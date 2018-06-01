@@ -28,6 +28,4 @@ $r dropbox:.chest "$HOME/.cheat"
 $r "$HOME/python" dropbox:python
 $r dropbox:python "$HOME/python" 
 
-# this should be good. get to a point where there are no symlinks 
-# to dropbox it honestly doesn't work!!
-# then configure for encryption. definitely do your research beforehand!!
+# it was this late into the game he realized that --from-file foo.txt existed.

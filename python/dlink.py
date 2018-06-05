@@ -3,18 +3,11 @@
 import os
 import sys
 
-# TODO #1: Test that the src dir [the one we're creating symlinks in] is handled
-# correctly as an optional parameter. AKA drop it and see if things still work.
-# Don't think that it will for the time being because of the way dest is
-# defined. It needs to account for different lengths of sys.argv the way
-# src does.
 # TODO #2 : If you want to add some zest, import glob and let users wildcard it
 
 cwd = os.path.join(os.getcwd(), '')
 src = sys.argv[-1] if len(sys.argv) == 3 else cwd
-# For the time being I'm going to make the erroneous decision to assume
-# that we'll have perfect user cooperation
-dest = sys.argv[-2]
+dest = sys.argv[1]
 # assert dest is type(string)       # no idea what the real syntax is 
 
 print("Your variable src is: " + src + " and type: " + str(type(src)))

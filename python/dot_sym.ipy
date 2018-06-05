@@ -1,0 +1,72 @@
+#!/usr/bin/env ipython3
+# -*- coding: utf-8 -*-
+# Maintainer: Faris Chugthai
+
+import os
+import sys
+
+home = os.path.join(os.path.expanduser("~"), "")
+proj = os.path.join(home, "projects")
+try:
+    os.chdir(proj)
+except DirectoryErrorfuckyou as e:
+    os.makedirs(i guess make it a variable)
+
+# could i do something like if comand below != 0 sys.exit()?
+os.system("git clone git@github.com:farisachugthai/dotfiles.git")
+
+repo = os.path.join(proj, "dotfiles")
+
+
+def dir_checker():
+    for root, dirs, files in os.walk(repo):
+        # Now lets do the folder check
+        if not os.path.isdir(root):
+            os.makedirs(root, exist_ok=False)
+
+
+def backup_prompt():
+    res = input("Would you like to back up this file?")
+    if res = "y*":
+        backup_file()
+# import it you've definitely written this before
+    elif res = "n*":
+        pass
+    else:
+        print("I'm sorry i don't understand.")
+
+
+def symlink_repo(file):
+    '''
+    Symlink the dotfiles if nothing exists in the home directory.
+    '''
+
+    src = os.path.join(repo, file)
+    dest = os.path.join(home, file)
+    try:
+        os.symlink(src, dest)
+    except FileExistsError:
+        if os.path.islink(dest):
+            # print("Sorry but a symlink to {0} already exists".format(dest))
+            pass
+        elif os.path.isfile(dest):
+            print("Sorry but a file to {0} already exists".format(dest))
+            backup_prompt()
+
+def main():
+    '''
+    Clone dotfiles to a user's home directory and then symlink to the repo.
+    Assumes Linux only because it has only been tested on Ubuntu and Termux.
+    Maintained by Faris Chugthai
+    '''
+
+    if os.uname()[0] != 'Linux':
+        raise OSError("This script assumes a Linux operating system.")
+        sys.exit()
+
+    repo_files = !git ls-files
+    for file in repo_files:
+        symlink_repo(file)
+
+if __name__ == '__main__':
+    main()

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # Maintainer: Faris Chugthai
 
+# Yo you gotta rewrite this if you're not in tbe directory the file is in it goes bonkers
 import sys
 import shutil
 from pathlib import Path

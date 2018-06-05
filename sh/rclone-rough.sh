@@ -21,7 +21,7 @@ $r "$HOME/projects/NewChat" dropbox:projects/NewChat
 
 # .cheat
 $r "$HOME/.cheat" dropbox:.cheat
-$r dropbox:.chest "$HOME/.cheat"
+$r dropbox:.cheat "$HOME/.cheat"
 
 # I'm cool with all of python syncing
 # gotta love vim with that :26,27s/\.cheat/python/gc

@@ -1,3 +1,6 @@
+# Mypy
+.mypy_cache/
+
 # Jupyter Notebooks / JupyterLab
 .ipynb_checkpoints
 

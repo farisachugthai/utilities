@@ -7,9 +7,12 @@ import sys
 
 
 def main():
-    """
-    Just all the system checks that could be performed in any situation.
-    """
-    if os.uname()[0] != 'Linux':
-        raise OSError("This script assumes a Linux operating system.")
+    """Checks that system requirements are met."""
+
+# Useful if you import pathlib, pandas etc
+    if sys.version_info < (3, 4):
+        sys.exit("Requires Python3.4 and up")
+
+    if os.uname()[0] not in ["Darwin", "Linux"]:
+        raise OSError("This script assumes a Unix operating system.")
         sys.exit()

@@ -11,6 +11,8 @@ home = Path.home()
 repo = Path.joinpath(home, 'projects', 'dotfiles', 'unix', '')
 
 
+# TODO: Remove hard coded path. argparse and set that as dedault option.
+# Well looks like Ive already started with mv_repo2.py
 def sys_checks():
     """Checks that system requirements are met."""
     if sys.version_info < (3, 4):
@@ -87,6 +89,8 @@ if __name__ == '__main__':
     dest = sys.argv[2] if len(sys.argv) == 3 else Path.joinpath(repo, rel_path)
 
     # TODO: Probably gonna need os.basepath if argv[1] was an absolute path.
+    # possibly tp the effect of
+    # dest_file = Path.joinpath(repo, rel_path, sys.argv[1].basename) but really not too sure
     dest_file = Path.joinpath(dest, sys.argv[1])
 
     main(src, dest, dest_file)

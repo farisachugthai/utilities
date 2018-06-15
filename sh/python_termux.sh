@@ -38,6 +38,7 @@ if ! [[ -d "$PREFIX/etc/apt/sources.list.d" ]]; then
     mkdir -pv "$PREFIX/etc/apt/sources.list.d"
 fi
 
+# sources.list.d isn't a default folder
 echo "deb [trusted=yes] https://its-pointless.github.io/files/ termux extras" >> $PREFIX/etc/apt/sources.list.d/pointless.list
 
 # Download signing key from https://its-pointless.github.io/pointless.gpg 

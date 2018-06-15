@@ -3,7 +3,12 @@
 # so termux and dropbox don't sync automatically. quite honestly I'm sure that
 # rclone is faster anyway. let's write a script that does all of this for us.
 
-r='rclone copy --update --one-file-system --copy-links'
+r1='rclone copy --update --one-file-system --copy-links'
+r2='rclone copy --update --track-renames'
+# one file system is probably unnecessary and copy links should be optional
+r3='rclone copy --update --track-renames --copy-links'
+
+r="$r1"         # or whichever r you want
 
 # projects sync
 $r "$HOME/projects/utilities" dropbox:projects/utilities

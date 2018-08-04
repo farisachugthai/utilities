@@ -1,8 +1,11 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-"""
-Explore the namespace and attributes of a module. If no argument
-is provoded then use the name bound to the local IPython object.
+""" Explore the namespace and attributes of a module.
+
+If no argument is provided then use the name bound to the local IPython object.
+
+However Python3.6 now has the builtin module 'pyclbr' so this entire script may be irrelevant.
 """
 
 import sys

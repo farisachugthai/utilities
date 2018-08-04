@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# TODO: Honestly drop this script i keep forgetting rclone with cloud storage id so much easier
+# https://rclone.org/crypt/
+
 # This is me basically taking notes as I haven't run this yet
 
 # Hoping this is the correct syntax for logical not

@@ -1,21 +1,29 @@
 #!/usr/bin/env ipython3
 # -*- coding: utf-8 -*-
 # Maintainer: Faris Chugthai
+# TODO: Test script. Also check if it'd be better to put the docstring in main
+# in the module docstring.
 
 import os
+import re
 import sys
 
-home = os.path.join(os.path.expanduser("~"), "")
-proj = os.path.join(home, "projects")
-try:
-    os.chdir(proj)
-except DirectoryErrorfuckyou as e:
-    os.makedirs(i guess make it a variable)
+import .sys_checks
 
-# could i do something like if comand below != 0 sys.exit()?
-os.system("git clone git@github.com:farisachugthai/dotfiles.git")
+# Global vars
+HOME = os.path.join(os.path.expanduser("~"), "")
+PROJ = os.path.join(home, "projects")
+REPO = os.path.join(proj, "dotfiles")
 
-repo = os.path.join(proj, "dotfiles")
+
+def get_dotfiles():
+    try:
+        os.chdir(proj)
+    # https://docs.python.org/3/library/exceptions.html#NotADirectoryError
+    except NotADirectoryError as e:
+        os.makedirs(proj) and os.chdir(proj) or sys.exit("Couldn't create the necessary directory.")
+
+    os.system("git clone git@github.com:farisachugthai/dotfiles.git")
 
 
 def dir_checker():
@@ -27,6 +35,8 @@ def dir_checker():
 
 def backup_prompt():
     res = input("Would you like to back up this file?")
+    answ = re.compile("^[Yy]*")
+    # TODO: Check how to do this part right.
     if res = "y*":
         backup_file()
 # import it you've definitely written this before
@@ -60,10 +70,18 @@ def main():
     Maintained by Faris Chugthai
     '''
 
-    if os.uname()[0] != 'Linux':
-        raise OSError("This script assumes a Linux operating system.")
-        sys.exit()
+    sys_checks()
+    #  if os.uname()[0] != 'Linux':
+    #      raise OSError("This script assumes a Linux operating system.")
+    #      sys.exit()
 
+    # let's get the files we need
+    get_dotfiles()
+
+    # ensure all necessary directories are in $HOME
+    dir_checker()
+
+    # symlink every file you can find
     repo_files = !git ls-files
     for file in repo_files:
         symlink_repo(file)

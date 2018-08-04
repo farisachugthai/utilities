@@ -3,19 +3,8 @@
 import os
 import sys
 
-# TODO #2 : If you want to add some zest, import glob and let users wildcard it
 
-cwd = os.path.join(os.getcwd(), '')
-src = sys.argv[-1] if len(sys.argv) == 3 else cwd
-dest = sys.argv[1]
-# assert dest is type(string)       # no idea what the real syntax is 
-
-print("Your variable src is: " + src + " and type: " + str(type(src)))
-print("Your variable dest is: " + dest + " and type: " + str(type(dest)))
-print("The files that we'll be symlinking to are: " + str(os.listdir(dest)))
-
-
-def dlink(dest, src=cwd):
+def dlink(dest, src):
     """
     Usage:
     Utilize in an analogous way to the shell command
@@ -31,24 +20,39 @@ def dlink(dest, src=cwd):
     for i in os.listdir(dest):
         dest_file = os.path.join(dest, i)
         src_file = os.path.join(src, i)
-        try:
-            os.symlink(dest_file, src_file)
-        except FileExistsError as e:
-            if os.path.islink(src_file):
-                pass
-            elif os.path.isdir(src_file):
-                pass
-            elif os.path.isfile(src_file):
-                print(src_file + " is already a file in the src dir. We will not create a symlink.")
-                pass
-            else:
-                print(e)
-                sys.exit("Huh. Didn't see that coming.")
+        if os.path.isdir(dest_file) and not os.path.isdir(src_file):
+            try:
+                os.mkdir(src_file, 0o777)
+            except:
+                sys.exc_info()
+                print("Can't create directory.")
 
-        print("symlinking: " + dest_file + " from " + src_file)
+        elif os.path.isfile(dest_file):
+            try:
+                os.symlink(dest_file, src_file)
+            except FileExistsError as e:
+                if os.path.islink(src_file):
+                    pass
+                elif os.path.isfile(src_file):
+                    print(src_file + " is already a file in the src dir. We "
+                          + "will not create a symlink.")
+                    print(e)
+            else:
+                print("symlinking: " + dest_file + " from " + src_file)
 
 
 def main():
+    cwd = os.path.join(os.getcwd(), '')
+    src = sys.argv[-1] if len(sys.argv) == 3 else cwd
+    dest = sys.argv[1]
+
+    if not os.path.isdir(dest):
+        sys.exit("Dir: " + dest + " is not a recognized directory. Exiting.")
+
+    print("Your variable src is: " + src + " and type: " + str(type(src)))
+    print("Your variable dest is: " + dest + " and type: " + str(type(dest)))
+    print("The files that we'll be symlinking to : " + str(os.listdir(dest)))
+
     dlink(dest, src=cwd)
 
 

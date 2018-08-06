@@ -49,9 +49,9 @@ def main():
     if not os.path.isdir(dest):
         sys.exit("Dir: " + dest + " is not a recognized directory. Exiting.")
 
-    print("Your variable src is: " + src + " and type: " + str(type(src)))
-    print("Your variable dest is: " + dest + " and type: " + str(type(dest)))
-    print("The files that we'll be symlinking to : " + str(os.listdir(dest)))
+    #  print("Your variable src is: " + src + " and type: " + str(type(src)))
+    #  print("Your variable dest is: " + dest + " and type: " + str(type(dest)))
+    #  print("The files that we'll be symlinking to : " + str(os.listdir(dest)))
 
     dlink(dest, src=cwd)
 

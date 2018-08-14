@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
+""" Symlink all of the files in one directory into another.
+
+Usage:
+
+    This module is intended to be used in the same fashion as
+    `ln -s path/to/dest/* path/to/src`
+    in a conventional Unix shell
+
 https://github.com/farisachugthai
 
+GPL: {{{
 All rights reserved.
 
 This program is free software: you can redistribute it and/or modify
@@ -17,6 +25,27 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+}}}
 """
 
 __author__ = 'Faris Chugthai'
@@ -53,11 +82,14 @@ def dlink(dest, src):
     Utilize in an analogous way to the shell command
     ln -s path/to/dir/* path/to/src/
 
-    Parameters:
-    Dest is the directory where the real files are located.
-    src is the directory where the symlinks are to be created.
+    :param dest: The directory where the original files are located.
+    :param src: Optional argument indicating the directory where the symlinks
+    are to be created.
+
     If the src argument isn't provided, it is assumed that the current working
     directory is the src dir.
+
+    Returns none
     """
 
     for i in os.listdir(dest):
@@ -66,7 +98,7 @@ def dlink(dest, src):
         if os.path.isdir(dest_file) and not os.path.isdir(src_file):
             try:
                 os.mkdir(src_file, 0o777)
-            except Exception as e:
+            except IsADirectoryError as e:
                 sys.exc_info()
                 print(e)
 
@@ -78,7 +110,7 @@ def dlink(dest, src):
                     pass
                 elif os.path.isfile(src_file):
                     print(src_file + " is already a file in the src dir. We "
-                          + "will not create a symlink.")
+                                     "will not create a symlink.")
                     print(e)
             # you could totally make this a root logger if you wanted some
             # pointless noise otherwise let's spare our poor victims
@@ -94,11 +126,7 @@ def main():
     if not os.path.isdir(dest):
         sys.exit("Dir: " + dest + " is not a recognized directory. Exiting.")
 
-    #  print("Your variable src is: " + src + " and type: " + str(type(src)))
-    #  print("Your variable dest is: " + dest + " and type: " + str(type(dest)))
-    #  print("The files that we'll be symlinking to : " + str(os.listdir(dest)))
-
-    dlink(dest, src=cwd)
+    dlink(dest, src)
 
 
 if __name__ == '__main__':

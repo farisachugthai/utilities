@@ -2,43 +2,24 @@
 # -*- coding: utf-8 -*-
 # Maintainer: Faris Chugthai
 
-import sys
-import shutil
-from pathlib import Path
 import os
+from pathlib import Path
+import shutil
+import sys
 
-home = Path.home()
-repo = Path.joinpath(home, 'projects', 'dotfiles', 'unix', '')
-
-
-# TODO: Remove hard coded path. argparse and set that as dedault option.
-# Well looks like Ive already started with mv_repo2.py
-def sys_checks():
-    """Checks that system requirements are met."""
-    if sys.version_info < (3, 4):
-        sys.exit("Requires Python3.4 and up")
-
-    if os.uname()[0] not in ["Darwin", "Linux"]:
-        raise OSError("This script assumes a Unix operating system.")
-        sys.exit()
+from . import sys_checks
 
 
 def repo_dir_check(dest):
-    """
-    Checks that the directory is in the repository and make one otherwise.
-    """
+    """ Checks that the directory is in the repository and make one otherwise. """
 
     if dest.is_dir() is not True:
-        #  https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir
-        # To mimic behavior of mkdir -p, use flags parents=True and exists_ok=True
         dest.mkdir(parents=True, exist_ok=True)
 
 
 def backup_file(src):
     """ Backs up file 'src' """
-    # TODO: Look into pros/cons of copy/copy2/copyfile
-    # TODO2: Should we do anything if src.bak already exists?
-    shutil.copy(str(src), str(src) + ".bak")
+    shutil.copy2(str(src), str(src) + ".bak")
 
 
 def main(src, dest, dest_file):
@@ -76,6 +57,9 @@ if __name__ == '__main__':
     Relatively long if __name__ block because we spend so much code handling
     user input that we don't deal with when the functions arebeing imported.
     """
+    home = Path.home()
+    repo = Path.joinpath(home, 'projects', 'dotfiles', 'unix', '')
+
     # Are we getting into argparse territory?
     # Setup the file to move
     inputted = sys.argv[1] if len(sys.argv) >= 2 else sys.exit("Takes at least one filename.")

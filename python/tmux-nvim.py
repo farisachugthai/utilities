@@ -82,23 +82,6 @@ def main():
     else:
         NVIM_SOCKET_PATH = home + '.cache'
 
-# needs work: {{{
-    # checking the TMUX environment variable will confirm whether or not tmux is currently running.
-    in_tmux = os.environ.get('TMUX')
-    lit_flag = files.count("--lit")
-
-    if in_tmux is not None and lit_flag == 0:
-        # if tmux is running, then we have different things to do if using neovim or another form of vim
-    else:
-    # otherwise, just call the editor and flags with the requisite files, no strings (or servers) attached.
-        while files.count("--lit") > 0:
-            # if lit_flag was passed in, we need to remove it from the list of files before calling
-            # TODO: this is pretty damn hacky.
-            files.pop(files.index("--lit"))
-
-# do it this way or embed?
-        subprocess.call([EDITOR] + EDITOR_FLAGS + files)
-# }}}
 
 if __name__ == '__main__':
 
@@ -132,4 +115,3 @@ if __name__ == '__main__':
     #      '--name', default='demo-instance', help='New instance name.')
 
     args = parser.parse_args()
-    # so do you call main() or main(args) after this?

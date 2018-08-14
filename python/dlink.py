@@ -1,7 +1,50 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+https://github.com/farisachugthai
+
+All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+__author__ = 'Faris Chugthai'
+__copyright__ = 'Copyright (C) 2018 Faris Chugthai'
+__license__ = 'MIT'
+__email__ = 'farischugthai@gmail.com'
 
 import os
 import sys
+
+
+# taken with almost no modifications from pyflakes
+def iterSourceCode(paths):
+    """
+    Iterate over all Python source files in C{paths}.
+
+    @param paths: A list of paths.  Directories will be recursed into and
+        any .py files found will be yielded.  Any non-directories will be
+        yielded as-is.
+    """
+    for path in paths:
+        if os.path.isdir(path):
+            for dirpath, dirnames, filenames in os.walk(path):
+                for filename in filenames:
+                    full_path = os.path.join(dirpath, filename)
+                    yield full_path
+        else:
+            yield path
 
 
 def dlink(dest, src):
@@ -23,9 +66,9 @@ def dlink(dest, src):
         if os.path.isdir(dest_file) and not os.path.isdir(src_file):
             try:
                 os.mkdir(src_file, 0o777)
-            except:
+            except Exception as e:
                 sys.exc_info()
-                print("Can't create directory.")
+                print(e)
 
         elif os.path.isfile(dest_file):
             try:
@@ -37,8 +80,10 @@ def dlink(dest, src):
                     print(src_file + " is already a file in the src dir. We "
                           + "will not create a symlink.")
                     print(e)
-            else:
-                print("symlinking: " + dest_file + " from " + src_file)
+            # you could totally make this a root logger if you wanted some
+            # pointless noise otherwise let's spare our poor victims
+            #  else:
+            #      print("symlinking: " + dest_file + " from " + src_file)
 
 
 def main():

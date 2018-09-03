@@ -1,32 +1,28 @@
 #!/usr/bin/env ipython3
 # -*- coding: utf-8 -*-
 # Maintainer: Faris Chugthai
-# TODO: Test script. Also check if it'd be better to put the docstring in main
-# in the module docstring.
 
 import os
 import re
 import sys
 
-import .sys_checks
-
-# Global vars
-HOME = os.path.join(os.path.expanduser("~"), "")
-PROJ = os.path.join(home, "projects")
-REPO = os.path.join(proj, "dotfiles")
+from . import sys_checks
 
 
 def get_dotfiles():
+    """ Move to a pre-designated directory for the dotfiles and git clone them."""
     try:
         os.chdir(proj)
     # https://docs.python.org/3/library/exceptions.html#NotADirectoryError
     except NotADirectoryError as e:
-        os.makedirs(proj) and os.chdir(proj) or sys.exit("Couldn't create the necessary directory.")
+        os.makedirs(proj)
+        os.chdir(proj) or sys.exit("Couldn't create the necessary directory.")
 
     os.system("git clone git@github.com:farisachugthai/dotfiles.git")
 
 
 def dir_checker():
+    """ So this function is now a TODO because of os.scandir()"""
     for root, dirs, files in os.walk(repo):
         # Now lets do the folder check
         if not os.path.isdir(root):
@@ -71,9 +67,9 @@ def main():
     '''
 
     sys_checks()
-    #  if os.uname()[0] != 'Linux':
-    #      raise OSError("This script assumes a Linux operating system.")
-    #      sys.exit()
+
+    # lets first mark where we're executing from
+    DIRNAME = os.path.dirname(os.path.absdir(__file__))
 
     # let's get the files we need
     get_dotfiles()
@@ -87,4 +83,8 @@ def main():
         symlink_repo(file)
 
 if __name__ == '__main__':
+    HOME = os.path.join(os.path.expanduser("~"), "")
+    PROJ = os.path.join(home, "projects")
+    REPO = os.path.join(proj, "dotfiles")
+
     main()

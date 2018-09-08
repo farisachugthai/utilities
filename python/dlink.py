@@ -4,54 +4,16 @@
 
 Usage:
 
-    This module is intended to be used in the same fashion as
+    This module is intended to be used in the same fashion as ln in a Unix shell
     `ln -s path/to/dest/* path/to/src`
-    in a conventional Unix shell
 
-https://github.com/farisachugthai
-
-GPL: {{{
-All rights reserved.
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-}}}
 """
 
 __author__ = 'Faris Chugthai'
 __copyright__ = 'Copyright (C) 2018 Faris Chugthai'
-__license__ = 'MIT'
 __email__ = 'farischugthai@gmail.com'
+__license__ = 'MIT'
+__url__ = 'https://github.com/farisachugthai'
 
 import os
 import sys
@@ -89,7 +51,8 @@ def dlink(dest, src):
     If the src argument isn't provided, it is assumed that the current working
     directory is the src dir.
 
-    Returns none
+    Returns:
+        None
     """
 
     for i in os.listdir(dest):
@@ -121,7 +84,11 @@ def dlink(dest, src):
 def main():
     cwd = os.path.join(os.getcwd(), '')
     src = sys.argv[-1] if len(sys.argv) == 3 else cwd
-    dest = sys.argv[1]
+
+    try:
+        dest = sys.argv[1]
+    except IndexError:
+        sys.exit("What directory do you want to link to?")
 
     if not os.path.isdir(dest):
         sys.exit("Dir: " + dest + " is not a recognized directory. Exiting.")

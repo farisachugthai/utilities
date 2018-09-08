@@ -3,11 +3,12 @@
 # Maintainer: Faris Chugthai
 """ Move a file into my dotfiles repository.
 
+Dude fuck I gotta debug this :\
+
 Depends:
     sys_checks
 
 Assumes:
-    Dotfiles directory is at ~/projects/dotfiles
     Script is executed in the same directory the file is in
 
 """
@@ -18,7 +19,7 @@ from pathlib import Path
 import shutil
 import sys
 
-from . import sys_checks
+import sys_checks
 
 
 def main():
@@ -41,19 +42,37 @@ def main():
 
     """
 
-    cwd = Path.cwd()
-    rel_path = Path.relative_to(cwd, home)
-    dest = args.destination
-    dest_file = Path.joinpath(dest, args.fname)
+    src = Path(args.fname)
+    dirname = os.path.dirname(src)
+    rel_path = Path.relative_to(dirname, home)
+    # turn the str into a path object
+    dest = Path(args.destination)
 
-    # Quite honestly this is so declarative that there's not any point to
-    # creating functions for this
-    #  https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir
-    # To mimic behavior of mkdir -p, use parents=True and exists_ok=True
-    if dest.is_dir() is not True:
+
+    # i feel like the below line HAS to be wrong. we need to use relpath to
+    # go from src to home. then we already know the distance from home to dest. it's the
+    # original distance [ the relpath ] plus any prefix before teh dotfiles repo.
+    # this is very not ready to handle user input jesus.
+    # you're overcomplicating both of these files.
+    # stop trying to implement 2 things
+
+    # this file should either use the hardcoded path because otherwise how do we know what the
+    # repository structure we're going to is or go all user input
+    # but don't do both in the same file man
+
+    # dest_file should have the repo dir. then add on the relative path thing [because the repo structure is
+    # mirrored on your local FS
+    # then fname itself
+    # if no argument was provided than at this point dest actually is repo
+    # oh shit so all we were missing in the rel_path! and it's being noted as not used up there
+    # rel_path kinda only makes sense if dest was provided as user input though....
+    dest_file = Path.joinpath(dest, rel_path, args.fname)
+
+    dest_dir = Path(os.path.dirname(dest_file))
+
+    if dest_dir.is_dir() is not True:
         dest.mkdir(parents=True, exist_ok=True)
 
-    # TODO: Which shutill.copy and what errors do either of these functions raise?
     shutil.copy(str(src), str(src) + ".bak")
     shutil.move(str(src), str(dest))
 
@@ -62,23 +81,34 @@ def main():
 
 if __name__ == '__main__':
     # Check that the system can run this script first
-    sys_checks()
+    sys_checks.main()
 
     # Keep all global modules in this loop
     home = Path.home()
+    # might be more aptly named dest dir
     repo = Path.joinpath(home, 'projects', 'dotfiles', 'unix', '')
+    cwd = os.getcwd()
 
     # Now let's parse the user's arguments
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(add_help=True, allow_abbrev=True,
+                                     description='Moves a file into a new'
+                                     'directory and then symlinks back'
+                                     'from the original location. useful for'
+                                     'managing dotfiles.')
+
     parser.add_argument('fname', help='The file to move to the dotfiles repo')
+
     parser.add_argument('-d', '--destination', default=repo,
                         help='The directory to put the file in. Defaults to' +
                         'the location of my dotfiles repository')
-    # TODO:
-    # parser.add_argument('-v','--verbose', help='Increase verbosity')
+
     args = parser.parse_args()
 
-    if args.fname.is_file() is not True:
+    if src.is_file() is not True:
         sys.exit("This is not a regular file or there is a permissions" +
                  "issue. Aborting.")
     main()
+
+    if args.fname not in os.listdir(cwd):
+        print('some kind of warning')
+        raise Exception         # did we forget how to raise exceptions?

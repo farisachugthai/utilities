@@ -3,68 +3,47 @@
 """ Symlink all of the files in one directory into another.
 
 Usage:
+    `ln -s path/to/dest/* [path/to/src]`
 
-    This module is intended to be used in the same fashion as
-    `ln -s path/to/dest/* path/to/src`
-    in a conventional Unix shell
+This module is intended to be used in the same fashion as
+in a conventional Unix shell
 
-https://github.com/farisachugthai
+Bugs:
+    Doesn't work if nested directories need to be made.
+    Although I suppose the original purpose of this was to replicate
+    ln -s dest/*
+    I mean I'm all for growing and expanding but maybe a different module altogether then?
 
-GPL: {{{
-All rights reserved.
+    So I don't wanna be the guy who suggests tagging this repo but like...
+    check the git log and see how long i went without committing to this file i'm assuming
+    this and mv_to_repo haven't been touched in forever and
+    now i'm rewriting the core functionality.
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+    probably should've just started in new files
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-}}}
 """
 
 __author__ = 'Faris Chugthai'
 __copyright__ = 'Copyright (C) 2018 Faris Chugthai'
 __license__ = 'MIT'
 __email__ = 'farischugthai@gmail.com'
+__url__ = 'https://github.com/farisachugthai'
 
 import os
 import sys
 
 
+# this would be a great function to call with the results of os.listdir('root_of_repo')
 # taken with almost no modifications from pyflakes
-def iterSourceCode(paths):
+def iter_source_code(paths):
     """
     Iterate over all Python source files in C{paths}.
 
     @param paths: A list of paths.  Directories will be recursed into and
         any .py files found will be yielded.  Any non-directories will be
         yielded as-is.
+
+        :param paths:
     """
     for path in paths:
         if os.path.isdir(path):

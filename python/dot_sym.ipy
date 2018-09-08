@@ -18,7 +18,11 @@ def get_dotfiles():
         os.makedirs(proj)
         os.chdir(proj) or sys.exit("Couldn't create the necessary directory.")
 
-    os.system("git clone git@github.com:farisachugthai/dotfiles.git")
+    # so this lil block is the obvious downside to os.system. maybe try subprocess
+    # and if that does nothing then we're going for the git mod
+    ret = os.system("git clone git@github.com:farisachugthai/dotfiles.git")
+    if ret != 0:
+        print('Git clone failed. See err code: ' + str(ret))
 
 
 def dir_checker():

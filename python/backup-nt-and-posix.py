@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
-# From:
-# http://pythonprogramming.language-tutorial.com/2012/10/fast-and-efficient-backup-script-that.html
+"""Show good idioms for how to backup directories using subprocess.
 
+This script aims to be platform agnostic and in the long term will be used
+on Windows, Linux, Mac and Android systems.
+
+Original URL::
+    http://pythonprogramming.language-tutorial.com/2012/10/fast-and-efficient-backup-script-that.html
+"""
 import os
 import os.path
 import subprocess
@@ -9,22 +14,19 @@ import time
 
 
 def backUpDir(path):
-    """
-    Creates a backup of a directory.
-    Uses the date and time as the name of the new file.
-    On success, returns a list consising of two values:
-        0: to signify the success
-        None: means no error occurred.
+    """Create a backup of a directory. Use the date and time as new name.
 
-    On error, return a list consisting of two values:
+    Returns:
+        None: means no error occurred.
+        0: to signify the success
         -1 : to signify the failure
         error string: the exact error string
-    """
 
-    if os.path.exists(path) is True:
+    """
+    if os.path.exists(path):
         # dir exists then backup old dir and create new
         backupDir = path + time.strftime('-%Y-%m-%d-%Hh%Mm%Ss')
-        if os.name == "nt":
+        if os.name == "nt":         # TODO:
             # NT Sysyem  - used the DOS Command 'move' to rename the folder
             cmd = subprocess.Popen(
                 ["mov", path, backupDir],
@@ -33,7 +35,8 @@ def backUpDir(path):
                 stdin=subprocess.PIPE,
                 stderr=subprocess.PIPE)
         elif os.name == "posix":
-            # POSIX System - use, start_new_session=False, pass_fds=(), encoding=None, errors=None)
+            # POSIX System - use, start_new_session=False, pass_fds=(),
+            # encoding=None, errors=None)
             cmd = subprocess.Popen(
                 ["mv", path, backupDir],
                 shell=True,

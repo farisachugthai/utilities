@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-""" Symlink all of the files in one directory into another.
+"""Symlink all of the files in one directory into another.
 
 Usage:
     `ln -s path/to/dest/* [path/to/src]`
@@ -12,17 +12,7 @@ Bugs:
     Doesn't work if nested directories need to be made.
     Although I suppose the original purpose of this was to replicate
     ln -s dest/*
-    I mean I'm all for growing and expanding but maybe a different module altogether then?
-
-    So I don't wanna be the guy who suggests tagging this repo but like...
-    check the git log and see how long i went without committing to this file i'm assuming
-    this and mv_to_repo haven't been touched in forever and
-    now i'm rewriting the core functionality.
-
-    probably should've just started in new files
-
 """
-
 __author__ = 'Faris Chugthai'
 __copyright__ = 'Copyright (C) 2018 Faris Chugthai'
 __license__ = 'MIT'
@@ -33,7 +23,7 @@ import os
 import sys
 
 
-# this would be a great function to call with the results of os.listdir('root_of_repo')
+# this would be a great function to call with the results of os.listdir('root')
 # taken with almost no modifications from pyflakes
 def iter_source_code(paths):
     """
@@ -56,10 +46,12 @@ def iter_source_code(paths):
 
 
 def dlink(dest, src):
-    """
-    Usage:
-    Utilize in an analogous way to the shell command
-    ln -s path/to/dir/* path/to/src/
+    """Symlinks all files in one directory from another.
+
+    Utilize in an analogous way to the shell command ln -s ./*
+
+    Usage::
+        ln -s path/to/dir/* path/to/src/
 
     :param dest: The directory where the original files are located.
     :param src: Optional argument indicating the directory where the symlinks
@@ -70,7 +62,6 @@ def dlink(dest, src):
 
     Returns none
     """
-
     for i in os.listdir(dest):
         dest_file = os.path.join(dest, i)
         src_file = os.path.join(src, i)
@@ -98,6 +89,7 @@ def dlink(dest, src):
 
 
 def main():
+    """Set up the rest of the module."""
     cwd = os.path.join(os.getcwd(), '')
     src = sys.argv[-1] if len(sys.argv) == 3 else cwd
     dest = sys.argv[1]

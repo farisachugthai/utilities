@@ -27,7 +27,8 @@ def main():
 
     #  if res.headers['Content-Type']:
     #      pass
-    #  # TODO: figure out how to check that the file is plain text and not hit constant false positives
+    #  # TODO: figure out how to check that the file is plain text and not hit
+    # constant false positives
 
     with open(args.fname, "xt") as f:
         f.write(res.text)

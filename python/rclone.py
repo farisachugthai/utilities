@@ -16,9 +16,12 @@ import subprocess
 import sys
 
 
-def parse_arguments():
+def _parse_arguments():
     """Parse user-given arguments."""
-    pass
+    parser = argparse.ArgumentParser("Automate usage of rclone for simple backup creation.")
+    parser.add_argument(dest=src,
+
+    return parser
 
 
 def rclone_base_case():
@@ -33,4 +36,8 @@ def rclone_follow(src, dest):
 
 
 if __name__ == "__main__":
-    rclone_follow(src, dest)
+    args = _parse_arguments()
+    args.parse_args()
+
+    if args.follows:
+        rclone_follow(src, dest)

@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-""" Symlink all of the files in one directory into another.
+"""Symlink all of the files in one directory into another.
 
-Usage:
+Usage::
+    `ln -s path/to/dest/* [path/to/src]`
 
-    This module is intended to be used in the same fashion as ln in a Unix shell
-    `ln -s path/to/dest/* path/to/src`
+This module is intended to be used in the same fashion as
+in a conventional Unix shell
+
+Bugs::
+    Doesn't work if nested directories need to be made.
+    Although I suppose the original purpose of this was to replicate
+        `ln -s dest/*`
+    Not arbitrarily start adding in globbing/recursive functionality.
 
 """
-
 __author__ = 'Faris Chugthai'
 __copyright__ = 'Copyright (C) 2018 Faris Chugthai'
 __email__ = 'farischugthai@gmail.com'
@@ -19,33 +25,16 @@ import os
 import sys
 
 
-# taken with almost no modifications from pyflakes
-def iterSourceCode(paths):
-    """
-    Iterate over all Python source files in C{paths}.
-
-    @param paths: A list of paths.  Directories will be recursed into and
-        any .py files found will be yielded.  Any non-directories will be
-        yielded as-is.
-    """
-    for path in paths:
-        if os.path.isdir(path):
-            for dirpath, dirnames, filenames in os.walk(path):
-                for filename in filenames:
-                    full_path = os.path.join(dirpath, filename)
-                    yield full_path
-        else:
-            yield path
-
-
 def dlink(dest, src):
-    """
-    Usage:
-    Utilize in an analogous way to the shell command
-    ln -s path/to/dir/* path/to/src/
+    """Symlinks all files in one directory from another.
 
-    :param dest: The directory where the original files are located.
-    :param src: Optional argument indicating the directory where the symlinks
+    Utilize in an analogous way to the shell command ln -s ./*
+
+    Usage::
+        ln -s path/to/dir/* path/to/src/
+
+    :param: dest: The directory where the original files are located.
+    :param: src: Optional argument indicating the directory where the symlinks
     are to be created.
 
     If the src argument isn't provided, it is assumed that the current working
@@ -54,7 +43,6 @@ def dlink(dest, src):
     Returns:
         None
     """
-
     for i in os.listdir(dest):
         dest_file = os.path.join(dest, i)
         src_file = os.path.join(src, i)
@@ -81,7 +69,10 @@ def dlink(dest, src):
             #      print("symlinking: " + dest_file + " from " + src_file)
 
 
-def main():
+if __name__ == '__main__':
+    # Main has been refactored out because there's no reason to have
+    # global vars defined in main. Let's have less function calls
+    # and only define these variables if we're not being sourced.
     cwd = os.path.join(os.getcwd(), '')
     src = sys.argv[-1] if len(sys.argv) == 3 else cwd
 
@@ -94,7 +85,3 @@ def main():
         sys.exit("Dir: " + dest + " is not a recognized directory. Exiting.")
 
     dlink(dest, src)
-
-
-if __name__ == '__main__':
-    main()

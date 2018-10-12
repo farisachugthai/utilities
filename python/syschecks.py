@@ -5,8 +5,6 @@
 import os
 import sys
 
-# TODO: FIX THIS FUNCTION DOCSTRING THIS IS GARBAGE!!!
-
 
 def py_gte(max_py_version):
     """
@@ -16,7 +14,7 @@ def py_gte(max_py_version):
     If you'll crash on python3.4 but work on 3.3, call this func with 3.3.
 
     params: max_py_version
-        args: tuple
+    args: tuple
     """
     if sys.version_info > max_py_version:
         sys.exit("Can not use python interpreter above: " + max_py_version)

@@ -1,32 +1,37 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Neovim sessions with the help of tmux
+""" neovim sessions with the help of tmux
 
 Depends: tmux, nvim, libtmux
 
-https://github.com/farisachugthai
-
 All rights reserved.
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 """
 
 __author__ = 'Faris Chugthai'
 __copyright__ = 'Copyright (C) 2018 Faris Chugthai'
-__license__ = 'MIT'
 __email__ = 'farischugthai@gmail.com'
+__license__ = 'MIT'
+__url__ = 'https://github.com/farisachugthai'
 
 # imports: {{{
 import argparse
@@ -59,7 +64,8 @@ class DefaultTmuxServer(libtmux.Server):
 # so now we gotta figure out if this is the correct way to make a child class
 # probs not tho
     def __init__(self, **kwargs):
-        libtmux.Server.__init__(self, colors='2', conf,
+        libtmux.Server.__init__(self, colors='2', conf, **kwargs)
+        # Only reason I defaulted to kwargs is because the docs aren't clear about which parameters are ACTUALLY REQUIRED
 
 
 def check_if_virtualenv():
@@ -82,26 +88,8 @@ def main():
     else:
         NVIM_SOCKET_PATH = home + '.cache'
 
-# needs work: {{{
-    # checking the TMUX environment variable will confirm whether or not tmux is currently running.
-    in_tmux = os.environ.get('TMUX')
-    lit_flag = files.count("--lit")
-
-    if in_tmux is not None and lit_flag == 0:
-        # if tmux is running, then we have different things to do if using neovim or another form of vim
-    else:
-    # otherwise, just call the editor and flags with the requisite files, no strings (or servers) attached.
-        while files.count("--lit") > 0:
-            # if lit_flag was passed in, we need to remove it from the list of files before calling
-            # TODO: this is pretty damn hacky.
-            files.pop(files.index("--lit"))
-
-# do it this way or embed?
-        subprocess.call([EDITOR] + EDITOR_FLAGS + files)
-# }}}
 
 if __name__ == '__main__':
-
     # checks correct python version and linux os
     sys_checks.main()
 
@@ -132,4 +120,3 @@ if __name__ == '__main__':
     #      '--name', default='demo-instance', help='New instance name.')
 
     args = parser.parse_args()
-    # so do you call main() or main(args) after this?

@@ -1,24 +1,31 @@
-#! /usr/bin/python3.6
-# From:
-# Python3.6 Examples in Ubuntu repositories
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""From Python3.6 Examples in Ubuntu repositories.
 
-# linktree
-#
-# Make a copy of a directory tree with symbolic links to all files in the
-# original tree.
-# All symbolic links go to a special symbolic link at the top, so you
-# can easily fix things if the original source tree moves.
-# See also "mkreal".
-#
-# usage: mklinks oldtree newtree
+Minor modifications for flake8, pydocstyle etc.
 
-import sys, os
+linktree
 
-LINK = '.LINK' # Name of special symlink at the top.
+Make a copy of a directory tree with symbolic links to all files in the
+original tree.
+All symbolic links go to a special symbolic link at the top, so you
+can easily fix things if the original source tree moves.
 
-debug = 0
+Usage::
+    mklinks oldtree newtree
+
+See also "mkreal".
+"""
+import os
+import sys
+
+LINK = '.LINK'  # Name of special symlink at the top.
+
+DEBUG = 0
+
 
 def main():
+    """Handle user inputs and initialize arguments."""
     if not 3 <= len(sys.argv) <= 4:
         print('usage:', sys.argv[0], 'oldtree newtree [linkto]')
         return 2
@@ -49,8 +56,11 @@ def main():
     linknames(oldtree, newtree, link)
     return 0
 
+
 def linknames(old, new, link):
-    if debug: print('linknames', (old, new, link))
+    """Recursively symlink a directory tree."""
+    if DEBUG:
+        print('linknames', (old, new, link))
     try:
         names = os.listdir(old)
     except OSError as msg:
@@ -61,14 +71,15 @@ def linknames(old, new, link):
             oldname = os.path.join(old, name)
             linkname = os.path.join(link, name)
             newname = os.path.join(new, name)
-            if debug > 1: print(oldname, newname, linkname)
+            if DEBUG > 1:
+                print(oldname, newname, linkname)
             if os.path.isdir(oldname) and \
                not os.path.islink(oldname):
                 try:
                     os.mkdir(newname, 0o777)
                     ok = 1
-                except:
-                    print(newname + \
+                except Exception as msg:
+                    print(newname +
                           ': warning: cannot mkdir:', msg)
                     ok = 0
                 if ok:
@@ -77,6 +88,7 @@ def linknames(old, new, link):
                     linknames(oldname, newname, linkname)
             else:
                 os.symlink(linkname, newname)
+
 
 if __name__ == '__main__':
     sys.exit(main())

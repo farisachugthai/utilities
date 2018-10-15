@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-""" Symlink all of the files in one directory into another.
+"""Symlink all of the files in one directory into another.
 
-Usage:
+Usage::
+    `<ln -s path/to/dest/* [path/to/src]>`
 
-    This module is intended to be used in the same fashion as ln in a Unix shell
-    `ln -s path/to/dest/* path/to/src`
+This module is intended to be used in the same fashion as
+in a conventional Unix shell
+
+Bugs::
+    Doesn't work if nested directories need to be made.
+    Although I suppose the original purpose of this was to replicate
+    ln -s dest/*
 
 """
-
 __author__ = 'Faris Chugthai'
 __copyright__ = 'Copyright (C) 2018 Faris Chugthai'
 __email__ = 'farischugthai@gmail.com'
@@ -19,30 +24,35 @@ import os
 import sys
 
 
+# this would be a great function to call with the results of os.listdir('root')
 # taken with almost no modifications from pyflakes
-def iterSourceCode(paths):
-    """
-    Iterate over all Python source files in C{paths}.
+def iter_source_code(paths):
+    """Iterate over all Python source files in C{paths}.
 
-    @param paths: A list of paths.  Directories will be recursed into and
-        any .py files found will be yielded.  Any non-directories will be
-        yielded as-is.
+    Directories will be recursed into and any .py files found will be yielded.
+    Any non-directories will be yielded as-is.
+
+    :param paths: A list of paths.
+
+    :returns: fname
     """
-    for path in paths:
-        if os.path.isdir(path):
-            for dirpath, dirnames, filenames in os.walk(path):
+    for fname in paths:
+        if os.path.isdir(fname):
+            for dirpath, dirnames, filenames in os.walk(fname):
                 for filename in filenames:
-                    full_path = os.path.join(dirpath, filename)
-                    yield full_path
+                    absolute_path = os.path.join(dirpath, filename)
+                    yield absolute_path
         else:
-            yield path
+            yield fname
 
 
 def dlink(dest, src):
-    """
-    Usage:
-    Utilize in an analogous way to the shell command
-    ln -s path/to/dir/* path/to/src/
+    """Symlinks all files in one directory from another.
+
+    Utilize in an analogous way to the shell command ln -s ./*
+
+    Usage::
+        ln -s path/to/dir/* path/to/src/
 
     :param dest: The directory where the original files are located.
     :param src: Optional argument indicating the directory where the symlinks
@@ -51,10 +61,13 @@ def dlink(dest, src):
     If the src argument isn't provided, it is assumed that the current working
     directory is the src dir.
 
-    Returns:
+    Returns::
         None
-    """
 
+    Bugs::
+        Doesn't handle nested directories.
+
+    """
     for i in os.listdir(dest):
         dest_file = os.path.join(dest, i)
         src_file = os.path.join(src, i)
@@ -75,13 +88,10 @@ def dlink(dest, src):
                     print(src_file + " is already a file in the src dir. We "
                                      "will not create a symlink.")
                     print(e)
-            # you could totally make this a root logger if you wanted some
-            # pointless noise otherwise let's spare our poor victims
-            #  else:
-            #      print("symlinking: " + dest_file + " from " + src_file)
 
 
 def main():
+    """Set up the rest of the module."""
     cwd = os.path.join(os.getcwd(), '')
     src = sys.argv[-1] if len(sys.argv) == 3 else cwd
 

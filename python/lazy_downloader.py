@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 # Maintainer: Faris Chugthai
-"""Automating the process of grabbing plain text files from the internet.
+""" Automating the process of grabbing plain text files from the internet.
 
-Usage::
+Usage:
     lazy_downloader url output_filename
 
 If filename already exists on the system it will NOT be overwritten,
 and the script will crash.
+
+TODO::
+    Can we check the MIME type and only import requests_html if we know we'll
+    need to?
 """
+
 import argparse
 import os
 import sys
@@ -31,16 +36,14 @@ def main():
 
 # could add in a check. if the file is over a certain size use res.iter_chunk()
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser("A helper script to automate downloading \
-                                     1 plain text file at a time.")
+    parser = argparse.ArgumentParser(prog='lazy_downloader', add_help=True,
+                                     allow_abbrev=True,
+                                     description='Download a plaintext file from the internet.')
+
     parser.add_argument("URL", help="The URL to download. Must be plaintext.")
 
-    # TODO: As this script currently stands, fname is required which is silly.
-    # Should change to -o, --output and make optional
-    # Will need to learn how to parse and tokenize the URL to get a reasonable
-    #guess for the filename though
-    parser.add_argument("fname", help="The name of the file to write to. \
-                         Must not exist already.")
+    # Will need to learn how to parse and tokenize the URL to get a reasonable guess for the filename though
+    parser.add_argument("-o", "--output", help="The name of the file to write to. Must not exist already.")
     args = parser.parse_args()
 
     # with xt permissions the script crashes so no point raising anything just bail

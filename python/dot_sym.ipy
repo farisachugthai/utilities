@@ -10,7 +10,7 @@ from . import sys_checks
 
 
 def get_dotfiles():
-    """ Move to a pre-designated directory for the dotfiles and git clone them."""
+    """Move to a pre-designated directory for the dotfiles and git clone them."""
     try:
         os.chdir(proj)
     # https://docs.python.org/3/library/exceptions.html#NotADirectoryError
@@ -18,7 +18,11 @@ def get_dotfiles():
         os.makedirs(proj)
         os.chdir(proj) or sys.exit("Couldn't create the necessary directory.")
 
-    os.system("git clone git@github.com:farisachugthai/dotfiles.git")
+    # so this lil block is the obvious downside to os.system. maybe try subprocess
+    # and if that does nothing then we're going for the git mod
+    ret = os.system("git clone git@github.com:farisachugthai/dotfiles.git")
+    if ret != 0:
+        print('Git clone failed. See err code: ' + str(ret))
 
 
 def dir_checker():
@@ -31,15 +35,9 @@ def dir_checker():
 
 def backup_prompt():
     res = input("Would you like to back up this file?")
-    answ = re.compile("^[Yy]*")
-    # TODO: Check how to do this part right.
-    if res = "y*":
+    matched = re.match("(Yy)+", res)
+    if matched:
         backup_file()
-# import it you've definitely written this before
-    elif res = "n*":
-        pass
-    else:
-        print("I'm sorry i don't understand.")
 
 
 def symlink_repo(file):
@@ -59,11 +57,11 @@ def symlink_repo(file):
             print("Sorry but a file to {0} already exists".format(dest))
             backup_prompt()
 
+
 def main():
-    '''
-    Clone dotfiles to a user's home directory and then symlink to the repo.
+    '''Clone dotfiles to a user's home directory and then symlink to the repo.
+
     Assumes Linux only because it has only been tested on Ubuntu and Termux.
-    Maintained by Faris Chugthai
     '''
 
     sys_checks()
@@ -78,9 +76,10 @@ def main():
     dir_checker()
 
     # symlink every file you can find
-    repo_files = !git ls-files
+    repo_files = !git ls-files  # noqa
     for file in repo_files:
         symlink_repo(file)
+
 
 if __name__ == '__main__':
     HOME = os.path.join(os.path.expanduser("~"), "")

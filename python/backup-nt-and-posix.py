@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
-# From:
-# http://pythonprogramming.language-tutorial.com/2012/10/fast-and-efficient-backup-script-that.html
+"""Backup a directory by appending the date and time and copying over.
 
+This script aims to be platform agnostic and in the long term will be used
+on Windows, Linux, Mac and Android systems.
+
+Original URL::
+    `<http://pythonprogramming.language-tutorial.com/2012/10/fast-and-efficient-backup-script-that.html>`
+
+Usage::
+    python3 backup-nt-and-posix.py /path/to/dir
+
+"""
 import os
 import os.path
 import subprocess
@@ -9,40 +18,42 @@ import time
 
 
 def backUpDir(path):
-    """
-    Creates a backup of a directory.
-    Uses the date and time as the name of the new file.
-    On success, returns a list consising of two values:
-        0: to signify the success
-        None: means no error occurred.
+    """Create a backup of a directory. Use the date and time as new name.
 
-    On error, return a list consisting of two values:
+    Returns:
+        None: means no error occurred.
+        0: to signify the success
         -1 : to signify the failure
         error string: the exact error string
-    """
 
-    if os.path.exists(path) is True:
+    """
+    if os.path.exists(path):
         # dir exists then backup old dir and create new
         backupDir = path + time.strftime('-%Y-%m-%d-%Hh%Mm%Ss')
         if os.name == "nt":
-            # NT Sysyem  - used the DOS Command 'move' to rename the folder
+            # TODO: Does nt encapsulate all windows computers? DOS? win32/win64?
+            # Am I thinking in the wrong language?
+            # NT System  - used the DOS Command 'move' to rename the folder
             cmd = subprocess.Popen(
-                ["mov", path, backupDir],
+                ["move", path, backupDir],
                 shell=True,
                 stdout=subprocess.PIPE,
                 stdin=subprocess.PIPE,
                 stderr=subprocess.PIPE)
         elif os.name == "posix":
-            # POSIX System - use, start_new_session=False, pass_fds=(), encoding=None, errors=None)
+            # POSIX System - use, start_new_session=False, pass_fds=(),
+            # encoding=None, errors=None)
             cmd = subprocess.Popen(
                 ["mv", path, backupDir],
                 shell=True,
                 stdout=subprocess.PIPE,
                 stdin=subprocess.PIPE,
                 stderr=subprocess.PIPE)
-            pass
         else:
-            # Not supported on other platforms
+            # Not supported on other platforms. // I mean is that true?
+            # What systems would we not be able to support? Should work perfectly
+            # On Macs and Androids. Without a device I can't confirm iphones but
+            # I see no reason why not. TODO:
             return [-1, "Not supported on %s platform" % (os.name)]
         (out, err) = cmd.communicate()
         if len(err) != 0:
@@ -51,6 +62,5 @@ def backUpDir(path):
             os.mkdir(path)
             return [0, None]
     else:
-        # create new dir
         os.mkdir(path)
         return [0, None]

@@ -1,13 +1,7 @@
-#!/bin/bash
-# Vim: set ff=unix:
-# Because shellcheck freaks out otherwise
-
-# TODO: First check that we have a Unix OS. Win 10 now has native bash for windows.
-# If unix, then put it in var/logs or something don't drop it in the home dir.
-# if ! [[ -d "$HOME/logs" ]]; then
-#     mkdir "$HOME/logs";
-#     echo "Creating directory for rsync logs.";
-# fi
+#!/usr/bin/env bash
+# set -euo pipefail
+# TODO: Honestly drop this script i keep forgetting rclone with cloud storage id so much easier
+# https://rclone.org/crypt/
 
 rsync -avz --recursive --update --preallocate --one-file-system --files-from="rsync.txt" \
     --human-readable --itemize-changes --log-file="$HOME/logs/rsync$(date)" --links

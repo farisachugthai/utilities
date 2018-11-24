@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Maintainer: Faris Chugthai
+"""Moves files from anywhere in the home directory to the dotfiles repo.
 
-import sys
-import shutil
-from pathlib import Path
+This is a script I've been using for the better part of a year, so while
+the docstring formatting isn't consistent and there are a couple odd sections,
+this script has served a very utilitiarian purpose.
+
+May refactor one day. But it continues to work.
+"""
 import os
-
-
-# Global variables
-home = Path.home()
-repo = Path.joinpath(home, 'projects', 'dotfiles', 'unix', '')
+from pathlib import Path
+import shutil
+import sys
 
 
 def sys_checks():
@@ -24,9 +25,7 @@ def sys_checks():
 
 
 def repo_dir_check(dest):
-    """
-    Checks that the directory is in the repository and make one otherwise.
-    """
+    """Checks that the directory is in the repository and make one otherwise."""
 
     if dest.is_dir() is not True:
         #  https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir
@@ -35,14 +34,14 @@ def repo_dir_check(dest):
 
 
 def backup_file(src):
-    """ Backs up file 'src' """
+    """Backs up file 'src' """
     # TODO: Look into pros/cons of copy/copy2/copyfile
     # TODO2: Should we do anything if src.bak already exists?
     shutil.copy(str(src), str(src) + ".bak")
 
 
 def main():
-    """
+    """Dispatch the remaining implementation of the module.
 
     Determine if a file name is in the current directory or absolute path.
     Then set up a relative path from $HOME. Use the root of the repo as the new
@@ -81,4 +80,6 @@ def main():
 
 
 if __name__ == '__main__':
+    home = Path.home()
+    repo = Path.joinpath(home, 'projects', 'dotfiles', 'unix', '')
     main()

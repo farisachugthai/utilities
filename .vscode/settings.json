@@ -1,4 +1,19 @@
+<<<<<<< HEAD
 {
     "python.pythonPath": "C:\\Users\\faris\\AppData\\Local\\conda\\conda\\envs\\ipy\\python.exe",
     "files.eol": "\n"
 }
+||||||| merged common ancestors
+=======
+<<<<<<< Updated upstream
+{
+    "python.pythonPath": "C:\\Users\\faris\\AppData\\Local\\conda\\conda\\envs\\ipy\\python.exe",
+    "files.eol": "\n"
+}
+||||||| merged common ancestors
+=======
+{
+    "python.pythonPath": "/home/faris/miniconda3/envs/neovim/bin/python"
+}
+>>>>>>> Stashed changes
+>>>>>>> laptop

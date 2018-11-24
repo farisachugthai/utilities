@@ -16,3 +16,5 @@ from .__about__ import (
 )
 
 from dlink import dlink
+
+import env

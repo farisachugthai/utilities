@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Symlink all of the files in one directory into another.
 
-This module is intended to be used in the same fashion as ln in a shell.
+Double check that this is a directive.
 
 .. code-example:: bash
 
@@ -19,12 +19,12 @@ Roadmap:
 
 Bugs:
 
-    Doesn't work if nested directories need to be made.
-    The original purpose of this was to replicate the Unix idiom::
+    Doesn't work if nested directories need to be traversed.
+    The original purpose of the module was to replicate the Unix idiom::
 
         ln -s dest/*
 
-    so this is arguably not a bug.
+    As a result, this behavior will not be considered a bug for the time being.
 """
 import os
 import sys
@@ -66,7 +66,8 @@ def dlink(dest, src):
                     print(e)
 
 
-if __name__ == '__main__':
+if name == '__main__':
+
     cwd = os.path.join(os.getcwd(), '')
 
     # If we're given 2 args, treat it with the same syntax as ln -s or os.symlink

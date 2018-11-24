@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 """Rewriting rclone.sh as a python module.
 
-Usage::
-
 .. code:: bash
 
     rclone.py [src] dst
@@ -12,17 +10,18 @@ Usage::
 
     rclone
 
-Roadmap:
-    - Set up a simple single use case backup.
-    - Add collections.ChainMap() to set precedence of backupdir.
-    - Add in multiple invocations of rclone and create args to reflect use cases.
-    - Expand argparse usage with `fromfile_prefix_chars` to emulate rsync's file input.
-
+The remaining roadmap.
 .. todo::
 
     - :param: args is used as a parameter to both ArgumentParser() and
       subprocess.run()
         - Switch the name for one of them as this'll get confusing quickly.
+    - Set up a simple single use case backup.
+    - Add collections.ChainMap() to set precedence of backupdir.
+    - Add in multiple invocations of rclone and create args to reflect use cases.
+    - Expand argparse usage with `fromfile_prefix_chars` to emulate rsync's file
+      input.
+
 """
 import argparse
 import os
@@ -72,7 +71,6 @@ def rclone_base_case(src, dst):
     This command assumes a use case and configures it rclone for it properly.
 
     .. todo::
-
         - rclone takes an argument for user-agent
 
     Parameters
@@ -103,43 +101,7 @@ if __name__ == "__main__":
     # a function
     home = os.path.expanduser("~")
 
-    # HACK
-    # Determine device is an Android from CPU arch. Set backups appropriately
-    if machine == 'aarch64':
-        dest = '/sdcard/backups'
-    elif machine == 'amd64':
-        dest = os.path.join(home, 'backups')
+    # Quite honestly most of everything below was garbage and needs to be
+    # rewritten ground up.
 
-    args = _parse_arguments()
-    args.parse_args()
-
-    # TODO: This gets outstandingly hard to follow from here and below.
-    src = args.src
-    dst = args.dst
-
-    if args.follows:
-        rclone_follow(dest, src=cwd)
-    rclone_follow(src, dest)
-
-    # No matter which one we pick, check it exists.
-    _dir_check(dst)
-    args = _parse_arguments()
-    args.parse_args()
-
-    if args.follows:
-        rclone_follow(src, dst)
-
-    else:
-        rclone_base_case(src, dst)
-    rclone_follow(src, dest)
-    # No matter which one we pick, check it exists.
-    _dir_check(dst)
-    args = _parse_arguments()
-    args.parse_args()
-
-    if args.follows:
-        rclone_follow(src, dst)
-
-    else:
-        rclone_base_case(src, dst)
-    rclone_follow(src, dest)
+    # Use :Glog if you want a reference of what was here.

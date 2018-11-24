@@ -4,8 +4,14 @@
 
 Now utilizes necessary libraries like glob.
 
-TODO::
+TODO:
     Argparse?
+    
+    .. note:
+        
+        I was just in ~/.config/nvim trying to symlink my dots from ~/projects/viconf/.config/nvim and running::
+
+            dlink2.py ~/projects/viconf/.config/nvim while in ~/.config/nvim did nothing at all.
 """
 import glob
 import os

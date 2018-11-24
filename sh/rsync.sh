@@ -1,5 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Maintainer: Faris Chugthai
 
+# set -euo pipefail
 # TODO: Honestly drop this script i keep forgetting rclone with cloud storage id so much easier
 # https://rclone.org/crypt/
 
@@ -18,7 +20,7 @@ rsync -avz --recursive --update --preallocate --one-file-system --files-from="rs
 
 # As far as links go you have 2 options
 # -l --links means symlinks are symlinks
-# -L or --copy-links means transform symlinks into the file they refer to 
+# -L or --copy-links means transform symlinks into the file they refer to
 
 # Preallocate to ensure that theres space on the EHD
 

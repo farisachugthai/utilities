@@ -1,37 +1,74 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Maintainer: Faris Chugthai
+"""Module to check a user is utilizing the proper version of python.
 
+Even outside of the 2 to 3 incompatibilities, the standard library
+introduces new modules often enough that it's useful to check.
+
+Utilized by importing as so.
+
+.. code-block::
+
+    # filename: must_be_three.py
+    from syschecks import py_gt
+
+    py_gt(3)
+
+.. code-block: shell
+
+    python2 must_be_three.py
+
+.. todo:
+
+    Uh actually execute the above because now I'm interested...
+
+Assumes:
+
+    All functions are imported as the module will immediately exit if directly
+    executed.
+"""
 import os
 import sys
 
 
-def py_gte(max_py_version):
+def py_gt(min_py_version):
+    """Check a user's python version is higher than some floor value.
+
+    For example, the :mod:`argparse` was only introduced in python3.2.
+
+    Everything utilizing it as a result needs to check that the right version
+    is setup.
+
+    :param min_py_version: The lowest version of python that can be used
+    :return: None
     """
-    Import this function and call it with the highest allowable version
-    of python the program accepts.
+    if sys.version_info < min_py_version:
+        sys.exit("Can not use python interpreter provided: "
+                + str(sys.version_info()))
+        sys.exit("The following version of python and newer are required: "
+                + str(min_py_version))
+
+
+def py_lt(max_py_version):
+    """Check a user's python version is lower than some ceiling value.
 
     If you'll crash on python3.4 but work on 3.3, call this func with 3.3.
 
-    params: max_py_version
-    args: tuple
+    :param max_py_version: The highest version of python that can be used
+    :type: int or float or tuple
+    :return: None
     """
+    # unsure if necessary
+    if type(max_py_version) not int or float or tuple:
+        tuple(max_py_version)
+
     if sys.version_info > max_py_version:
-        sys.exit("Can not use python interpreter above: " + max_py_version)
-
-
-def main():
-    """Checks that system requirements are met."""
-
-# Useful if you import pathlib, pandas etc
-    if sys.version_info < (3, 4):
-        sys.exit("Requires Python3.4 and up")
-
-    if os.uname()[0] not in ["Darwin", "Linux"]:
-        raise OSError("This script assumes a Unix operating system.")
-        sys.exit()
+        sys.exit("Can not use python interpreter provided: "
+                + str(sys.version_info()))
+        sys.exit("The following version of python and newer are required: "
+                + str(min_py_version))
 
 
 if __name__ == '__main__':
     print("Source this file don't run it directly!")
-    sys.exit(main())
+    sys.exit()

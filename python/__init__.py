@@ -3,6 +3,17 @@
 """This package is undergoing a thorough rewriting. Little is currently exported.
 
 As a seal of approval, I'll add modules in one by one.
+
+Dec 24, 2018:
+
+    Wait should you import stuff in the __init__.py file like this?
+    I feel like that should be reserved for an __all__.py type thing.
+
+    Yeah I'm taking that out.
+
+from dlink import dlink
+
+import env
 """
 from .__about__ import (
     __author__,
@@ -15,6 +26,7 @@ from .__about__ import (
     __package_name__,
 )
 
-from dlink import dlink
+import logging
+from logging import NullHandler
 
-import env
+logging.getLogger(__name__).addHandler(NullHandler())

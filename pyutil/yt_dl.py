@@ -5,19 +5,21 @@ Dec 24, 2018: Back after an extended hiatus from this script.
 
 .. todo::
 
-    Open up thr API a lot. Reduce instances of hard coded values.
-    Expand to playlists.
-    Get everything tested.
+    File saved goes %(artist) - %(title) - %(url key)
+
+    and those keys are long random strings which is annoying. How do we
+    properly parse the videos title and save the filename?
+
 """
 from __future__ import unicode_literals
 
-import os
 from sys import argv
 
 import youtube_dl
 
 
 class MyLogger(object):
+
     def debug(self, msg):
         pass
 
@@ -36,39 +38,18 @@ def my_hook(d):
 if __name__ == "__main__":
     from argparse import ArgumentParser
 
-    parser = ArgumentParser(
-        description='Wrapper for downloading YouTube videos.')
+    parser = ArgumentParser(description='Wrapper for downloading YouTube videos.')
 
-    general = parser.add_argument_group()
-
-    general.add_argument('-u', '--url_list', nargs='+', required=True, type=str)
-
-    mp3dir = os.path.join(
-        os.path.expanduser('~'), '', 'storage', '', 'music', '')
-
-    general.add_argument(
-        '-o',
-        '--output',
-        default=os.path.join(mp3dir, '', '%(title)s-%(artist)s.%(ext)s'))
-
-    postproc = parser.add_argument_group()
-
-    postproc.add_option(
-                    '-k', '--keep-video',
-                            action='store_true', dest='keepvideo', default=False,
-                                    help='Keep the video file on disk after the post-processing; the video is erased
-                                    by defa
+    parser.add_argument('-u', '--url_list', nargs='+', required=True, type=str)
 
     ydl_opts = {
-        'format':
-        'bestaudio/best',
+        'format': 'bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
             'preferredquality': '192',
-        }],
-        'logger':
-        MyLogger(),
+           }],
+        'logger': MyLogger(),
         'progress_hooks': [my_hook],
     }
 

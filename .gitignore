@@ -35,9 +35,6 @@ dist/
 build/
 *.egg-info/
 
-# PyCharm
-.idea/
-
 # KDE directory settings
 .directory
 

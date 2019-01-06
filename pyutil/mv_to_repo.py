@@ -8,35 +8,39 @@ this script has served a very utilitiarian purpose.
 
 May refactor one day. But it continues to work.
 """
-import os
 from pathlib import Path
 import shutil
 import sys
 
-
-def sys_checks():
-    """Checks that system requirements are met."""
-    if sys.version_info < (3, 4):
-        sys.exit("Requires Python3.4 and up")
-
-    if os.uname()[0] not in ["Darwin", "Linux"]:
-        raise OSError("This script assumes a Unix operating system.")
-        sys.exit()
+from sys_checks import py_gt
 
 
 def repo_dir_check(dest):
-    """Checks that the directory is in the repository and make one otherwise."""
+    """Checks that the file to back up already has a directory.
 
+    .. see also::
+
+        <https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir>
+        #To mimic behavior of mkdir -p, use flags
+        parents=True and exists_ok=True
+
+    :param dest: The path that the file is moved to in the repository.
+                 Doesn't need to be relative or absolute.
+    :returns: None
+    """
     if dest.is_dir() is not True:
-        #  https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir
-        # To mimic behavior of mkdir -p, use flags parents=True and exists_ok=True
         dest.mkdir(parents=True, exist_ok=True)
 
 
 def backup_file(src):
-    """Backs up file 'src' """
-    # TODO: Look into pros/cons of copy/copy2/copyfile
-    # TODO2: Should we do anything if src.bak already exists?
+    """Backs up file 'src'.
+
+    :param src: The file to move to the dotfiles repo.
+    :return: None
+
+    :TODO: Look into pros/cons of copy/copy2/copyfile
+    :TODO2: Should we do anything if src.bak already exists?
+    """
     shutil.copy(str(src), str(src) + ".bak")
 
 
@@ -58,7 +62,8 @@ def main():
         User runs the script from inside the folder of the file they want to
         move.
     """
-    sys_checks()
+    py_gt((3,4))
+
     inputted = sys.argv[1] if len(sys.argv) >= 2 else sys.exit("Takes at least one filename.")
     src = Path(inputted)
 

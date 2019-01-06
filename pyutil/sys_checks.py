@@ -27,7 +27,6 @@ Assumes:
     All functions are imported as the module will immediately exit if directly
     executed.
 """
-import os
 import sys
 
 
@@ -35,18 +34,21 @@ def py_gt(min_py_version):
     """Check a user's python version is higher than some floor value.
 
     For example, the :mod:`argparse` was only introduced in python3.2.
-
     Everything utilizing it as a result needs to check that the right version
     is setup.
+
+    .. todo::
+
+        Possibly change API so funcs return a value on success.
 
     :param min_py_version: The lowest version of python that can be used
     :return: None
     """
     if sys.version_info < min_py_version:
         sys.exit("Can not use python interpreter provided: "
-                + str(sys.version_info()))
+                 + str(sys.version_info()))
         sys.exit("The following version of python and newer are required: "
-                + str(min_py_version))
+                 + str(min_py_version))
 
 
 def py_lt(max_py_version):
@@ -59,14 +61,14 @@ def py_lt(max_py_version):
     :return: None
     """
     # unsure if necessary
-    if type(max_py_version) not int or float or tuple:
+    if not type(max_py_version) == int or float or tuple:
         tuple(max_py_version)
 
     if sys.version_info > max_py_version:
         sys.exit("Can not use python interpreter provided: "
-                + str(sys.version_info()))
+                 + str(sys.version_info()))
         sys.exit("The following version of python and newer are required: "
-                + str(min_py_version))
+                 + str(max_py_version))
 
 
 if __name__ == '__main__':

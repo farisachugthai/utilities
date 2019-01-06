@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """Symlink all of the files in one directory into another.
 
-Double check that this is a directive.
 Usage::
 
     `ln -s path/to/dest/* [path/to/src]`
@@ -15,7 +14,8 @@ import sys
 def dlink(dest, src):
     """Symlinks a directory from another one.
 
-    Utilize in an analogous way to Unix idiom `ln -s path/to/dir/*`
+    Utilize in an analogous way to Unix idiom::
+        `ln -s path/to/dir/*`
 
     :param dest: The directory where the original files are located.
     :param src: Optional argument indicating the directory where the symlinks
@@ -24,8 +24,7 @@ def dlink(dest, src):
     If the src argument isn't provided, it is assumed that the current working
     directory is the src dir.
 
-    Returns:
-        None
+    :return: None
     """
     for i in os.listdir(dest):
         # First let's set up the relative paths for our destination and src

@@ -80,3 +80,20 @@ if __name__ = '__main__':
     #  import doctest
     #  doctest.docmod()
     # then build up the module. Add arg to handle different string template.
+def fix_extension():
+    """Basically a batch renamer.
+    
+    .. usage::
+    
+        # This isn't very helpful but whatever. cd into intended dir
+        fix_extension()
+        
+    .. bugs::
+    
+        Fuck I didn't consider the case where there are 2 words separated by dots that we want to keep.
+    """
+    for i in os.listdir('.'):
+        parts = i.split(sep='.')
+        new = parts[0] + '.' + parts[1]
+        shutil.move(i, new)
+        

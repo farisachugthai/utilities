@@ -7,22 +7,29 @@ the docstring formatting isn't consistent and there are a couple odd sections,
 this script has served a very utilitiarian purpose.
 
 May refactor one day. But it continues to work.
+
+01-06-19
+
+Began refactoring. This would be a great module to autodoc since the 
+docstrings are nice and detailed but the functions don't return 
+anything and kinda can't.
+
+.. todo:: Consistent docstring formatting.
 """
 from pathlib import Path
 import shutil
 import sys
 
-from sys_checks import py_gt
+from sys_checks import py_gt_exit
 
 
 def repo_dir_check(dest):
     """Checks that the file to back up already has a directory.
 
-    .. see also::
-
-        <https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir>
-        #To mimic behavior of mkdir -p, use flags
-        parents=True and exists_ok=True
+    :URL: `<https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir>_`
+    
+    To mimic behavior of mkdir -p, use flags ``parents=True`` and
+    ``exists_ok=True``
 
     :param dest: The path that the file is moved to in the repository.
                  Doesn't need to be relative or absolute.
@@ -33,38 +40,42 @@ def repo_dir_check(dest):
 
 
 def backup_file(src):
-    """Backs up file 'src'.
+    """Backs up file ``src``.
 
     :param src: The file to move to the dotfiles repo.
     :return: None
 
-    :TODO: Look into pros/cons of copy/copy2/copyfile
-    :TODO2: Should we do anything if src.bak already exists?
+    .. todo:: Should we do anything if src.bak already exists?
     """
-    shutil.copy(str(src), str(src) + ".bak")
+    shutil.copy2(str(src), str(src) + ".bak")
 
 
-def main():
-    """Dispatch the remaining implementation of the module.
+def main(args):
+    """Move the file to the dotfiles repo and symlink it from where it was.
+    
+    The :func:`main` is where the dispatch for the remaining 
+    implementation of the module is found.
 
-    Determine if a file name is in the current directory or absolute path.
-    Then set up a relative path from $HOME. Use the root of the repo as the new
-    root and move the file there, all while creating directories and backups.
+    Determine if a file name is in the current directory or 
+    absolute path.
+    
+    Then set up a relative path from $HOME. Use the root of the 
+    repo as the new root and move the file there, all while 
+    creating directories and backups.
 
-    Runs checks, calls func to backup file 'src', moves it to the dotfiles
-    repo and symlinks it.
-    Moves file to a hardcoded path but will be generalized to take as an argument.
+    Runs checks, calls func to backup file ``src``, moves it to 
+    the dotfiles repo and symlinks it.
+    Moves file to a hardcoded path, *but soon*, this behavior
+    will be generalized to take an argument.
 
     Parameters:
         Name of file to backup, move and symlink.
 
     Assumes:
-        User runs the script from inside the folder of the file they want to
-        move.
+        User runs the script from inside the folder of the file
+        they want to move.
     """
-    py_gt((3,4))
-
-    inputted = sys.argv[1] if len(sys.argv) >= 2 else sys.exit("Takes at least one filename.")
+    inputted = args[1] if len(args) >= 2 else sys.exit("Takes at least one filename.")
     src = Path(inputted)
 
     if src.is_file() is not True:
@@ -72,8 +83,9 @@ def main():
 
     cwd: Path = Path.cwd()
     rel_path = Path.relative_to(cwd, home)
+
     # Setup the file we're moving to
-    dest = sys.argv[2] if len(sys.argv) == 3 else Path.joinpath(repo, rel_path)
+    dest = args[2] if len(args) == 3 else Path.joinpath(repo, rel_path)
 
     dest_file = Path.joinpath(dest, inputted)
     repo_dir_check(dest)
@@ -85,6 +97,8 @@ def main():
 
 
 if __name__ == '__main__':
+    py_gt_exit((3, 4))
     home = Path.home()
     repo = Path.joinpath(home, 'projects', 'dotfiles', 'unix', '')
-    main()
+    args = sys.argv[:]
+    main(args)

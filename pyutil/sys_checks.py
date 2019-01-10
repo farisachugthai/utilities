@@ -27,6 +27,7 @@ Assumes:
     All functions are imported as the module will immediately exit if directly
     executed.
 """
+from platform import system
 import sys
 
 
@@ -34,6 +35,7 @@ def py_gt(min_py_version):
     """Check a user's python version is higher than some floor value.
 
     For example, the :mod:`argparse` was only introduced in python3.2.
+
     Everything utilizing it as a result needs to check that the right version
     is setup.
 
@@ -61,16 +63,20 @@ def py_lt(max_py_version):
     :return: None
     """
     # unsure if necessary
-    if not type(max_py_version) == int or float or tuple:
+    if type(max_py_version) not in (int, tuple, float):
         tuple(max_py_version)
 
     if sys.version_info > max_py_version:
-        sys.exit("Can not use python interpreter provided: "
-                 + str(sys.version_info()))
+        print("Can not use python interpreter provided: "
+                + str(sys.version_info()))
         sys.exit("The following version of python and newer are required: "
-                 + str(max_py_version))
+                + str(max_py_version))
+
+
+def test_linux():
+    """Not a unit test but checks that the user is on Linux OS."""
+    assert system() == 'Linux'
 
 
 if __name__ == '__main__':
-    print("Source this file don't run it directly!")
-    sys.exit()
+    sys.exit("Source this file don't run it directly!")

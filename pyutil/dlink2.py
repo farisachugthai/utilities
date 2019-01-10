@@ -6,9 +6,9 @@ Now utilizes necessary libraries like glob.
 
 TODO:
     Argparse?
-    
+
     .. note:
-        
+
         I was just in ~/.config/nvim trying to symlink my dots from ~/projects/viconf/.config/nvim and running::
 
             dlink2.py ~/projects/viconf/.config/nvim while in ~/.config/nvim did nothing at all.
@@ -24,7 +24,7 @@ def main(i, j=os.getcwd):
         if os.path.isfile(i):
             try:
                 os.symlink(i, j)
-            except FileExistsError as e:
+            except FileExistsError:
                 pass
             #  except OSError as e:
             #      print(e)

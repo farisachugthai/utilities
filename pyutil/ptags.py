@@ -28,6 +28,7 @@ import sys
 
 
 def main():
+    """Handle CLAs and work with writing the tags file."""
     args = sys.argv[1:]
     for filename in args:
         treat_file(filename)
@@ -39,6 +40,7 @@ def main():
 
 
 def treat_file(filename):
+    """Find usable matches for tags file."""
     try:
         fp = open(filename, 'r')
     except Exception:

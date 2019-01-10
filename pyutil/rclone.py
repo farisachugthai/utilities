@@ -25,7 +25,6 @@ The remaining roadmap.
 """
 import argparse
 import os
-from platform import machine
 import subprocess
 import sys
 

@@ -12,7 +12,7 @@ import sys
 try:
     import requests
 except ImportError:
-    sys.exit()
+    from urllib.request import urlopen  # sigh
 
 
 def get_public_ip():

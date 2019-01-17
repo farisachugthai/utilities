@@ -1,13 +1,20 @@
 pyutil package
 ==============
 
+Subpackages
+-----------
+
+.. toctree::
+
+    pyutil.math
+
 Submodules
 ----------
 
-pyutil.backup\-nt\-and\-posix module
+pyutil.backup\_nt\_and\_posix module
 ------------------------------------
 
-.. automodule:: pyutil.backup-nt-and-posix
+.. automodule:: pyutil.backup_nt_and_posix
     :members:
     :undoc-members:
     :show-inheritance:
@@ -32,6 +39,14 @@ pyutil.conda\-export module
 ---------------------------
 
 .. automodule:: pyutil.conda-export
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyutil.dir3 module
+------------------
+
+.. automodule:: pyutil.dir3
     :members:
     :undoc-members:
     :show-inheritance:
@@ -168,6 +183,14 @@ pyutil.tmux\-nvim module
 ------------------------
 
 .. automodule:: pyutil.tmux-nvim
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyutil.wrap module
+------------------
+
+.. automodule:: pyutil.wrap
     :members:
     :undoc-members:
     :show-inheritance:

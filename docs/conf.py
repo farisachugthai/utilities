@@ -54,7 +54,11 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = [
+        '.rst',
+        '.md',
+        '.txt'
+]
 
 # The master toctree document.
 master_doc = 'index'
@@ -81,7 +85,7 @@ add_module_names = True
 # output. They are ignored by default.
 # show_authors = False
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'flask_theme_support.FlaskyStyle'
+pygments_style = 'monokai'
 
 # -- Options for HTML output -------------------------------------------------
 

@@ -6,9 +6,10 @@
 Welcome to utilities's documentation!
 =====================================
 
-# .. toctree::
-      
-# :maxdepth: 2
+.. toctree::
+   :maxdepth: 2
+
+   tutorial
 
 .. autosummary::
    :toctree: ./_build
@@ -39,6 +40,13 @@ Welcome to utilities's documentation!
    ../pyutil/yt_dl.py
    ../pyutil/zillow-api.py
 
+Currently this needs another directive.
+WARNING: invalid signature for automodule ('../pyutil')
+WARNING: don't know which module to import for autodocumenting '../pyutil' (try placing a "module" or "currentmodule" directive in the document, or giving an explicit module name)
+
+Oh I'm reading the sphinx docs on domains and realizing I probably need
+to handwrite a bunch and then reference those docs from here.
+
 .. automodule:: ../pyutil
    :members:
 
@@ -68,6 +76,7 @@ Welcome to utilities's documentation!
    ../pyutil/yt_dl.py
    ../pyutil/zillow-api.py
 
+sphinx.ext.autosectionlabel
 
 Indices and tables
 ==================

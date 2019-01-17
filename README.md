@@ -1,5 +1,7 @@
 # utilities
 
+- [Usage](#usage)
+
 This repository houses a number of functional scripts I utilize to
 administer multiple workstations.
 
@@ -9,7 +11,7 @@ have a script do this for me.' every now and then.
 That continued until I had enough scripts I was happy with to make a git repo
 for them!
 
-## Usage
+## <a id="usage"></a>Usage
 
 Modules can be used to:
 

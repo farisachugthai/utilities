@@ -2,26 +2,9 @@
 # -*- coding: utf-8 -*-
 """Symlink all of the files in one directory into another.
 
-This module is intended to be a python imitation of a classic Unix idiom.
+Usage::
 
-.. code-block:: bash
-
-    ln -s path/to/dest/* [path/to/src]
-
-Attributes
-----------
-dest : str (or Path-like object)
-    The destination directory that a symlink is supposed to point to
-
-src : str (or Path-like object)
-    The directory that the symlink is to be created in.
-
-See Also
--------
-:manpage:`ln(1)`
-The third form of ``ln`` in the manpages shows the proper form for :ref:`~dlink.py`.
-
-
+    `ln -s path/to/dest/* [path/to/src]`
 
 """
 import os
@@ -64,8 +47,6 @@ def dlink(dest, src):
                 elif os.path.isfile(src_file):
                     # If there's a file, complain.
                     print(e)
-                    # Or maybe I should...
-                    # raise IsAFileError
 
 
 if __name__ == '__main__':

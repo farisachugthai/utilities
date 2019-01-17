@@ -39,18 +39,14 @@ def py_gt(min_py_version):
     Everything utilizing it as a result needs to check that the right version
     is setup.
 
-    .. todo::
-
-        Possibly change API so funcs return a value on success.
-
     :param min_py_version: The lowest version of python that can be used
     :return: None
     """
     if sys.version_info < min_py_version:
-        sys.exit("Can not use python interpreter provided: "
-                 + str(sys.version_info()))
+        print("Can not use python interpreter provided: "
+                + str(sys.version_info()))
         sys.exit("The following version of python and newer are required: "
-                 + str(min_py_version))
+                + str(min_py_version))
 
 
 def py_lt(max_py_version):

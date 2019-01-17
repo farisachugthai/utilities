@@ -23,9 +23,9 @@ sys.path.insert(0, os.path.abspath('../pyutil/'))
 
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
-project = u'pyutil'
-copyright = u'2018, Faris A Chugthai'
-author = u'Faris A Chugthai'
+project = 'pyutil'
+copyright = '2018, Faris A Chugthai'
+author = 'Faris A Chugthai'
 
 # The short X.Y version
 version = ''
@@ -37,18 +37,15 @@ release = ''
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
-needs_sphinx = '1.8'
+# needs_sphinx = '1.0'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.autosectionlabel',
     'sphinx.ext.doctest',
-    'sphinx.ext.extlinks',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.napoleon',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
 ]
@@ -61,11 +58,11 @@ templates_path = ['_templates']
 
 # source_suffix = ['.rst', '.md']
 # or:
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.txt': 'restructuredtext',
-    '.md': 'markdown',
-}
+# source_suffix = {
+#     '.rst': 'restructuredtext',
+#     '.txt': 'restructuredtext',
+#     '.md': 'markdown',
+# }
 # As stated at:
 # :URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
 # However, the filetype mapping came about in 1.8 so make sure to add that
@@ -88,7 +85,7 @@ language = None
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = None
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -200,7 +197,7 @@ epub_exclude_files = ['search.html']
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/3': None}
+intersphinx_mapping = {'https://docs.python.org/': None}
 
 # -- Options for todo extension ----------------------------------------------
 

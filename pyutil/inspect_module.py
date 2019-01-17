@@ -11,7 +11,6 @@ However Python3.6 now has the builtin module 'pyclbr' so this entire script may 
 import sys
 import importlib
 
-
 def main(mod_name):
     """
     Credit for this function in particular goes entirely to:

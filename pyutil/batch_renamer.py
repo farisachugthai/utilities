@@ -10,56 +10,68 @@ Examples::
 
     >>> os.listdir("/path/to/dir")
     # ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
-    >>> python3 batch_renamer.py /path/to/dir
+    >>>  batch_renamer.py /path/to/dir
     #  img_1074.jpg --> Ashley_0.jpg
     #  img_1076.jpg --> Ashley_1.jpg
     #  img_1077.jpg --> Ashley_2.jpg
 
-TODO: Wait how much do module docstrings get indented?
-Both the text and the quotes.
+.. todo::
+
+    First things first ensure it works at all.
+    Then we should add some doctests maybe.
+
+    .. code block::
+
+        import doctest
+        doctest.docmod()
 """
-
-__author__ = 'Faris Chugthai'
-__copyright__ = 'copyright (c) 2018 Faris Chugthai'
-__email__ = 'farischugthai@gmail.com'
-__license__ = 'MIT'
-__url__ = 'https://github.com/farisachugthai'
-
 import argparse
 import os.path
+import shutil
 from string import Template
 import time
 import uuid
-
-# Wth is the order up top supposed to be? I might Ijust leave it but there are docs like
-# pep 8 that get SO specific everyones code starts looking the same.
 
 
 class BatchRename(Template):
     delimiter = '%'
 
 
-def tmpfiles():
-    """Here so that if you don't want to keep botching family photos, you can
-    test this module on emporary files.
+def fix_extension():
+    """Basically a batch renamer.
 
-    Utilize the tempfile module in order to simulate IO processes, and wrap i in a
-    context manager to ensure that all connections are closed when the script completes.
+    .. usage::
+
+        # This isn't very helpful but whatever. cd into intended dir
+        fix_extension()
+
+    .. bugs::
+
+        Fuck I didn't consider the case where there are 2 words separated by dots that we want to keep.
     """
+    for i in os.listdir('.'):
+        parts = i.split(sep='.')
+        new = parts[0] + '.' + parts[1]
+        shutil.move(i, new)
 
-# we could take a predetermined value for the range. shrugs.
-def batch_helper():
-    """Created to produce sparse and light files to accommodate testing the script."""
-for tmp0 in range(35):
-    tmp_file = open('capitalsquiz%s.txt' %(quizNum + 1), 'w') as f:
-        f.write('Arbitrary Header:\nDate'+datetime.datetime.now()
+
+def fix_multipart_filename():
+    """TODO. I mean a lot of todos. Gotta fix the function above a little.
+
+    Gotta clean whatever the hell is going on below up.
+    Then we gotta fix the module so that it properly handles names like
+    :ref:`os.path.rst.txt`.
+    """
+    pass
 
 
 def main(d):
-    """Renames a dir of files."""
-    # fmt = input('Enter rename style (%d-date %n-seqnum %f-format):  ')
-# Enter rename style (%d-date %n-seqnum %f-format):  Ashley_%n%f
+    """Renames a dir of files.
 
+    :param d: The directory to iterate over.
+    """
+    fmt = input('Enter rename style (%d-date %n-seqnum %f-format):  ')
+    # Enter rename style (%d-date %n-seqnum %f-format):  Ashley_%n%f
     t = BatchRename(fmt)
     date = time.strftime('%d%b%y')
     for i, filename in enumerate(os.listdir(d)):
@@ -68,32 +80,10 @@ def main(d):
         print('{0} --> {1}'.format(filename, newname))
 
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--directory", help="Directory containing only the files to be renamed.")
     args = parser.parse_args()
     print(args.directory)
     d = args.directory
     main(d)
-
-    # first things first ensure it works at all
-    #  import doctest
-    #  doctest.docmod()
-    # then build up the module. Add arg to handle different string template.
-def fix_extension():
-    """Basically a batch renamer.
-    
-    .. usage::
-    
-        # This isn't very helpful but whatever. cd into intended dir
-        fix_extension()
-        
-    .. bugs::
-    
-        Fuck I didn't consider the case where there are 2 words separated by dots that we want to keep.
-    """
-    for i in os.listdir('.'):
-        parts = i.split(sep='.')
-        new = parts[0] + '.' + parts[1]
-        shutil.move(i, new)
-        

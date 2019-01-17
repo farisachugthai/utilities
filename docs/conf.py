@@ -16,10 +16,14 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../pyutil/'))
 
+# soon...
+# sys.path.append(os.path.abspath('sphinxext'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'utilities'
+# Does Sphinx use this while building the docs? Appears so from
+# Sphinx.
+project = 'pyutil'
 copyright = '2018, Faris A Chugthai'
 author = 'Faris A Chugthai'
 
@@ -51,8 +55,18 @@ templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
-#
+
 # source_suffix = ['.rst', '.md']
+# or:
+# source_suffix = {
+#     '.rst': 'restructuredtext',
+#     '.txt': 'restructuredtext',
+#     '.md': 'markdown',
+# }
+# As stated at:
+# :URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
+# However, the filetype mapping came about in 1.8 so make sure to add that
+# ``needs-sphinx=version`` bit
 source_suffix = '.rst'
 
 # The master toctree document.

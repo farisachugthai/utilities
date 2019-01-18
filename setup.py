@@ -34,7 +34,7 @@ REQUIRED = [
 ]
 
 EXTRAS = {
-        'downloading packages': ['requests']
+        'dev': ['requests', 'sphinx', 'flake8']
 }
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -46,10 +46,11 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
 # Load the package's __version__.py module as a dictionary.
 about = {}
 if not VERSION:
-    with open(os.path.join(here, NAME, '__version__.py')) as f:
-        exec(f.read(), about)
-else:
-    about['__version__'] = VERSION
+    try:
+        with open(os.path.join(here, NAME, '__version__.py')) as f:
+            exec(f.read(), about)
+    except IOError:  # the file doesn't exist
+        about['__version__'] = None
 
 
 class UploadCommand(Command):

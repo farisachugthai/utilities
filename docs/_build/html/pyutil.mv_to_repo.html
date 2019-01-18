@@ -32,8 +32,50 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pyutil-mv-to-repo-module">
-<h1>pyutil.mv_to_repo module<a class="headerlink" href="#pyutil-mv-to-repo-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pyutil.mv_to_repo">
+<span id="pyutil-mv-to-repo-module"></span><h1>pyutil.mv_to_repo module<a class="headerlink" href="#module-pyutil.mv_to_repo" title="Permalink to this headline">¶</a></h1>
+<p>Moves files from anywhere in the home directory to the dotfiles repo.</p>
+<p>This is a script I’ve been using for the better part of a year, so while
+the docstring formatting isn’t consistent and there are a couple odd sections,
+this script has served a very utilitiarian purpose.</p>
+<p>May refactor one day. But it continues to work.</p>
+<dl class="function">
+<dt id="pyutil.mv_to_repo.backup_file">
+<code class="descclassname">pyutil.mv_to_repo.</code><code class="descname">backup_file</code><span class="sig-paren">(</span><em>src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/mv_to_repo.html#backup_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.mv_to_repo.backup_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Backs up file ‘src’</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.mv_to_repo.main">
+<code class="descclassname">pyutil.mv_to_repo.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/mv_to_repo.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.mv_to_repo.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispatch the remaining implementation of the module.</p>
+<p>Determine if a file name is in the current directory or absolute path.
+Then set up a relative path from $HOME. Use the root of the repo as the new
+root and move the file there, all while creating directories and backups.</p>
+<p>Runs checks, calls func to backup file ‘src’, moves it to the dotfiles
+repo and symlinks it.
+Moves file to a hardcoded path but will be generalized to take as an argument.</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd>Name of file to backup, move and symlink.</dd>
+<dt>Assumes:</dt>
+<dd>User runs the script from inside the folder of the file they want to
+move.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.mv_to_repo.repo_dir_check">
+<code class="descclassname">pyutil.mv_to_repo.</code><code class="descname">repo_dir_check</code><span class="sig-paren">(</span><em>dest</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/mv_to_repo.html#repo_dir_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.mv_to_repo.repo_dir_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that the directory is in the repository and make one otherwise.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.mv_to_repo.sys_checks">
+<code class="descclassname">pyutil.mv_to_repo.</code><code class="descname">sys_checks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/mv_to_repo.html#sys_checks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.mv_to_repo.sys_checks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that system requirements are met.</p>
+</dd></dl>
+
 </div>
 
 

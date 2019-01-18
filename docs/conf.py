@@ -43,6 +43,7 @@ release = ''
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.apidoc',
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
@@ -120,7 +121,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'utilitiesdoc'
+htmlhelp_basename = 'pyutil'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -147,7 +148,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'utilities.tex', 'utilities Documentation',
+    (master_doc, 'pyutil.tex', 'utilities Documentation',
      'Faris A Chugthai', 'manual'),
 ]
 
@@ -157,7 +158,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'utilities', 'utilities Documentation',
+    (master_doc, 'pyutil', 'Pyutil Documentation',
      [author], 1)
 ]
 
@@ -168,8 +169,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'utilities', 'utilities Documentation',
-     author, 'utilities', 'One line description of project.',
+    (master_doc, 'pyutil', 'Pyutil Documentation',
+     author, 'pyutil', 'One line description of project.',
      'Miscellaneous'),
 ]
 

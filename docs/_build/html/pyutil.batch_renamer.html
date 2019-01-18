@@ -32,8 +32,71 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pyutil-batch-renamer-module">
-<h1>pyutil.batch_renamer module<a class="headerlink" href="#pyutil-batch-renamer-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pyutil.batch_renamer">
+<span id="pyutil-batch-renamer-module"></span><h1>pyutil.batch_renamer module<a class="headerlink" href="#module-pyutil.batch_renamer" title="Permalink to this headline">¶</a></h1>
+<p>Renames a directory of files based on a template</p>
+<p>Largely argparse and doctest practice.
+From pydocs tutorials stdlib2. Reformatted.
+Still uses old style strings as a result.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;/path/to/dir&quot;</span><span class="p">)</span>
+<span class="go"># [&#39;img_1074.jpg&#39;, &#39;img_1076.jpg&#39;, &#39;img_1077.jpg&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span> <span class="n">batch_renamer</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="nb">dir</span>
+<span class="go">#  img_1074.jpg --&gt; Ashley_0.jpg</span>
+<span class="go">#  img_1076.jpg --&gt; Ashley_1.jpg</span>
+<span class="go">#  img_1077.jpg --&gt; Ashley_2.jpg</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">First things first ensure it works at all.
+Then we should add some doctests maybe.</p>
+</div>
+<dl class="class">
+<dt id="pyutil.batch_renamer.BatchRename">
+<em class="property">class </em><code class="descclassname">pyutil.batch_renamer.</code><code class="descname">BatchRename</code><span class="sig-paren">(</span><em>template</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#BatchRename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.BatchRename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/string.html#string.Template" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">string.Template</span></code></a></p>
+<dl class="attribute">
+<dt id="pyutil.batch_renamer.BatchRename.delimiter">
+<code class="descname">delimiter</code><em class="property"> = '%'</em><a class="headerlink" href="#pyutil.batch_renamer.BatchRename.delimiter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyutil.batch_renamer.BatchRename.pattern">
+<code class="descname">pattern</code><em class="property"> = re.compile('\n    %(?:\n      (?P&lt;escaped&gt;%) |   # Escape sequence of two delimiters\n      (?P&lt;named&gt;(?a:[_a-z][_a-z0-9]*))      |   # delimiter and a Python identifier\n      {(?P&lt;braced&gt;(?a:[_a-z][_a-z0-9]*)), re.IGNORECASE|re.VERBOSE)</em><a class="headerlink" href="#pyutil.batch_renamer.BatchRename.pattern" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.batch_renamer.fix_extension">
+<code class="descclassname">pyutil.batch_renamer.</code><code class="descname">fix_extension</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#fix_extension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.fix_extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basically a batch renamer.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.batch_renamer.fix_multipart_filename">
+<code class="descclassname">pyutil.batch_renamer.</code><code class="descname">fix_multipart_filename</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#fix_multipart_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.fix_multipart_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO. I mean a lot of todos. Gotta fix the function above a little.</p>
+<p>Gotta clean whatever the hell is going on below up.
+Then we gotta fix the module so that it properly handles names like
+<span class="xref std std-ref">os.path.rst.txt</span>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.batch_renamer.main">
+<code class="descclassname">pyutil.batch_renamer.</code><code class="descname">main</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renames a dir of files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> – The directory to iterate over.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 

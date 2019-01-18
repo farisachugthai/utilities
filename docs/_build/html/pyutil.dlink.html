@@ -32,8 +32,46 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pyutil-dlink-module">
-<h1>pyutil.dlink module<a class="headerlink" href="#pyutil-dlink-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pyutil.dlink">
+<span id="pyutil-dlink-module"></span><h1>pyutil.dlink module<a class="headerlink" href="#module-pyutil.dlink" title="Permalink to this headline">¶</a></h1>
+<p>Symlink all of the files in one directory into another.</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`ln -s path/to/dest/* [path/to/src]`
+</pre></div>
+</div>
+<dl class="function">
+<dt id="pyutil.dlink.dlink">
+<code class="descclassname">pyutil.dlink.</code><code class="descname">dlink</code><span class="sig-paren">(</span><em>dest</em>, <em>src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink.html#dlink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink.dlink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Symlinks a directory from another one.</p>
+<dl class="docutils">
+<dt>Utilize in an analogous way to Unix idiom::</dt>
+<dd><cite>ln -s path/to/dir/*</cite></dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dest</strong> – The directory where the original files are located.</li>
+<li><strong>src</strong> – Optional argument indicating the directory where the symlinks</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>are to be created.</p>
+<p>If the src argument isn’t provided, it is assumed that the current working
+directory is the src dir.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 

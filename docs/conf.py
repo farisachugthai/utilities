@@ -58,11 +58,11 @@ templates_path = ['_templates']
 
 # source_suffix = ['.rst', '.md']
 # or:
-# source_suffix = {
-#     '.rst': 'restructuredtext',
-#     '.txt': 'restructuredtext',
-#     '.md': 'markdown',
-# }
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'restructuredtext',
+    '.md': 'markdown',
+}
 # As stated at:
 # :URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
 # However, the filetype mapping came about in 1.8 so make sure to add that
@@ -85,7 +85,7 @@ language = None
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = None
+pygments_style = 'monokai'
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -197,9 +197,13 @@ epub_exclude_files = ['search.html']
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {'https://docs.python.org/3/': None}
 
 # -- Options for todo extension ----------------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+# Viewcode
+# ---------
+viewcode_import = True

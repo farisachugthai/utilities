@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyutil.backup_nt_and_posix &#8212; utilities  documentation</title>
+    <title>pyutil.backup_nt_and_posix &#8212; pyutil  documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -33,23 +33,26 @@
           <div class="body" role="main">
             
   <h1>Source code for pyutil.backup_nt_and_posix</h1><div class="highlight"><pre>
-<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="sd">&quot;&quot;&quot;Backup a directory by appending the date and time and copying over.</span>
+
+<span class="sd">Motivation</span>
+<span class="sd">============</span>
 
 <span class="sd">This script aims to be platform agnostic and in the long term will be used</span>
 <span class="sd">on Windows, Linux, Mac and Android systems.</span>
 
-<span class="sd">Original URL::</span>
-<span class="sd">    `&lt;http://pythonprogramming.language-tutorial.com/2012/10/fast-and-efficient-backup-script-that.html&gt;`</span>
+<span class="sd">Usage</span>
+<span class="sd">------</span>
 
-<span class="sd">Usage::</span>
-<span class="sd">    python3 backup-nt-and-posix.py /path/to/dir</span>
+<span class="sd">.. code::</span>
+
+<span class="sd">    python backup_nt_and_posix.py /path/to/dir</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">strftime</span>
 
 
 <div class="viewcode-block" id="backUpDir"><a class="viewcode-back" href="../../pyutil.backup_nt_and_posix.html#pyutil.backup_nt_and_posix.backUpDir">[docs]</a><span class="k">def</span> <span class="nf">backUpDir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
@@ -63,39 +66,39 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+
         <span class="c1"># dir exists then backup old dir and create new</span>
-        <span class="n">backupDir</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;-%Y-%m-</span><span class="si">%d</span><span class="s1">-%Hh%Mm%Ss&#39;</span><span class="p">)</span>
+        <span class="n">backup_dir</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;-%Y-%m-</span><span class="si">%d</span><span class="s1">-%Hh%Mm%Ss&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Windows Specific Implementation</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
-            <span class="c1"># TODO: Does nt encapsulate all windows computers? DOS? win32/win64?</span>
-            <span class="c1"># Am I thinking in the wrong language?</span>
-            <span class="c1"># NT System  - used the DOS Command &#39;move&#39; to rename the folder</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">&quot;move&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">backupDir</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">&quot;move&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">backup_dir</span><span class="p">],</span>
                 <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
                 <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
                 <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+
+        <span class="c1"># POSIX</span>
         <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;posix&quot;</span><span class="p">:</span>
-            <span class="c1"># POSIX System - use, start_new_session=False, pass_fds=(),</span>
-            <span class="c1"># encoding=None, errors=None)</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">&quot;mv&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">backupDir</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">&quot;mv&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">backup_dir</span><span class="p">],</span>
                 <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
                 <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
                 <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Not supported on other platforms. // I mean is that true?</span>
-            <span class="c1"># What systems would we not be able to support? Should work perfectly</span>
-            <span class="c1"># On Macs and Androids. Without a device I can&#39;t confirm iphones but</span>
-            <span class="c1"># I see no reason why not. TODO:</span>
             <span class="k">return</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Not supported on </span><span class="si">%s</span><span class="s2"> platform&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span>
+
         <span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+
     <span class="k">else</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span></div>
@@ -107,7 +110,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../index.html">utilities</a></h1>
+<h1 class="logo"><a href="../../index.html">pyutil</a></h1>
 
 
 
@@ -117,9 +120,6 @@
 
 
 <h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst - The pyutils tutorial</a></li>
-</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>

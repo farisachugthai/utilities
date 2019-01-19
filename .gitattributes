@@ -1,3 +1,4 @@
+<<<<<<< .merge_file_c09zeW
 *.py        diff=python
 
 *           text=auto
@@ -5,3 +6,7 @@
 *.png       binary
 *.doctree   binary
 *.pickle    binary
+||||||| .merge_file_0zZRgn
+=======
+*.py diff=python
+>>>>>>> .merge_file_Z2F7ru

@@ -1,3 +1,4 @@
+<<<<<<< .merge_file_AwRWlP
 #!/usr/bin/env python
 # Maintainer: Faris Chugthai
 """Simple module that handles the user's environment variables.
@@ -21,3 +22,20 @@ def env_ns():
 
 if __name__ == "__main__":
     to_console()
+||||||| .merge_file_IHSLRT
+=======
+#!/usr/bin/env python
+# Maintainer: Faris Chugthai
+"""Simple module that pretty prints the user's environment variables.
+
+This is actually implemented as an IPython magic but to make it easier
+to use in a typical Python REPL it's also implemented here.
+
+The if name == '__main__' is left off so that it can be run directly
+or sourced.
+"""
+import os
+import pprint
+
+pprint.pprint(sorted(os.environ.items()))
+>>>>>>> .merge_file_T1C1t5

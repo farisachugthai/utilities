@@ -1,12 +1,26 @@
 # utilities
 
+<<<<<<< .merge_file_tICH9A
 - [Usage](#usage)
+||||||| .merge_file_Qa1fH1
+This repository houses a number of functional scripts I utilize to administer multiple workstations.
+=======
+This repository houses a number of functional scripts I utilize to
+administer multiple workstations.
+>>>>>>> .merge_file_kPhVsS
 
+<<<<<<< .merge_file_tICH9A
 This repository houses a number of functional scripts I utilize to
 administer multiple workstations.
 
 Quite honestly, it basically started with me saying 'Hey it'd be nice to
 have a script do this for me.' every now and then.
+||||||| .merge_file_Qa1fH1
+Quite honestly, it basically started with me saying 'Hey it'd be nice to have a script do this for me.' every now and then.
+=======
+Quite honestly, it basically started with me saying 'Hey it'd be nice to
+have a script do this for me.' every now and then.
+>>>>>>> .merge_file_kPhVsS
 
 That continued until I had enough scripts I was happy with to make a git repo
 for them!

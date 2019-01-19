@@ -1,3 +1,4 @@
+<<<<<<< .merge_file_6bfWeK
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Give a one sentence summary in the imperative
@@ -40,3 +41,14 @@ def gcdRecur(a, b):
 if __name__ == "__main__":
     a, b = sys.argv[1:3]
     gcdRecur(a, b)
+||||||| .merge_file_CnzHcT
+=======
+def gcdRecur(a, b):
+    if b == 0:
+        return a
+    if b > a:
+        tmp = b
+        b = a
+        a = tmp
+    return gcdRecur(b, a % b)
+>>>>>>> .merge_file_PwL4vK

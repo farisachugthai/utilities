@@ -5,3 +5,6 @@ pyutil.find\_pics module
     :members:
     :undoc-members:
     :show-inheritance:
+
+
+.. autofunction:: pyutil.find_pics

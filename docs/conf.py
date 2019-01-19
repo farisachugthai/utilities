@@ -16,10 +16,14 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../pyutil/'))
 
+# soon...
+# sys.path.append(os.path.abspath('sphinxext'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'utilities'
+# Does Sphinx use this while building the docs? Appears so from
+# Sphinx.
+project = 'pyutil'
 copyright = '2018, Faris A Chugthai'
 author = 'Faris A Chugthai'
 
@@ -39,7 +43,7 @@ release = ''
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autosummary',
+    'sphinx.ext.apidoc',
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
@@ -52,13 +56,19 @@ templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
-#
+
 # source_suffix = ['.rst', '.md']
-source_suffix = [
-        '.rst',
-        '.md',
-        '.txt'
-]
+# or:
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'restructuredtext',
+    '.md': 'markdown',
+}
+# As stated at:
+# :URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
+# However, the filetype mapping came about in 1.8 so make sure to add that
+# ``needs-sphinx=version`` bit
+source_suffix = '.rst'
 
 # The master toctree document.
 master_doc = 'index'
@@ -73,19 +83,11 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '__pycache__', '.git']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-# All nabbed by Ken Reitz.
-# If true, '()' will be appended to :func: etc. cross-reference text.
-add_function_parentheses = False
-# If true, the current module name will be prepended to all description
-# unit titles (such as .. function::).
-add_module_names = True
-# If true, sectionauthor and moduleauthor directives will be shown in the
-# output. They are ignored by default.
-# show_authors = False
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'monokai'
+
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -119,7 +121,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'utilities'
+htmlhelp_basename = 'pyutil'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -146,7 +148,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'utilities.tex', 'utilities Documentation',
+    (master_doc, 'pyutil.tex', 'utilities Documentation',
      'Faris A Chugthai', 'manual'),
 ]
 
@@ -156,7 +158,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'utilities', 'utilities Documentation',
+    (master_doc, 'pyutil', 'Pyutil Documentation',
      [author], 1)
 ]
 
@@ -167,8 +169,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'utilities', 'utilities Documentation',
-     author, 'utilities', 'One line description of project.',
+    (master_doc, 'pyutil', 'Pyutil Documentation',
+     author, 'pyutil', 'One line description of project.',
      'Miscellaneous'),
 ]
 
@@ -196,9 +198,13 @@ epub_exclude_files = ['search.html']
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {'https://docs.python.org/3/': None}
 
 # -- Options for todo extension ----------------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+# Viewcode
+# ---------
+viewcode_import = True

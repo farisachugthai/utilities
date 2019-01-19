@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyutil.script_helper module &#8212; utilities  documentation</title>
+    <title>pyutil.script_helper module &#8212; pyutil  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -32,8 +32,86 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pyutil-script-helper-module">
-<h1>pyutil.script_helper module<a class="headerlink" href="#pyutil-script-helper-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pyutil.script_helper">
+<span id="pyutil-script-helper-module"></span><h1>pyutil.script_helper module<a class="headerlink" href="#module-pyutil.script_helper" title="Permalink to this headline">¶</a></h1>
+<p>Common utility functions used by various script execution tests</p>
+<p>e.g. test_cmd_line, test_cmd_line_script and test_runpy</p>
+<dl class="function">
+<dt id="pyutil.script_helper.assert_python_failure">
+<code class="descclassname">pyutil.script_helper.</code><code class="descname">assert_python_failure</code><span class="sig-paren">(</span><em>*args</em>, <em>**env_vars</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/script_helper.html#assert_python_failure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.script_helper.assert_python_failure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assert that running the interpreter with <cite>args</cite> and optional environment
+variables <cite>env_vars</cite> fails (rc != 0) and return a (return code, stdout,
+stderr) tuple.</p>
+<p>See assert_python_ok() for more options.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.script_helper.assert_python_ok">
+<code class="descclassname">pyutil.script_helper.</code><code class="descname">assert_python_ok</code><span class="sig-paren">(</span><em>*args</em>, <em>**env_vars</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/script_helper.html#assert_python_ok"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.script_helper.assert_python_ok" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assert that running the interpreter with <cite>args</cite> and optional environment
+variables <cite>env_vars</cite> succeeds (rc == 0) and return a (return code, stdout,
+stderr) tuple.</p>
+<p>If the __cleanenv keyword is set, env_vars is used as a fresh environment.</p>
+<p>Python is started in isolated mode (command line option -I),
+except if the __isolated keyword is set to False.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.script_helper.interpreter_requires_environment">
+<code class="descclassname">pyutil.script_helper.</code><code class="descname">interpreter_requires_environment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/script_helper.html#interpreter_requires_environment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.script_helper.interpreter_requires_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True based on sys.executable.</p>
+<p>If the interpreter requires environment variables in order to be
+able to run at all.</p>
+<p>This is designed to be used with &#64;unittest.skipIf() to annotate tests
+that need to use an assert_python*() function to launch an isolated
+mode (-I) or no environment mode (-E) sub-interpreter process.</p>
+<p>A normal build &amp; test does not run into this situation but it can happen
+when trying to run the standard library test suite from an interpreter that
+doesn’t have an obvious home with Python’s current home finding logic.</p>
+<p>Setting PYTHONHOME is one way to get most of the testsuite to run in that
+situation.  PYTHONPATH or PYTHONUSERSITE are other common environment
+variables that might impact whether or not the interpreter can start.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.script_helper.kill_python">
+<code class="descclassname">pyutil.script_helper.</code><code class="descname">kill_python</code><span class="sig-paren">(</span><em>p</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/script_helper.html#kill_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.script_helper.kill_python" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the given Popen process until completion and return stdout.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.script_helper.make_pkg">
+<code class="descclassname">pyutil.script_helper.</code><code class="descname">make_pkg</code><span class="sig-paren">(</span><em>pkg_dir</em>, <em>init_source=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/script_helper.html#make_pkg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.script_helper.make_pkg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyutil.script_helper.make_script">
+<code class="descclassname">pyutil.script_helper.</code><code class="descname">make_script</code><span class="sig-paren">(</span><em>script_dir</em>, <em>script_basename</em>, <em>source</em>, <em>omit_suffix=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/script_helper.html#make_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.script_helper.make_script" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyutil.script_helper.make_zip_pkg">
+<code class="descclassname">pyutil.script_helper.</code><code class="descname">make_zip_pkg</code><span class="sig-paren">(</span><em>zip_dir</em>, <em>zip_basename</em>, <em>pkg_name</em>, <em>script_basename</em>, <em>source</em>, <em>depth=1</em>, <em>compiled=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/script_helper.html#make_zip_pkg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.script_helper.make_zip_pkg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyutil.script_helper.make_zip_script">
+<code class="descclassname">pyutil.script_helper.</code><code class="descname">make_zip_script</code><span class="sig-paren">(</span><em>zip_dir</em>, <em>zip_basename</em>, <em>script_name</em>, <em>name_in_zip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/script_helper.html#make_zip_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.script_helper.make_zip_script" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyutil.script_helper.run_python_until_end">
+<code class="descclassname">pyutil.script_helper.</code><code class="descname">run_python_until_end</code><span class="sig-paren">(</span><em>*args</em>, <em>**env_vars</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/script_helper.html#run_python_until_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.script_helper.run_python_until_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyutil.script_helper.spawn_python">
+<code class="descclassname">pyutil.script_helper.</code><code class="descname">spawn_python</code><span class="sig-paren">(</span><em>*args</em>, <em>stdout=-1</em>, <em>stderr=-2</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/script_helper.html#spawn_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.script_helper.spawn_python" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a Python subprocess with the given arguments.</p>
+<p>kw is extra keyword args to pass to subprocess.Popen. Returns a Popen
+object.</p>
+</dd></dl>
+
 </div>
 
 
@@ -43,7 +121,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">utilities</a></h1>
+<h1 class="logo"><a href="index.html">pyutil</a></h1>
 
 
 
@@ -53,9 +131,6 @@
 
 
 <h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst - The pyutils tutorial</a></li>
-</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>

@@ -4,10 +4,22 @@ pyutil.math package
 Submodules
 ----------
 
-.. toctree::
+pyutil.math.gcd\_iter module
+----------------------------
 
-   pyutil.math.gcd_iter
-   pyutil.math.gcd_recur
+.. automodule:: pyutil.math.gcd_iter
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyutil.math.gcd\_recur module
+-----------------------------
+
+.. automodule:: pyutil.math.gcd_recur
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

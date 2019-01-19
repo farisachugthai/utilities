@@ -5,11 +5,11 @@
 
 # Prelimenary checks: {{{
 
-if [[ "$1" = "-h" || "--help" ]]; then
-  echo -e "Usage: 'bash tmux-scripting.sh session_name window_name' \n"
-  echo -e "Current tmux sessions: \n"
-  tmux ls
-  exit
+if [[ "$1 == -h" || "$1 == --help" ]]; then
+    echo -e "Usage: 'bash tmux-scripting.sh session_name window_name' \n"
+    echo -e "Current tmux sessions: \n"
+    tmux ls
+    exit
 fi
 
 
@@ -24,14 +24,11 @@ fi
 echo -e "If there are active sessions here are their names."
 tmux list-sessions | cut -d " " -f 1
 
-echo -e "Alright let's script."
-# }}}
-
 tmux start-server
 
-if $1 && $2 then
+if [[ -z $1 && $2 ]]; then
     tmux new-session -s $1 -n $2
-elif $1
+elif [[ -z $1 ]]; then
     tmux new-session -s $1
 else
     tmux new-session -s default -n ipython -d

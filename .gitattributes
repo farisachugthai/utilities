@@ -1,0 +1,7 @@
+*.py        diff=python
+
+*           text=auto
+
+*.png       binary
+*.doctree   binary
+*.pickle    binary

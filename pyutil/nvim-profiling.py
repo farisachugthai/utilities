@@ -24,21 +24,12 @@ def get_script_dir():
     return os.path.dirname(os.path.realpath(__file__))
 
 
-def check_xdg_env():
-    """Profiling results will be saved in $XDG_CONFIG_HOME if its been defined."""
-    if os.environ("$XDG_CONFIG_HOME"):
-        return True
-    else:
-        return False
-
-
 def check_profiling_dir():
     """Ensure a directory has been created for the results.
     Need to change now that we take xdg into account.
     """
     if os.path.isdir(os.path.join(dirname, 'profiling')) is False:
-            os.mkdir(os.path.join(dirname, 'profiling')
-
+        os.mkdir(os.path.join(dirname, 'profiling')
 
 
 def main():
@@ -47,11 +38,8 @@ def main():
 
     get_script_dir()
 
-    # TODO:
     # check_profiling_dir():
 
-    # Why aren't I setting more variables along the way? We have too many
-    # hard coded strings
     # results = os.path.join(dirname, 'profiling', now)
 
     # TODO: use subprocess to run

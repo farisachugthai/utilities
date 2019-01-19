@@ -44,7 +44,7 @@
 <li class="toctree-l3"><a class="reference internal" href="pyutil.math.gcd_recur.html">pyutil.math.gcd_recur module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pyutil.math.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.math.html#module-pyutil.math">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -82,8 +82,21 @@
 </ul>
 </div>
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyutil">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyutil" title="Permalink to this headline">¶</a></h2>
+<p>This package is undergoing a thorough rewriting. Little is currently exported.</p>
+<p>As a seal of approval, I’ll add modules in one by one.</p>
+<p>Dec 24, 2018:</p>
+<blockquote>
+<div><p>Wait should you import stuff in the __init__.py file like this?
+I feel like that should be reserved for an __all__.py type thing.</p>
+<p>Yeah I’m taking that out.</p>
+</div></blockquote>
+<p>from dlink import dlink</p>
+<p>import env</p>
+<p>2018-12-24 16:46:44-0500</p>
+<p>Took a few hours but don’t put imports in init. If you must put them in
+__main__.py so someone can go python -m mod</p>
 </div>
 </div>
 

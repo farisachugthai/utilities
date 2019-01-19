@@ -10,11 +10,9 @@ def iter_source_code(paths):
     Taken with almost no modifications from pyflakes.
     This would be a great function to call with os.listdir('root') output.
 
-    @param paths: A list of paths.  Directories will be recursed into and
-        any .py files found will be yielded.  Any non-directories will be
-        yielded as-is.
-
-        :param paths:
+    :param paths: A list of paths.  Directories will be recursed into and
+                  any .py files found will be yielded.  Any non-directories
+                  will be yielded as-is.
     """
     for path in paths:
         if os.path.isdir(path):

@@ -32,8 +32,67 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pyutil-dir-cleaner-module">
-<h1>pyutil.dir_cleaner module<a class="headerlink" href="#pyutil-dir-cleaner-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pyutil.dir_cleaner">
+<span id="pyutil-dir-cleaner-module"></span><h1>pyutil.dir_cleaner module<a class="headerlink" href="#module-pyutil.dir_cleaner" title="Permalink to this headline">¶</a></h1>
+<p>Beginning of script. Not finished.</p>
+<p>Run in $PREFIX/tmp.</p>
+<p>Can modify to accept user input and fall back to that dir.</p>
+<p>Implement once all the logic has panned out.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<ul class="last simple">
+<li>Write a second function that implemenents rm -r if <cite>du dir==0</cite></li>
+<li><dl class="first docutils">
+<dt>Failing that, specifically delete directories with only month old sockets</dt>
+<dd><ul class="first last">
+<li>$PREFIX/tmp/nvim-*</li>
+<li>$PREFIX/tmp/ssh-*</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<p>Dec 01, 2018:</p>
+<blockquote>
+<div>I was writing this like on termux like 4 days ago. Cleaned up
+~/python/tutorials/<a href="#id1"><span class="problematic" id="id2">fnmatch_</span></a>.py and realized it was the exact same thing.</div></blockquote>
+<dl class="function">
+<dt id="pyutil.dir_cleaner.clean">
+<code class="descclassname">pyutil.dir_cleaner.</code><code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all pyc files. Add input for filetype later.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filetype</strong> – File to iterately remove.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">NoneType</td>
+</tr>
+</tbody>
+</table>
+<p>Yeah i said returns.
+Use return instead of yield since the function call is gonna
+either require <code class="docutils literal notranslate"><span class="pre">list[clean()]</span></code> or a loop.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.dir_cleaner.dir_cleaner">
+<code class="descclassname">pyutil.dir_cleaner.</code><code class="descname">dir_cleaner</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#dir_cleaner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.dir_cleaner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield all directories before november.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.dir_cleaner.extract_dir">
+<code class="descclassname">pyutil.dir_cleaner.</code><code class="descname">extract_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#extract_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.extract_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Could be used in dir_cleaner. Yeah let’s do that.</p>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last"><em>sigh</em> alright so we need to add a check that the zip has a child dir in it.
+Extracted 3 zips rn and its all mixed together :(</p>
+</div>
+</dd></dl>
+
 </div>
 
 

@@ -32,8 +32,30 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pyutil-backup-nt-and-posix-module">
-<h1>pyutil.backup_nt_and_posix module<a class="headerlink" href="#pyutil-backup-nt-and-posix-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pyutil.backup_nt_and_posix">
+<span id="pyutil-backup-nt-and-posix-module"></span><h1>pyutil.backup_nt_and_posix module<a class="headerlink" href="#module-pyutil.backup_nt_and_posix" title="Permalink to this headline">¶</a></h1>
+<p>Backup a directory by appending the date and time and copying over.</p>
+<p>This script aims to be platform agnostic and in the long term will be used
+on Windows, Linux, Mac and Android systems.</p>
+<dl class="docutils">
+<dt>Original URL::</dt>
+<dd><cite>&lt;http://pythonprogramming.language-tutorial.com/2012/10/fast-and-efficient-backup-script-that.html&gt;</cite></dd>
+<dt>Usage::</dt>
+<dd>python3 backup-nt-and-posix.py /path/to/dir</dd>
+</dl>
+<dl class="function">
+<dt id="pyutil.backup_nt_and_posix.backUpDir">
+<code class="descclassname">pyutil.backup_nt_and_posix.</code><code class="descname">backUpDir</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#backUpDir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.backUpDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a backup of a directory. Use the date and time as new name.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>None: means no error occurred.
+0: to signify the success
+-1 : to signify the failure
+error string: the exact error string</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 

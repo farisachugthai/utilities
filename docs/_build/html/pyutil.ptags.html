@@ -32,8 +32,41 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pyutil-ptags-module">
-<h1>pyutil.ptags module<a class="headerlink" href="#pyutil-ptags-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pyutil.ptags">
+<span id="pyutil-ptags-module"></span><h1>pyutil.ptags module<a class="headerlink" href="#module-pyutil.ptags" title="Permalink to this headline">¶</a></h1>
+<p>Create a tags file for Python programs, usable with vi.</p>
+<dl class="docutils">
+<dt>Tagged are:</dt>
+<dd><ul class="first last simple">
+<li>functions (even inside other defs or classes)</li>
+<li>classes</li>
+<li>filenames</li>
+</ul>
+</dd>
+</dl>
+<p>Warns about files it cannot open.</p>
+<p>No warnings about duplicate tags.</p>
+<p>Snagged from the scripts dir in python3.6-examples.</p>
+<dl class="docutils">
+<dt>TODO::</dt>
+<dd><p class="first">Add docstrings.
+Use ipdb and step through while watching the tags var.
+Initially it was defined outside the ifmain loop.</p>
+<p class="last">I moved it, but without the global keyword I don’t get how any changes
+to tags in treat_file will propogate back to main.</p>
+</dd>
+</dl>
+<p>Otherwise add in pep257 compliant params. Try different styles and see what you like.</p>
+<dl class="function">
+<dt id="pyutil.ptags.main">
+<code class="descclassname">pyutil.ptags.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/ptags.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ptags.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyutil.ptags.treat_file">
+<code class="descclassname">pyutil.ptags.</code><code class="descname">treat_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/ptags.html#treat_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ptags.treat_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 

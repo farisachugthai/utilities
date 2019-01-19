@@ -34,6 +34,31 @@ def dir_cleaner(i):
                 pass  # more than likely dir not empty.
 
 
+def extract_dir():
+    """Could be used in dir_cleaner. Yeah let's do that.
+
+    .. todo::
+
+        *sigh* alright so we need to add a check that the zip has a child dir in it.
+        Extracted 3 zips rn and its all mixed together :(
+    """
+    for i in glob('*.zip'):
+        shutil.unpack_archive(i)
+        os.unlink(i)
+        return
+
+def clean():
+    """Removes all pyc files. Add input for filetype later.
+
+    :param filetype: File to iterately remove.
+    :returns: NoneType
+
+    Yeah i said returns.
+    Use return instead of yield since the function call is gonna
+    either require ``list[clean()]`` or a loop.
+    """
+    yield [ os.unlink(i) for i in glob('*.pyc') ]
+
 if __name__ == "__main__":
     try:
         tmp = os.environ.get('PREFIX') + '/tmp/'

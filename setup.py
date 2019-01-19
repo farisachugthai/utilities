@@ -116,6 +116,12 @@ setup(
         '': ['*.txt', '*.rst'],
     },
     license='MIT',
+
+    #  https://www.python.org/dev/peps/pep-0345/#platform-multiple-use
+    # A Platform specification describing an operating system supported by the
+    # distribution which is not listed in the "Operating System" Trove
+    # classifiers. See "Classifier" below.#
+    # Platform='Linux',
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers

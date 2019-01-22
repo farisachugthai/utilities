@@ -8,9 +8,14 @@ Welcome to utilities's documentation!
 
 .. toctree::
    :maxdepth: 2
+   :numbered:
    :glob:
+   :titlesonly:
 
-   ../pyutil/**
+
+   math.rst
+   ../pyutil/*.py
+   ../test/*.py
 
 Indices and tables
 ==================

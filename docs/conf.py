@@ -1,19 +1,38 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
-# Configuration file for the Sphinx documentation builder.
-#
-# This file does only contain a selection of the most common options. For a
-# full list see the documentation:
-# http://www.sphinx-doc.org/en/master/config
+"""Configuration file for the Sphinx documentation builder.
 
-# -- Path setup --------------------------------------------------------------
+This file does only contain a selection of the most common options. For a
+full list see the documentation:
+http://www.sphinx-doc.org/en/master/config
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
+-- Path setup --------------------------------------------------------------
+
+If extensions (or modules to document with autodoc) are in another directory,
+add these directories to sys.path here. If the directory is relative to the
+documentation root, use os.path.abspath to make it absolute, like shown here.
+
+.. code-block::
+
+    sys.path.insert(0, os.path.abspath('.'))
+
+As stated at:
+:URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
+
+However, the filetype mapping came about in 1.8 so make sure to add that
+``needs-sphinx=version`` bit
+
+"""
+import logging
 import os
 import sys
+
+
+logger = logging.getLogger(__name__)
+
+DOC_PATH = os.path.dirname(os.path.abspath(__file__))
+BUILD_PATH = os.path.join(DOC_PATH, 'build')
+
 sys.path.insert(0, os.path.abspath('../pyutil/'))
 
 # soon...
@@ -37,7 +56,7 @@ release = ''
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
-# needs_sphinx = '1.0'
+needs_sphinx = '1.8'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -64,11 +83,9 @@ source_suffix = {
     '.txt': 'restructuredtext',
     '.md': 'markdown',
 }
-# As stated at:
-# :URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
-# However, the filetype mapping came about in 1.8 so make sure to add that
-# ``needs-sphinx=version`` bit
-source_suffix = '.rst'
+
+# The encoding of source files.
+source_encoding = 'utf-8'
 
 # The master toctree document.
 master_doc = 'index'
@@ -79,6 +96,10 @@ master_doc = 'index'
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
 language = None
+
+# The reST default role (used for this markup: `text`) to use for all
+# documents.
+default_role = 'python'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.

@@ -55,7 +55,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if len(argv[:]) == 1:
+    if len(args) == 1:
         parser.print_help()
 
     url_list = args.url_list

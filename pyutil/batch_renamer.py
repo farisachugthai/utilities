@@ -30,15 +30,10 @@ import os.path
 import shutil
 from string import Template
 import time
-import uuid
-
-
-class BatchRename(Template):
-    delimiter = '%'
 
 
 def fix_extension():
-    """Basically a batch renamer.
+    """Rename files that have have the wrong filename extension.
 
     .. usage::
 
@@ -82,7 +77,10 @@ def main(d):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--directory", help="Directory containing only the files to be renamed.")
+    parser.add_argument(
+        "-d",
+        "--directory",
+        help="Directory containing only the files to be renamed.")
     args = parser.parse_args()
     print(args.directory)
     d = args.directory

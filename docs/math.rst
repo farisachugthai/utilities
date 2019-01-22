@@ -1,0 +1,16 @@
+.. _math.rst:
+
+:mod:`math`
+===========
+
+These are a few modules created in order to practice using computational
+analysis to solve problems.
+
+.. toctree::
+    :maxdepth: 2
+    :numbered:
+    :titlesonly:
+    :glob:
+    :hidden:
+
+    ../pyutil/math/*.py

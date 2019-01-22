@@ -2,6 +2,7 @@
 
 # Local files
 *.local
+*.patch
 
 # Python specific
 # mypy

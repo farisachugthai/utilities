@@ -39,7 +39,6 @@ EXTRAS = {
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
@@ -54,14 +53,14 @@ if not VERSION:
 
 
 class UploadCommand(Command):
-    """Support setup.py upload."""
+    """Support :ref:`setup.py` upload."""
 
     description = 'Build and publish the package.'
     user_options = []
 
     @staticmethod
     def status(s):
-        """Prints things in bold."""
+        """Prints things in bold using ANSI escape sequences."""
         print('\033[1m{0}\033[0m'.format(s))
 
     def initialize_options(self):
@@ -80,12 +79,12 @@ class UploadCommand(Command):
         self.status('Building Source and Wheel (universal) distribution…')
         os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
 
-        self.status('Uploading the package to PyPI via Twine…')
-        os.system('twine upload dist/*')
+        # self.status('Uploading the package to PyPI via Twine…')
+        # os.system('twine upload dist/*')
 
-        self.status('Pushing git tags…')
-        os.system('git tag v{0}'.format(about['__version__']))
-        os.system('git push --tags')
+        # self.status('Pushing git tags…')
+        # os.system('git tag v{0}'.format(about['__version__']))
+        # os.system('git push --tags')
 
         sys.exit()
 

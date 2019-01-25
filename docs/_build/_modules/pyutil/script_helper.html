@@ -56,7 +56,7 @@
 <span class="n">__cached_interp_requires_environment</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<div class="viewcode-block" id="interpreter_requires_environment"><a class="viewcode-back" href="../../pyutil.script_helper.html#pyutil.script_helper.interpreter_requires_environment">[docs]</a><span class="k">def</span> <span class="nf">interpreter_requires_environment</span><span class="p">():</span>
+<div class="viewcode-block" id="interpreter_requires_environment"><a class="viewcode-back" href="../../pyutil.html#pyutil.script_helper.interpreter_requires_environment">[docs]</a><span class="k">def</span> <span class="nf">interpreter_requires_environment</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Returns True based on sys.executable.</span>
 
 <span class="sd">    If the interpreter requires environment variables in order to be</span>
@@ -126,7 +126,7 @@
 
 
 <span class="c1"># Executing the interpreter in a subprocess</span>
-<div class="viewcode-block" id="run_python_until_end"><a class="viewcode-back" href="../../pyutil.script_helper.html#pyutil.script_helper.run_python_until_end">[docs]</a><span class="k">def</span> <span class="nf">run_python_until_end</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">):</span>
+<div class="viewcode-block" id="run_python_until_end"><a class="viewcode-back" href="../../pyutil.html#pyutil.script_helper.run_python_until_end">[docs]</a><span class="k">def</span> <span class="nf">run_python_until_end</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">):</span>
     <span class="n">env_required</span> <span class="o">=</span> <span class="n">interpreter_requires_environment</span><span class="p">()</span>
     <span class="n">cwd</span> <span class="o">=</span> <span class="n">env_vars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;__cwd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="s1">&#39;__isolated&#39;</span> <span class="ow">in</span> <span class="n">env_vars</span><span class="p">:</span>
@@ -186,7 +186,7 @@
     <span class="k">return</span> <span class="n">res</span>
 
 
-<div class="viewcode-block" id="assert_python_ok"><a class="viewcode-back" href="../../pyutil.script_helper.html#pyutil.script_helper.assert_python_ok">[docs]</a><span class="k">def</span> <span class="nf">assert_python_ok</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">):</span>
+<div class="viewcode-block" id="assert_python_ok"><a class="viewcode-back" href="../../pyutil.html#pyutil.script_helper.assert_python_ok">[docs]</a><span class="k">def</span> <span class="nf">assert_python_ok</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Assert that running the interpreter with `args` and optional environment</span>
 <span class="sd">    variables `env_vars` succeeds (rc == 0) and return a (return code, stdout,</span>
@@ -200,7 +200,7 @@
     <span class="k">return</span> <span class="n">_assert_python</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="assert_python_failure"><a class="viewcode-back" href="../../pyutil.script_helper.html#pyutil.script_helper.assert_python_failure">[docs]</a><span class="k">def</span> <span class="nf">assert_python_failure</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">):</span>
+<div class="viewcode-block" id="assert_python_failure"><a class="viewcode-back" href="../../pyutil.html#pyutil.script_helper.assert_python_failure">[docs]</a><span class="k">def</span> <span class="nf">assert_python_failure</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Assert that running the interpreter with `args` and optional environment</span>
 <span class="sd">    variables `env_vars` fails (rc != 0) and return a (return code, stdout,</span>
@@ -211,7 +211,7 @@
     <span class="k">return</span> <span class="n">_assert_python</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="spawn_python"><a class="viewcode-back" href="../../pyutil.script_helper.html#pyutil.script_helper.spawn_python">[docs]</a><span class="k">def</span> <span class="nf">spawn_python</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+<div class="viewcode-block" id="spawn_python"><a class="viewcode-back" href="../../pyutil.html#pyutil.script_helper.spawn_python">[docs]</a><span class="k">def</span> <span class="nf">spawn_python</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Run a Python subprocess with the given arguments.</span>
 
 <span class="sd">    kw is extra keyword args to pass to subprocess.Popen. Returns a Popen</span>
@@ -234,7 +234,7 @@
                             <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="kill_python"><a class="viewcode-back" href="../../pyutil.script_helper.html#pyutil.script_helper.kill_python">[docs]</a><span class="k">def</span> <span class="nf">kill_python</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<div class="viewcode-block" id="kill_python"><a class="viewcode-back" href="../../pyutil.html#pyutil.script_helper.kill_python">[docs]</a><span class="k">def</span> <span class="nf">kill_python</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Run the given Popen process until completion and return stdout.&quot;&quot;&quot;</span>
     <span class="n">p</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -246,7 +246,7 @@
     <span class="k">return</span> <span class="n">data</span></div>
 
 
-<div class="viewcode-block" id="make_script"><a class="viewcode-back" href="../../pyutil.script_helper.html#pyutil.script_helper.make_script">[docs]</a><span class="k">def</span> <span class="nf">make_script</span><span class="p">(</span><span class="n">script_dir</span><span class="p">,</span> <span class="n">script_basename</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">omit_suffix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="make_script"><a class="viewcode-back" href="../../pyutil.html#pyutil.script_helper.make_script">[docs]</a><span class="k">def</span> <span class="nf">make_script</span><span class="p">(</span><span class="n">script_dir</span><span class="p">,</span> <span class="n">script_basename</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">omit_suffix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">script_filename</span> <span class="o">=</span> <span class="n">script_basename</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">omit_suffix</span><span class="p">:</span>
         <span class="n">script_filename</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s1">&#39;py&#39;</span>
@@ -259,7 +259,7 @@
     <span class="k">return</span> <span class="n">script_name</span></div>
 
 
-<div class="viewcode-block" id="make_zip_script"><a class="viewcode-back" href="../../pyutil.script_helper.html#pyutil.script_helper.make_zip_script">[docs]</a><span class="k">def</span> <span class="nf">make_zip_script</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="n">zip_basename</span><span class="p">,</span> <span class="n">script_name</span><span class="p">,</span> <span class="n">name_in_zip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="make_zip_script"><a class="viewcode-back" href="../../pyutil.html#pyutil.script_helper.make_zip_script">[docs]</a><span class="k">def</span> <span class="nf">make_zip_script</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="n">zip_basename</span><span class="p">,</span> <span class="n">script_name</span><span class="p">,</span> <span class="n">name_in_zip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">zip_filename</span> <span class="o">=</span> <span class="n">zip_basename</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="o">+</span><span class="s1">&#39;zip&#39;</span>
     <span class="n">zip_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="n">zip_filename</span><span class="p">)</span>
     <span class="n">zip_file</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
@@ -281,12 +281,12 @@
     <span class="k">return</span> <span class="n">zip_name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">zip_name</span><span class="p">,</span> <span class="n">name_in_zip</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="make_pkg"><a class="viewcode-back" href="../../pyutil.script_helper.html#pyutil.script_helper.make_pkg">[docs]</a><span class="k">def</span> <span class="nf">make_pkg</span><span class="p">(</span><span class="n">pkg_dir</span><span class="p">,</span> <span class="n">init_source</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="make_pkg"><a class="viewcode-back" href="../../pyutil.html#pyutil.script_helper.make_pkg">[docs]</a><span class="k">def</span> <span class="nf">make_pkg</span><span class="p">(</span><span class="n">pkg_dir</span><span class="p">,</span> <span class="n">init_source</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">pkg_dir</span><span class="p">)</span>
     <span class="n">make_script</span><span class="p">(</span><span class="n">pkg_dir</span><span class="p">,</span> <span class="s1">&#39;__init__&#39;</span><span class="p">,</span> <span class="n">init_source</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="make_zip_pkg"><a class="viewcode-back" href="../../pyutil.script_helper.html#pyutil.script_helper.make_zip_pkg">[docs]</a><span class="k">def</span> <span class="nf">make_zip_pkg</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="n">zip_basename</span><span class="p">,</span> <span class="n">pkg_name</span><span class="p">,</span> <span class="n">script_basename</span><span class="p">,</span>
+<div class="viewcode-block" id="make_zip_pkg"><a class="viewcode-back" href="../../pyutil.html#pyutil.script_helper.make_zip_pkg">[docs]</a><span class="k">def</span> <span class="nf">make_zip_pkg</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="n">zip_basename</span><span class="p">,</span> <span class="n">pkg_name</span><span class="p">,</span> <span class="n">script_basename</span><span class="p">,</span>
                  <span class="n">source</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">compiled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">unlink</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">init_name</span> <span class="o">=</span> <span class="n">make_script</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="s1">&#39;__init__&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -334,6 +334,34 @@
 
 
 <h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.backup_nt_and_posix.html">pyutil.backup_nt_and_posix module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.batch_renamer.html">pyutil.batch_renamer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.check_IP.html">pyutil.check_IP module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.conda-export.html">pyutil.conda-export module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.dir3.html">pyutil.dir3 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.dir_cleaner.html">pyutil.dir_cleaner module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.dlink.html">pyutil.dlink module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.dlink2.html">pyutil.dlink2 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.env.html">pyutil.env module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.find_pics.html">pyutil.find_pics module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.inspect_module.html">pyutil.inspect_module module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.itersrc.html">pyutil.itersrc module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.lazy_downloader.html">pyutil.lazy_downloader module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.linktree.html">pyutil.linktree module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.math.html">pyutil.math package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.mv_to_repo.html">pyutil.mv_to_repo module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.nvim-profiling.html">pyutil.nvim-profiling module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.ptags.html">pyutil.ptags module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.rclone.html">pyutil.rclone module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.script_helper.html">pyutil.script_helper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.strip_space.html">pyutil.strip_space module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.sys_checks.html">pyutil.sys_checks module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.tmux-nvim.html">pyutil.tmux-nvim module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.yes_no_question.html">pyutil.yes_no_question module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.yt_dl.html">pyutil.yt_dl module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.zillow-api.html">pyutil.zillow-api module</a></li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>

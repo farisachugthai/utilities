@@ -53,19 +53,19 @@
 <span class="kn">import</span> <span class="nn">youtube_dl</span>
 
 
-<div class="viewcode-block" id="MyLogger"><a class="viewcode-back" href="../../pyutil.yt_dl.html#pyutil.yt_dl.MyLogger">[docs]</a><span class="k">class</span> <span class="nc">MyLogger</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="MyLogger"><a class="viewcode-back" href="../../pyutil.html#pyutil.yt_dl.MyLogger">[docs]</a><span class="k">class</span> <span class="nc">MyLogger</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-<div class="viewcode-block" id="MyLogger.debug"><a class="viewcode-back" href="../../pyutil.yt_dl.html#pyutil.yt_dl.MyLogger.debug">[docs]</a>    <span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<div class="viewcode-block" id="MyLogger.debug"><a class="viewcode-back" href="../../pyutil.html#pyutil.yt_dl.MyLogger.debug">[docs]</a>    <span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="MyLogger.warning"><a class="viewcode-back" href="../../pyutil.yt_dl.html#pyutil.yt_dl.MyLogger.warning">[docs]</a>    <span class="k">def</span> <span class="nf">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<div class="viewcode-block" id="MyLogger.warning"><a class="viewcode-back" href="../../pyutil.html#pyutil.yt_dl.MyLogger.warning">[docs]</a>    <span class="k">def</span> <span class="nf">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="MyLogger.error"><a class="viewcode-back" href="../../pyutil.yt_dl.html#pyutil.yt_dl.MyLogger.error">[docs]</a>    <span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<div class="viewcode-block" id="MyLogger.error"><a class="viewcode-back" href="../../pyutil.html#pyutil.yt_dl.MyLogger.error">[docs]</a>    <span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="my_hook"><a class="viewcode-back" href="../../pyutil.yt_dl.html#pyutil.yt_dl.my_hook">[docs]</a><span class="k">def</span> <span class="nf">my_hook</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+<div class="viewcode-block" id="my_hook"><a class="viewcode-back" href="../../pyutil.html#pyutil.yt_dl.my_hook">[docs]</a><span class="k">def</span> <span class="nf">my_hook</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;finished&#39;</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done downloading, now converting ...&#39;</span><span class="p">)</span></div>
 
@@ -83,7 +83,7 @@
             <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;FFmpegExtractAudio&#39;</span><span class="p">,</span>
             <span class="s1">&#39;preferredcodec&#39;</span><span class="p">:</span> <span class="s1">&#39;mp3&#39;</span><span class="p">,</span>
             <span class="s1">&#39;preferredquality&#39;</span><span class="p">:</span> <span class="s1">&#39;192&#39;</span><span class="p">,</span>
-           <span class="p">}],</span>
+        <span class="p">}],</span>
         <span class="s1">&#39;logger&#39;</span><span class="p">:</span> <span class="n">MyLogger</span><span class="p">(),</span>
         <span class="s1">&#39;progress_hooks&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">my_hook</span><span class="p">],</span>
     <span class="p">}</span>
@@ -115,6 +115,34 @@
 
 
 <h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.backup_nt_and_posix.html">pyutil.backup_nt_and_posix module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.batch_renamer.html">pyutil.batch_renamer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.check_IP.html">pyutil.check_IP module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.conda-export.html">pyutil.conda-export module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.dir3.html">pyutil.dir3 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.dir_cleaner.html">pyutil.dir_cleaner module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.dlink.html">pyutil.dlink module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.dlink2.html">pyutil.dlink2 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.env.html">pyutil.env module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.find_pics.html">pyutil.find_pics module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.inspect_module.html">pyutil.inspect_module module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.itersrc.html">pyutil.itersrc module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.lazy_downloader.html">pyutil.lazy_downloader module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.linktree.html">pyutil.linktree module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.math.html">pyutil.math package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.mv_to_repo.html">pyutil.mv_to_repo module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.nvim-profiling.html">pyutil.nvim-profiling module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.ptags.html">pyutil.ptags module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.rclone.html">pyutil.rclone module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.script_helper.html">pyutil.script_helper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.strip_space.html">pyutil.strip_space module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.sys_checks.html">pyutil.sys_checks module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.tmux-nvim.html">pyutil.tmux-nvim module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.yes_no_question.html">pyutil.yes_no_question module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.yt_dl.html">pyutil.yt_dl module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyutil.zillow-api.html">pyutil.zillow-api module</a></li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>

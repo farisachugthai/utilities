@@ -35,11 +35,16 @@
   <h1>Source code for pyutil.yes_no_question</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot; Mod that shows an easy, consistent way to handle user input.&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Mod that shows an easy, consistent way to handle user input.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 
 
 <div class="viewcode-block" id="yes_no_question"><a class="viewcode-back" href="../../pyutil.html#pyutil.yes_no_question.yes_no_question">[docs]</a><span class="k">def</span> <span class="nf">yes_no_question</span><span class="p">(</span><span class="n">question</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Continuing prompt the user until valid input is provided.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Prompt a user until they respond with an appropriate answer.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ---------</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; [y/n] &quot;</span><span class="p">)</span>
@@ -53,8 +58,7 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Well I&#39;ve got to admit this is embarassing. I thought you&#39;d import&quot;</span>
-          <span class="s2">&quot;me!&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">yes_no_question</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[:]))</span>
 </pre></div>
 
           </div>

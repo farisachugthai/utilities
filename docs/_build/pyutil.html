@@ -58,25 +58,31 @@
 <h3>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h3>
 <p>This script aims to be platform agnostic and in the long term will be used
 on Windows, Linux, Mac and Android systems.</p>
+</div>
 <div class="section" id="usage">
-<h4>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h4>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">backup_nt_and_posix</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="nb">dir</span>
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python backup_nt_and_posix.py /path/to/dir
 </pre></div>
 </div>
 <dl class="function">
-<dt id="pyutil.backup_nt_and_posix.backUpDir">
-<code class="descclassname">pyutil.backup_nt_and_posix.</code><code class="descname">backUpDir</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#backUpDir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.backUpDir" title="Permalink to this definition">¶</a></dt>
+<dt id="pyutil.backup_nt_and_posix.backup_directory">
+<code class="descclassname">pyutil.backup_nt_and_posix.</code><code class="descname">backup_directory</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#backup_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.backup_directory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a backup of a directory. Use the date and time as new name.</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>None: means no error occurred.
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">means no error occurred.
 0: to signify the success
 -1 : to signify the failure
-error string: the exact error string</dd>
-</dl>
+error string: the exact error string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-</div>
 </div>
 </div>
 <div class="section" id="module-pyutil.batch_renamer">
@@ -99,26 +105,10 @@ Still uses old style strings as a result.</p>
 <p class="last">First things first ensure it works at all.
 Then we should add some doctests maybe.</p>
 </div>
-<dl class="class">
-<dt id="pyutil.batch_renamer.BatchRename">
-<em class="property">class </em><code class="descclassname">pyutil.batch_renamer.</code><code class="descname">BatchRename</code><span class="sig-paren">(</span><em>template</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#BatchRename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.BatchRename" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/string.html#string.Template" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">string.Template</span></code></a></p>
-<dl class="attribute">
-<dt id="pyutil.batch_renamer.BatchRename.delimiter">
-<code class="descname">delimiter</code><em class="property"> = '%'</em><a class="headerlink" href="#pyutil.batch_renamer.BatchRename.delimiter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="pyutil.batch_renamer.BatchRename.pattern">
-<code class="descname">pattern</code><em class="property"> = re.compile('\n    %(?:\n      (?P&lt;escaped&gt;%) |   # Escape sequence of two delimiters\n      (?P&lt;named&gt;(?a:[_a-z][_a-z0-9]*))      |   # delimiter and a Python identifier\n      {(?P&lt;braced&gt;(?a:[_a-z][_a-z0-9]*)), re.IGNORECASE|re.VERBOSE)</em><a class="headerlink" href="#pyutil.batch_renamer.BatchRename.pattern" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 <dl class="function">
 <dt id="pyutil.batch_renamer.fix_extension">
 <code class="descclassname">pyutil.batch_renamer.</code><code class="descname">fix_extension</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#fix_extension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.fix_extension" title="Permalink to this definition">¶</a></dt>
-<dd><p>Basically a batch renamer.</p>
+<dd><p>Rename files and group them by functions provided in <a class="reference external" href="https://docs.python.org/3/library/datetime.html#module-datetime" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code></a>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -165,7 +155,7 @@ Then we gotta fix the module so that it properly handles names like
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return rt:</th><td class="field-body">A formatted message displaying the user’s IP address.</td>
+<tr class="field-odd field"><th class="field-name">Return ret:</th><td class="field-body">A formatted message displaying the user’s IP address.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
 </tr>
@@ -305,10 +295,10 @@ directory is the src dir.</p>
 <span id="pyutil-dlink2-module"></span><h2>pyutil.dlink2 module<a class="headerlink" href="#module-pyutil.dlink2" title="Permalink to this headline">¶</a></h2>
 <p>Possibly rewrote the entire module in half as many lines.</p>
 <p>Now utilizes necessary libraries like glob.</p>
-<dl class="docutils">
-<dt>TODO:</dt>
-<dd>Argparse?</dd>
-</dl>
+<div class="admonition-todo admonition" id="index-5">
+<p class="first admonition-title">Todo</p>
+<p class="last">Argparse?</p>
+</div>
 <dl class="function">
 <dt id="pyutil.dlink2.main">
 <code class="descclassname">pyutil.dlink2.</code><code class="descname">main</code><span class="sig-paren">(</span><em>i</em>, <em>j=&lt;built-in function getcwd&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.main" title="Permalink to this definition">¶</a></dt>
@@ -437,9 +427,15 @@ root and move the file there, all while creating directories and backups.</p>
 <p>Runs checks, calls func to backup file ‘src’, moves it to the dotfiles
 repo and symlinks it.
 Moves file to a hardcoded path but will be generalized to take as an argument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>of file to backup</strong><strong>, </strong><strong>move and symlink.</strong> (<em>Name</em>) – </td>
+</tr>
+</tbody>
+</table>
 <dl class="docutils">
-<dt>Parameters:</dt>
-<dd>Name of file to backup, move and symlink.</dd>
 <dt>Assumes:</dt>
 <dd>User runs the script from inside the folder of the file they want to
 move.</dd>
@@ -679,7 +675,7 @@ is setup.</p>
 <dl class="function">
 <dt id="pyutil.yes_no_question.yes_no_question">
 <code class="descclassname">pyutil.yes_no_question.</code><code class="descname">yes_no_question</code><span class="sig-paren">(</span><em>question</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/yes_no_question.html#yes_no_question"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.yes_no_question.yes_no_question" title="Permalink to this definition">¶</a></dt>
-<dd><p>Continuing prompt the user until valid input is provided.</p>
+<dd><p>Prompt a user until they respond with an appropriate answer.</p>
 </dd></dl>
 
 </div>
@@ -687,7 +683,7 @@ is setup.</p>
 <span id="pyutil-yt-dl-module"></span><h2>pyutil.yt_dl module<a class="headerlink" href="#module-pyutil.yt_dl" title="Permalink to this headline">¶</a></h2>
 <p>Embedding youtube-dl.</p>
 <p>Dec 24, 2018: Back after an extended hiatus from this script.</p>
-<div class="admonition-todo admonition" id="index-5">
+<div class="admonition-todo admonition" id="index-6">
 <p class="first admonition-title">Todo</p>
 <p>File saved goes %(artist) - %(title) - %(url key)</p>
 <p class="last">and those keys are long random strings which is annoying. How do we

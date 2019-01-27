@@ -65,20 +65,12 @@
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">string</span> <span class="k">import</span> <span class="n">Template</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">uuid</span>
-
-
-<div class="viewcode-block" id="BatchRename"><a class="viewcode-back" href="../../pyutil.html#pyutil.batch_renamer.BatchRename">[docs]</a><span class="k">class</span> <span class="nc">BatchRename</span><span class="p">(</span><span class="n">Template</span><span class="p">):</span>
-    <span class="n">delimiter</span> <span class="o">=</span> <span class="s1">&#39;%&#39;</span></div>
 
 
 <div class="viewcode-block" id="fix_extension"><a class="viewcode-back" href="../../pyutil.html#pyutil.batch_renamer.fix_extension">[docs]</a><span class="k">def</span> <span class="nf">fix_extension</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Basically a batch renamer.</span>
+    <span class="sd">&quot;&quot;&quot;Rename files and group them by functions provided in :mod:`datetime`.</span>
 
-<span class="sd">    .. usage::</span>
-
-<span class="sd">        # This isn&#39;t very helpful but whatever. cd into intended dir</span>
-<span class="sd">        fix_extension()</span>
+<span class="sd">    .. code-block actually just kidding</span>
 
 <span class="sd">    .. bugs::</span>
 
@@ -117,7 +109,12 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;--directory&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Directory containing only the files to be renamed.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--directory&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Directory containing only the files to be renamed.&quot;</span>
+     <span class="p">)</span>
+
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">directory</span>

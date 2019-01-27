@@ -16,6 +16,8 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyutil.batch_renamer module" href="pyutil.batch_renamer.html" />
+    <link rel="prev" title="Welcome to utilities’s documentation!" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -39,25 +41,31 @@
 <h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
 <p>This script aims to be platform agnostic and in the long term will be used
 on Windows, Linux, Mac and Android systems.</p>
+</div>
 <div class="section" id="usage">
-<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">backup_nt_and_posix</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="nb">dir</span>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python backup_nt_and_posix.py /path/to/dir
 </pre></div>
 </div>
 <dl class="function">
-<dt id="pyutil.backup_nt_and_posix.backUpDir">
-<code class="descclassname">pyutil.backup_nt_and_posix.</code><code class="descname">backUpDir</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#backUpDir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.backUpDir" title="Permalink to this definition">¶</a></dt>
+<dt id="pyutil.backup_nt_and_posix.backup_directory">
+<code class="descclassname">pyutil.backup_nt_and_posix.</code><code class="descname">backup_directory</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#backup_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.backup_directory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a backup of a directory. Use the date and time as new name.</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>None: means no error occurred.
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">means no error occurred.
 0: to signify the success
 -1 : to signify the failure
-error string: the exact error string</dd>
-</dl>
+error string: the exact error string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-</div>
 </div>
 </div>
 
@@ -78,11 +86,45 @@ error string: the exact error string</dd>
 
 
 <h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pyutil.backup_nt_and_posix module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#motivation">Motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.batch_renamer.html">pyutil.batch_renamer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.check_IP.html">pyutil.check_IP module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.conda-export.html">pyutil.conda-export module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.dir3.html">pyutil.dir3 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.dir_cleaner.html">pyutil.dir_cleaner module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.dlink.html">pyutil.dlink module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.dlink2.html">pyutil.dlink2 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.env.html">pyutil.env module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.find_pics.html">pyutil.find_pics module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.inspect_module.html">pyutil.inspect_module module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.itersrc.html">pyutil.itersrc module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.lazy_downloader.html">pyutil.lazy_downloader module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.linktree.html">pyutil.linktree module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.math.html">pyutil.math package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.mv_to_repo.html">pyutil.mv_to_repo module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.nvim-profiling.html">pyutil.nvim-profiling module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.ptags.html">pyutil.ptags module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.rclone.html">pyutil.rclone module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.script_helper.html">pyutil.script_helper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.strip_space.html">pyutil.strip_space module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.sys_checks.html">pyutil.sys_checks module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.tmux-nvim.html">pyutil.tmux-nvim module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.yes_no_question.html">pyutil.yes_no_question module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.yt_dl.html">pyutil.yt_dl module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.zillow-api.html">pyutil.zillow-api module</a></li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to utilities’s documentation!</a></li>
+      <li>Next: <a href="pyutil.batch_renamer.html" title="next chapter">pyutil.batch_renamer module</a></li>
   </ul></li>
 </ul>
 </div>

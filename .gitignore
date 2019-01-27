@@ -1,28 +1,42 @@
 # Git Ignore
 
+# Sphinx build files: From pandas-website
+searchindex.js
+robots.txt
+_build
+*.html
+objects.inv
+.buildinfo
+
 # Local files
+###############
 *.local
 
 # Python specific
-# mypy
+##################
 .mypy_cache/
 
 # spyder projects
+###################
 .spyproject/
 
 # Jupyter Notebooks / JupyterLab
+###################################
 .ipynb_checkpoints/
 
 # Rope
+##########
 .ropeproject/
 
 # Vim Backup Files
+#######################
 *.un~
 *.swp
 *.swo
 *~
 
 # Flask
+############
 venv/
 *.pyc
 __pycache__/
@@ -35,16 +49,16 @@ dist/
 build/
 *.egg-info/
 
-# PyCharm
-.idea/
 
 # KDE directory settings
+########################
 .directory
 
 # From:
 # https://raw.githubusercontent.com/github/gitignore/afbff9027d02ccfc680e031f6c295f79ad61662d/Global/Tags.gitignore
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
+#####################################################################
 *tags
 /tags*tags
 /tags/
@@ -64,9 +78,6 @@ cscope.files
 cscope.out
 cscope.in.out
 cscope.po.out
-
-# aare we allowed to do thia?
-![:alpha:].py
 
 # Thank the Octocat
 # https://gist.github.com/octocat/9257657

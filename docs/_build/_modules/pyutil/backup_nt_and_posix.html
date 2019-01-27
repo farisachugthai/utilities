@@ -37,7 +37,7 @@
 <span class="sd">&quot;&quot;&quot;Backup a directory by appending the date and time and copying over.</span>
 
 <span class="sd">Motivation</span>
-<span class="sd">============</span>
+<span class="sd">------------</span>
 
 <span class="sd">This script aims to be platform agnostic and in the long term will be used</span>
 <span class="sd">on Windows, Linux, Mac and Android systems.</span>
@@ -45,17 +45,18 @@
 <span class="sd">Usage</span>
 <span class="sd">------</span>
 
-<span class="sd">.. code::</span>
+<span class="sd">.. code-block:: shell</span>
 
 <span class="sd">    python backup_nt_and_posix.py /path/to/dir</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">strftime</span>
 
 
-<div class="viewcode-block" id="backUpDir"><a class="viewcode-back" href="../../pyutil.html#pyutil.backup_nt_and_posix.backUpDir">[docs]</a><span class="k">def</span> <span class="nf">backUpDir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="backup_directory"><a class="viewcode-back" href="../../pyutil.html#pyutil.backup_nt_and_posix.backup_directory">[docs]</a><span class="k">def</span> <span class="nf">backup_directory</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Create a backup of a directory. Use the date and time as new name.</span>
 
 <span class="sd">    Returns:</span>
@@ -102,6 +103,10 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">backupd</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">backup_directory</span><span class="p">(</span><span class="n">backupd</span><span class="p">)</span>
 </pre></div>
 
           </div>

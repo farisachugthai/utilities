@@ -53,16 +53,16 @@
 <div class="viewcode-block" id="get_public_ip"><a class="viewcode-back" href="../../pyutil.html#pyutil.check_IP.get_public_ip">[docs]</a><span class="k">def</span> <span class="nf">get_public_ip</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Fetches the user&#39;s public IP address by querying httpbin.org</span>
 
-<span class="sd">    :return rt: A formatted message displaying the user&#39;s IP address.</span>
+<span class="sd">    :return ret: A formatted message displaying the user&#39;s IP address.</span>
 <span class="sd">    :rtype: str</span>
 
 <span class="sd">    From Kenneth Reitz:</span>
 
 <span class="sd">        .. _Section: Installing packages for your project: `https://docs.python-guide.org/en/latest/dev/virtualenvs/`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://httpbin.org/ip&#39;</span><span class="p">)</span>
-    <span class="n">rt</span> <span class="o">=</span> <span class="s1">&#39;Your IP is </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;origin&#39;</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">rt</span></div>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://httpbin.org/ip&#39;</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39;Your IP is </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;origin&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
 
 
 <div class="viewcode-block" id="get_hostname"><a class="viewcode-back" href="../../pyutil.html#pyutil.check_IP.get_hostname">[docs]</a><span class="k">def</span> <span class="nf">get_hostname</span><span class="p">():</span>

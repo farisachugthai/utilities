@@ -224,9 +224,39 @@ Idk.</p>
 <div>I was writing this like on termux like 4 days ago. Cleaned up
 ~/python/tutorials/<a href="#id1"><span class="problematic" id="id2">fnmatch_</span></a>.py and realized it was the exact same thing.</div></blockquote>
 <dl class="function">
+<dt id="pyutil.dir_cleaner.clean">
+<code class="descclassname">pyutil.dir_cleaner.</code><code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all pyc files. Add input for filetype later.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filetype</strong> – File to iterately remove.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">NoneType</td>
+</tr>
+</tbody>
+</table>
+<p>Yeah i said returns.
+Use return instead of yield since the function call is gonna
+either require <code class="docutils literal notranslate"><span class="pre">list[clean()]</span></code> or a loop.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyutil.dir_cleaner.dir_cleaner">
 <code class="descclassname">pyutil.dir_cleaner.</code><code class="descname">dir_cleaner</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#dir_cleaner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.dir_cleaner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Yield all directories before november.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.dir_cleaner.extract_dir">
+<code class="descclassname">pyutil.dir_cleaner.</code><code class="descname">extract_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#extract_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.extract_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Could be used in dir_cleaner. Yeah let’s do that.</p>
+<div class="admonition-todo admonition" id="index-4">
+<p class="first admonition-title">Todo</p>
+<p class="last"><em>sigh</em> alright so we need to add a check that the zip has a child dir in it.
+Extracted 3 zips rn and its all mixed together :(</p>
+</div>
 </dd></dl>
 
 </div>
@@ -591,17 +621,28 @@ Needs more file checks.</dd>
 <p>Even outside of the 2 to 3 incompatibilities, the standard library
 introduces new modules often enough that it’s useful to check.</p>
 <p>Utilized by importing as so.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python2 must_be_three.py
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="index-5">
+<p class="first admonition-title">Todo</p>
+<p class="last">Uh actually execute the above because now I’m interested…</p>
+</div>
 <p>Assumes:</p>
 <blockquote>
-<div>All functions are imported as the module will immediately exit if directly
-executed.</div></blockquote>
+<div>All functions are imported as the module will immediately exit if
+directly executed.</div></blockquote>
+<p>If nothing else this is a lesson in how painful it becomes to maintain
+nonsense names.</p>
 <dl class="function">
-<dt id="pyutil.sys_checks.py_gt">
-<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_gt</code><span class="sig-paren">(</span><em>min_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt" title="Permalink to this definition">¶</a></dt>
+<dt id="pyutil.sys_checks.py_gt_exit">
+<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_gt_exit</code><span class="sig-paren">(</span><em>min_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt_exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt_exit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check a user’s python version is higher than some floor value.</p>
 <p>For example, the <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> was only introduced in python3.2.</p>
-<p>Everything utilizing it as a result needs to check that the right version
-is setup.</p>
+<div class="admonition-todo admonition" id="index-6">
+<p class="first admonition-title">Todo</p>
+<p class="last">Possibly change API so funcs return a value on success.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -615,8 +656,14 @@ is setup.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pyutil.sys_checks.py_lt">
-<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_lt</code><span class="sig-paren">(</span><em>max_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_lt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_lt" title="Permalink to this definition">¶</a></dt>
+<dt id="pyutil.sys_checks.py_gt_raise">
+<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_gt_raise</code><span class="sig-paren">(</span><em>min_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt_raise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt_raise" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Created an extra method to exclusively raise an error.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.sys_checks.py_lt_exit">
+<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_lt_exit</code><span class="sig-paren">(</span><em>max_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_lt_exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_lt_exit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check a user’s python version is lower than some ceiling value.</p>
 <p>If you’ll crash on python3.4 but work on 3.3, call this func with 3.3.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -653,8 +700,42 @@ is setup.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="pyutil-yt-dl-module">
-<h2>pyutil.yt_dl module<a class="headerlink" href="#pyutil-yt-dl-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyutil.yt_dl">
+<span id="pyutil-yt-dl-module"></span><h2>pyutil.yt_dl module<a class="headerlink" href="#module-pyutil.yt_dl" title="Permalink to this headline">¶</a></h2>
+<p>Embedding youtube-dl.</p>
+<p>Dec 24, 2018: Back after an extended hiatus from this script.</p>
+<div class="admonition-todo admonition" id="index-7">
+<p class="first admonition-title">Todo</p>
+<p>File saved goes %(artist) - %(title) - %(url key)</p>
+<p class="last">and those keys are long random strings which is annoying. How do we
+properly parse the videos title and save the filename?</p>
+</div>
+<dl class="class">
+<dt id="pyutil.yt_dl.MyLogger">
+<em class="property">class </em><code class="descclassname">pyutil.yt_dl.</code><code class="descname">MyLogger</code><a class="reference internal" href="_modules/pyutil/yt_dl.html#MyLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.yt_dl.MyLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="pyutil.yt_dl.MyLogger.debug">
+<code class="descname">debug</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/yt_dl.html#MyLogger.debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.yt_dl.MyLogger.debug" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyutil.yt_dl.MyLogger.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/yt_dl.html#MyLogger.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.yt_dl.MyLogger.error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyutil.yt_dl.MyLogger.warning">
+<code class="descname">warning</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/yt_dl.html#MyLogger.warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.yt_dl.MyLogger.warning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.yt_dl.my_hook">
+<code class="descclassname">pyutil.yt_dl.</code><code class="descname">my_hook</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/yt_dl.html#my_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.yt_dl.my_hook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="pyutil-zillow-api-module">
 <h2>pyutil.zillow-api module<a class="headerlink" href="#pyutil-zillow-api-module" title="Permalink to this headline">¶</a></h2>

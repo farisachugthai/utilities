@@ -69,6 +69,31 @@
                 <span class="k">pass</span>  <span class="c1"># more than likely dir not empty.</span></div>
 
 
+<div class="viewcode-block" id="extract_dir"><a class="viewcode-back" href="../../pyutil.dir_cleaner.html#pyutil.dir_cleaner.extract_dir">[docs]</a><span class="k">def</span> <span class="nf">extract_dir</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Could be used in dir_cleaner. Yeah let&#39;s do that.</span>
+
+<span class="sd">    .. todo::</span>
+
+<span class="sd">        *sigh* alright so we need to add a check that the zip has a child dir in it.</span>
+<span class="sd">        Extracted 3 zips rn and its all mixed together :(</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.zip&#39;</span><span class="p">):</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">unpack_archive</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="clean"><a class="viewcode-back" href="../../pyutil.dir_cleaner.html#pyutil.dir_cleaner.clean">[docs]</a><span class="k">def</span> <span class="nf">clean</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Removes all pyc files. Add input for filetype later.</span>
+
+<span class="sd">    :param filetype: File to iterately remove.</span>
+<span class="sd">    :returns: NoneType</span>
+
+<span class="sd">    Yeah i said returns.</span>
+<span class="sd">    Use return instead of yield since the function call is gonna</span>
+<span class="sd">    either require ``list[clean()]`` or a loop.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">yield</span> <span class="p">[</span> <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.pyc&#39;</span><span class="p">)</span> <span class="p">]</span></div>
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">tmp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PREFIX&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/tmp/&#39;</span>

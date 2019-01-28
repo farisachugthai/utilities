@@ -38,17 +38,28 @@
 <p>Even outside of the 2 to 3 incompatibilities, the standard library
 introduces new modules often enough that it’s useful to check.</p>
 <p>Utilized by importing as so.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python2 must_be_three.py
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Uh actually execute the above because now I’m interested…</p>
+</div>
 <p>Assumes:</p>
 <blockquote>
-<div>All functions are imported as the module will immediately exit if directly
-executed.</div></blockquote>
+<div>All functions are imported as the module will immediately exit if
+directly executed.</div></blockquote>
+<p>If nothing else this is a lesson in how painful it becomes to maintain
+nonsense names.</p>
 <dl class="function">
-<dt id="pyutil.sys_checks.py_gt">
-<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_gt</code><span class="sig-paren">(</span><em>min_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt" title="Permalink to this definition">¶</a></dt>
+<dt id="pyutil.sys_checks.py_gt_exit">
+<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_gt_exit</code><span class="sig-paren">(</span><em>min_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt_exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt_exit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check a user’s python version is higher than some floor value.</p>
 <p>For example, the <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> was only introduced in python3.2.</p>
-<p>Everything utilizing it as a result needs to check that the right version
-is setup.</p>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">Possibly change API so funcs return a value on success.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -62,8 +73,14 @@ is setup.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pyutil.sys_checks.py_lt">
-<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_lt</code><span class="sig-paren">(</span><em>max_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_lt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_lt" title="Permalink to this definition">¶</a></dt>
+<dt id="pyutil.sys_checks.py_gt_raise">
+<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_gt_raise</code><span class="sig-paren">(</span><em>min_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt_raise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt_raise" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Created an extra method to exclusively raise an error.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.sys_checks.py_lt_exit">
+<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_lt_exit</code><span class="sig-paren">(</span><em>max_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_lt_exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_lt_exit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check a user’s python version is lower than some ceiling value.</p>
 <p>If you’ll crash on python3.4 but work on 3.3, call this func with 3.3.</p>
 <table class="docutils field-list" frame="void" rules="none">

@@ -6,16 +6,12 @@
 Welcome to utilities's documentation!
 =====================================
 
-.. toctree::
-   :maxdepth: 2
-   :numbered:
-   :glob:
-   :titlesonly:
+.. autosummary::
+   :toctree: pyutil
 
-
-   math.rst
+   readme
+   ../pyutil/math
    ../pyutil/*.py
-   ../test/*.py
 
 Indices and tables
 ==================

@@ -35,8 +35,9 @@ BUILD_PATH = os.path.join(DOC_PATH, 'build')
 
 sys.path.insert(0, os.path.abspath('../pyutil/'))
 
-# soon...
-# sys.path.append(os.path.abspath('sphinxext'))
+sys.path.insert(0, os.path.abspath('.'))
+
+sys.path.append(os.path.abspath('sphinxext'))
 
 # -- Project information -----------------------------------------------------
 
@@ -64,8 +65,10 @@ needs_sphinx = '1.8'
 extensions = [
     'sphinx.ext.apidoc',
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.napoleon',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
 ]
@@ -169,7 +172,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pyutil.tex', 'utilities Documentation',
+    (master_doc, 'pyutil.tex', 'Pyutil Documentation',
      'Faris A Chugthai', 'manual'),
 ]
 
@@ -219,7 +222,11 @@ epub_exclude_files = ['search.html']
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/3/': None}
+intersphinx_mapping = {
+        'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
+        'matplotlib': ('https://matplotlib.org', None),
+        'python': ('https://docs.python.org/3/', None)
+    }
 
 # -- Options for todo extension ----------------------------------------------
 
@@ -229,3 +236,11 @@ todo_include_todos = True
 # Viewcode
 # ---------
 viewcode_import = True
+
+
+# -----------------------------------------------------------------------------
+# Autosummary
+# -----------------------------------------------------------------------------
+
+import glob  # noqa F402
+autosummary_generate = glob.glob("./*.rst")

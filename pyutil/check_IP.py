@@ -18,16 +18,16 @@ except ImportError:
 def get_public_ip():
     """Fetches the user's public IP address by querying httpbin.org
 
-    :return rt: A formatted message displaying the user's IP address.
+    :return ret: A formatted message displaying the user's IP address.
     :rtype: str
 
     From Kenneth Reitz:
 
         .. _Section: Installing packages for your project: `https://docs.python-guide.org/en/latest/dev/virtualenvs/`
     """
-    response = requests.get('https://httpbin.org/ip')
-    rt = 'Your IP is {0}'.format(response.json()['origin'])
-    return rt
+    res = requests.get('https://httpbin.org/ip')
+    ret = 'Your IP is {0}'.format(res.json()['origin'])
+    return ret
 
 
 def get_hostname():

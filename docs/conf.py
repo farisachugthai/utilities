@@ -47,8 +47,11 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.napoleon',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
+    'IPython.sphinxext.ipython_directive',
+    'IPython.sphinxext.ipython_console_highlighting'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -59,11 +62,11 @@ templates_path = ['_templates']
 
 # source_suffix = ['.rst', '.md']
 # or:
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.txt': 'restructuredtext',
-    '.md': 'markdown',
-}
+# source_suffix = {
+#     '.rst': 'restructuredtext',
+#     '.txt': 'restructuredtext',
+#     '.md': 'markdown',
+# }
 # As stated at:
 # :URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
 # However, the filetype mapping came about in 1.8 so make sure to add that
@@ -148,7 +151,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pyutil.tex', 'utilities Documentation',
+    (master_doc, 'pyutil.tex', 'Pyutil Documentation',
      'Faris A Chugthai', 'manual'),
 ]
 
@@ -169,8 +172,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'pyutil', 'Pyutil Documentation',
-     author, 'pyutil', 'One line description of project.',
+    (master_doc, 'Pyutil', 'Pyutil Documentation',
+     author, 'Pyutil', 'One line description of project.',
      'Miscellaneous'),
 ]
 
@@ -198,7 +201,7 @@ epub_exclude_files = ['search.html']
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/3/': None}
+intersphinx_mapping = {'https://docs.python.org/3': None}
 
 # -- Options for todo extension ----------------------------------------------
 

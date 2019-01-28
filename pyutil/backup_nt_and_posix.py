@@ -2,7 +2,7 @@
 """Backup a directory by appending the date and time and copying over.
 
 Motivation
-============
+------------
 
 This script aims to be platform agnostic and in the long term will be used
 on Windows, Linux, Mac and Android systems.
@@ -10,17 +10,18 @@ on Windows, Linux, Mac and Android systems.
 Usage
 ------
 
-.. code::
+.. code-block:: shell
 
     python backup_nt_and_posix.py /path/to/dir
 
 """
 import os
 import subprocess
+import sys
 from time import strftime
 
 
-def backUpDir(path):
+def backup_directory(path):
     """Create a backup of a directory. Use the date and time as new name.
 
     Returns:
@@ -67,3 +68,7 @@ def backUpDir(path):
     else:
         os.mkdir(path)
         return [0, None]
+
+if __name__ == '__main__':
+    backupd = sys.argv[1]
+    backup_directory(backupd)

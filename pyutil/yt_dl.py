@@ -48,7 +48,7 @@ if __name__ == "__main__":
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
             'preferredquality': '192',
-           }],
+        }],
         'logger': MyLogger(),
         'progress_hooks': [my_hook],
     }

@@ -9,7 +9,7 @@ import logging
 from logging import NullHandler
 import pkg_resources
 
-from __about__ import (
+from pyutil.__about__ import (
     __author__,
     __copyright__,
     __description__,

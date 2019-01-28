@@ -30,20 +30,12 @@ import os.path
 import shutil
 from string import Template
 import time
-import uuid
-
-
-class BatchRename(Template):
-    delimiter = '%'
 
 
 def fix_extension():
-    """Basically a batch renamer.
+    """Rename files and group them by functions provided in :mod:`datetime`.
 
-    .. usage::
-
-        # This isn't very helpful but whatever. cd into intended dir
-        fix_extension()
+    .. code-block actually just kidding
 
     .. bugs::
 
@@ -82,7 +74,12 @@ def main(d):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--directory", help="Directory containing only the files to be renamed.")
+    parser.add_argument(
+        "-d",
+        "--directory",
+        help="Directory containing only the files to be renamed."
+     )
+
     args = parser.parse_args()
     print(args.directory)
     d = args.directory

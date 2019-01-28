@@ -14,57 +14,42 @@ Utilized by importing as so.
 
     py_gt(3)
 
-.. code-block:: shell
+.. code-block: shell
 
     python2 must_be_three.py
 
-.. todo::
+.. todo:
 
     Uh actually execute the above because now I'm interested...
 
 Assumes:
 
-    All functions are imported as the module will immediately exit if
-    directly executed.
-
-If nothing else this is a lesson in how painful it becomes to maintain
-nonsense names.
+    All functions are imported as the module will immediately exit if directly
+    executed.
 """
 from platform import system
 import sys
 
 
-def py_gt_raise(min_py_version):
-    """"Created an extra method to exclusively raise an error."""
-    if sys.version_info < min_py_version:
-        print("Can not use python interpreter provided: "
-              + str(sys.version_info()))
-        raise RuntimeError("The following version of python and newer are required: "
-                           + str(min_py_version))
-    ("Python 3.4 or later is required")
-
-
-def py_gt_exit(min_py_version):
+def py_gt(min_py_version):
     """Check a user's python version is higher than some floor value.
 
     For example, the :mod:`argparse` was only introduced in python3.2.
 
-    .. todo::
-
-        Possibly change API so funcs return a value on success.
+    Everything utilizing it as a result needs to check that the right version
+    is setup.
 
     :param min_py_version: The lowest version of python that can be used
     :return: None
     """
     if sys.version_info < min_py_version:
         print("Can not use python interpreter provided: "
-              + str(sys.version_info()))
-        raise RuntimeError("The following version of python and newer are required: "
-                           + str(min_py_version))
-    ("Python 3.4 or later is required")
+                + str(sys.version_info()))
+        sys.exit("The following version of python and newer are required: "
+                + str(min_py_version))
 
 
-def py_lt_exit(max_py_version):
+def py_lt(max_py_version):
     """Check a user's python version is lower than some ceiling value.
 
     If you'll crash on python3.4 but work on 3.3, call this func with 3.3.
@@ -74,14 +59,14 @@ def py_lt_exit(max_py_version):
     :return: None
     """
     # unsure if necessary
-    if not type(max_py_version) == int or float or tuple:
+    if type(max_py_version) not in (int, tuple, float):
         tuple(max_py_version)
 
     if sys.version_info > max_py_version:
         print("Can not use python interpreter provided: "
-              + str(sys.version_info()))
+                + str(sys.version_info()))
         sys.exit("The following version of python and newer are required: "
-                 + str(max_py_version))
+                + str(max_py_version))
 
 
 def test_linux():

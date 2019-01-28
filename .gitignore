@@ -4,9 +4,9 @@
 searchindex.js
 robots.txt
 _build
-*.html
+./*/*.html
 objects.inv
-.buildinfo
+**.buildinfo
 
 # Local files
 ###############

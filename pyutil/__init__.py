@@ -13,12 +13,13 @@ Now that there's a working `setup file <../setup.py>`_ I'm not sure if we need
 to use either pkg_util or pkg_resources.
 """
 import logging
+import sys
 from logging import NullHandler
-from pkg_util import extend_path
+from pkgutil import extend_path
 
 import pkg_resources
 
-from __about__ import (
+from pyutil.__about__ import (
     __author__,
     __copyright__,
     __description__,
@@ -33,4 +34,4 @@ logging.getLogger(__name__).addHandler(NullHandler())
 
 pkg_resources.declare_namespace(__name__)
 
-__path__ = extend_path(__path__, __name__)
+__path__ = extend_path(sys.path, __name__)

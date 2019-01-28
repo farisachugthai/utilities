@@ -16,55 +16,28 @@ from setuptools import setup, find_packages, Command
 
 # Metadata
 
-NAME='utilities'
-AUTHOR="Faris Chugthai",
-EMAIL="farischugthai@gmail.com",
-DESCRIPTION="Utiities for maintaining platform agnostic workstations.",
-LICENSE="MIT",
-KEYWORDS="linux math science",
-URL="https://github.com/farisachugthai/utilities",
+NAME = 'utilities'
+AUTHOR = "Faris Chugthai",
+EMAIL = "farischugthai@gmail.com",
+DESCRIPTION = "Utiities for maintaining platform agnostic workstations.",
+LICENSE = "MIT",
+KEYWORDS = "linux math science",
+URL = "https://github.com/farisachugthai/utilities",
 REQUIRES_PYTHON = '>=3.6.0'  # actually could be as bad as 3.7+ only.
 VERSION = None
 
 REQUIRED = [
         'pynvim', 'IPython',
+        # Project uses reStructuredText, so ensure that the docutils get
+        # installed or upgraded on the target machine
+        'docutils>=0.3'
 ]
 
 EXTRAS = {
-        'downloading packages': ['requests']
+        'dev': ['requests', 'sphinx', 'flake8']
 }
 
-setup(
-    name="HelloWorld",
-    version="0.1",
-    packages=find_packages(),
-    scripts=['say_hello.py'],
-    # Project uses reStructuredText, so ensure that the docutils get
-    # installed or upgraded on the target machine
-    install_requires=['docutils>=0.3'],
-    package_data={
-        # If any package contains *.txt or *.rst files, include them:
-        '': ['*.txt', '*.rst'],
-    },
-
-    # metadata to display on PyPI
-    author="Faris Chugthai",
-    author_email="me@example.com",
-    description="This is an Example Package",
-    license="MIT",
-    keywords="hello world example examples",
-    url="http://example.com/HelloWorld/",
-
-    # project home page, if any
-    project_urls={
-        "Bug Tracker": "https://bugs.example.com/HelloWorld/",
-        "Documentation": "https://docs.example.com/HelloWorld/",
-        "Source Code": "https://code.example.com/HelloWorld/",
-    }
-    # could also include long_description, download_url, classifiers, etc.
-)
 here = os.path.abspath(os.path.dirname(__file__))
-
 
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
@@ -72,21 +45,22 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
 # Load the package's __version__.py module as a dictionary.
 about = {}
 if not VERSION:
-    with open(os.path.join(here, NAME, '__version__.py')) as f:
-        exec(f.read(), about)
-else:
-    about['__version__'] = VERSION
+    try:
+        with open(os.path.join(here, NAME, '__version__.py')) as f:
+            exec(f.read(), about)
+    except IOError:  # the file doesn't exist
+        about['__version__'] = None
 
 
 class UploadCommand(Command):
-    """Support setup.py upload."""
+    """Support :ref:`setup.py` upload."""
 
     description = 'Build and publish the package.'
     user_options = []
 
     @staticmethod
     def status(s):
-        """Prints things in bold."""
+        """Prints things in bold using ANSI escape sequences."""
         print('\033[1m{0}\033[0m'.format(s))
 
     def initialize_options(self):
@@ -105,12 +79,12 @@ class UploadCommand(Command):
         self.status('Building Source and Wheel (universal) distribution…')
         os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
 
-        self.status('Uploading the package to PyPI via Twine…')
-        os.system('twine upload dist/*')
+        # self.status('Uploading the package to PyPI via Twine…')
+        # os.system('twine upload dist/*')
 
-        self.status('Pushing git tags…')
-        os.system('git tag v{0}'.format(about['__version__']))
-        os.system('git push --tags')
+        # self.status('Pushing git tags…')
+        # os.system('git tag v{0}'.format(about['__version__']))
+        # os.system('git push --tags')
 
         sys.exit()
 
@@ -136,7 +110,17 @@ setup(
     install_requires=REQUIRED,
     extras_require=EXTRAS,
     include_package_data=True,
+    package_data={
+        # If any package contains *.txt or *.rst files, include them:
+        '': ['*.txt', '*.rst'],
+    },
     license='MIT',
+
+    #  https://www.python.org/dev/peps/pep-0345/#platform-multiple-use
+    # A Platform specification describing an operating system supported by the
+    # distribution which is not listed in the "Operating System" Trove
+    # classifiers. See "Classifier" below.#
+    # Platform='Linux',
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -151,4 +135,11 @@ setup(
     cmdclass={
         'upload': UploadCommand,
     },
+    # project home page, if any
+    # project_urls={
+    #     "Bug Tracker": "https://bugs.example.com/HelloWorld/",
+    #     "Documentation": "https://docs.example.com/HelloWorld/",
+    #     "Source Code": "https://code.example.com/HelloWorld/",
+    # }
+    # could also include long_description, download_url, classifiers, etc.
 )

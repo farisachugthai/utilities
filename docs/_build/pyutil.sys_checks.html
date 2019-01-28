@@ -25,76 +25,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head><body>
-  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
-  <div class="section" id="module-pyutil.sys_checks">
-<span id="pyutil-sys-checks-module"></span><h1>pyutil.sys_checks module<a class="headerlink" href="#module-pyutil.sys_checks" title="Permalink to this headline">¶</a></h1>
-<p>Module to check a user is utilizing the proper version of python.</p>
-<p>Even outside of the 2 to 3 incompatibilities, the standard library
-introduces new modules often enough that it’s useful to check.</p>
-<p>Utilized by importing as so.</p>
-<p>Assumes:</p>
-<blockquote>
-<div>All functions are imported as the module will immediately exit if directly
-executed.</div></blockquote>
-<dl class="function">
-<dt id="pyutil.sys_checks.py_gt">
-<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_gt</code><span class="sig-paren">(</span><em>min_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check a user’s python version is higher than some floor value.</p>
-<p>For example, the <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> was only introduced in python3.2.</p>
-<p>Everything utilizing it as a result needs to check that the right version
-is setup.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>min_py_version</strong> – The lowest version of python that can be used</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.sys_checks.py_lt">
-<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_lt</code><span class="sig-paren">(</span><em>max_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_lt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_lt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check a user’s python version is lower than some ceiling value.</p>
-<p>If you’ll crash on python3.4 but work on 3.3, call this func with 3.3.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>max_py_version</strong> – The highest version of python that can be used</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.sys_checks.test_linux">
-<code class="descclassname">pyutil.sys_checks.</code><code class="descname">test_linux</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#test_linux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.test_linux" title="Permalink to this definition">¶</a></dt>
-<dd><p>Not a unit test but checks that the user is on Linux OS.</p>
-</dd></dl>
-
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><h1 style="font-size: 3em;">Sampledoc</h1></a>
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
+
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">pyutil</a></h1>
@@ -165,6 +102,75 @@ is setup.</p>
 
 
 
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-pyutil.sys_checks">
+<span id="pyutil-sys-checks-module"></span><h1>pyutil.sys_checks module<a class="headerlink" href="#module-pyutil.sys_checks" title="Permalink to this headline">¶</a></h1>
+<p>Module to check a user is utilizing the proper version of python.</p>
+<p>Even outside of the 2 to 3 incompatibilities, the standard library
+introduces new modules often enough that it’s useful to check.</p>
+<p>Utilized by importing as so.</p>
+<p>Assumes:</p>
+<blockquote>
+<div>All functions are imported as the module will immediately exit if directly
+executed.</div></blockquote>
+<dl class="function">
+<dt id="pyutil.sys_checks.py_gt">
+<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_gt</code><span class="sig-paren">(</span><em>min_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check a user’s python version is higher than some floor value.</p>
+<p>For example, the <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> was only introduced in python3.2.</p>
+<p>Everything utilizing it as a result needs to check that the right version
+is setup.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>min_py_version</strong> – The lowest version of python that can be used</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.sys_checks.py_lt">
+<code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_lt</code><span class="sig-paren">(</span><em>max_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_lt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_lt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check a user’s python version is lower than some ceiling value.</p>
+<p>If you’ll crash on python3.4 but work on 3.3, call this func with 3.3.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>max_py_version</strong> – The highest version of python that can be used</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.sys_checks.test_linux">
+<code class="descclassname">pyutil.sys_checks.</code><code class="descname">test_linux</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#test_linux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.test_linux" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not a unit test but checks that the user is on Linux OS.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
         </div>
       </div>
       <div class="clearer"></div>

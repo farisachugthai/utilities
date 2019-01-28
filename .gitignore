@@ -7,6 +7,7 @@ _build
 ./*/*.html
 objects.inv
 **.buildinfo
+docs/_build/*
 
 # Local files
 ###############

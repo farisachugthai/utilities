@@ -23,55 +23,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head><body>
-  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
-  <div class="section" id="module-pyutil.math.gcd_iter">
-<span id="pyutil-math-gcd-iter-module"></span><h1>pyutil.math.gcd_iter module<a class="headerlink" href="#module-pyutil.math.gcd_iter" title="Permalink to this headline">¶</a></h1>
-<p>Display an iterative method for determining the greatest common denom.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">File:</th><td class="field-body">gcd_iter.py</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Faris Chugthai</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:farischugthai&#37;&#52;&#48;gmail&#46;com">farischugthai<span>&#64;</span>gmail<span>&#46;</span>com</a></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Github:</th><td class="field-body"><a class="reference external" href="https://github.com/farisachugthai">https://github.com/farisachugthai</a></td>
-</tr>
-</tbody>
-</table>
-<p>Jan 17, 2019:</p>
-<blockquote>
-<div>Just added in <a class="reference external" href="https://docs.python.org/3/library/sys.html#module-sys" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code></a> so that we accept input from the user.</div></blockquote>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">Let’s think about gcd(9, 12). It returned 6.
-a decrements and then when it gets to 6, 12 % 6 == 0. So it works.
-You need to save the original values of both variables in tmp vars
-and then when you run the if a % b == 0, you need to do that in the form of
-if a % b and original_b % b == 0 then you’re good.</p>
-</div>
-<dl class="function">
-<dt id="pyutil.math.gcd_iter.gcdIter">
-<code class="descclassname">pyutil.math.gcd_iter.</code><code class="descname">gcdIter</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/math/gcd_iter.html#gcdIter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.math.gcd_iter.gcdIter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><h1 style="font-size: 3em;">Sampledoc</h1></a>
 </div>
 
 
-          </div>
-          
-        </div>
-      </div>
+
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">pyutil</a></h1>
@@ -140,6 +98,54 @@ if a % b and original_b % b == 0 then you’re good.</p>
 
 
 
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-pyutil.math.gcd_iter">
+<span id="pyutil-math-gcd-iter-module"></span><h1>pyutil.math.gcd_iter module<a class="headerlink" href="#module-pyutil.math.gcd_iter" title="Permalink to this headline">¶</a></h1>
+<p>Display an iterative method for determining the greatest common denom.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">File:</th><td class="field-body">gcd_iter.py</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Faris Chugthai</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:farischugthai&#37;&#52;&#48;gmail&#46;com">farischugthai<span>&#64;</span>gmail<span>&#46;</span>com</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Github:</th><td class="field-body"><a class="reference external" href="https://github.com/farisachugthai">https://github.com/farisachugthai</a></td>
+</tr>
+</tbody>
+</table>
+<p>Jan 17, 2019:</p>
+<blockquote>
+<div>Just added in <a class="reference external" href="https://docs.python.org/3/library/sys.html#module-sys" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code></a> so that we accept input from the user.</div></blockquote>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Let’s think about gcd(9, 12). It returned 6.
+a decrements and then when it gets to 6, 12 % 6 == 0. So it works.
+You need to save the original values of both variables in tmp vars
+and then when you run the if a % b == 0, you need to do that in the form of
+if a % b and original_b % b == 0 then you’re good.</p>
+</div>
+<dl class="function">
+<dt id="pyutil.math.gcd_iter.gcdIter">
+<code class="descclassname">pyutil.math.gcd_iter.</code><code class="descname">gcdIter</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/math/gcd_iter.html#gcdIter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.math.gcd_iter.gcdIter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+          
         </div>
       </div>
       <div class="clearer"></div>

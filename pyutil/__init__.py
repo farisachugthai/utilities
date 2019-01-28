@@ -14,6 +14,9 @@ This module intends to establish a few different things.
 create the directory as a namespace package
 - Define generic dunder methods
 - Extend the user's $PATH to include this directory even if it != os.cwd
+
+# NOQA F401
+
 """
 import logging
 from logging import NullHandler
@@ -22,7 +25,7 @@ import sys
 
 import pkg_resources
 
-from __about__ import (
+from pyutil.__about__ import (
     __author__,
     __copyright__,
     __description__,

@@ -3,10 +3,10 @@
 """ Renames a directory of files based on a template
 
 Largely argparse and doctest practice.
-From pydocs tutorials stdlib2. Reformatted.
+From pydocs tutorials stdlib2 with some reformatting.
 Still uses old style strings as a result.
 
-Examples::
+.. code-block:: python
 
     >>> os.listdir("/path/to/dir")
     # ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
@@ -18,12 +18,9 @@ Examples::
 .. todo::
 
     First things first ensure it works at all.
-    Then we should add some doctests maybe.
 
-    .. code block::
-
-        import doctest
-        doctest.docmod()
+    This would be quite an easy module to create unittests for IN ADDITION
+    to the fact that you could add some fixtures in and learn that.
 """
 import argparse
 import os.path
@@ -34,11 +31,6 @@ import time
 
 def fix_extension():
     """Rename files that have have the wrong filename extension.
-
-    .. usage::
-
-        # This isn't very helpful but whatever. cd into intended dir
-        fix_extension()
 
     .. bugs::
 

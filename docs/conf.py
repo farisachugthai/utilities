@@ -22,6 +22,8 @@ As stated at:
 However, the filetype mapping came about in 1.8 so make sure to add that
 ``needs-sphinx=version`` bit
 
+Jesus this is painful
+# NOQA
 """
 import logging
 import os
@@ -33,11 +35,11 @@ logger = logging.getLogger(__name__)
 DOC_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(DOC_PATH, 'build')
 
-sys.path.insert(0, os.path.abspath('../pyutil/'))
+sys.path.insert(0, os.path.abspath('..'))
 
-sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('./_themes'))
 
-sys.path.append(os.path.abspath('sphinxext'))
+sys.path.insert(0, os.path.abspath('sphinxext'))
 
 # -- Project information -----------------------------------------------------
 
@@ -71,6 +73,8 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
+    'IPython.sphinxext.ipython_console_highlighting',
+    'IPython.sphinxext.ipython_directive'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

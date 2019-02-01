@@ -1,23 +1,16 @@
 #!/usr/bin/env python
-"""Embedding youtube-dl.
+"""Embedding youtube-dl into a script.
 
-Dec 24, 2018: Back after an extended hiatus from this script.
-
-.. todo::
-
-    File saved goes %(artist) - %(title) - %(url key)
-
-    and those keys are long random strings which is annoying. How do we
-    properly parse the videos title and save the filename?
+Dec 24, 2018: Back after an extended hiatus from working on this.
 
 Jan 25, 2019:
 
     Not pertinent to this specific module but useful background info for
-    debugging. 
+    debugging.
 
 .. ipython::
 
-    [ins] In [6]: len(dir(youtube_dl.extractor))
+    In [6]: len(dir(youtube_dl.extractor))
     Out[6]: 1944
 
     Jesus Christ that's a lot!
@@ -25,7 +18,7 @@ Jan 25, 2019:
 
 .. ipython::
 
-    [ins] In [8]: youtube_dl.extractor.AdultSwimIE?
+    In [8]: youtube_dl.extractor.AdultSwimIE?
     Init signature: youtube_dl.extractor.AdultSwimIE(downloader=None)
     Docstring:
     Information Extractor class.

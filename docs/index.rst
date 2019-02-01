@@ -9,7 +9,7 @@ Welcome to utilities's documentation!
 .. autosummary::
    :toctree: pyutil
 
-   readme
+   readme.rst
    ../pyutil/math
    ../pyutil/*.py
 

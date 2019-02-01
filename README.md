@@ -29,7 +29,7 @@ MIT
 ## Contributions
 
 Even though these are mostly scripts I've thrown together;
-I'd absolutely love any constructive criticism or 
+I'd absolutely love any constructive criticism or
 pointers on how to get any module listed to work better!
 
 I hope it goes without saying, but if it doesn't, please don't hesitate

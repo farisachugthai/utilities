@@ -7,7 +7,7 @@ introduces new modules often enough that it's useful to check.
 
 Utilized by importing as so.
 
-.. code-block::
+.. code-block:: python
 
     # filename: must_be_three.py
     from syschecks import py_gt
@@ -16,7 +16,7 @@ Utilized by importing as so.
 
 .. code-block:: shell
 
-    python2 must_be_three.py
+    python3 must_be_three.py
 
 .. todo::
 

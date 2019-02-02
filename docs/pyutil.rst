@@ -83,6 +83,14 @@ pyutil.env module
     :undoc-members:
     :show-inheritance:
 
+pyutil.env\_checks module
+-------------------------
+
+.. automodule:: pyutil.env_checks
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pyutil.find\_pics module
 ------------------------
 
@@ -103,6 +111,14 @@ pyutil.itersrc module
 ---------------------
 
 .. automodule:: pyutil.itersrc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyutil.json\_sorter module
+--------------------------
+
+.. automodule:: pyutil.json_sorter
     :members:
     :undoc-members:
     :show-inheritance:
@@ -187,6 +203,14 @@ pyutil.tmux\-nvim module
     :undoc-members:
     :show-inheritance:
 
+pyutil.wrap module
+------------------
+
+.. automodule:: pyutil.wrap
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pyutil.yes\_no\_question module
 -------------------------------
 
@@ -219,3 +243,4 @@ Module contents
     :members:
     :undoc-members:
     :show-inheritance:
+    :noindex:

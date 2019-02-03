@@ -16,7 +16,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="pyutil.backup_nt_and_posix module" href="pyutil.backup_nt_and_posix.html" />
+    <link rel="next" title="Tutorial.rst - The pyutils tutorial" href="tutorial.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -26,7 +26,7 @@
   </head><body>
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
-<a href="#"><h1 style="font-size: 3em;">Sampledoc</h1></a>
+<a href="#"><h1 style="font-size: 3em;">Pyutil</h1></a>
 </div>
 
 
@@ -40,43 +40,29 @@
 
 
 
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
 
 
 <h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.backup_nt_and_posix.html">pyutil.backup_nt_and_posix module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.batch_renamer.html">pyutil.batch_renamer module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.check_IP.html">pyutil.check_IP module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.conda-export.html">pyutil.conda-export module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.dir3.html">pyutil.dir3 module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.dir_cleaner.html">pyutil.dir_cleaner module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.dlink.html">pyutil.dlink module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.dlink2.html">pyutil.dlink2 module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.env.html">pyutil.env module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.find_pics.html">pyutil.find_pics module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.inspect_module.html">pyutil.inspect_module module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.itersrc.html">pyutil.itersrc module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.lazy_downloader.html">pyutil.lazy_downloader module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.linktree.html">pyutil.linktree module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.math.html">pyutil.math package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.mv_to_repo.html">pyutil.mv_to_repo module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.nvim-profiling.html">pyutil.nvim-profiling module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.ptags.html">pyutil.ptags module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.rclone.html">pyutil.rclone module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.script_helper.html">pyutil.script_helper module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.strip_space.html">pyutil.strip_space module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.sys_checks.html">pyutil.sys_checks module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.tmux-nvim.html">pyutil.tmux-nvim module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.yes_no_question.html">pyutil.yes_no_question module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.yt_dl.html">pyutil.yt_dl module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.zillow-api.html">pyutil.zillow-api module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst - The pyutils tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pyutil</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.html">pyutil package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math.html"><code class="docutils literal notranslate"><span class="pre">math</span></code></a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="pyutil.backup_nt_and_posix.html" title="next chapter">pyutil.backup_nt_and_posix module</a></li>
+      <li>Next: <a href="tutorial.html" title="next chapter">Tutorial.rst - The pyutils tutorial</a></li>
   </ul></li>
 </ul>
 </div>
@@ -111,45 +97,53 @@
           <div class="body" role="main">
             
   <div class="section" id="welcome-to-utilities-s-documentation">
-<h1>Welcome to utilities’s documentation!<a class="headerlink" href="#welcome-to-utilities-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
+<span id="index"></span><h1>Welcome to utilities’s documentation!<a class="headerlink" href="#welcome-to-utilities-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound" id="mastertoc">
+<p class="caption"><span class="caption-text">Table of Contents</span><a class="headerlink" href="#mastertoc" title="Permalink to this toctree">¶</a></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.backup_nt_and_posix.html">pyutil.backup_nt_and_posix module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pyutil.backup_nt_and_posix.html#motivation">Motivation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyutil.backup_nt_and_posix.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst - The pyutils tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#contributing">Contributing</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.batch_renamer.html">pyutil.batch_renamer module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.check_IP.html">pyutil.check_IP module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.conda-export.html">pyutil.conda-export module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.dir3.html">pyutil.dir3 module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.dir_cleaner.html">pyutil.dir_cleaner module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.dlink.html">pyutil.dlink module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.dlink2.html">pyutil.dlink2 module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.env.html">pyutil.env module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.find_pics.html">pyutil.find_pics module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.inspect_module.html">pyutil.inspect_module module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.itersrc.html">pyutil.itersrc module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.lazy_downloader.html">pyutil.lazy_downloader module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.linktree.html">pyutil.linktree module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.math.html">pyutil.math package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pyutil.math.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyutil.math.html#module-pyutil.math.gcd_iter">pyutil.math.gcd_iter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyutil.math.html#module-pyutil.math.gcd_recur">pyutil.math.gcd_recur module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyutil.math.html#module-pyutil.math">Module contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pyutil</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html">pyutil package</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.mv_to_repo.html">pyutil.mv_to_repo module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.nvim-profiling.html">pyutil.nvim-profiling module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.ptags.html">pyutil.ptags module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.rclone.html">pyutil.rclone module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.script_helper.html">pyutil.script_helper module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.strip_space.html">pyutil.strip_space module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.sys_checks.html">pyutil.sys_checks module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.tmux-nvim.html">pyutil.tmux-nvim module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.yes_no_question.html">pyutil.yes_no_question module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.yt_dl.html">pyutil.yt_dl module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyutil.zillow-api.html">pyutil.zillow-api module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyutil.html">pyutil package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-backup-nt-and-posix-module">pyutil.backup_nt_and_posix module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-batch-renamer-module">pyutil.batch_renamer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-check-ip-module">pyutil.check_IP module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-conda-export-module">pyutil.conda-export module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-dir3-module">pyutil.dir3 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-dir-cleaner-module">pyutil.dir_cleaner module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-dlink-module">pyutil.dlink module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-dlink2-module">pyutil.dlink2 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-env-module">pyutil.env module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-env-checks-module">pyutil.env_checks module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-find-pics-module">pyutil.find_pics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-inspect-module-module">pyutil.inspect_module module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-itersrc-module">pyutil.itersrc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-json-sorter-module">pyutil.json_sorter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-lazy-downloader-module">pyutil.lazy_downloader module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-linktree-module">pyutil.linktree module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-mv-to-repo-module">pyutil.mv_to_repo module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-nvim-profiling-module">pyutil.nvim-profiling module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-ptags-module">pyutil.ptags module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-rclone-module">pyutil.rclone module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-script-helper-module">pyutil.script_helper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-strip-space-module">pyutil.strip_space module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-sys-checks-module">pyutil.sys_checks module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-tmux-nvim-module">pyutil.tmux-nvim module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-wrap-module">pyutil.wrap module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-yes-no-question-module">pyutil.yes_no_question module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-yt-dl-module">pyutil.yt_dl module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#pyutil-zillow-api-module">pyutil.zillow-api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyutil.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="math.html"><code class="docutils literal notranslate"><span class="pre">math</span></code></a></li>
 </ul>
 </div>
 </div>

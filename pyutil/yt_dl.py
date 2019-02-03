@@ -17,7 +17,7 @@ Jan 25, 2019:
 
 .. ipython::
 
-    [ins] In [6]: len(dir(youtube_dl.extractor))
+    In [6]: len(dir(youtube_dl.extractor))
     Out[6]: 1944
 
     Jesus Christ that's a lot!
@@ -25,7 +25,7 @@ Jan 25, 2019:
 
 .. ipython::
 
-    [ins] In [8]: youtube_dl.extractor.AdultSwimIE?
+    In [8]: youtube_dl.extractor.AdultSwimIE?
     Init signature: youtube_dl.extractor.AdultSwimIE(downloader=None)
     Docstring:
     Information Extractor class.
@@ -46,6 +46,7 @@ Jan 25, 2019:
 
     id:             Video identifier.
     title:          Video title, unescaped.
+
 """
 from __future__ import unicode_literals
 
@@ -84,7 +85,8 @@ if __name__ == "__main__":
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
             'preferredquality': '192',
-           }],
+            }
+        ],
         'logger': MyLogger(),
         'progress_hooks': [my_hook],
     }

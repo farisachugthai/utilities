@@ -11,6 +11,8 @@ Subpackages
 Submodules
 ----------
 
+.. unfortunately the no index thing didn't help mitigate the warnings
+
 pyutil.backup\_nt\_and\_posix module
 ------------------------------------
 
@@ -18,6 +20,7 @@ pyutil.backup\_nt\_and\_posix module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.batch\_renamer module
 ----------------------------
@@ -26,6 +29,7 @@ pyutil.batch\_renamer module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.check\_IP module
 -----------------------
@@ -34,6 +38,7 @@ pyutil.check\_IP module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.conda\-export module
 ---------------------------
@@ -42,6 +47,7 @@ pyutil.conda\-export module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.dir3 module
 ------------------
@@ -50,6 +56,7 @@ pyutil.dir3 module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.dir\_cleaner module
 --------------------------
@@ -58,6 +65,7 @@ pyutil.dir\_cleaner module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.dlink module
 -------------------
@@ -66,6 +74,7 @@ pyutil.dlink module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.dlink2 module
 --------------------
@@ -74,6 +83,7 @@ pyutil.dlink2 module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.env module
 -----------------
@@ -82,6 +92,16 @@ pyutil.env module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
+
+pyutil.env\_checks module
+-------------------------
+
+.. automodule:: pyutil.env_checks
+    :members:
+    :undoc-members:
+    :show-inheritance:
+    :no-index:
 
 pyutil.find\_pics module
 ------------------------
@@ -90,6 +110,7 @@ pyutil.find\_pics module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.inspect\_module module
 -----------------------------
@@ -98,6 +119,7 @@ pyutil.inspect\_module module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.itersrc module
 ---------------------
@@ -106,6 +128,16 @@ pyutil.itersrc module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
+
+pyutil.json\_sorter module
+--------------------------
+
+.. automodule:: pyutil.json_sorter
+    :members:
+    :undoc-members:
+    :show-inheritance:
+    :no-index:
 
 pyutil.lazy\_downloader module
 ------------------------------
@@ -114,6 +146,7 @@ pyutil.lazy\_downloader module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.linktree module
 ----------------------
@@ -122,6 +155,7 @@ pyutil.linktree module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.mv\_to\_repo module
 --------------------------
@@ -130,6 +164,7 @@ pyutil.mv\_to\_repo module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.nvim\-profiling module
 -----------------------------
@@ -138,6 +173,7 @@ pyutil.nvim\-profiling module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.ptags module
 -------------------
@@ -146,6 +182,7 @@ pyutil.ptags module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.rclone module
 --------------------
@@ -154,6 +191,7 @@ pyutil.rclone module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.script\_helper module
 ----------------------------
@@ -162,6 +200,7 @@ pyutil.script\_helper module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.strip\_space module
 --------------------------
@@ -170,6 +209,7 @@ pyutil.strip\_space module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.sys\_checks module
 -------------------------
@@ -178,6 +218,7 @@ pyutil.sys\_checks module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.tmux\-nvim module
 ------------------------
@@ -186,6 +227,16 @@ pyutil.tmux\-nvim module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
+
+pyutil.wrap module
+------------------
+
+.. automodule:: pyutil.wrap
+    :members:
+    :undoc-members:
+    :show-inheritance:
+    :no-index:
 
 pyutil.yes\_no\_question module
 -------------------------------
@@ -194,6 +245,7 @@ pyutil.yes\_no\_question module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.yt\_dl module
 --------------------
@@ -202,6 +254,7 @@ pyutil.yt\_dl module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 pyutil.zillow\-api module
 -------------------------
@@ -210,6 +263,7 @@ pyutil.zillow\-api module
     :members:
     :undoc-members:
     :show-inheritance:
+    :no-index:
 
 
 Module contents
@@ -219,3 +273,4 @@ Module contents
     :members:
     :undoc-members:
     :show-inheritance:
+    :noindex:

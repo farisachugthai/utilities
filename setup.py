@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 """Create an installable package for the utilities repository.
 
-Largely based off of the work done by @kennethreitz in his setup.py repository.
+Largely based off of the work done by @kennethreitz in his setup.py_ 
+repository.
 
-:URL: https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py
+:URL: _`<https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py>`
 
 """
 import codecs
@@ -27,14 +28,14 @@ REQUIRES_PYTHON = '>=3.6.0'  # actually could be as bad as 3.7+ only.
 VERSION = None
 
 REQUIRED = [
-        'pynvim', 'IPython',
-        # Project uses reStructuredText, so ensure that the docutils get
-        # installed or upgraded on the target machine
-        'docutils>=0.3'
+    'pynvim', 'IPython',
+    # Project uses reStructuredText, so ensure that the docutils get
+    # installed or upgraded on the target machine
+    'docutils>=0.3'
 ]
 
 EXTRAS = {
-        'dev': ['requests', 'sphinx', 'flake8']
+    'dev': ['requests', 'sphinx', 'flake8', 'flake8-rst']
 }
 
 here = os.path.abspath(os.path.dirname(__file__))

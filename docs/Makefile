@@ -1,8 +1,8 @@
 # Minimal makefile for Sphinx documentation
-#
 
 # You can set these variables from the command line.
-SPHINXOPTS    =
+# Force everything to be rebuilt everytime.
+SPHINXOPTS    = -a
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = .
 BUILDDIR      = _build

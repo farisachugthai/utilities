@@ -19,7 +19,6 @@ fh() { # {{{
 #                             fzf wiki                               #
 ######################################################################
 
-
 git_log() { # {{{
   local show="git show --color=always \"\$(grep -m1 -o \"[a-f0-9]\{7\}\" <<< {})\""
   fzf --prompt='log' -e --no-sort --tiebreak=index \
@@ -30,16 +29,14 @@ git_log() { # {{{
 }
 # }}}
 
-# fbr - checkout git branch
-fbr() { # {{{
+fbr() { # checkout git branch {{{
   local branches branch
   branches=$(git branch -vv) &&
   branch=$(echo "$branches" | fzf +m) &&
   git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
 # }}}
-# fbr - checkout git branch (including remote branches)
-fbr() { # {{{
+fbr() { # {{{ checkout git branch (including remote branches)
   local branches branch
   branches=$(git branch --all | grep -v HEAD) &&
   branch=$(echo "$branches" |
@@ -47,8 +44,7 @@ fbr() { # {{{
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 # }}}
-# fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
-fbr() { # {{{
+fbr() { # {{{ checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
   local branches branch
   branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
   branch=$(echo "$branches" |
@@ -56,8 +52,8 @@ fbr() { # {{{
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 # }}}
-# fco - checkout git branch/tag
-fco() { # {{{
+
+fco() { # {{{ checkout git branch/tag
   local tags branches target
   tags=$(
     git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
@@ -71,8 +67,8 @@ fco() { # {{{
   git checkout $(echo "$target" | awk '{print $2}')
 }
 # }}}
-# fco_preview - checkout git branch/tag, with a preview showing the commits between the tag/branch and HEAD
-fco_preview() { # {{{
+
+fco_preview() { # {{{ checkout git branch/tag, with a preview showing the commits between the tag/branch and HEAD
   local tags branches target
   tags=$(
 git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
@@ -87,16 +83,16 @@ sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
   git checkout $(echo "$target" | awk '{print $2}')
 }
 # }}}
-# fcoc - checkout git commit
-fcoc() { # {{{
+
+fcoc() { # {{{ checkout git commit
   local commits commit
   commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
   commit=$(echo "$commits" | fzf --tac +s +m -e) &&
   git checkout $(echo "$commit" | sed "s/ .*//")
 }
 # }}}
-# fshow - git commit browser
-fshow() { # {{{
+
+fshow() { # {{{ git commit browser
   git log --graph --color=always \
       --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
   fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
@@ -107,11 +103,14 @@ fshow() { # {{{
 FZF-EOF"
 }
 # }}}
+
 alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
+
 _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+
 _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
-# fcoc_preview - checkout git commit with previews
-fcoc_preview() { # {{{
+
+fcoc_preview() { # {{{ checkout git commit with previews
   local commit
   commit=$( glNoGraph |
     fzf --no-sort --reverse --tiebreak=index --no-multi \
@@ -119,8 +118,8 @@ fcoc_preview() { # {{{
   git checkout $(echo "$commit" | sed "s/ .*//")
 }
 # }}}
-# fshow_preview - git commit browser with previews
-fshow_preview() { # {{{
+
+fshow_preview() { # {{{ fshow_preview - git commit browser with previews
     glNoGraph |
         fzf --no-sort --reverse --tiebreak=index --no-multi \
             --ansi --preview="$_viewGitLogLine" \
@@ -129,15 +128,13 @@ fshow_preview() { # {{{
                 --bind "alt-y:execute:$_gitLogLineToHash | xclip"
 }
 # }}}
-# Create a gitignore file from [gitignore.io](http://gitignore.io):
-# (https://gist.github.com/phha/cb4f4bb07519dc494609792fb918e167)
-# fgst - pick files from git status -s
+
 is_in_git_repo() { # {{{
   git rev-parse HEAD > /dev/null 2>&1
 }
 # }}}
 
-fgst() { # {{{
+fgst() { # {{{ pick files from git status -s
   # "Nothing to see here, move along"
   is_in_git_repo || return
 
@@ -150,9 +147,7 @@ fgst() { # {{{
 }
 # }}}
 
-
-# ftags - search ctags
-ftags() { # {{{
+ftags() { # {{{ search ctags
   local line
   [ -e tags ] &&
   line=$(

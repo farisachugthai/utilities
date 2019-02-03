@@ -1,6 +1,10 @@
 """
 reST directive for syntax-highlighting ipython interactive sessions.
 
+Feb 02, 2019:
+
+    Modified the lexer so that `ipython` is connected to ipy3
+
 """
 
 from IPython.lib.lexers import IPyLexer
@@ -25,6 +29,6 @@ def setup(app):
 ipy2 = IPyLexer(python3=False)
 ipy3 = IPyLexer(python3=True)
 
-highlighting.lexers['ipython'] = ipy2
+highlighting.lexers['ipython'] = ipy3
 highlighting.lexers['ipython2'] = ipy2
 highlighting.lexers['ipython3'] = ipy3

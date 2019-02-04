@@ -13,4 +13,4 @@ analysis to solve problems.
     :glob:
     :hidden:
 
-    ../pyutil/math/*.py
+    ./math/*.rst

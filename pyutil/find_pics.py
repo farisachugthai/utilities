@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""Finds all the jpegs and jpgs in the user's current directory."""
 import re
 import os
 
@@ -24,4 +25,6 @@ def find_pics(path):
 if __name__ == "__main__":
     path = os.listdir(".")
     # list comprehesion with a function?
-    matches = [f if find_pics(f) for f in path]
+    matches = []
+    for f in path:
+        matches.append(find_pics(f))

@@ -6,11 +6,13 @@
 Welcome to utilities's documentation!
 =====================================
 
-.. include::
+.. literalinclude::
 
    readme
 
 .. toctree::
+   :caption: Table of Contents
+   :name: mastertoc
    :maxdepth: 2
 
    tutorial

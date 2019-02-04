@@ -8,7 +8,7 @@
 Welcome to utilities's documentation!
 =====================================
 
-.. literal-include::
+.. literalinclude::
 
    readme
 

@@ -4,7 +4,6 @@
 
 :File: __init__.py
 :Author: Faris Chugthai
-:Email: farischugthai@gmail.com
 :Github: `https://github.com/farisachugthai`_
 
 This module intends to establish a few different things.
@@ -22,19 +21,12 @@ import sys
 
 import pkg_resources
 
-from __about__ import (
-    __author__,
-    __copyright__,
-    __description__,
-    __docformat__,
-    __email__,
-    __license__,
-    __title__,
-    __package_name__,
-)
+from pyutil import *
 
 logging.getLogger(__name__).addHandler(NullHandler())
 
 pkg_resources.declare_namespace(__name__)
 
 __path__ = extend_path(sys.path, __file__)
+
+# Feb 05, 2019: How am i atill having path issues.

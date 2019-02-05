@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 """Create an installable package for the utilities repository.
 
-Largely based off of the work done by @kennethreitz in his setup.py_ 
+Largely based off of the work done by @kennethreitz in his setup.py_
 repository.
 
-:URL: _`<https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py>`
+:URL: _`https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py`
 
 """
 import codecs
@@ -25,33 +25,37 @@ LICENSE = "MIT",
 KEYWORDS = "linux math science",
 URL = "https://github.com/farisachugthai/utilities",
 REQUIRES_PYTHON = '>=3.6.0'  # actually could be as bad as 3.7+ only.
-VERSION = None
+VERSION = '0.0.1'
 
 REQUIRED = [
-    'pynvim', 'IPython',
-    # Project uses reStructuredText, so ensure that the docutils get
-    # installed or upgraded on the target machine
-    'docutils>=0.3'
+    'pynvim', 'IPython', 'youtube_dl'
 ]
 
 EXTRAS = {
-    'dev': ['requests', 'sphinx', 'flake8', 'flake8-rst']
+    'develop': ['requests', 'flake8', 'flake8-rst', 'yapf'],
+    'docs': ['sphinx',
+             # Project uses reStructuredText, so ensure that the docutils get
+             # installed or upgraded on the target machine
+             'docutils>=0.3',
+             'recommonmark',
+             'numpydoc']
 }
 
 here = os.path.abspath(os.path.dirname(__file__))
 
 
-with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
+with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
 # Load the package's __version__.py module as a dictionary.
 about = {}
-if not VERSION:
-    try:
-        with open(os.path.join(here, NAME, '__version__.py')) as f:
-            exec(f.read(), about)
-    except IOError:  # the file doesn't exist
-        about['__version__'] = None
+# if not VERSION:
+#     try:
+#         with open(os.path.join(here, NAME, '__version__.py')) as f:
+#             exec(f.read(), about)
+#     except IOError:  # the file doesn't exist
+#         about['__version__'] = None
+about['__version__'] = '0.0.1'
 
 
 class UploadCommand(Command):
@@ -62,7 +66,7 @@ class UploadCommand(Command):
 
     @staticmethod
     def status(s):
-        """Prints things in bold."""
+        """Print output in bold."""
         print('\033[1m{0}\033[0m'.format(s))
 
     def initialize_options(self):
@@ -97,7 +101,7 @@ setup(
     version=about['__version__'],
     description=DESCRIPTION,
     long_description=long_description,
-    long_description_content_type='text/markdown',
+    long_description_content_type='text/restructuredtext',
     author=AUTHOR,
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,

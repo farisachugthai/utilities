@@ -3,10 +3,10 @@
 """ Renames a directory of files based on a template
 
 Largely argparse and doctest practice.
-From pydocs tutorials stdlib2. Reformatted.
+From pydocs tutorials stdlib2 with some reformatting.
 Still uses old style strings as a result.
 
-Examples::
+.. code-block:: python
 
     >>> os.listdir("/path/to/dir")
     # ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
@@ -18,12 +18,9 @@ Examples::
 .. todo::
 
     First things first ensure it works at all.
-    Then we should add some doctests maybe.
 
-    .. code block::
-
-        import doctest
-        doctest.docmod()
+    This would be quite an easy module to create unittests for IN ADDITION
+    to the fact that you could add some fixtures in and learn that.
 """
 import argparse
 import os.path
@@ -32,14 +29,17 @@ from string import Template
 import time
 
 
-def fix_extension():
-    """Rename files and group them by functions provided in :mod:`datetime`.
+class BatchRename(Template):
+    delimiter = '%'
 
-    .. code-block actually just kidding
+
+def fix_extension():
+    """Rename files that have have the wrong filename extension.
 
     .. bugs::
 
-        Fuck I didn't consider the case where there are 2 words separated by dots that we want to keep.
+        Fuck I didn't consider the case where there are 2 words separated by
+        dots that we want to keep.
     """
     for i in os.listdir('.'):
         parts = i.split(sep='.')
@@ -72,14 +72,19 @@ def main(d):
         print('{0} --> {1}'.format(filename, newname))
 
 
+def batch_mover():
+    """Move all the files in :param:`dir` that match :param:`pattern`."""
+    for i in os.scandir('.'):
+        if i.name.__contains__('vim'):
+            shutil.move(i.name, '/home/faris/Dropbox/vim/' + i.name)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-d",
         "--directory",
-        help="Directory containing only the files to be renamed."
-     )
-
+        help="Directory containing only the files to be renamed.")
     args = parser.parse_args()
     print(args.directory)
     d = args.directory

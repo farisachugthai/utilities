@@ -2,11 +2,12 @@
 #
 
 # You can set these variables from the command line.
-SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = .
 BUILDDIR      = _build
-
+# CONFDIR		  = "$(PWD)"
+SPHINXOPTS    =
+# -c "$(CONFDIR)" isn't working in sphinx opts
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)

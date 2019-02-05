@@ -25,6 +25,6 @@ def setup(app):
 ipy2 = IPyLexer(python3=False)
 ipy3 = IPyLexer(python3=True)
 
-highlighting.lexers['ipython'] = ipy2
+highlighting.lexers['ipython'] = ipy3
 highlighting.lexers['ipython2'] = ipy2
 highlighting.lexers['ipython3'] = ipy3

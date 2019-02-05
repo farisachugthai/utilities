@@ -29,12 +29,17 @@ from string import Template
 import time
 
 
+class BatchRename(Template):
+    delimiter = '%'
+
+
 def fix_extension():
     """Rename files that have have the wrong filename extension.
 
     .. bugs::
 
-        Fuck I didn't consider the case where there are 2 words separated by dots that we want to keep.
+        Fuck I didn't consider the case where there are 2 words separated by
+        dots that we want to keep.
     """
     for i in os.listdir('.'):
         parts = i.split(sep='.')
@@ -65,6 +70,13 @@ def main(d):
         base, ext = os.path.splitext(filename)
         newname = t.substitute(d=date, n=i, f=ext)
         print('{0} --> {1}'.format(filename, newname))
+
+
+def batch_mover():
+    """Move all the files in :param:`dir` that match :param:`pattern`."""
+    for i in os.scandir('.'):
+        if i.name.__contains__('vim'):
+            shutil.move(i.name, '/home/faris/Dropbox/vim/' + i.name)
 
 
 if __name__ == '__main__':

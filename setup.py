@@ -24,17 +24,20 @@ LICENSE = "MIT",
 KEYWORDS = "linux math science",
 URL = "https://github.com/farisachugthai/utilities",
 REQUIRES_PYTHON = '>=3.6.0'  # actually could be as bad as 3.7+ only.
-VERSION = None
+VERSION = '0.0.1'
 
 REQUIRED = [
-        'pynvim', 'IPython',
-        # Project uses reStructuredText, so ensure that the docutils get
-        # installed or upgraded on the target machine
-        'docutils>=0.3'
+    'pynvim',
+    'IPython',
+    'requests',
+    # Project uses reStructuredText, so ensure that the docutils get
+    # installed or upgraded on the target machine
+    'docutils>=0.3'
 ]
 
 EXTRAS = {
-        'dev': ['requests', 'sphinx', 'flake8']
+    'develop': ['nose', 'flake8', 'flake8-rst', 'yapf'],
+    'docs': ['numpydoc', 'sphinx']
 }
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -60,7 +63,7 @@ class UploadCommand(Command):
 
     @staticmethod
     def status(s):
-        """Prints things in bold using ANSI escape sequences."""
+        """Print output in bold using ANSI escape sequences."""
         print('\033[1m{0}\033[0m'.format(s))
 
     def initialize_options(self):
@@ -77,7 +80,8 @@ class UploadCommand(Command):
             pass
 
         self.status('Building Source and Wheel (universal) distribution…')
-        os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+        os.system('{0} setup.py sdist bdist_wheel --universal'.format(
+            sys.executable))
 
         # self.status('Uploading the package to PyPI via Twine…')
         # os.system('twine upload dist/*')
@@ -100,7 +104,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=('tests',)),
+    packages=find_packages(exclude=('tests', )),
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
 

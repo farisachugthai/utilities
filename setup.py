@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 """Create an installable package for the utilities repository.
 
-Largely based off of the work done by @kennethreitz in his setup.py repository.
+Largely based off of the work done by @kennethreitz in his setup.py_
+repository.
 
-:URL: https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py
+:URL: _`https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py`
 
 """
 import codecs
@@ -27,32 +28,34 @@ REQUIRES_PYTHON = '>=3.6.0'  # actually could be as bad as 3.7+ only.
 VERSION = '0.0.1'
 
 REQUIRED = [
-    'pynvim',
-    'IPython',
-    'requests',
-    # Project uses reStructuredText, so ensure that the docutils get
-    # installed or upgraded on the target machine
-    'docutils>=0.3'
+    'pynvim', 'IPython', 'youtube_dl'
 ]
 
 EXTRAS = {
-    'develop': ['nose', 'flake8', 'flake8-rst', 'yapf'],
-    'docs': ['numpydoc', 'sphinx']
+    'develop': ['requests', 'flake8', 'flake8-rst', 'yapf'],
+    'docs': ['sphinx',
+             # Project uses reStructuredText, so ensure that the docutils get
+             # installed or upgraded on the target machine
+             'docutils>=0.3',
+             'recommonmark',
+             'numpydoc']
 }
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
+
+with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
 # Load the package's __version__.py module as a dictionary.
 about = {}
-if not VERSION:
-    try:
-        with open(os.path.join(here, NAME, '__version__.py')) as f:
-            exec(f.read(), about)
-    except IOError:  # the file doesn't exist
-        about['__version__'] = None
+# if not VERSION:
+#     try:
+#         with open(os.path.join(here, NAME, '__version__.py')) as f:
+#             exec(f.read(), about)
+#     except IOError:  # the file doesn't exist
+#         about['__version__'] = None
+about['__version__'] = '0.0.1'
 
 
 class UploadCommand(Command):
@@ -99,12 +102,13 @@ setup(
     version=about['__version__'],
     description=DESCRIPTION,
     long_description=long_description,
-    long_description_content_type='text/markdown',
+    long_description_content_type='text/restructuredtext',
     author=AUTHOR,
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=('tests', )),
+    packages=find_packages(exclude=('tests',)),
+    # index='https://pypi.org/projects',
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
 

@@ -37,7 +37,6 @@ SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath('./_themes'))
 
 sys.path.insert(0, os.path.abspath('./sphinxext'))
 
@@ -61,14 +60,12 @@ release = ''
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
-needs_sphinx = '1.8'
+needs_sphinx = '1.7'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    # apidoc isn't one. it's the command that invokes the extension autodoc.
-    # now i get it.
     'sphinx.ext.autodoc',
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.autosummary',
@@ -79,7 +76,6 @@ extensions = [
     'sphinx.ext.viewcode',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
-    'numpydoc'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -201,15 +197,19 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pyutil.tex', 'Pyutil Documentation', 'Faris A Chugthai',
-     'manual'),
+    (master_doc, 'pyutil.tex', 'Pyutil Documentation',
+     'Faris A Chugthai', 'manual'),
 ]
 
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, 'pyutil', 'Pyutil Documentation', [author], 1)]
+man_pages = [
+    (master_doc, 'pyutil', 'Pyutil Documentation',
+     [author], 1)
+]
+
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -217,8 +217,9 @@ man_pages = [(master_doc, 'pyutil', 'Pyutil Documentation', [author], 1)]
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Pyutil', 'Pyutil Documentation', author, 'Pyutil',
-     'One line description of project.', 'Miscellaneous'),
+    (master_doc, 'Pyutil', 'Pyutil Documentation',
+     author, 'Pyutil', 'One line description of project.',
+     'Miscellaneous'),
 ]
 
 # -- Options for Epub output -------------------------------------------------

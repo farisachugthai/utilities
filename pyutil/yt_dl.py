@@ -1,15 +1,23 @@
 #!/usr/bin/env python
 """Embedding youtube-dl into a script.
 
-Dec 24, 2018: Back after an extended hiatus from working on this.
+Dec 24, 2018:
+
+    Back after an extended hiatus from working on this.
 
 Jan 25, 2019:
 
     Not pertinent to this specific module but useful background info for
     debugging.
 
+.. admonition::
+
+    Things keep breaking because it says Sphinx doesn't recognize youtube_dl
+    So do we need to run import statements all along this thing too?
+
 .. ipython::
 
+    In [5]: import youtube_dl
     In [6]: len(dir(youtube_dl.extractor))
     Out[6]: 1944
 

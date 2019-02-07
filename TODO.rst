@@ -11,8 +11,27 @@ It's not much but the docs build. However your readme file still renders as
 markdown so you'll probably wanna change the file extension there and rewrite
 it.
 
+02-06-19
+
+syntax highlighting
+^^^^^^^^^^^^^^^^^^^^^^
+
+Just like that they don't. As a mental note when the build works again try this
+
+.. code-block:: python
+
+   from sphinx.pygments_style import SphinxStyle
+
+   global sph
+   sph = SphinxStyle()
+   sph.styles
+
+Will print off all the token configs. Figure out how to return the global
+instance and then we have a gruvbox pygments file on termux. Override to
+your hearts content.
+
 scripts
-^^^^^^^^
+---------
 
 - Either add doctests, logging or unittests to
 `dlink <https://github.com/farisachugthai/utilities/python/dlink.py>`_
@@ -21,7 +40,7 @@ that you feel confident enough to begin basing
 off of it and then begin basing `newbuntu <https://github.com/farisachugthai/newbuntu>`_
 off of that.
 
-- Make a script that deletes empty dirs in `$PREFIX/tmp.`
+- Make a script that deletes empty dirs in `$PREFIX/tmp`
   Termux has 100s now.
 
 - A script that utilizes

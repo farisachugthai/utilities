@@ -27,6 +27,11 @@ URL = "https://github.com/farisachugthai/utilities",
 REQUIRES_PYTHON = '>=3.6.0'  # actually could be as bad as 3.7+ only.
 VERSION = '0.0.1'
 
+ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+CONF_PATH = os.path.dirname(os.path.abspath('docs'))
+BUILD_PATH = os.path.join(CONF_PATH, 'build')
+SOURCE_PATH = os.path.join(CONF_PATH, '_source')
+
 REQUIRED = [
     'pynvim', 'IPython', 'youtube_dl'
 ]

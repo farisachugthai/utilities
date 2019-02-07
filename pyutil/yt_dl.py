@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-"""Embedding youtube-dl.
+"""Embedding youtube-dl into a script.
 
-Dec 24, 2018: Back after an extended hiatus from this script.
+Dec 24, 2018:
 
 .. todo::
 
@@ -13,15 +13,21 @@ Dec 24, 2018: Back after an extended hiatus from this script.
 Jan 25, 2019:
 
     Not pertinent to this specific module but useful background info for
-    debugging. 
+    debugging.
+
+.. admonition::
+
+    Things keep breaking because it says Sphinx doesn't recognize youtube_dl
+    So do we need to run import statements all along this thing too?
 
 .. ipython::
 
+    In [5]: import youtube_dl
     In [6]: len(dir(youtube_dl.extractor))
     Out[6]: 1944
 
-    Jesus Christ that's a lot!
-    Here's some info on the extractors.abs
+Jesus Christ that's a lot!
+Here's some info on the extractors.abs
 
 .. ipython::
 
@@ -46,7 +52,6 @@ Jan 25, 2019:
 
     id:             Video identifier.
     title:          Video title, unescaped.
-
 """
 from __future__ import unicode_literals
 
@@ -75,19 +80,21 @@ def my_hook(d):
 if __name__ == "__main__":
     from argparse import ArgumentParser
 
-    parser = ArgumentParser(description='Wrapper for downloading YouTube videos.')
+    parser = ArgumentParser(
+        description='Wrapper for downloading YouTube videos.')
 
     parser.add_argument('-u', '--url_list', nargs='+', required=True, type=str)
 
     ydl_opts = {
-        'format': 'bestaudio/best',
+        'format':
+        'bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
             'preferredquality': '192',
-            }
-        ],
-        'logger': MyLogger(),
+        }],
+        'logger':
+        MyLogger(),
         'progress_hooks': [my_hook],
     }
 

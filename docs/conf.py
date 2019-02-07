@@ -1,27 +1,47 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
-# Configuration file for the Sphinx documentation builder.
-#
-# This file does only contain a selection of the most common options. For a
-# full list see the documentation:
-# http://www.sphinx-doc.org/en/master/config
+"""Configuration file for the Sphinx documentation builder.
 
-# -- Path setup --------------------------------------------------------------
+This file does only contain a selection of the most common options. For a
+full list see the documentation:
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
+:URL: http://www.sphinx-doc.org/en/master/config
+
+-- Path setup --------------------------------------------------------------
+
+If extensions (or modules to document with autodoc) are in another directory,
+add these directories to sys.path here. If the directory is relative to the
+documentation root, use os.path.abspath to make it absolute, like shown here.
+
+.. code-block:: python
+
+    sys.path.insert(0, os.path.abspath('.'))
+
+As stated at:
+
+:URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
+
+However, the filetype mapping came about in 1.8 so make sure to add that
+``needs-sphinx=version`` bit
+
+"""
+import logging
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath('../pyutil/'))
+logger = logging.getLogger(__name__)
 
-sys.path.insert(0, os.path.abspath('..'))
+
+CONF_PATH = os.path.dirname(os.path.abspath(__file__))
+BUILD_PATH = os.path.join(CONF_PATH, 'build')
+SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 sys.path.insert(0, os.path.abspath('.'))
 
-sys.path.insert(0, os.path.abspath('sphinxext'))
+sys.path.insert(0, os.path.abspath('./sphinxext'))
 
+sys.path.insert(0, os.path.abspath('../pyutil'))
+
+sys.path.insert(0, os.path.abspath('../pyutil/math'))
 # -- Project information -----------------------------------------------------
 
 # Does Sphinx use this while building the docs? Appears so from
@@ -47,13 +67,15 @@ needs_sphinx = '1.7'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosectionlabel',
+    'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
+    'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
-    'IPython.sphinxext.ipython_console_highlighting'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -105,8 +127,8 @@ html_theme = 'alabaster'
 # documentation.
 #
 html_theme_options = {
-        "github_user": "Faris A. Chugthai",
-        "github_repo": "utilities"
+    "github_user": "Faris A. Chugthai",
+    "github_repo": "utilities"
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -128,13 +150,13 @@ html_static_path = ['_static']
 # html_sidebars = {}
 # From the alabaster website
 html_sidebars = {
-        '**': [
-            'about.html',
-            'navigation.html',
-            'relations.html',
-            'searchbox.html',
-            'donate.html',
-        ]
+    '**': [
+        'about.html',
+        'navigation.html',
+        'relations.html',
+        'searchbox.html',
+        'donate.html',
+    ]
 }
 
 # -- Options for HTMLHelp output ---------------------------------------------
@@ -211,13 +233,16 @@ epub_title = project
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
 
-
 # -- Extension configuration -------------------------------------------------
 
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/3/': None}
+intersphinx_mapping = {
+    'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
+    'matplotlib': ('https://matplotlib.org', None),
+    'python': ('https://docs.python.org/3/', None)
+}
 
 # -- Options for todo extension ----------------------------------------------
 
@@ -227,3 +252,10 @@ todo_include_todos = True
 # Viewcode
 # ---------
 viewcode_import = True
+
+# -----------------------------------------------------------------------------
+# Autosummary
+# -----------------------------------------------------------------------------
+
+import glob  # noqa F402
+autosummary_generate = glob.glob("./*.rst")

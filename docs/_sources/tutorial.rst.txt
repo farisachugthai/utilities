@@ -16,6 +16,6 @@ For examples, refer to :mod:`numpydoc`.
 A bare template for a full docstring with all numpy subsections has been
 included below.
 
-.. literal-include::
+.. literalinclude::
 
    numpydoc_docstring

@@ -25,24 +25,23 @@ LICENSE = "MIT",
 KEYWORDS = "linux math science",
 URL = "https://github.com/farisachugthai/utilities",
 REQUIRES_PYTHON = '>=3.6.0'  # actually could be as bad as 3.7+ only.
-VERSION = '0.0.1'
+VERSION = '0.1'
 
-REQUIRED = [
-    'pynvim', 'IPython', 'youtube_dl'
-]
+REQUIRED = ['pynvim', 'IPython', 'youtube_dl']
 
 EXTRAS = {
     'develop': ['requests', 'flake8', 'flake8-rst', 'yapf'],
-    'docs': ['sphinx',
-             # Project uses reStructuredText, so ensure that the docutils get
-             # installed or upgraded on the target machine
-             'docutils>=0.3',
-             'recommonmark',
-             'numpydoc']
+    'docs': [
+        'sphinx',
+        # Project uses reStructuredText, so ensure that the docutils get
+        # installed or upgraded on the target machine
+        'docutils>=0.3',
+        'recommonmark',
+        'numpydoc'
+    ]
 }
 
 here = os.path.abspath(os.path.dirname(__file__))
-
 
 with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
@@ -55,7 +54,7 @@ about = {}
 #             exec(f.read(), about)
 #     except IOError:  # the file doesn't exist
 #         about['__version__'] = None
-about['__version__'] = '0.0.1'
+about['__version__'] = '0.1'
 
 
 class UploadCommand(Command):

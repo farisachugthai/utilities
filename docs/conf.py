@@ -52,9 +52,9 @@ copyright = '2018, Faris A Chugthai'
 author = 'Faris A Chugthai'
 
 # The short X.Y version
-version = ''
+version = '0.1'
 # The full version, including alpha/beta/rc tags
-release = ''
+release = '0.1'
 
 # -- General configuration ---------------------------------------------------
 
@@ -84,13 +84,14 @@ templates_path = ['_templates']
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 
+source_suffix = ['.rst']
 # source_suffix = ['.rst', '.md']
 # or:
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.txt': 'restructuredtext',
-    '.md': 'markdown',
-}
+# source_suffix = {
+#     '.rst': 'restructuredtext',
+#     '.txt': 'restructuredtext',
+#     '.md': 'markdown',
+# }
 
 # The encoding of source files.
 source_encoding = 'utf-8'
@@ -109,7 +110,7 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+# language = None
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -122,7 +123,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 # So i overwrote the pygments.css file entirely so i wanna see what happens
-pygments_style = 'monokai'
+pygments_style = 'sphinx'
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -197,19 +198,15 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pyutil.tex', 'Pyutil Documentation',
-     'Faris A Chugthai', 'manual'),
+    (master_doc, 'pyutil.tex', 'Pyutil Documentation', 'Faris A Chugthai',
+     'manual'),
 ]
 
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'pyutil', 'Pyutil Documentation',
-     [author], 1)
-]
-
+man_pages = [(master_doc, 'pyutil', 'Pyutil Documentation', [author], 1)]
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -217,9 +214,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Pyutil', 'Pyutil Documentation',
-     author, 'Pyutil', 'One line description of project.',
-     'Miscellaneous'),
+    (master_doc, 'Pyutil', 'Pyutil Documentation', author, 'Pyutil',
+     'One line description of project.', 'Miscellaneous'),
 ]
 
 # -- Options for Epub output -------------------------------------------------

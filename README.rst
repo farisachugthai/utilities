@@ -3,6 +3,10 @@
 utilities
 ==========
 
+.. module:: readme
+
+.. title:: utilities
+
 This repository houses a number of functional scripts I utilize to
 administer multiple workstations.
 
@@ -35,9 +39,9 @@ MIT
 Contributing
 --------------
 
-Even though these are mostly scripts I've thrown together;
-I'd absolutely love any constructive criticism or
-pointers on how to get any module listed to work better!
+Even though these are mostly scripts I've thrown together; I'd absolutely love
+any constructive criticism or pointers on how to get any module listed to work
+better!
 
 I hope it goes without saying, but if it doesn't, please don't hesitate
 to fork or create an issue.

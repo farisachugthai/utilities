@@ -6,21 +6,22 @@
 
     rclone.py [src] dst
 
-.. requires::
-
-    rclone
+Requires
+---------
+rclone
 
 The remaining roadmap.
+
 .. todo::
 
-    - :param: args is used as a parameter to both ArgumentParser() and
-      subprocess.run()
+    - :param:`args` is used as a parameter to both :class:`argparse.ArgumentParser()` and
+      :func:`subprocess.run()`
         - Switch the name for one of them as this'll get confusing quickly.
     - Set up a simple single use case backup.
-    - Add collections.ChainMap() to set precedence of backupdir.
+    - Add :func:`collections.ChainMap()` to set precedence of backupdir.
     - Add in multiple invocations of rclone and create args to reflect use cases.
-    - Expand argparse usage with `fromfile_prefix_chars` to emulate rsync's file
-      input.
+    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`
+     to emulate rsync's file input.
 
 """
 import argparse
@@ -34,12 +35,12 @@ def _parse_arguments():
     # parser = argparse.ArgumentParser("Automate usage of rclone for simple backup creation.")
     # parser.add_argument(dest=src, required=True, help='A directory, presumably local, to sync with a remote.')
     parser = argparse.ArgumentParser(usage="%(prog)s [options]",
-                                     description="Automate usage of rclone for \
-                                     simple backup creation.",
+                                     description="Automate usage of rclone for "
+                                     "simple backup creation.",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter
                                      )
-    parser.add_argument(dest=src, default=cwd, help="The source directory.\
-                        Defaults to the cwd.")
+    parser.add_argument(src, default=cwd, help="The source directory. "
+                        "Defaults to the cwd.")
 
     return parser
 
@@ -104,3 +105,6 @@ if __name__ == "__main__":
     # rewritten ground up.
 
     # Use :Glog if you want a reference of what was here.
+    parser = _parse_arguments()
+
+    parser.parse_args()

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-""" Renames a directory of files based on a template
+"""Renames a directory of files based on a template
+
+.. module:: batch_renamer.py
 
 Largely argparse and doctest practice.
 From pydocs tutorials stdlib2 with some reformatting.
@@ -9,11 +11,11 @@ Still uses old style strings as a result.
 .. code-block:: python
 
     >>> os.listdir("/path/to/dir")
-    # ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
+    ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
     >>>  batch_renamer.py /path/to/dir
-    #  img_1074.jpg --> Ashley_0.jpg
-    #  img_1076.jpg --> Ashley_1.jpg
-    #  img_1077.jpg --> Ashley_2.jpg
+    img_1074.jpg --> Ashley_0.jpg
+    img_1076.jpg --> Ashley_1.jpg
+    img_1077.jpg --> Ashley_2.jpg
 
 .. todo::
 
@@ -23,7 +25,7 @@ Still uses old style strings as a result.
     to the fact that you could add some fixtures in and learn that.
 """
 import argparse
-import os.path
+import os
 import shutil
 from string import Template
 import time
@@ -36,7 +38,7 @@ class BatchRename(Template):
 def fix_extension():
     """Rename files that have have the wrong filename extension.
 
-    .. bugs::
+    .. todo::
 
         Fuck I didn't consider the case where there are 2 words separated by
         dots that we want to keep.
@@ -52,13 +54,13 @@ def fix_multipart_filename():
 
     Gotta clean whatever the hell is going on below up.
     Then we gotta fix the module so that it properly handles names like
-    :ref:`os.path.rst.txt`.
+    ``os.path.rst.txt``.
     """
     pass
 
 
 def main(d):
-    """Renames a dir of files.
+    """Rename a dir of files.
 
     :param d: The directory to iterate over.
     """

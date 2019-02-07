@@ -1,38 +1,12 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" neovim sessions with the help of tmux
+"""Neovim sessions with the help of tmux.
+
+.. module:: tmux_nvim
 
 Depends: tmux, nvim, libtmux
 
-All rights reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 """
-
-__author__ = 'Faris Chugthai'
-__copyright__ = 'Copyright (C) 2018 Faris Chugthai'
-__email__ = 'farischugthai@gmail.com'
-__license__ = 'MIT'
-__url__ = 'https://github.com/farisachugthai'
-
 # imports: {{{
 import argparse
 import os
@@ -65,12 +39,16 @@ class DefaultTmuxServer(libtmux.Server):
 # probs not tho
     def __init__(self, **kwargs):
         libtmux.Server.__init__(self, colors='2', conf, **kwargs)
-        # Only reason I defaulted to kwargs is because the docs aren't clear about which parameters are ACTUALLY REQUIRED
 
 
 def check_if_virtualenv():
-    # TODO: Do this in a better way. They'll get the warning if they
-    # use the builtin venv, pipenv or the other 1000 ways to isolate python.
+    """Check if we're in a virtualenv or conda env.
+
+    .. todo::
+
+        Do this in a better way. They'll get the warning if they use
+        the builtin venv, pipenv or the other 1000 ways to isolate python.
+    """
     if not os.environ.get('VIRTUAL_ENV') or \
     int(os.environ.get('CONDA_SHLVL')) = 1 or None :
         print("As a warning, you're not in a virtualenv. Pass -g to continue."
@@ -78,7 +56,7 @@ def check_if_virtualenv():
 
 
 def main():
-
+    """Check env vars and programatically ijteract with tmux and nvim."""
     EDITOR_FLAGS = sys.argv[1:]
     if os.environ.get('EDITOR') is not None:
         EDITOR = os.environ.get('EDITOR')

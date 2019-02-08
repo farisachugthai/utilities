@@ -1,18 +1,44 @@
 #!/usr/bin/env python
 # Maintainer: Faris Chugthai
-""" Automating the process of grabbing plain text files from the internet.
+"""
+lazy_downloader
+==================
 
-Usage:
+.. module:: lazy_downloader
+    :synopsis: Automates downloading plain text files from the Web.
+
+Parameters
+-----------
+url : str
+A url to download
+
+output_filename: path-like object
+A path to write the downloaded content to.
+
+
+Usage
+------
+.. code-block:: shell
+
     lazy_downloader url output_filename
 
-If filename already exists on the system it will NOT be overwritten,
-and the script will crash.
+Both parameters are required parameters.
 
-TODO::
+If the filename already exists on the system it will NOT be overwritten,
+and the script will safely exit.
+
+
+.. todo::
+
     Can we check the MIME type and only import requests_html if we know we'll
     need to?
-"""
 
+Feb 08, 2019:
+
+    There are all the errors I just got building this module.abs
+
+
+"""
 import argparse
 import os
 import sys
@@ -20,33 +46,60 @@ import sys
 import requests
 
 
-def main():
-    """ Download URL and write to disk."""
-    res = requests.get(args.URL)
+def main(url, output_fname):
+    """Download URL and write to disk.
+
+    Parameters
+    -----------
+    url : str
+    A url to download
+
+    output_filename: path-like object
+    A path to write the downloaded content to.
+
+    .. todo::
+
+    Figure out how to check that the file is plain text and not hit
+    constant false positives
+
+    .. todo::
+
+        .. code-block:: python
+
+            if res.headers['Content-Type']:
+                 pass
+
+    .. todo::
+
+    Could add in a check. if the file is over a certain size use
+    `:func:requests.res.iter_chunk()`
+
+    """
+    res = requests.get(url)
     res.raise_for_status()
 
-    #  if res.headers['Content-Type']:
-    #      pass
-    #  # TODO: figure out how to check that the file is plain text and not hit
-    # constant false positives
-
-    with open(args.fname, "xt") as f:
+    with open(output_fname, "xt") as f:
         f.write(res.text)
 
 
-# could add in a check. if the file is over a certain size use res.iter_chunk()
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(prog='lazy_downloader', add_help=True,
-                                     allow_abbrev=True,
-                                     description='Download a plaintext file from the internet.')
+    parser = argparse.ArgumentParser(prog='lazy_downloader',
+                                     description=__doc__)
 
     parser.add_argument("URL", help="The URL to download. Must be plaintext.")
 
-    # Will need to learn how to parse and tokenize the URL to get a reasonable guess for the filename though
-    parser.add_argument("-o", "--output", help="The name of the file to write to. Must not exist already.")
+    # Will need to learn how to parse and tokenize the URL to get a reasonable
+    # guess for the filename though
+    parser.add_argument("fname", help="The name of the file to write to. Must not exist already.")
     args = parser.parse_args()
 
-    # with xt permissions the script crashes so no point raising anything just bail
+    # With xt permissions the script crashes so no point raising anything.
+    # Just bail
     if os.path.isfile(args.fname):
         sys.exit('File already exists. Cannot overwrite. Exiting.')
-    main()
+    # And if we're good, then bind the properties from the parser
+    else:
+        output_fname = args.fname
+        url = args.URL
+
+    main(url, output_fname)

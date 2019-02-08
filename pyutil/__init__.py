@@ -4,7 +4,6 @@
 
 :File: __init__.py
 :Author: Faris Chugthai
-:Email: farischugthai@gmail.com
 :Github: `https://github.com/farisachugthai`_
 
 This module intends to establish a few different things.
@@ -14,6 +13,7 @@ This module intends to establish a few different things.
 create the directory as a namespace package
 - Define generic dunder methods
 - Extend the user's $PATH to include this directory even if it != os.cwd
+
 """
 import logging
 from logging import NullHandler

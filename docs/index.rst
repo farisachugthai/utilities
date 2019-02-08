@@ -18,7 +18,6 @@ Welcome to utilities's documentation!
    :maxdepth: 2
 
    tutorial
-   modules
    pyutil
    math
 

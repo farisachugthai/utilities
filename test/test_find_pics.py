@@ -4,7 +4,6 @@
 
 :File: test_find_pics.py
 :Author: Faris Chugthai
-:Email: farischugthai@gmail.com
 :Github: https://github.com/farisachugthai
 
 """
@@ -19,7 +18,7 @@ class TestFindPics(unittest.TestCase):
 
     def setUp(self):
         """Create dummy temporary picture files."""
-        with tempfile.TemporaryFile():  # don't know what args it needs
+        with tempfile.TemporaryFile() as f:  # don't know what args it needs
             pass
 
 

@@ -31,13 +31,11 @@ import sys
 
 logger = logging.getLogger(__name__)
 
+
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
-
-sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath('./_themes'))
 
 sys.path.insert(0, os.path.abspath('./sphinxext'))
 
@@ -57,18 +55,17 @@ version = ''
 # The full version, including alpha/beta/rc tags
 release = ''
 
+
 # -- General configuration ---------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
-needs_sphinx = '1.8'
+needs_sphinx = '1.7'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    # apidoc isn't one. it's the command that invokes the extension autodoc.
-    # now i get it.
     'sphinx.ext.autodoc',
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.autosummary',
@@ -79,7 +76,6 @@ extensions = [
     'sphinx.ext.viewcode',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
-    'numpydoc'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -95,15 +91,10 @@ source_suffix = {
     '.txt': 'restructuredtext',
     '.md': 'markdown',
 }
-
-# The encoding of source files.
-source_encoding = 'utf-8'
-
-# source_parsers = {
-#     '.md': 'recommonmark.parser.CommonMarkParser',
-#     '.rst': 'sphinx.parsers.Parser',
-#     '.txt': 'sphinx.parsers.Parser'
-# }
+# As stated at:
+# :URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
+# However, the filetype mapping came about in 1.8 so make sure to add that
+# ``needs-sphinx=version`` bit
 
 # The master toctree document.
 master_doc = 'index'
@@ -115,18 +106,14 @@ master_doc = 'index'
 # Usually you set "language" from the command line for these cases.
 language = None
 
-# The reST default role (used for this markup: `text`) to use for all
-# documents.
-# default_domain = 'python'
-
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
-# So i overwrote the pygments.css file entirely so i wanna see what happens
 pygments_style = 'monokai'
+
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -177,6 +164,7 @@ html_sidebars = {
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'pyutil'
 
+
 # -- Options for LaTeX output ------------------------------------------------
 
 latex_elements = {
@@ -201,15 +189,20 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pyutil.tex', 'Pyutil Documentation', 'Faris A Chugthai',
-     'manual'),
+    (master_doc, 'pyutil.tex', 'Pyutil Documentation',
+     'Faris A Chugthai', 'manual'),
 ]
+
 
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, 'pyutil', 'Pyutil Documentation', [author], 1)]
+man_pages = [
+    (master_doc, 'pyutil', 'Pyutil Documentation',
+     [author], 1)
+]
+
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -217,9 +210,11 @@ man_pages = [(master_doc, 'pyutil', 'Pyutil Documentation', [author], 1)]
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Pyutil', 'Pyutil Documentation', author, 'Pyutil',
-     'One line description of project.', 'Miscellaneous'),
+    (master_doc, 'Pyutil', 'Pyutil Documentation',
+     author, 'Pyutil', 'One line description of project.',
+     'Miscellaneous'),
 ]
+
 
 # -- Options for Epub output -------------------------------------------------
 

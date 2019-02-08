@@ -3,10 +3,10 @@
 """ Renames a directory of files based on a template
 
 Largely argparse and doctest practice.
-From pydocs tutorials stdlib2 with some reformatting.
+From pydocs tutorials stdlib2. Reformatted.
 Still uses old style strings as a result.
 
-.. code-block:: python
+Examples::
 
     >>> os.listdir("/path/to/dir")
     # ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
@@ -18,15 +18,19 @@ Still uses old style strings as a result.
 .. todo::
 
     First things first ensure it works at all.
+    Then we should add some doctests maybe.
 
-    This would be quite an easy module to create unittests for IN ADDITION
-    to the fact that you could add some fixtures in and learn that.
+    .. code block::
+
+        import doctest
+        doctest.docmod()
 """
 import argparse
 import os.path
 import shutil
 from string import Template
 import time
+import uuid
 
 
 class BatchRename(Template):
@@ -34,12 +38,16 @@ class BatchRename(Template):
 
 
 def fix_extension():
-    """Rename files that have have the wrong filename extension.
+    """Basically a batch renamer.
+
+    .. usage::
+
+        # This isn't very helpful but whatever. cd into intended dir
+        fix_extension()
 
     .. bugs::
 
-        Fuck I didn't consider the case where there are 2 words separated by
-        dots that we want to keep.
+        Fuck I didn't consider the case where there are 2 words separated by dots that we want to keep.
     """
     for i in os.listdir('.'):
         parts = i.split(sep='.')
@@ -72,19 +80,9 @@ def main(d):
         print('{0} --> {1}'.format(filename, newname))
 
 
-def batch_mover():
-    """Move all the files in :param:`dir` that match :param:`pattern`."""
-    for i in os.scandir('.'):
-        if i.name.__contains__('vim'):
-            shutil.move(i.name, '/home/faris/Dropbox/vim/' + i.name)
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-d",
-        "--directory",
-        help="Directory containing only the files to be renamed.")
+    parser.add_argument("-d", "--directory", help="Directory containing only the files to be renamed.")
     args = parser.parse_args()
     print(args.directory)
     d = args.directory

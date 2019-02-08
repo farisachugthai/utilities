@@ -1,4 +1,4 @@
-# !/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Initialize the package for all scripts used in IPythom startup.
 
@@ -14,6 +14,9 @@ This module intends to establish a few different things.
 create the directory as a namespace package
 - Define generic dunder methods
 - Extend the user's $PATH to include this directory even if it != os.cwd
+
+# NOQA F401
+
 """
 import logging
 from logging import NullHandler

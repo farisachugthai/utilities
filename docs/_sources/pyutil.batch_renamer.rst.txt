@@ -1,7 +1,7 @@
 pyutil.batch\_renamer module
 ============================
 
-.. currentmodule:: batch_renamer
+.. module:: batch_renamer
     :synopsis: Renames groups of files.
 
 

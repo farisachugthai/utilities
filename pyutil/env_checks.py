@@ -2,18 +2,20 @@
 # -*- coding: utf-8 -*-
 """Run simple checks to ensure that a user's environment has been set up.
 
-Easier to group similar methods in one mod then have them scattered around. 
+Easier to group similar methods in one mod then have them scattered around.
 
-Below is a generic example of using the public methods to read in user 
+Below is a generic example of using the public methods to read in user
 defined configurations.
 
 Example
 ---------
 
->>> from env_checks import check_xdg_config_home
->>> if check_xdg_config_home:
-    >>> with open('module.conf') as f:
-        >>> configs = f.readlines()
+.. code-block:: python
+
+    >>> from env_checks import check_xdg_config_home
+    >>> if check_xdg_config_home():
+        >>> with open('module.conf', 'rt') as f:
+            >>> configs = f.readlines()
 
 """
 import os
@@ -25,7 +27,7 @@ def check_xdg_config_home():
     Usage
     ------
     TODO
-    
+
     :param: None
     :returns: Bool
     """
@@ -37,7 +39,7 @@ def check_xdg_config_home():
 
 def check_xdg_env():
     """Check to see if $XDG_CONFIG_HOME has been defined.
-    
+
     :param: None
     :returns: Bool
     """

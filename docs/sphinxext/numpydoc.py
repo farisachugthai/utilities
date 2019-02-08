@@ -32,28 +32,26 @@ from sphinx.addnodes import pending_xref, desc_content
 if sphinx.__version__ < '1.0.1':
     raise RuntimeError("Sphinx 1.0.1 or newer is required")
 
-from docscrape_sphinx import get_doc_object, SphinxDocString
-__version__ = '1.0.0'
+from .docscrape_sphinx import get_doc_object, SphinxDocString
+from . import __version__
 
 if sys.version_info[0] >= 3:
     sixu = lambda s: s
 else:
     sixu = lambda s: unicode(s, 'unicode_escape')
 
+
 HASH_LEN = 12
 
 
 def rename_references(app, what, name, obj, options, lines):
-    """Decorate reference numbers so that there are no duplicates.
-
-    These are later undecorated in the doctree, in relabel_references.
-    """
+    # decorate reference numbers so that there are no duplicates
+    # these are later undecorated in the doctree, in relabel_references
     references = set()
     for line in lines:
         line = line.strip()
-        m = re.match(
-            sixu('^.. \\[(%s)\\]') % app.config.numpydoc_citation_re, line,
-            re.I)
+        m = re.match(sixu('^.. \\[(%s)\\]') % app.config.numpydoc_citation_re,
+                     line, re.I)
         if m:
             references.add(m.group(1))
 
@@ -66,12 +64,10 @@ def rename_references(app, what, name, obj, options, lines):
         for r in references:
             new_r = prefix + '-' + r
             for i, line in enumerate(lines):
-                lines[i] = lines[i].replace(
-                    sixu('[%s]_') % r,
-                    sixu('[%s]_') % new_r)
-                lines[i] = lines[i].replace(
-                    sixu('.. [%s]') % r,
-                    sixu('.. [%s]') % new_r)
+                lines[i] = lines[i].replace(sixu('[%s]_') % r,
+                                            sixu('[%s]_') % new_r)
+                lines[i] = lines[i].replace(sixu('.. [%s]') % r,
+                                            sixu('.. [%s]') % new_r)
 
 
 def _ascend(node, cls):
@@ -99,8 +95,8 @@ def relabel_references(app, doc):
 
             # Sphinx has created pending_xref nodes with [reftext] text.
             def matching_pending_xref(node):
-                return (isinstance(node, pending_xref)
-                        and node[0].astext() == '[%s]' % ref_text)
+                return (isinstance(node, pending_xref) and
+                        node[0].astext() == '[%s]' % ref_text)
 
             for xref_node in ref.parent.traverse(matching_pending_xref):
                 xref_node.replace(xref_node[0], Text('[%s]' % new_text))
@@ -114,18 +110,12 @@ def mangle_docstrings(app, what, name, obj, options, lines):
     if DEDUPLICATION_TAG in lines:
         return
 
-    cfg = {
-        'use_plots':
-        app.config.numpydoc_use_plots,
-        'use_blockquotes':
-        app.config.numpydoc_use_blockquotes,
-        'show_class_members':
-        app.config.numpydoc_show_class_members,
-        'show_inherited_class_members':
-        app.config.numpydoc_show_inherited_class_members,
-        'class_members_toctree':
-        app.config.numpydoc_class_members_toctree
-    }
+    cfg = {'use_plots': app.config.numpydoc_use_plots,
+           'use_blockquotes': app.config.numpydoc_use_blockquotes,
+           'show_class_members': app.config.numpydoc_show_class_members,
+           'show_inherited_class_members':
+           app.config.numpydoc_show_inherited_class_members,
+           'class_members_toctree': app.config.numpydoc_class_members_toctree}
 
     u_NL = sixu('\n')
     if what == 'module':
@@ -134,25 +124,23 @@ def mangle_docstrings(app, what, name, obj, options, lines):
         title_re = re.compile(sixu(pattern), re.I | re.S)
         lines[:] = title_re.sub(sixu(''), u_NL.join(lines)).split(u_NL)
     else:
-        doc = get_doc_object(
-            obj, what, u_NL.join(lines), config=cfg, builder=app.builder)
+        doc = get_doc_object(obj, what, u_NL.join(lines), config=cfg,
+                             builder=app.builder)
         if sys.version_info[0] >= 3:
             doc = str(doc)
         else:
             doc = unicode(doc)
         lines[:] = doc.split(u_NL)
 
-    if (app.config.numpydoc_edit_link and hasattr(obj, '__name__')
-            and obj.__name__):
+    if (app.config.numpydoc_edit_link and hasattr(obj, '__name__') and
+            obj.__name__):
         if hasattr(obj, '__module__'):
             v = dict(full_name=sixu("%s.%s") % (obj.__module__, obj.__name__))
         else:
             v = dict(full_name=obj.__name__)
         lines += [sixu(''), sixu('.. htmlonly::'), sixu('')]
-        lines += [
-            sixu('    %s') % x
-            for x in (app.config.numpydoc_edit_link % v).split("\n")
-        ]
+        lines += [sixu('    %s') % x for x in
+                  (app.config.numpydoc_edit_link % v).split("\n")]
 
     # call function to replace reference numbers so that there are no
     # duplicates
@@ -163,13 +151,13 @@ def mangle_docstrings(app, what, name, obj, options, lines):
 
 def mangle_signature(app, what, name, obj, options, sig, retann):
     # Do not try to inspect classes that don't define `__init__`
-    if (inspect.isclass(obj)
-            and (not hasattr(obj, '__init__')
-                 or 'initializes x; see ' in pydoc.getdoc(obj.__init__))):
+    if (inspect.isclass(obj) and
+        (not hasattr(obj, '__init__') or
+            'initializes x; see ' in pydoc.getdoc(obj.__init__))):
         return '', ''
 
-    if not (isinstance(obj, collections.Callable)
-            or hasattr(obj, '__argspec_is_invalid_')):
+    if not (isinstance(obj, collections.Callable) or
+            hasattr(obj, '__argspec_is_invalid_')):
         return
 
     if not hasattr(obj, '__doc__'):
@@ -205,9 +193,9 @@ def setup(app, get_doc_object_=get_doc_object):
 
     app.setup_extension('sphinx.ext.autosummary')
 
-    metadata = {'version': __version__, 'parallel_read_safe': True}
+    metadata = {'version': __version__,
+                'parallel_read_safe': True}
     return metadata
-
 
 # ------------------------------------------------------------------------------
 # Docstring-mangling domains
@@ -308,14 +296,12 @@ def match_items(lines, content_old):
         items_new.append(items_old[j])
         if line.strip() and j < len(lines_old) - 1:
             j += 1
-    assert (len(items_new) == len(lines))
+    assert(len(items_new) == len(lines))
     return items_new
 
 
 def wrap_mangling_directive(base_directive, objtype):
-
     class directive(base_directive):
-
         def run(self):
             env = self.state.document.settings.env
 
@@ -331,8 +317,8 @@ def wrap_mangling_directive(base_directive, objtype):
             mangle_docstrings(env.app, objtype, name, None, None, lines)
             if self.content:
                 items = match_items(lines, self.content)
-                self.content = ViewList(
-                    lines, items=items, parent=self.content.parent)
+                self.content = ViewList(lines, items=items,
+                                        parent=self.content.parent)
 
             return base_directive.run(self)
 

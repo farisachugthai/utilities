@@ -1,5 +1,3 @@
-.. _pyutil:
-
 pyutil package
 ==============
 
@@ -7,10 +5,8 @@ Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 2
-   :noindex:
 
-   math
+    pyutil.math
 
 Submodules
 ----------
@@ -238,3 +234,13 @@ pyutil.zillow\-api module
     :members:
     :undoc-members:
     :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: pyutil
+    :members:
+    :undoc-members:
+    :show-inheritance:
+    :noindex:

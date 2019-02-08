@@ -83,14 +83,16 @@ def main(url, output_fname):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(prog='lazy_downloader',
-                                     description=__doc__)
+    parser = argparse.ArgumentParser(
+        prog='lazy_downloader', description=__doc__)
 
     parser.add_argument("URL", help="The URL to download. Must be plaintext.")
 
     # Will need to learn how to parse and tokenize the URL to get a reasonable
     # guess for the filename though
-    parser.add_argument("fname", help="The name of the file to write to. Must not exist already.")
+    parser.add_argument(
+        "fname",
+        help="The name of the file to write to. Must not exist already.")
     args = parser.parse_args()
 
     # With xt permissions the script crashes so no point raising anything.

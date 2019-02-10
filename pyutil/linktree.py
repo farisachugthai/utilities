@@ -79,12 +79,10 @@ def linknames(old, new, link):
                     os.mkdir(newname, 0o777)
                     ok = 1
                 except Exception as msg:
-                    print(newname +
-                          ': warning: cannot mkdir:', msg)
+                    print(newname + ': warning: cannot mkdir:', msg)
                     ok = 0
                 if ok:
-                    linkname = os.path.join(os.pardir,
-                                            linkname)
+                    linkname = os.path.join(os.pardir, linkname)
                     linknames(oldname, newname, linkname)
             else:
                 os.symlink(linkname, newname)

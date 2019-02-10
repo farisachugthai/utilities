@@ -1,36 +1,34 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-""" Renames a directory of files based on a template
+"""Renames a directory of files based on a template
+
+.. module:: batch_renamer.py
 
 Largely argparse and doctest practice.
-From pydocs tutorials stdlib2. Reformatted.
+From pydocs tutorials stdlib2 with some reformatting.
 Still uses old style strings as a result.
 
-Examples::
+.. code-block:: python
 
     >>> os.listdir("/path/to/dir")
-    # ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
+    ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
     >>>  batch_renamer.py /path/to/dir
-    #  img_1074.jpg --> Ashley_0.jpg
-    #  img_1076.jpg --> Ashley_1.jpg
-    #  img_1077.jpg --> Ashley_2.jpg
+    img_1074.jpg --> Ashley_0.jpg
+    img_1076.jpg --> Ashley_1.jpg
+    img_1077.jpg --> Ashley_2.jpg
 
 .. todo::
 
     First things first ensure it works at all.
-    Then we should add some doctests maybe.
 
-    .. code block::
-
-        import doctest
-        doctest.docmod()
+    This would be quite an easy module to create unittests for IN ADDITION
+    to the fact that you could add some fixtures in and learn that.
 """
 import argparse
-import os.path
+import os
 import shutil
 from string import Template
 import time
-import uuid
 
 
 class BatchRename(Template):
@@ -38,16 +36,12 @@ class BatchRename(Template):
 
 
 def fix_extension():
-    """Basically a batch renamer.
+    """Rename files that have have the wrong filename extension.
 
-    .. usage::
+    .. todo::
 
-        # This isn't very helpful but whatever. cd into intended dir
-        fix_extension()
-
-    .. bugs::
-
-        Fuck I didn't consider the case where there are 2 words separated by dots that we want to keep.
+        Fuck I didn't consider the case where there are 2 words separated by
+        dots that we want to keep.
     """
     for i in os.listdir('.'):
         parts = i.split(sep='.')
@@ -60,13 +54,13 @@ def fix_multipart_filename():
 
     Gotta clean whatever the hell is going on below up.
     Then we gotta fix the module so that it properly handles names like
-    :ref:`os.path.rst.txt`.
+    ``os.path.rst.txt``.
     """
     pass
 
 
 def main(d):
-    """Renames a dir of files.
+    """Rename a dir of files.
 
     :param d: The directory to iterate over.
     """
@@ -80,9 +74,19 @@ def main(d):
         print('{0} --> {1}'.format(filename, newname))
 
 
+def batch_mover():
+    """Move all the files in :param:`dir` that match :param:`pattern`."""
+    for i in os.scandir('.'):
+        if i.name.__contains__('vim'):
+            shutil.move(i.name, '/home/faris/Dropbox/vim/' + i.name)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--directory", help="Directory containing only the files to be renamed.")
+    parser.add_argument(
+        "-d",
+        "--directory",
+        help="Directory containing only the files to be renamed.")
     args = parser.parse_args()
     print(args.directory)
     d = args.directory

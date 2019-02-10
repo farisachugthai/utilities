@@ -16,7 +16,6 @@ import zipfile
 from importlib.util import source_from_cache
 from test.support import make_legacy_pyc, strip_python_stderr
 
-
 # Cached result of the expensive test performed in the function below.
 __cached_interp_requires_environment = None
 
@@ -48,8 +47,8 @@ def interpreter_requires_environment():
 
         # Try running an interpreter with -E to see if it works or not.
         try:
-            subprocess.check_call([sys.executable, '-E',
-                                   '-c', 'import sys; sys.exit(0)'])
+            subprocess.check_call(
+                [sys.executable, '-E', '-c', 'import sys; sys.exit(0)'])
         except subprocess.CalledProcessError:
             __cached_interp_requires_environment = True
         else:
@@ -58,8 +57,8 @@ def interpreter_requires_environment():
     return __cached_interp_requires_environment
 
 
-class _PythonRunResult(collections.namedtuple("_PythonRunResult",
-                                          ("rc", "out", "err"))):
+class _PythonRunResult(
+        collections.namedtuple("_PythonRunResult", ("rc", "out", "err"))):
     """Helper for reporting Python subprocess run results"""
 
     def fail(self, cmd_line):
@@ -84,10 +83,7 @@ class _PythonRunResult(collections.namedtuple("_PythonRunResult",
                              "stderr:\n"
                              "---\n"
                              "%s\n"
-                             "---"
-                             % (self.rc, cmd_line,
-                                out,
-                                err))
+                             "---" % (self.rc, cmd_line, out, err))
 
 
 # Executing the interpreter in a subprocess
@@ -130,9 +126,13 @@ def run_python_until_end(*args, **env_vars):
 
     env.update(env_vars)
     cmd_line.extend(args)
-    proc = subprocess.Popen(cmd_line, stdin=subprocess.PIPE,
-                         stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                         env=env, cwd=cwd)
+    proc = subprocess.Popen(
+        cmd_line,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        env=env,
+        cwd=cwd)
     with proc:
         try:
             out, err = proc.communicate()
@@ -176,7 +176,8 @@ def assert_python_failure(*args, **env_vars):
     return _assert_python(False, *args, **env_vars)
 
 
-def spawn_python(*args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, **kw):
+def spawn_python(*args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                 **kw):
     """Run a Python subprocess with the given arguments.
 
     kw is extra keyword args to pass to subprocess.Popen. Returns a Popen
@@ -194,9 +195,8 @@ def spawn_python(*args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, **kw):
     # - http://lists.gnu.org/archive/html/bug-readline/2007-08/msg00004.html
     env = kw.setdefault('env', dict(os.environ))
     env['TERM'] = 'vt100'
-    return subprocess.Popen(cmd_line, stdin=subprocess.PIPE,
-                            stdout=stdout, stderr=stderr,
-                            **kw)
+    return subprocess.Popen(
+        cmd_line, stdin=subprocess.PIPE, stdout=stdout, stderr=stderr, **kw)
 
 
 def kill_python(p):
@@ -225,7 +225,7 @@ def make_script(script_dir, script_basename, source, omit_suffix=False):
 
 
 def make_zip_script(zip_dir, zip_basename, script_name, name_in_zip=None):
-    zip_filename = zip_basename+os.extsep+'zip'
+    zip_filename = zip_basename + os.extsep + 'zip'
     zip_name = os.path.join(zip_dir, zip_filename)
     zip_file = zipfile.ZipFile(zip_name, 'w')
     if name_in_zip is None:
@@ -251,8 +251,13 @@ def make_pkg(pkg_dir, init_source=''):
     make_script(pkg_dir, '__init__', init_source)
 
 
-def make_zip_pkg(zip_dir, zip_basename, pkg_name, script_basename,
-                 source, depth=1, compiled=False):
+def make_zip_pkg(zip_dir,
+                 zip_basename,
+                 pkg_name,
+                 script_basename,
+                 source,
+                 depth=1,
+                 compiled=False):
     unlink = []
     init_name = make_script(zip_dir, '__init__', '')
     unlink.append(init_name)
@@ -263,9 +268,10 @@ def make_zip_pkg(zip_dir, zip_basename, pkg_name, script_basename,
         init_name = py_compile.compile(init_name, doraise=True)
         script_name = py_compile.compile(script_name, doraise=True)
         unlink.extend((init_name, script_name))
-    pkg_names = [os.sep.join([pkg_name]*i) for i in range(1, depth+1)]
-    script_name_in_zip = os.path.join(pkg_names[-1], os.path.basename(script_name))
-    zip_filename = zip_basename+os.extsep+'zip'
+    pkg_names = [os.sep.join([pkg_name] * i) for i in range(1, depth + 1)]
+    script_name_in_zip = os.path.join(pkg_names[-1],
+                                      os.path.basename(script_name))
+    zip_filename = zip_basename + os.extsep + 'zip'
     zip_name = os.path.join(zip_dir, zip_filename)
     zip_file = zipfile.ZipFile(zip_name, 'w')
     for name in pkg_names:

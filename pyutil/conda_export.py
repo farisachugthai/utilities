@@ -46,7 +46,7 @@ def munging():
 
 def truncate(envs):
     """Take the decoded environments and reduce them down to the parts we need."""
-# I want this list comprehension to work so badly I cant tell you
+    # I want this list comprehension to work so badly I cant tell you
     short_envs = [env for env.split()[0] in envs]
     return short_envs
 

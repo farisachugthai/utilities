@@ -6,21 +6,22 @@
 
     rclone.py [src] dst
 
-
 Requires
-----------
+---------
 rclone
 
+The remaining roadmap.
 
 .. todo::
 
-    - :param:`args` is used as a parameter to both :class:`argparse.ArgumentParser()` and :func:`subprocess.run()`
+    - :param:`args` is used as a parameter to both :class:`argparse.ArgumentParser()` and
+      :func:`subprocess.run()`
         - Switch the name for one of them as this'll get confusing quickly.
     - Set up a simple single use case backup.
     - Add :func:`collections.ChainMap()` to set precedence of backupdir.
     - Add in multiple invocations of rclone and create args to reflect use cases.
-    - Expand argparse usage with :func:`argparse.ArgumentParser.fromfile_prefix_chars()` to emulate rsync's file input.
-
+    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`
+     to emulate rsync's file input.
 
 """
 import argparse
@@ -35,17 +36,12 @@ def _parse_arguments():
     # parser.add_argument(dest=src, required=True, help='A directory, presumably local, to sync with a remote.')
     parser = argparse.ArgumentParser(
         usage="%(prog)s [options]",
-        description="Automate usage of rclone for"
+        description="Automate usage of rclone for "
         "simple backup creation.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
-        src, default=cwd, help="The source directory."
+        src, default=cwd, help="The source directory. "
         "Defaults to the cwd.")
-
-    parser.add_argument(
-        dst, help="Directory to clone to. Required.", required=True)
-
-    parser.add_argument('-f', '--follow', help="Follow symlinks")
 
     return parser
 
@@ -75,11 +71,8 @@ def rclone_base_case(src, dst):
 
     This command assumes a use case and configures it rclone for it properly.
 
-
     .. todo::
-
-        - rclone takes an argument for ``user-agent``
-
+        - rclone takes an argument for user-agent
 
     Parameters
     ----------
@@ -88,12 +81,9 @@ def rclone_base_case(src, dst):
           a dropbox directory, a google drive folder or a google cloud storage
           bucket among many other things.
 
-
     Returns
     -------
     None.
-
-
     """
     cmd = ['rclone', 'copy', '--update', '--track-renames', src, dst]
     subprocess.run(cmd)
@@ -121,9 +111,4 @@ if __name__ == "__main__":
     # Use :Glog if you want a reference of what was here.
     parser = _parse_arguments()
 
-    args = parser.parse_args
-
-    if args.follow:
-        rclone_follow(dst=args.dst, args.src=src)
-    else:
-        rclone(args.dst=dst, args.src=src)
+    parser.parse_args()

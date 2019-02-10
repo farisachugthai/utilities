@@ -1,51 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Automate profiling nvim.
-
-Examples::
-    Case
-
-Tests::
-    something
-
-Errors/Bugs::
-    abc
-
-So yeah.
-"""
+"""Automate profiling nvim."""
 import datetime
 import os
-import shutil
-import subprocess
 
-
-def get_script_dir():
-    """Determine the directory this script is in."""
-    return os.path.dirname(os.path.realpath(__file__))
-
-
-def check_xdg_env():
-    """Profiling results will be saved in $XDG_CONFIG_HOME if its been defined."""
-    if os.environ("$XDG_CONFIG_HOME"):
-        return True
-    else:
-        return False
+from pyutil.env_checks import *  # noqa F403
 
 
 def check_profiling_dir():
     """Ensure a directory has been created for the results.
+
     Need to change now that we take xdg into account.
     """
     if os.path.isdir(os.path.join(dirname, 'profiling')) is False:
-            os.mkdir(os.path.join(dirname, 'profiling')
-
+        os.mkdir(os.path.join(dirname, 'profiling'))
 
 
 def main():
     """Profile nvim."""
     now = datetime.date.isoformat(datetime.datetime.now())
-
-    get_script_dir()
 
     # TODO:
     # check_profiling_dir():
@@ -60,4 +33,15 @@ def main():
 
 
 if __name__ == "__main__":
+    xdg = check_xdg_env()
+
+    if xdg:
+        nvimroot = os.environ.get("XDG_CONFIG_HOME")
+    else:
+        # hmm what do?
+        # nvimroot = get_home() + os.path.join("config", "nvim", "")
+        pass
+
+    pdir = check_profiling_dir()
+
     main()

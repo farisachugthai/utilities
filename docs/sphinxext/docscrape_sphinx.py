@@ -20,11 +20,11 @@ if sys.version_info[0] >= 3:
 else:
     sixu = lambda s: unicode(s, 'unicode_escape')
 
-
 IMPORT_MATPLOTLIB_RE = r'\b(import +matplotlib|from +matplotlib +import)\b'
 
 
 class SphinxDocString(NumpyDocString):
+
     def __init__(self, docstring, config={}):
         NumpyDocString.__init__(self, docstring, config=config)
         self.load_config(config)
@@ -35,7 +35,9 @@ class SphinxDocString(NumpyDocString):
         self.class_members_toctree = config.get('class_members_toctree', True)
         self.template = config.get('template', None)
         if self.template is None:
-            template_dirs = [os.path.join(os.path.dirname(__file__), 'templates')]
+            template_dirs = [
+                os.path.join(os.path.dirname(__file__), 'templates')
+            ]
             template_loader = FileSystemLoader(template_dirs)
             template_env = SandboxedEnvironment(loader=template_loader)
             self.template = template_env.get_template('numpydoc_docstring.rst')
@@ -50,7 +52,7 @@ class SphinxDocString(NumpyDocString):
     def _str_indent(self, doc, indent=4):
         out = []
         for line in doc:
-            out += [' '*indent + line]
+            out += [' ' * indent + line]
         return out
 
     def _str_signature(self):
@@ -76,8 +78,8 @@ class SphinxDocString(NumpyDocString):
             out += ['']
             for param, param_type, desc in self[name]:
                 if param_type:
-                    out += self._str_indent([typed_fmt % (param.strip(),
-                                                          param_type)])
+                    out += self._str_indent(
+                        [typed_fmt % (param.strip(), param_type)])
                 else:
                     out += self._str_indent([untyped_fmt % param.strip()])
                 if desc and self.use_blockquotes:
@@ -132,8 +134,7 @@ class SphinxDocString(NumpyDocString):
             return display_param, desc
 
         param_obj = getattr(self._obj, param, None)
-        if not (callable(param_obj)
-                or isinstance(param_obj, property)
+        if not (callable(param_obj) or isinstance(param_obj, property)
                 or inspect.isgetsetdescriptor(param_obj)):
             param_obj = None
         obj_doc = pydoc.getdoc(param_obj)
@@ -150,16 +151,13 @@ class SphinxDocString(NumpyDocString):
             link_prefix = ''
 
         # Referenced object has a docstring
-        display_param = ':obj:`%s <%s%s>`' % (param,
-                                              link_prefix,
-                                              param)
+        display_param = ':obj:`%s <%s%s>`' % (param, link_prefix, param)
         if obj_doc:
             # Overwrite desc. Take summary logic of autosummary
             desc = re.split('\n\s*\n', obj_doc.strip(), 1)[0]
             # XXX: Should this have DOTALL?
             #      It does not in autosummary
-            m = re.search(r"^([A-Z].*?\.)(?:\s|$)",
-                          ' '.join(desc.split()))
+            m = re.search(r"^([A-Z].*?\.)(?:\s|$)", ' '.join(desc.split()))
             if m:
                 desc = m.group(1).strip()
             else:
@@ -192,12 +190,12 @@ class SphinxDocString(NumpyDocString):
             out += self._str_field_list(name)
             out += ['']
             for param, param_type, desc in self[name]:
-                display_param, desc = self._process_param(param, desc,
-                                                          fake_autosummary)
+                display_param, desc = self._process_param(
+                    param, desc, fake_autosummary)
 
                 if param_type:
-                    out += self._str_indent(['%s : %s' % (display_param,
-                                                          param_type)])
+                    out += self._str_indent(
+                        ['%s : %s' % (display_param, param_type)])
                 else:
                     out += self._str_indent([display_param])
                 if desc and self.use_blockquotes:
@@ -239,8 +237,7 @@ class SphinxDocString(NumpyDocString):
 
                 # Check if the referenced member can have a docstring or not
                 param_obj = getattr(self._obj, param, None)
-                if not (callable(param_obj)
-                        or isinstance(param_obj, property)
+                if not (callable(param_obj) or isinstance(param_obj, property)
                         or inspect.isdatadescriptor(param_obj)):
                     param_obj = None
 
@@ -259,7 +256,7 @@ class SphinxDocString(NumpyDocString):
             if others:
                 maxlen_0 = max(3, max([len(x[0]) + 4 for x in others]))
                 hdr = sixu("=") * maxlen_0 + sixu("  ") + sixu("=") * 10
-                fmt = sixu('%%%ds  %%s  ') % (maxlen_0,)
+                fmt = sixu('%%%ds  %%s  ') % (maxlen_0, )
                 out += ['', '', hdr]
                 for param, param_type, desc in others:
                     desc = sixu(" ").join(x.strip() for x in desc).strip()
@@ -350,24 +347,40 @@ class SphinxDocString(NumpyDocString):
 
     def __str__(self, indent=0, func_role="obj"):
         ns = {
-            'signature':  self._str_signature(),
-            'index': self._str_index(),
-            'summary': self._str_summary(),
-            'extended_summary': self._str_extended_summary(),
-            'parameters': self._str_param_list('Parameters'),
-            'returns': self._str_returns('Returns'),
-            'yields': self._str_returns('Yields'),
-            'other_parameters': self._str_param_list('Other Parameters'),
-            'raises': self._str_param_list('Raises'),
-            'warns': self._str_param_list('Warns'),
-            'warnings': self._str_warnings(),
-            'see_also': self._str_see_also(func_role),
-            'notes': self._str_section('Notes'),
-            'references': self._str_references(),
-            'examples': self._str_examples(),
-            'attributes': self._str_param_list('Attributes',
-                                               fake_autosummary=True),
-            'methods': self._str_member_list('Methods'),
+            'signature':
+            self._str_signature(),
+            'index':
+            self._str_index(),
+            'summary':
+            self._str_summary(),
+            'extended_summary':
+            self._str_extended_summary(),
+            'parameters':
+            self._str_param_list('Parameters'),
+            'returns':
+            self._str_returns('Returns'),
+            'yields':
+            self._str_returns('Yields'),
+            'other_parameters':
+            self._str_param_list('Other Parameters'),
+            'raises':
+            self._str_param_list('Raises'),
+            'warns':
+            self._str_param_list('Warns'),
+            'warnings':
+            self._str_warnings(),
+            'see_also':
+            self._str_see_also(func_role),
+            'notes':
+            self._str_section('Notes'),
+            'references':
+            self._str_references(),
+            'examples':
+            self._str_examples(),
+            'attributes':
+            self._str_param_list('Attributes', fake_autosummary=True),
+            'methods':
+            self._str_member_list('Methods'),
         }
         ns = dict((k, '\n'.join(v)) for k, v in ns.items())
 
@@ -376,18 +389,21 @@ class SphinxDocString(NumpyDocString):
 
 
 class SphinxFunctionDoc(SphinxDocString, FunctionDoc):
+
     def __init__(self, obj, doc=None, config={}):
         self.load_config(config)
         FunctionDoc.__init__(self, obj, doc=doc, config=config)
 
 
 class SphinxClassDoc(SphinxDocString, ClassDoc):
+
     def __init__(self, obj, doc=None, func_doc=None, config={}):
         self.load_config(config)
         ClassDoc.__init__(self, obj, doc=doc, func_doc=None, config=config)
 
 
 class SphinxObjDoc(SphinxDocString):
+
     def __init__(self, obj, doc=None, config={}):
         self._f = obj
         self.load_config(config)
@@ -415,8 +431,8 @@ def get_doc_object(obj, what=None, doc=None, config={}, builder=None):
     config['template'] = template_env.get_template('numpydoc_docstring.rst')
 
     if what == 'class':
-        return SphinxClassDoc(obj, func_doc=SphinxFunctionDoc, doc=doc,
-                              config=config)
+        return SphinxClassDoc(
+            obj, func_doc=SphinxFunctionDoc, doc=doc, config=config)
     elif what in ('function', 'method'):
         return SphinxFunctionDoc(obj, doc=doc, config=config)
     else:

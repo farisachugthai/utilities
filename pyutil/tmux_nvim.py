@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Neovim sessions with the help of tmux
+"""Neovim sessions with the help of tmux.
+
+.. module:: tmux_nvim
 
 Depends: tmux, nvim, libtmux
-
-All rights reserved.
 
 """
 # imports: {{{
@@ -39,13 +39,16 @@ class DefaultTmuxServer(libtmux.Server):
 # probs not tho
     def __init__(self, **kwargs):
         libtmux.Server.__init__(self, colors='2', conf, **kwargs)
-        # Only reason I defaulted to kwargs is because the docs aren't clear
-        # 1about which parameters are ACTUALLY REQUIRED
 
 
 def check_if_virtualenv():
-    # TODO: Do this in a better way. They'll get the warning if they
-    # use the builtin venv, pipenv or the other 1000 ways to isolate python.
+    """Check if we're in a virtualenv or conda env.
+
+    .. todo::
+
+        Do this in a better way. They'll get the warning if they use
+        the builtin venv, pipenv or the other 1000 ways to isolate python.
+    """
     if not os.environ.get('VIRTUAL_ENV') or \
     int(os.environ.get('CONDA_SHLVL')) = 1 or None :
         print("As a warning, you're not in a virtualenv. Pass -g to continue."
@@ -53,7 +56,7 @@ def check_if_virtualenv():
 
 
 def main():
-
+    """Check env vars and programatically ijteract with tmux and nvim."""
     EDITOR_FLAGS = sys.argv[1:]
     if os.environ.get('EDITOR') is not None:
         EDITOR = os.environ.get('EDITOR')

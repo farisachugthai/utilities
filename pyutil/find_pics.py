@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Finds all the jpegs and jpgs in the user's current directory."""
 import re
 import os
 
@@ -25,6 +24,11 @@ def find_pics(path):
 if __name__ == "__main__":
     path = os.listdir(".")
     # list comprehesion with a function?
-    matches = []
+    # matches = [f if find_pics(f) for f in path]
     for f in path:
-        matches.append(find_pics(f))
+        if find_pics(f):
+            match = find_pics(f)
+
+            # We'll say that another thing on the todo list is return a path-like
+            # object from :func:`find_pics()`.
+            # print(os.path.abspath(match)

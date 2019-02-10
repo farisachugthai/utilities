@@ -24,10 +24,6 @@ import os
 def check_xdg_config_home():
     """Check to see if $XDG_CONFIG_HOME has been defined.
 
-    Usage
-    ------
-    TODO
-
     :param: None
     :returns: Bool
     """
@@ -37,13 +33,6 @@ def check_xdg_config_home():
         return False
 
 
-def check_xdg_env():
-    """Check to see if $XDG_CONFIG_HOME has been defined.
-
-    :param: None
-    :returns: Bool
-    """
-    if os.environ.get('XDG_CONFIG_HOME'):
-        return True
-    else:
-        return False
+def get_script_dir():
+    """Determine the directory this script is in."""
+    return os.path.dirname(os.path.realpath(__file__))

@@ -38,21 +38,19 @@ def backup_directory(path):
 
         # Windows Specific Implementation
         if os.name == "nt":
-            cmd = subprocess.Popen(
-                ["move", path, backup_dir],
-                shell=True,
-                stdout=subprocess.PIPE,
-                stdin=subprocess.PIPE,
-                stderr=subprocess.PIPE)
+            cmd = subprocess.Popen(["move", path, backup_dir],
+                                   shell=True,
+                                   stdout=subprocess.PIPE,
+                                   stdin=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
 
         # POSIX
         elif os.name == "posix":
-            cmd = subprocess.Popen(
-                ["mv", path, backup_dir],
-                shell=True,
-                stdout=subprocess.PIPE,
-                stdin=subprocess.PIPE,
-                stderr=subprocess.PIPE)
+            cmd = subprocess.Popen(["mv", path, backup_dir],
+                                   shell=True,
+                                   stdout=subprocess.PIPE,
+                                   stdin=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
         else:
             return [-1, "Not supported on %s platform" % (os.name)]
 
@@ -68,6 +66,7 @@ def backup_directory(path):
     else:
         os.mkdir(path)
         return [0, None]
+
 
 if __name__ == '__main__':
     backupd = sys.argv[1]

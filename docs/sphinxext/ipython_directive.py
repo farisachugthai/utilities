@@ -218,7 +218,6 @@ except Exception:
 # for tokenizing blocks
 COMMENT, INPUT, OUTPUT = range(3)
 
-
 # -----------------------------------------------------------------------------
 # Functions and class declarations
 # -----------------------------------------------------------------------------

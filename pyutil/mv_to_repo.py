@@ -59,7 +59,8 @@ def main():
         move.
     """
     sys_checks()
-    inputted = sys.argv[1] if len(sys.argv) >= 2 else sys.exit("Takes at least one filename.")
+    inputted = sys.argv[1] if len(
+        sys.argv) >= 2 else sys.exit("Takes at least one filename.")
     src = Path(inputted)
 
     if src.is_file() is not True:

@@ -42,6 +42,8 @@ if __name__ == "__main__":
     tmpd = os.scandir(tmp)
     for i in tmpd:
         dir_cleaner(i)
+
+
 def extract_dir():
     """Could be used in dir_cleaner. Yeah let's do that.
     
@@ -54,7 +56,8 @@ def extract_dir():
         shutil.unpack_archive(i)
         os.unlink(i)
         return
-    
+
+
 def clean():
     """Removes all pyc files. Add input for filetype later.
     
@@ -65,4 +68,4 @@ def clean():
     Use return instead of yield since the function call is gonna
     either require ``list[clean()]`` or a loop.
     """
-    yield [ os.unlink(i) for i in glob('*.pyc') ]
+    yield [os.unlink(i) for i in glob('*.pyc')]

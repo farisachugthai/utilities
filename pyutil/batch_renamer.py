@@ -77,8 +77,7 @@ if __name__ == '__main__':
     parser.add_argument(
         "-d",
         "--directory",
-        help="Directory containing only the files to be renamed."
-     )
+        help="Directory containing only the files to be renamed.")
 
     args = parser.parse_args()
     print(args.directory)

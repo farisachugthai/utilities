@@ -33,12 +33,15 @@ def _parse_arguments():
     """Parse user-given arguments."""
     # parser = argparse.ArgumentParser("Automate usage of rclone for simple backup creation.")
     # parser.add_argument(dest=src, required=True, help='A directory, presumably local, to sync with a remote.')
-    parser = argparse.ArgumentParser(usage="%(prog)s [options]",
-                                     description="Automate usage of rclone for \
+    parser = argparse.ArgumentParser(
+        usage="%(prog)s [options]",
+        description="Automate usage of rclone for \
                                      simple backup creation.",
-                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter
-                                     )
-    parser.add_argument(dest=src, default=cwd, help="The source directory.\
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument(
+        dest=src,
+        default=cwd,
+        help="The source directory.\
                         Defaults to the cwd.")
 
     return parser
@@ -89,7 +92,10 @@ def rclone_base_case(src, dst):
 
 def rclone_follow(dst, src=cwd):
     """Follow symlinks."""
-    cmd = ['rclone', 'copy', '--update', '--track-renames' '--copy-links', src, dst]
+    cmd = [
+        'rclone', 'copy', '--update', '--track-renames'
+                                      '--copy-links', src, dst
+    ]
     subprocess.run(cmd)
 
 

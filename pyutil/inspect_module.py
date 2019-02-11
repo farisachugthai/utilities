@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """ Explore the namespace and attributes of a module.
 
 If no argument is provided then use the name bound to the local IPython object.
@@ -10,6 +9,7 @@ However Python3.6 now has the builtin module 'pyclbr' so this entire script may 
 
 import sys
 import importlib
+
 
 def main(mod_name):
     """
@@ -22,9 +22,7 @@ def main(mod_name):
         print("{idx}: {nam:30}  {typ}".format(
             idx=str(num + 1).rjust(4),
             nam=(mod_name + '.' + attr).ljust(30),
-            typ=type(eval(mod_name + '.' + attr))
-            )
-        )
+            typ=type(eval(mod_name + '.' + attr))))
 
 
 if __name__ == '__main__':

@@ -1,4 +1,7 @@
-# utilities
+utilities
+===========
+
+.. module: readme
 
 This repository houses a number of functional scripts I utilize to
 administer multiple workstations.
@@ -9,7 +12,8 @@ have a script do this for me.' every now and then.
 That continued until I had enough scripts I was happy with to make a git repo
 for them!
 
-## Usage
+Usage
+-------
 
 Modules can be used to:
 
@@ -22,11 +26,13 @@ Modules can be used to:
 - Profiling nvim startup time.
 - Strip trailing whitespace from a file.
 
-## License
+License
+---------
 
 MIT
 
-## Contributions
+Contributions
+-----------------
 
 Even though these are mostly scripts I've thrown together;
 I'd absolutely love any constructive criticism or 

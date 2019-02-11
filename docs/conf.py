@@ -16,15 +16,16 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../pyutil/'))
 
-# soon...
-# sys.path.append(os.path.abspath('sphinxext'))
+sys.path.insert(0, os.path.abspath('sphinxext'))
+
+sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
 project = 'pyutil'
-copyright = '2018, Faris A Chugthai'
+copyright = '2018-2019, Faris A Chugthai'
 author = 'Faris A Chugthai'
 
 # The short X.Y version
@@ -37,13 +38,12 @@ release = ''
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
-# needs_sphinx = '1.0'
+needs_sphinx = '1.7'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.apidoc',
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
@@ -62,16 +62,16 @@ templates_path = ['_templates']
 
 # source_suffix = ['.rst', '.md']
 # or:
-# source_suffix = {
-#     '.rst': 'restructuredtext',
-#     '.txt': 'restructuredtext',
-#     '.md': 'markdown',
-# }
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'restructuredtext',
+    '.md': 'markdown',
+}
 # As stated at:
 # :URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
 # However, the filetype mapping came about in 1.8 so make sure to add that
 # ``needs-sphinx=version`` bit
-source_suffix = '.rst'
+# source_suffix = '.rst'
 
 # The master toctree document.
 master_doc = 'index'
@@ -181,7 +181,7 @@ texinfo_documents = [
 # -- Options for Epub output -------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = project
+# epub_title = project
 
 # The unique identifier of the text. This can be a ISBN number
 # or the project homepage.
@@ -201,7 +201,12 @@ epub_exclude_files = ['search.html']
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/3': None}
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3', 'python-inv.txt'),
+    'pandas': 'https://pandas.pydata.org/pandas-docs/stable',
+    'matplotlib': 'http://matplotlib.org',
+    'flask': 'http://flask.pocoo.org/docs/latest/api',
+}
 
 # -- Options for todo extension ----------------------------------------------
 

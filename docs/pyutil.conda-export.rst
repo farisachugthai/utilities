@@ -1,3 +1,5 @@
+.. _py:currentmodule:: pyutil.conda-export
+
 pyutil.conda\-export module
 ===========================
 

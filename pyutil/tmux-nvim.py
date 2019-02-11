@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-""" neovim sessions with the help of tmux
+"""Neovim sessions with the help of tmux
 
 Depends: tmux, nvim, libtmux
 
@@ -24,14 +24,7 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 """
-
-__author__ = 'Faris Chugthai'
-__copyright__ = 'Copyright (C) 2018 Faris Chugthai'
-__email__ = 'farischugthai@gmail.com'
-__license__ = 'MIT'
-__url__ = 'https://github.com/farisachugthai'
 
 # imports: {{{
 import argparse
@@ -43,15 +36,13 @@ import subprocess
 # Keeping an eye on the server for a lil.
 
 try:
-    import neovim
+    import pynvim
 except ImportError as e:
-    print(e)
     sys.exit("Neovim isn't installed.")
 
 try:
     import libtmux
 except ImportError as e:
-    print(e)
     sys.exit("libtmux isn't installed.")
 
 from . import sys_checks
@@ -61,24 +52,17 @@ from . import sys_checks
 class DefaultTmuxServer(libtmux.Server):
     """Helper for initializing tmux, nvim, ipython and anything else."""
 
-# so now we gotta figure out if this is the correct way to make a child class
-# probs not tho
     def __init__(self, **kwargs):
         libtmux.Server.__init__(self, colors='2', conf, **kwargs)
-        # Only reason I defaulted to kwargs is because the docs aren't clear about which parameters are ACTUALLY REQUIRED
-
 
 def check_if_virtualenv():
-    # TODO: Do this in a better way. They'll get the warning if they
-    # use the builtin venv, pipenv or the other 1000 ways to isolate python.
     if not os.environ.get('VIRTUAL_ENV') or \
-    int(os.environ.get('CONDA_SHLVL')) = 1 or None :
-        print("As a warning, you're not in a virtualenv. Pass -g to continue."
-        sys.exit()
+    int(os.environ.get('CONDA_SHLVL')) = 1 or None:
+        sys.exit("As a warning, you're not in a virtualenv. Pass -g to continue.")
 
 
 def main():
-
+    """Check the system for set environment variables."""
     EDITOR_FLAGS = sys.argv[1:]
     if os.environ.get('EDITOR') is not None:
         EDITOR = os.environ.get('EDITOR')
@@ -97,12 +81,10 @@ if __name__ == '__main__':
     libtmux.common.has_minimum_version()
 
     HOME = os.path.join(os.path.expanduser("~"), "")
-    conf = os.path.join(HOME + ".tmux.conf")
+    conf = os.path.join(HOME, ".tmux.conf")
     if os.path.isfile(conf):
         has_config = 1
 
-
-    # because of libtmux we might not need all the stuff below
 #    args = argparse.ArgumentParser("usage, description, argument_default, add_help and allow_abbrev are already true")
     parser = argparse.ArgumentParser(
         description=__doc__,

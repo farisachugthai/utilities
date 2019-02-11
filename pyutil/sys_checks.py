@@ -7,7 +7,7 @@ introduces new modules often enough that it's useful to check.
 
 Utilized by importing as so.
 
-.. code-block::
+.. code-block:: python
 
     # filename: must_be_three.py
     from syschecks import py_gt
@@ -70,7 +70,7 @@ def py_lt(max_py_version):
 
 
 def test_linux():
-    """Not a unit test but checks that the user is on Linux OS."""
+    """Check that the user is on a Linux OS system."""
     assert system() == 'Linux'
 
 

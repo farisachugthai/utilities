@@ -13,5 +13,4 @@ analysis to solve problems.
     :glob:
     :hidden:
 
-    math/gcd_iter
-    math/gcd_recur
+    math/*.rst

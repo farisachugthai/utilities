@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Renames a directory of files based on a template
+"""Renames a directory of files based on a template.
 
 .. module:: batch_renamer.py
 
@@ -23,15 +23,18 @@ Still uses old style strings as a result.
 
     This would be quite an easy module to create unittests for IN ADDITION
     to the fact that you could add some fixtures in and learn that.
+
 """
 import argparse
 import os
+import logging
 import shutil
 from string import Template
 import time
 
 
 class BatchRename(Template):
+    """Delimiter for string substitutions."""
     delimiter = '%'
 
 
@@ -40,8 +43,8 @@ def fix_extension():
 
     .. todo::
 
-        Fuck I didn't consider the case where there are 2 words separated by
-        dots that we want to keep.
+        Fuck I didn't consider the case where there are 2 words
+        separated by dots that we want to keep.
     """
     for i in os.listdir('.'):
         parts = i.split(sep='.')
@@ -49,18 +52,12 @@ def fix_extension():
         shutil.move(i, new)
 
 
-def fix_multipart_filename():
-    """TODO. I mean a lot of todos. Gotta fix the function above a little.
-
-    Gotta clean whatever the hell is going on below up.
-    Then we gotta fix the module so that it properly handles names like
-    ``os.path.rst.txt``.
-    """
-    pass
-
-
 def main(d):
     """Rename a dir of files.
+
+    .. todo::
+
+        Uhhhh??
 
     :param d: The directory to iterate over.
     """
@@ -74,20 +71,39 @@ def main(d):
         print('{0} --> {1}'.format(filename, newname))
 
 
-def batch_mover():
-    """Move all the files in :param:`dir` that match :param:`pattern`."""
-    for i in os.scandir('.'):
-        if i.name.__contains__('vim'):
-            shutil.move(i.name, '/home/faris/Dropbox/vim/' + i.name)
+def batch_mover(pattern):
+    """Move files in the current working directory that match a pattern.
+
+    .. todo::
+
+        Fix docstring to numpy style... in the meanwhile ensure all
+        3 of these render correctly as is.
+
+    :param pattern: Pattern to check filenames for.
+    :returns: True or False
+    :rtype: Bool
+    """
+    cwd = os.cwd()
+    for i in os.scandir(cwd):
+        if i.name.__contains__(pattern):
+            yield True
 
 
 if __name__ == '__main__':
+
+    logging.basicConfig()
+
     parser = argparse.ArgumentParser()
+
     parser.add_argument(
         "-d",
         "--directory",
-        help="Directory containing only the files to be renamed.")
+        help="Directory containing only the files to be renamed."
+    )
+
     args = parser.parse_args()
-    print(args.directory)
+
+    logging.debug(args.directory)
+
     d = args.directory
     main(d)

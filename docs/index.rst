@@ -10,17 +10,17 @@ Welcome to utilities's documentation!
 
 .. literalinclude::
 
-   readme
+    readme
 
 .. toctree::
-   :caption: Table of Contents
-   :name: mastertoc
-   :maxdepth: 2
+    :caption: Table of Contents
+    :name: mastertoc
+    :maxdepth: 2
 
-   tutorial
-   modules
-   pyutil
-   math
+    tutorial
+    pyutil
+    math
+    api
 
 Indices and tables
 ==================

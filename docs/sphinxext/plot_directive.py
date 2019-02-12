@@ -495,18 +495,19 @@ def run_code(code, code_path, ns=None, function_name=None):
                 ns = {}
             if not ns:
                 if setup.config.plot_pre_code is None:
-                    exec ('import numpy as np\n'
-                          'from matplotlib import pyplot as plt\n', ns)
+                    exec(
+                        'import numpy as np\n'
+                        'from matplotlib import pyplot as plt\n', ns)
                 else:
-                    exec (str(setup.config.plot_pre_code), ns)
+                    exec(str(setup.config.plot_pre_code), ns)
             if "__main__" in code:
                 ns['__name__'] = '__main__'
 
             # Patch out non-interactive show() to avoid triggering a warning.
             with cbook._setattr_cm(FigureManagerBase, show=lambda self: None):
-                exec (code, ns)
+                exec(code, ns)
                 if function_name is not None:
-                    exec (function_name + "()", ns)
+                    exec(function_name + "()", ns)
 
         except (Exception, SystemExit) as err:
             raise PlotError(traceback.format_exc())

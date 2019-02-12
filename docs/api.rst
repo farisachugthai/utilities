@@ -1,15 +1,23 @@
-pyutil package
-==============
+.. _api:
 
-Subpackages
------------
+:mod:`API`
+==========
 
 .. toctree::
+    :glob:
+    :hidden:
+    :maxdepth: 1
+    :local:
 
-    pyutil.math
+    *
 
-Submodules
-----------
+pyutil module
+-------------
+
+.. automodule:: pyutil
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 pyutil.backup\_nt\_and\_posix module
 ------------------------------------
@@ -35,10 +43,10 @@ pyutil.check\_IP module
     :undoc-members:
     :show-inheritance:
 
-pyutil.conda\-export module
----------------------------
+:mod:`pyutil.conda_export` module
+-----------------------------------
 
-.. automodule:: pyutil.conda-export
+.. automodule:: pyutil.conda_export
     :members:
     :undoc-members:
     :show-inheritance:
@@ -140,17 +148,17 @@ pyutil.linktree module
     :show-inheritance:
 
 pyutil.mv\_to\_repo module
---------------------------
+----------------------------
 
 .. automodule:: pyutil.mv_to_repo
     :members:
     :undoc-members:
     :show-inheritance:
 
-pyutil.nvim\-profiling module
------------------------------
+:mod:`pyutil.nvim_profiling` module
+-------------------------------------
 
-.. automodule:: pyutil.nvim-profiling
+.. automodule:: pyutil.nvim_profiling
     :members:
     :undoc-members:
     :show-inheritance:
@@ -195,10 +203,10 @@ pyutil.sys\_checks module
     :undoc-members:
     :show-inheritance:
 
-pyutil.tmux\-nvim module
-------------------------
+:mod:`pyutil.tmux_nvim` module
+-------------------------------
 
-.. automodule:: pyutil.tmux-nvim
+.. automodule:: pyutil.tmux_nvim
     :members:
     :undoc-members:
     :show-inheritance:
@@ -219,28 +227,10 @@ pyutil.yes\_no\_question module
     :undoc-members:
     :show-inheritance:
 
-pyutil.yt\_dl module
---------------------
-
-.. automodule:: pyutil.yt_dl
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pyutil.zillow\-api module
+pyutil.zillow module
 -------------------------
 
-.. automodule:: pyutil.zillow-api
+.. automodule:: pyutil.zillow
     :members:
     :undoc-members:
     :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: pyutil
-    :members:
-    :undoc-members:
-    :show-inheritance:
-    :noindex:

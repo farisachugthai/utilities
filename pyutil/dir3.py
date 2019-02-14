@@ -13,15 +13,14 @@ Dir3
 
 Background
 -----------
-
-:func:`dir()` is a phenomenal function for exploring both the global namespace
-and the exported methods of an object.
+:func:`dir()` is a phenomenal function for exploring both the global
+namespace and the exported methods of an object.
 
 However it can get incredibly messy, especially when :mod:`IPython`
 displays the placeholder variables for every cell that has been
-run in the session. I.E.:
+run in the session. I.E.
 
-.. literal::
+.. ipython::
 
     _i
     _ii
@@ -38,10 +37,8 @@ methods I.E. ones that begin with the characters ``_`` or ``__``.
 
 It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 
-
 Attributes
 -----------
-
 ip (InteractiveShell): A global object representing the active IPython
                        session. Contains varying packages as well as the
                        current global namespace. Doesn't need to be defined
@@ -57,16 +54,17 @@ ip (InteractiveShell): A global object representing the active IPython
 .. todo::
 
     - Show some example usage.
-    - Should this function import or in any way be based off of dir2 via import?
-    - We'll probably need to import register_line_magic or something.
+    - Should this function import or in any way be based off of
+    :func:`IPython.utils.dir2.dir2()` via import?
+    - We'll probably need to import :func:`register_line_magic` or something.
 
 
 See Also
 ---------
 dir2(obj) -> list of strings
 
-    Extended version of the Python builtin dir(), which does a few extra
-    checks.
+    Extended version of the Python builtin :func:`dir()`, which does a few
+    extra checks.
 
     This version is guaranteed to return only a list of true
     strings, whereas :func:`dir()` returns anything that
@@ -74,7 +72,7 @@ dir2(obj) -> list of strings
     are later not really valid for attribute access (many
     extension libraries have such bugs).
 
-.. code-block:: python
+.. code-block:: python3
 
     # Start building the attribute list via dir(), and then complete it
     # with a few extra special-purpose calls.
@@ -114,6 +112,7 @@ def dir3():
 
         This might need to become a class soon this is quickly
         getting unwieldy and as is requires a lot of state.
+
     """
     # This should silence the error from flake about ip being used but not
     # defined
@@ -150,7 +149,12 @@ def _interactive(args):
     Returns
     --------
     filtered : list
-        All methods that don't begin with '_'. More stringent filters will come.
+        All methods that don't begin with '_'.
+
+    .. todo::
+
+        More stringent filters will come.
+
     """
     filtered = []
     for i in args:

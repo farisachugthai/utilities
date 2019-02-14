@@ -2,23 +2,29 @@
 # -*- coding: utf-8 -*-
 """Iterate over the list of conda environments that are present.
 
-Assumes:
-    Working conda installation.
+Assumes
+---------
+Working conda installation.
 
-Examples:
+Example
+--------
 
-    $ python3 conda-export.py
+.. code-block:: shell
 
-Returns:
+    python3 conda-export.py
 
-    Separate text files. 2 for each environment.
-    - One with general metadata
-    - One with a list of packages.
+Returns
+-------
+Separate text files. 2 for each environment.
+- One with general metadata
+- One with a list of packages.
 
-TODO::
+.. todo::
+
     Possibly refactor into more functions. Would this warrant a class?
 
 Work in progress.
+
 """
 import codecs
 import shutil

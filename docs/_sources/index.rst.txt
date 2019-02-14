@@ -16,11 +16,11 @@ Welcome to utilities's documentation!
     :caption: Table of Contents
     :name: mastertoc
     :maxdepth: 2
-    :noindex:
 
     tutorial
     pyutil
     math
+    api
 
 Indices and tables
 ==================

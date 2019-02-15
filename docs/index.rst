@@ -15,7 +15,7 @@ Welcome to utilities's documentation!
 .. toctree::
     :caption: Table of Contents
     :name: mastertoc
-    :maxdepth: 1
+    :maxdepth: 2
 
     tutorial
     numpydoc

@@ -8,7 +8,7 @@
 Welcome to utilities's documentation!
 =====================================
 
-.. literalinclude::
+.. include:: literal
 
     readme
 
@@ -18,7 +18,7 @@ Welcome to utilities's documentation!
     :maxdepth: 2
 
     tutorial
-    pyutil
+    numpydoc
     math
     api
 

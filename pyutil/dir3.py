@@ -18,16 +18,7 @@ namespace and the exported methods of an object.
 
 However it can get incredibly messy, especially when :mod:`IPython`
 displays the placeholder variables for every cell that has been
-run in the session. I.E.
-
-.. ipython::
-
-    _i
-    _ii
-    _iii
-    _1
-    _29
-    ...
+run in the session.
 
 This causes an incredibly long output that's difficult to parse quickly at
 best, and at worst, the output truncates and all valuable
@@ -37,6 +28,7 @@ methods I.E. ones that begin with the characters ``_`` or ``__``.
 
 It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 
+
 Attributes
 -----------
 ip (InteractiveShell): A global object representing the active IPython
@@ -44,18 +36,11 @@ ip (InteractiveShell): A global object representing the active IPython
                        current global namespace. Doesn't need to be defined
                        in advance during an interactive session.
 
-.. code-block:: rst
-
-    .. ipython::
-
-        In[1]: dir3()
-        Out[1]: ...  # ELLIPSES
 
 .. todo::
 
     - Show some example usage.
-    - Should this function import or in any way be based off of
-    :func:`IPython.utils.dir2.dir2()` via import?
+    - Should this function import or in any way be based off of :func:`IPython.utils.dir2.dir2()` via import?
     - We'll probably need to import :func:`register_line_magic` or something.
 
 
@@ -71,6 +56,7 @@ dir2(obj) -> list of strings
     objects inject into themselves, even if they
     are later not really valid for attribute access (many
     extension libraries have such bugs).
+
 
 .. code-block:: python3
 
@@ -92,6 +78,7 @@ dir2(obj) -> list of strings
     >>> words = [w for w in words if isinstance(w, str)]
     >>> return sorted(words)
 
+
 """
 import sys
 
@@ -103,15 +90,18 @@ def dir3():
     ------------
     None
 
+
     Returns
     --------
     output : list
         All methods that don't begin with '_'. More stringent filters will come.
 
+
     .. note::
 
         This might need to become a class soon this is quickly
         getting unwieldy and as is requires a lot of state.
+
 
     """
     # This should silence the error from flake about ip being used but not
@@ -146,14 +136,17 @@ def _interactive(args):
     args : (iterable)
         The object to inspect.
 
+
     Returns
     --------
     filtered : list
         All methods that don't begin with '_'.
 
+
     .. todo::
 
         More stringent filters will come.
+
 
     """
     filtered = []

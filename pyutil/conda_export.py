@@ -37,7 +37,7 @@ import sys
 
 
 def munging():
-    """Iterate through conda envs and return text files to replicate from.abs
+    """Iterate through conda envs and return text files to replicate from.
 
     Parameters
     -----------

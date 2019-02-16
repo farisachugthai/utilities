@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Improve the :func:`dir()` by ignoring methods hidden by _.
+"""Improve the :func:`dir()` by ignoring methods hidden by ``_``.
 
 Dir3
 ======
@@ -31,10 +31,10 @@ It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 
 Attributes
 -----------
-ip (InteractiveShell): A global object representing the active IPython
-                       session. Contains varying packages as well as the
-                       current global namespace. Doesn't need to be defined
-                       in advance during an interactive session.
+ip (InteractiveShell):
+    A global object representing the active IPython session. Contains varying
+    packages as well as the current global namespace. Doesn't need to be
+    defined in advance during an interactive session.
 
 
 .. todo::
@@ -94,7 +94,12 @@ def dir3():
     Returns
     --------
     output : list
-        All methods that don't begin with '_'. More stringent filters will come.
+        All methods that don't begin with ``_``.
+
+
+    .. todo::
+
+        More stringent filters will need to come.
 
 
     .. note::

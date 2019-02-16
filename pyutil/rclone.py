@@ -2,26 +2,28 @@
 # -*- coding: utf-8 -*-
 """Rewriting rclone.sh as a python module.
 
-.. code:: bash
+.. code-block:: bash
 
-    rclone.py [src] dst
+    rclone.py src dst
+
 
 Requires
 ---------
 rclone
 
+
 The remaining roadmap.
+
 
 .. todo::
 
-    - :param:`args` is used as a parameter to both :class:`argparse.ArgumentParser()` and
-      :func:`subprocess.run()`
+    - ``args`` is used as a parameter to both :class:`argparse.ArgumentParser()` and :func:`subprocess.run()`
         - Switch the name for one of them as this'll get confusing quickly.
     - Set up a simple single use case backup.
     - Add :func:`collections.ChainMap()` to set precedence of backupdir.
     - Add in multiple invocations of rclone and create args to reflect use cases.
-    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`
-     to emulate rsync's file input.
+    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync's file input.
+
 
 """
 import argparse
@@ -30,17 +32,20 @@ import subprocess
 import sys
 
 
-def _parse_arguments():
+def _parse_arguments(cwd=None):
     """Parse user-given arguments."""
-    # parser = argparse.ArgumentParser("Automate usage of rclone for simple backup creation.")
+    if cwd is None:
+        cwd = os.getcwd()
+
+    parser = argparse.ArgumentParser(desc="Automate usage of rclone for simple backup creation.")
     # parser.add_argument(dest=src, required=True, help='A directory, presumably local, to sync with a remote.')
     parser = argparse.ArgumentParser(
         usage="%(prog)s [options]",
         description="Automate usage of rclone for "
         "simple backup creation.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument(
-        src, default=cwd, help="The source directory. "
+    parser.add_argument(action=store, dest='src',
+        default=cwd, help="The source directory. "
         "Defaults to the cwd.")
 
     return parser

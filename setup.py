@@ -32,22 +32,21 @@ CONF_PATH = os.path.dirname(os.path.abspath('docs'))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 
-REQUIRED = [
-    'pynvim', 'IPython', 'youtube_dl'
-]
+REQUIRED = ['pynvim', 'IPython', 'youtube_dl']
 
 EXTRAS = {
     'develop': ['requests', 'flake8', 'flake8-rst', 'yapf'],
-    'docs': ['sphinx',
-             # Project uses reStructuredText, so ensure that the docutils get
-             # installed or upgraded on the target machine
-             'docutils>=0.3',
-             'recommonmark',
-             'numpydoc']
+    'docs': [
+        'sphinx',
+        # Project uses reStructuredText, so ensure that the docutils get
+        # installed or upgraded on the target machine
+        'docutils>=0.3',
+        'recommonmark',
+        'numpydoc'
+    ]
 }
 
 here = os.path.abspath(os.path.dirname(__file__))
-
 
 with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
@@ -88,7 +87,8 @@ class UploadCommand(Command):
             pass
 
         self.status('Building Source and Wheel (universal) distribution…')
-        os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+        os.system('{0} setup.py sdist bdist_wheel --universal'.format(
+            sys.executable))
 
         self.status('Uploading the package to PyPI via Twine…')
         os.system('twine upload dist/*')
@@ -111,7 +111,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=('tests',)),
+    packages=find_packages(exclude=('tests', )),
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
 
@@ -120,6 +120,7 @@ setup(
     # },
     install_requires=REQUIRED,
     extras_require=EXTRAS,
+    setup_requires=['nose>=1.0'],
     include_package_data=True,
     package_data={
         # If any package contains *.txt or *.rst files, include them:

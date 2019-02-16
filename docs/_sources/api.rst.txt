@@ -7,6 +7,7 @@
     :glob:
     :hidden:
     :maxdepth: 1
+    :local:
 
     *
 
@@ -202,13 +203,6 @@ pyutil.sys\_checks module
     :undoc-members:
     :show-inheritance:
 
-:mod:`pyutil.tmux_nvim` module
--------------------------------
-
-.. automodule:: pyutil.tmux_nvim
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
 pyutil.wrap module
 ------------------

@@ -12,32 +12,39 @@ from matplotlib.mathtext import MathTextParser
 rcParams['mathtext.fontset'] = 'cm'
 mathtext_parser = MathTextParser("Bitmap")
 
+
 # Define LaTeX math node:
 class latex_math(nodes.General, nodes.Element):
     pass
 
+
 def fontset_choice(arg):
     return directives.choice(arg, ['cm', 'stix', 'stixsans'])
 
+
 options_spec = {'fontset': fontset_choice}
 
-def math_role(role, rawtext, text, lineno, inliner,
-              options={}, content=[]):
+
+def math_role(role, rawtext, text, lineno, inliner, options={}, content=[]):
     i = rawtext.find('`')
-    latex = rawtext[i+1:-1]
+    latex = rawtext[i + 1:-1]
     node = latex_math(rawtext)
     node['latex'] = latex
     node['fontset'] = options.get('fontset', 'cm')
     return [node], []
+
+
 math_role.options = options_spec
 
-def math_directive(name, arguments, options, content, lineno,
-                   content_offset, block_text, state, state_machine):
+
+def math_directive(name, arguments, options, content, lineno, content_offset,
+                   block_text, state, state_machine):
     latex = ''.join(content)
     node = latex_math(block_text)
     node['latex'] = latex
     node['fontset'] = options.get('fontset', 'cm')
     return [node]
+
 
 # This uses mathtext to render the expression
 def latex2png(latex, filename, fontset='cm'):
@@ -50,13 +57,16 @@ def latex2png(latex, filename, fontset='cm'):
         try:
             depth = mathtext_parser.to_png(filename, latex, dpi=100)
         except:
-            warnings.warn("Could not render math expression %s" % latex,
-                          Warning, stacklevel=2)
+            warnings.warn(
+                "Could not render math expression %s" % latex,
+                Warning,
+                stacklevel=2)
             depth = 0
     rcParams['mathtext.fontset'] = orig_fontset
     sys.stdout.write("#")
     sys.stdout.flush()
     return depth
+
 
 # LaTeX to HTML translation stuff:
 def latex2html(node, source):
@@ -101,23 +111,23 @@ def setup(app):
         if inline:
             self.body.append('$%s$' % node['latex'])
         else:
-            self.body.extend(['\\begin{equation}',
-                              node['latex'],
-                              '\\end{equation}'])
+            self.body.extend(
+                ['\\begin{equation}', node['latex'], '\\end{equation}'])
 
     def depart_latex_math_latex(self, node):
         pass
 
-    app.add_node(latex_math,
-                 html=(visit_latex_math_html, depart_latex_math_html),
-                 latex=(visit_latex_math_latex, depart_latex_math_latex))
+    app.add_node(
+        latex_math,
+        html=(visit_latex_math_html, depart_latex_math_html),
+        latex=(visit_latex_math_latex, depart_latex_math_latex))
     app.add_role('mathmpl', math_role)
-    app.add_directive('mathmpl', math_directive,
-                      True, (0, 0, 0), **options_spec)
+    app.add_directive('mathmpl', math_directive, True, (0, 0, 0),
+                      **options_spec)
     if sphinx.version_info < (1, 8):
         app.add_role('math', math_role)
-        app.add_directive('math', math_directive,
-                          True, (0, 0, 0), **options_spec)
+        app.add_directive('math', math_directive, True, (0, 0, 0),
+                          **options_spec)
 
     metadata = {'parallel_read_safe': True, 'parallel_write_safe': True}
     return metadata

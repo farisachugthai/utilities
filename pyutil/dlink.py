@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 """Symlink all of the files in one directory into another.
 
-Usage::
+Usage
+------
+
+.. code-block:: shell
 
     `ln -s path/to/dest/* [path/to/src]`
 
@@ -14,7 +17,10 @@ import sys
 def dlink(dest, src):
     """Symlinks a directory from another one.
 
-    Utilize in an analogous way to Unix idiom::
+    Utilize in an analogous way to Unix idiom
+
+    .. code-block:: shell
+
         `ln -s path/to/dir/*`
 
     :param dest: The directory where the original files are located.
@@ -34,7 +40,7 @@ def dlink(dest, src):
             # If the first item in dest is a dir, make sure it exists in src
             try:
                 os.mkdir(src_file, 0o777)
-            except IsADirectoryError as e:
+            except IsADirectoryError:
                 # If that dir exists already, move along.
                 pass
         elif os.path.isfile(dest_file):

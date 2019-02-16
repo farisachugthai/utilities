@@ -19,7 +19,7 @@ fh() { # {{{
 #                             fzf wiki                               #
 ######################################################################
 
-git_log() { # {{{
+git_log() { # {{{ log piped into less and displays show
   local show="git show --color=always \"\$(grep -m1 -o \"[a-f0-9]\{7\}\" <<< {})\""
   fzf --prompt='log' -e --no-sort --tiebreak=index \
     --bind="enter:execute:$show | less -R" \
@@ -28,7 +28,6 @@ git_log() { # {{{
     --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@")
 }
 # }}}
-
 fbr() { # checkout git branch {{{
   local branches branch
   branches=$(git branch -vv) &&
@@ -52,7 +51,6 @@ fbr() { # {{{ checkout git branch (including remote branches), sorted by most re
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 # }}}
-
 fco() { # {{{ checkout git branch/tag
   local tags branches target
   tags=$(
@@ -67,7 +65,6 @@ fco() { # {{{ checkout git branch/tag
   git checkout $(echo "$target" | awk '{print $2}')
 }
 # }}}
-
 fco_preview() { # {{{ checkout git branch/tag, with a preview showing the commits between the tag/branch and HEAD
   local tags branches target
   tags=$(
@@ -83,7 +80,6 @@ sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
   git checkout $(echo "$target" | awk '{print $2}')
 }
 # }}}
-
 fcoc() { # {{{ checkout git commit
   local commits commit
   commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
@@ -91,7 +87,6 @@ fcoc() { # {{{ checkout git commit
   git checkout $(echo "$commit" | sed "s/ .*//")
 }
 # }}}
-
 fshow() { # {{{ git commit browser
   git log --graph --color=always \
       --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
@@ -103,13 +98,6 @@ fshow() { # {{{ git commit browser
 FZF-EOF"
 }
 # }}}
-
-alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
-
-_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
-
-_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
-
 fcoc_preview() { # {{{ checkout git commit with previews
   local commit
   commit=$( glNoGraph |
@@ -118,7 +106,6 @@ fcoc_preview() { # {{{ checkout git commit with previews
   git checkout $(echo "$commit" | sed "s/ .*//")
 }
 # }}}
-
 fshow_preview() { # {{{ fshow_preview - git commit browser with previews
     glNoGraph |
         fzf --no-sort --reverse --tiebreak=index --no-multi \
@@ -128,12 +115,10 @@ fshow_preview() { # {{{ fshow_preview - git commit browser with previews
                 --bind "alt-y:execute:$_gitLogLineToHash | xclip"
 }
 # }}}
-
 is_in_git_repo() { # {{{
   git rev-parse HEAD > /dev/null 2>&1
 }
 # }}}
-
 fgst() { # {{{ pick files from git status -s
   # "Nothing to see here, move along"
   is_in_git_repo || return
@@ -146,7 +131,6 @@ fgst() { # {{{ pick files from git status -s
   echo
 }
 # }}}
-
 ftags() { # {{{ search ctags
   local line
   [ -e tags ] &&
@@ -157,3 +141,76 @@ ftags() { # {{{ search ctags
                                       -c "silent tag $(cut -f2 <<< "$line")"
 }
 # }}}
+# From Choi's Gist not the wiki.
+fzf-down() { # {{{ fzf --height and border
+  fzf --height 50% "$@" --border
+}
+# }}}
+fgf() { # {{{ git status - preview diff
+  is_in_git_repo || return
+  git -c color.status=always status --short |
+  fzf-down -m --ansi --nth 2..,.. \
+    --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
+  cut -c4- | sed 's/.* -> //'
+}
+# }}}
+fgb() { # {{{
+  is_in_git_repo || return
+  git branch -a --color=always | grep -v '/HEAD\s' | sort |
+  fzf-down --ansi --multi --tac --preview-window right:70% \
+    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+  sed 's/^..//' | cut -d' ' -f1 |
+  sed 's#^remotes/##'
+}
+# }}}
+fgt() { # {{{
+  is_in_git_repo || return
+  git tag --sort -version:refname |
+  fzf-down --multi --preview-window right:70% \
+    --preview 'git show --color=always {} | head -'$LINES
+}
+# }}}
+fgh() { # {{{
+  is_in_git_repo || return
+  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
+  fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+    --header 'Press CTRL-S to toggle sort' \
+    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -'$LINES |
+  grep -o "[a-f0-9]\{7,\}"
+}
+# }}}
+fgr() { # {{{1 git remote
+  is_in_git_repo || return
+  git remote -v | awk '{print $1 "\t" $2}' | uniq |
+  fzf-down --tac \
+    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
+  cut -d$'\t' -f1
+}
+# }}}
+# Key bindings for each. {{{1
+bind '"\er": redraw-current-line'
+bind '"\C-g\C-f": "$(fgf)\e\C-e\er"'
+bind '"\C-g\C-b": "$(fgb)\e\C-e\er"'
+bind '"\C-g\C-t": "$(fgt)\e\C-e\er"'
+bind '"\C-g\C-h": "$(fgh)\e\C-e\er"'
+bind '"\C-g\C-r": "$(fgr)\e\C-e\er"'
+
+# Different gist
+gstash() { # {{{1 preview window for git stashes
+  local out k reflog
+  out=(
+    $(git stash list --pretty='%C(yellow)%gd %>(14)%Cgreen%cr %C(blue)%gs' |
+      fzf --ansi --no-sort --header='enter:show, ctrl-d:diff, ctrl-o:pop, ctrl-y:apply, ctrl-x:drop' \
+          --preview='git stash show --color=always -p $(cut -d" " -f1 <<< {}) | head -'$LINES \
+          --preview-window=down:50% --reverse \
+          --bind='enter:execute(git stash show --color=always -p $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
+          --bind='ctrl-d:execute(git diff --color=always $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
+          --expect=ctrl-o,ctrl-y,ctrl-x))
+  k=${out[0]}
+  reflog=${out[1]}
+  [ -n "$reflog" ] && case "$k" in
+    ctrl-o) git stash pop $reflog ;;
+    ctrl-y) git stash apply $reflog ;;
+    ctrl-x) git stash drop $reflog ;;
+  esac
+}

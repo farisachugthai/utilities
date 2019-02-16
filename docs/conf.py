@@ -5,7 +5,7 @@
 This file does only contain a selection of the most common options. For a
 full list see the documentation:
 
-:URL: http://www.sphinx-doc.org/en/master/config
+:URL: `http://www.sphinx-doc.org/en/master/config`_
 
 -- Path setup --------------------------------------------------------------
 
@@ -13,13 +13,13 @@ If extensions (or modules to document with autodoc) are in another directory,
 add these directories to sys.path here. If the directory is relative to the
 documentation root, use os.path.abspath to make it absolute, like shown here.
 
-.. code-block:: python
+.. code-block:: python3
 
     sys.path.insert(0, os.path.abspath('.'))
 
 As stated at:
 
-:URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
+:URL: `https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix`_
 
 However, the filetype mapping came about in 1.8 so make sure to add that
 ``needs-sphinx=version`` bit
@@ -31,10 +31,11 @@ import sys
 
 logger = logging.getLogger(__name__)
 
-
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
+
+sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('.'))
 
 sys.path.insert(0, os.path.abspath('./sphinxext'))
@@ -51,10 +52,9 @@ copyright = '2018, Faris A Chugthai'
 author = 'Faris A Chugthai'
 
 # The short X.Y version
-version = ''
+version = '0.1'
 # The full version, including alpha/beta/rc tags
-release = ''
-
+release = '0.1'
 
 # -- General configuration ---------------------------------------------------
 
@@ -84,17 +84,23 @@ templates_path = ['_templates']
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 
+source_suffix = ['.rst']
 # source_suffix = ['.rst', '.md']
 # or:
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.txt': 'restructuredtext',
-    '.md': 'markdown',
-}
-# As stated at:
-# :URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
-# However, the filetype mapping came about in 1.8 so make sure to add that
-# ``needs-sphinx=version`` bit
+# source_suffix = {
+#     '.rst': 'restructuredtext',
+#     '.txt': 'restructuredtext',
+#     '.md': 'markdown',
+# }
+
+# The encoding of source files.
+source_encoding = 'utf-8'
+
+# source_parsers = {
+#     '.md': 'recommonmark.parser.CommonMarkParser',
+#     '.rst': 'sphinx.parsers.Parser',
+#     '.txt': 'sphinx.parsers.Parser'
+# }
 
 # The master toctree document.
 master_doc = 'index'
@@ -104,7 +110,11 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+# language = None
+
+# The reST default role (used for this markup: `text`) to use for all
+# documents.
+# default_domain = 'python'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -112,8 +122,8 @@ language = None
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'monokai'
-
+# So i overwrote the pygments.css file entirely so i wanna see what happens
+pygments_style = 'sphinx'
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -164,7 +174,6 @@ html_sidebars = {
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'pyutil'
 
-
 # -- Options for LaTeX output ------------------------------------------------
 
 latex_elements = {
@@ -189,20 +198,15 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pyutil.tex', 'Pyutil Documentation',
-     'Faris A Chugthai', 'manual'),
+    (master_doc, 'pyutil.tex', 'Pyutil Documentation', 'Faris A Chugthai',
+     'manual'),
 ]
-
 
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'pyutil', 'Pyutil Documentation',
-     [author], 1)
-]
-
+man_pages = [(master_doc, 'pyutil', 'Pyutil Documentation', [author], 1)]
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -210,11 +214,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Pyutil', 'Pyutil Documentation',
-     author, 'Pyutil', 'One line description of project.',
-     'Miscellaneous'),
+    (master_doc, 'Pyutil', 'Pyutil Documentation', author, 'Pyutil',
+     'One line description of project.', 'Miscellaneous'),
 ]
-
 
 # -- Options for Epub output -------------------------------------------------
 
@@ -241,7 +243,9 @@ epub_exclude_files = ['search.html']
 intersphinx_mapping = {
     'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
     'matplotlib': ('https://matplotlib.org', None),
-    'python': ('https://docs.python.org/3/', None)
+    'python': ('https://docs.python.org/3/', None),
+    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'numpydoc': ('https://numpydoc.readthedocs.io/', None),
 }
 
 # -- Options for todo extension ----------------------------------------------
@@ -259,3 +263,21 @@ viewcode_import = True
 
 import glob  # noqa F402
 autosummary_generate = glob.glob("./*.rst")
+
+# -----------------------------------------------------------------------------
+# Napoleon settings
+# -----------------------------------------------------------------------------
+
+# Honestly all the defaults are great so leave them. Just annoyed that it
+# doesn't seem to be working!
+# napoleon_google_docstring = True
+# napoleon_numpy_docstring = True
+# napoleon_include_init_with_doc = False
+# napoleon_include_private_with_doc = False
+# napoleon_include_special_with_doc = True
+# napoleon_use_admonition_for_examples = False
+# napoleon_use_admonition_for_notes = False
+# napoleon_use_admonition_for_references = False
+# napoleon_use_ivar = False
+# napoleon_use_param = True
+# napoleon_use_rtype = True

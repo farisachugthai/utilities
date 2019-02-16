@@ -26,6 +26,7 @@ class Reader(object):
     """A line-based string reader.
 
     """
+
     def __init__(self, data):
         """
         Parameters
@@ -72,7 +73,7 @@ class Reader(object):
                 return self[start:self._l]
             self._l += 1
             if self.eof():
-                return self[start:self._l+1]
+                return self[start:self._l + 1]
         return []
 
     def read_to_next_empty_line(self):
@@ -84,8 +85,10 @@ class Reader(object):
         return self.read_to_condition(is_empty)
 
     def read_to_next_unindented_line(self):
+
         def is_unindented(line):
             return (line.strip() and (len(line.lstrip()) == len(line)))
+
         return self.read_to_condition(is_unindented)
 
     def peek(self, n=0):
@@ -99,6 +102,7 @@ class Reader(object):
 
 
 class ParseError(Exception):
+
     def __str__(self):
         message = self.args[0]
         if hasattr(self, 'docstring'):
@@ -173,7 +177,7 @@ class NumpyDocString(collections.Mapping):
             return True
 
         l2 = self._doc.peek(1).strip()  # ---------- or ==========
-        return l2.startswith('-'*len(l1)) or l2.startswith('='*len(l1))
+        return l2.startswith('-' * len(l1)) or l2.startswith('=' * len(l1))
 
     def _strip(self, doc):
         i = 0
@@ -186,7 +190,7 @@ class NumpyDocString(collections.Mapping):
             if line.strip():
                 break
 
-        return doc[i:len(doc)-j]
+        return doc[i:len(doc) - j]
 
     def _read_to_next_section(self):
         section = self._doc.read_to_next_empty_line()
@@ -229,9 +233,10 @@ class NumpyDocString(collections.Mapping):
 
         return params
 
-    _name_rgx = re.compile(r"^\s*(:(?P<role>\w+):"
-                           r"`(?P<name>(?:~\w+\.)?[a-zA-Z0-9_.-]+)`|"
-                           r" (?P<name2>[a-zA-Z0-9_.-]+))\s*", re.X)
+    _name_rgx = re.compile(
+        r"^\s*(:(?P<role>\w+):"
+        r"`(?P<name>(?:~\w+\.)?[a-zA-Z0-9_.-]+)`|"
+        r" (?P<name2>[a-zA-Z0-9_.-]+))\s*", re.X)
 
     def _parse_see_also(self, content):
         """
@@ -295,6 +300,7 @@ class NumpyDocString(collections.Mapping):
            :refguide: something, else, and more
 
         """
+
         def strip_each_in(lst):
             return [s.strip() for s in lst]
 
@@ -348,8 +354,8 @@ class NumpyDocString(collections.Mapping):
                 section = (s.capitalize() for s in section.split(' '))
                 section = ' '.join(section)
                 if self.get(section):
-                    self._error_location("The section %s appears twice"
-                                         % section)
+                    self._error_location(
+                        "The section %s appears twice" % section)
 
             if section in ('Parameters', 'Returns', 'Yields', 'Raises',
                            'Warns', 'Other Parameters', 'Attributes',
@@ -369,8 +375,8 @@ class NumpyDocString(collections.Mapping):
                 filename = inspect.getsourcefile(self._obj)
             except TypeError:
                 filename = None
-            msg = msg + (" in the docstring of %s in %s."
-                         % (self._obj, filename))
+            msg = msg + (" in the docstring of %s in %s." %
+                         (self._obj, filename))
         if error:
             raise ValueError(msg)
         else:
@@ -379,12 +385,12 @@ class NumpyDocString(collections.Mapping):
     # string conversion routines
 
     def _str_header(self, name, symbol='-'):
-        return [name, len(name)*symbol]
+        return [name, len(name) * symbol]
 
     def _str_indent(self, doc, indent=4):
         out = []
         for line in doc:
-            out += [' '*indent + line]
+            out += [' ' * indent + line]
         return out
 
     def _str_signature(self):
@@ -482,7 +488,7 @@ class NumpyDocString(collections.Mapping):
 
 
 def indent(str, indent=4):
-    indent_str = ' '*indent
+    indent_str = ' ' * indent
     if str is None:
         return indent_str
     lines = str.split('\n')
@@ -495,10 +501,11 @@ def dedent_lines(lines):
 
 
 def header(text, style='-'):
-    return text + '\n' + style*len(text) + '\n'
+    return text + '\n' + style * len(text) + '\n'
 
 
 class FunctionDoc(NumpyDocString):
+
     def __init__(self, func, role='func', doc=None, config={}):
         self._f = func
         self._role = role  # e.g. "func" or "meth"
@@ -540,8 +547,7 @@ class FunctionDoc(NumpyDocString):
         func, func_name = self.get_func()
         signature = self['Signature'].replace('*', '\*')
 
-        roles = {'func': 'function',
-                 'meth': 'method'}
+        roles = {'func': 'function', 'meth': 'method'}
 
         if self._role:
             if self._role not in roles:
@@ -557,14 +563,18 @@ class ClassDoc(NumpyDocString):
 
     extra_public_methods = ['__call__']
 
-    def __init__(self, cls, doc=None, modulename='', func_doc=FunctionDoc,
+    def __init__(self,
+                 cls,
+                 doc=None,
+                 modulename='',
+                 func_doc=FunctionDoc,
                  config={}):
         if not inspect.isclass(cls) and cls is not None:
             raise ValueError("Expected a class or None, but got %r" % cls)
         self._cls = cls
 
         self.show_inherited_members = config.get(
-                    'show_inherited_class_members', True)
+            'show_inherited_class_members', True)
 
         if modulename and not modulename.endswith('.'):
             modulename += '.'
@@ -578,6 +588,7 @@ class ClassDoc(NumpyDocString):
         NumpyDocString.__init__(self, doc)
 
         if config.get('show_class_members', True):
+
             def splitlines_x(s):
                 if not s:
                     return []
@@ -600,21 +611,23 @@ class ClassDoc(NumpyDocString):
     def methods(self):
         if self._cls is None:
             return []
-        return [name for name, func in inspect.getmembers(self._cls)
-                if ((not name.startswith('_')
-                     or name in self.extra_public_methods)
-                    and isinstance(func, collections.Callable)
-                    and self._is_show_member(name))]
+        return [
+            name for name, func in inspect.getmembers(self._cls)
+            if ((not name.startswith('_') or name in self.extra_public_methods)
+                and isinstance(func, collections.Callable)
+                and self._is_show_member(name))
+        ]
 
     @property
     def properties(self):
         if self._cls is None:
             return []
-        return [name for name, func in inspect.getmembers(self._cls)
-                if (not name.startswith('_') and
-                    (func is None or isinstance(func, property) or
-                     inspect.isdatadescriptor(func))
-                    and self._is_show_member(name))]
+        return [
+            name for name, func in inspect.getmembers(self._cls)
+            if (not name.startswith('_') and (
+                func is None or isinstance(func, property) or inspect.
+                isdatadescriptor(func)) and self._is_show_member(name))
+        ]
 
     def _is_show_member(self, name):
         if self.show_inherited_members:

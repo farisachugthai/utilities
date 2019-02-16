@@ -7,6 +7,7 @@ From IPython.utils.text
 import re
 from textwrap import dedent, fill
 
+
 def wrap_paragraphs(text, ncols=80):
     """Wrap multiple paragraphs to fit a specified width.
 

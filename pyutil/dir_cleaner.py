@@ -47,6 +47,7 @@ def extract_dir():
         os.unlink(i)
         return
 
+
 def clean():
     """Removes all pyc files. Add input for filetype later.
 
@@ -57,7 +58,8 @@ def clean():
     Use return instead of yield since the function call is gonna
     either require ``list[clean()]`` or a loop.
     """
-    yield [ os.unlink(i) for i in glob('*.pyc') ]
+    yield [os.unlink(i) for i in glob('*.pyc')]
+
 
 if __name__ == "__main__":
     try:

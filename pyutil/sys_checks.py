@@ -37,10 +37,11 @@ import sys
 def py_gt_raise(min_py_version):
     """"Created an extra method to exclusively raise an error."""
     if sys.version_info < min_py_version:
-        print("Can not use python interpreter provided: "
-              + str(sys.version_info()))
-        raise RuntimeError("The following version of python and newer are required: "
-                           + str(min_py_version))
+        print("Can not use python interpreter provided: " +
+              str(sys.version_info()))
+        raise RuntimeError(
+            "The following version of python and newer are required: " +
+            str(min_py_version))
     ("Python 3.4 or later is required")
 
 
@@ -57,10 +58,11 @@ def py_gt_exit(min_py_version):
     :return: None
     """
     if sys.version_info < min_py_version:
-        print("Can not use python interpreter provided: "
-              + str(sys.version_info()))
-        raise RuntimeError("The following version of python and newer are required: "
-                           + str(min_py_version))
+        print("Can not use python interpreter provided: " +
+              str(sys.version_info()))
+        raise RuntimeError(
+            "The following version of python and newer are required: " +
+            str(min_py_version))
     ("Python 3.4 or later is required")
 
 
@@ -78,10 +80,10 @@ def py_lt_exit(max_py_version):
         tuple(max_py_version)
 
     if sys.version_info > max_py_version:
-        print("Can not use python interpreter provided: "
-              + str(sys.version_info()))
-        sys.exit("The following version of python and newer are required: "
-                 + str(max_py_version))
+        print("Can not use python interpreter provided: " +
+              str(sys.version_info()))
+        sys.exit("The following version of python and newer are required: " +
+                 str(max_py_version))
 
 
 def test_linux():

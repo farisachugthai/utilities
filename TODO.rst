@@ -30,6 +30,11 @@ Will print off all the token configs. Figure out how to return the global
 instance and then we have a gruvbox pygments file on termux. Override to
 your hearts content.
 
+Feb 12, 2019:
+
+Docs are building better. Modules are building well; however the index is still
+incredibly wrong. Doesn't list anything at all though it should.1
+
 scripts
 ---------
 

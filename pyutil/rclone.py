@@ -2,20 +2,18 @@
 # -*- coding: utf-8 -*-
 """Rewriting rclone.sh as a python module.
 
-.. code:: bash
+.. code-block:: bash
 
-    rclone.py [src] dst
+    rclone.py src dst
+
 
 Requires
 ---------
 rclone
 
-The remaining roadmap.
-
 .. todo::
 
-    - :param:`args` is used as a parameter to both :class:`argparse.ArgumentParser()` and
-      :func:`subprocess.run()`
+    - ``args`` is used as a parameter to both :class:`argparse.ArgumentParser()` and :func:`subprocess.run()`
         - Switch the name for one of them as this'll get confusing quickly.
     - Set up a simple single use case backup.
     - Add :func:`collections.ChainMap()` to set precedence of backupdir.
@@ -30,17 +28,25 @@ import subprocess
 import sys
 
 
-def _parse_arguments():
+def _parse_arguments(cwd=None):
     """Parse user-given arguments."""
-    # parser = argparse.ArgumentParser("Automate usage of rclone for simple backup creation.")
+    if cwd is None:
+        cwd = os.getcwd()
+
+    parser = argparse.ArgumentParser(
+        desc="Automate usage of rclone for simple backup creation.")
     # parser.add_argument(dest=src, required=True, help='A directory, presumably local, to sync with a remote.')
     parser = argparse.ArgumentParser(
         usage="%(prog)s [options]",
         description="Automate usage of rclone for "
         "simple backup creation.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
     parser.add_argument(
-        src, default=cwd, help="The source directory. "
+        action='store',
+        dest='src',
+        default=cwd,
+        help="The source directory. "
         "Defaults to the cwd.")
 
     return parser
@@ -72,31 +78,35 @@ def rclone_base_case(src, dst):
     This command assumes a use case and configures it rclone for it properly.
 
     .. todo::
+
         - rclone takes an argument for user-agent
 
     Parameters
     ----------
-    src : directory to clone files from
-    dst : destination to send files to. Can be configured as a local directory,
+    src : path-like object
+        directory to clone files from
+
+    dst : path-like object
+        destination to send files to. Can be configured as a local directory,
           a dropbox directory, a google drive folder or a google cloud storage
           bucket among many other things.
 
     Returns
     -------
-    None.
+    None
+
     """
     cmd = ['rclone', 'copy', '--update', '--track-renames', src, dst]
     subprocess.run(cmd)
 
 
-def rclone_follow(dst, src=cwd):
-    """Follow symlinks."""
-    cmd = [
-        'rclone', 'copy', '--update', '--track-renames'
-        '--copy-links', src, dst
-    ]
-    subprocess.run(cmd)
-
+# def rclone_follow(dst, src=cwd):
+# """Follow symlinks."""
+# cmd = [
+# 'rclone', 'copy', '--update', '--track-renames'
+# '--copy-links', src, dst
+# ]
+# subprocess.run(cmd)
 
 if __name__ == "__main__":
     cwd = os.getcwd()

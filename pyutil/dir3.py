@@ -9,7 +9,7 @@ Dir3
 
 :File: dir3.py
 :Author: Faris Chugthai
-:Github: https://github.com/farisachugthai
+`GitHub https://github.com/farisachugthai`_
 
 Background
 -----------

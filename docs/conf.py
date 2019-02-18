@@ -5,7 +5,7 @@
 This file does only contain a selection of the most common options. For a
 full list see the documentation:
 
-:URL: http://www.sphinx-doc.org/en/master/config
+:URL: `http://www.sphinx-doc.org/en/master/config`_
 
 -- Path setup --------------------------------------------------------------
 
@@ -13,13 +13,13 @@ If extensions (or modules to document with autodoc) are in another directory,
 add these directories to sys.path here. If the directory is relative to the
 documentation root, use os.path.abspath to make it absolute, like shown here.
 
-.. code-block:: python
+.. code-block:: python3
 
     sys.path.insert(0, os.path.abspath('.'))
 
 As stated at:
 
-:URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
+:URL: `https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix`_
 
 However, the filetype mapping came about in 1.8 so make sure to add that
 ``needs-sphinx=version`` bit
@@ -241,11 +241,10 @@ epub_exclude_files = ['search.html']
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    'scipy': ('https://docs.scipy.org/doc/scipy/reference', 'scipy-inv.txt'),
-    'matplotlib': ('https://matplotlib.org', 'matplotlib-inv.txt'),
-    'python': ('https://docs.python.org/3/', 'python-inv.txt'),
-    'numpy': ('http://docs.scipy.org/doc/numpy/', 'numpy-inv.txt'),
-    'numpydoc': ('https://numpydoc.readthedocs.io/', 'numpydoc-inv.txt'),
+    'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
+    'matplotlib': ('https://matplotlib.org', None),
+    'python': ('https://docs.python.org/3/', None),
+    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
 }
 
 # -- Options for todo extension ----------------------------------------------

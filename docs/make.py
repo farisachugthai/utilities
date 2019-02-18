@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 
-:mod:`make` --- Expedite documentation builds
+:mod:`make` --- Expedite documentation builds.
 ================================================
 
 .. module:: make
@@ -13,19 +13,6 @@
 :Author: Faris Chugthai
 :Github: `https://github.com/farisachugthai`_
 :Date: |date|
-
-Attributes
------------
-
-    ``module_level_variables`` (type): Explanation and give an inline docstring
-                                       immediately afterwards if possible
-
-Example
----------
-
-    Any example of how to use this module goes here:: shell
-
-        $ python exampleofrst.py
 
 """
 import os
@@ -52,7 +39,7 @@ def run(cmd):
     -------
     process.returncode : int
         The returncode from the process.
-    
+
 
     """
     cmd = shlex.split(cmd)

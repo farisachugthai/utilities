@@ -1,5 +1,8 @@
 # Minimal makefile for Sphinx documentation
-#
+
+# Do we emit errors if we don't use a var?
+PYTHON = python3
+
 
 # You can set these variables from the command line.
 SPHINXBUILD   = sphinx-build

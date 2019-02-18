@@ -21,12 +21,6 @@ try:
 except ImportError:
     IPythonDirective = None
 
-if IPythonDirective is None:
-    try:
-        import ipython_directive as IPythonDirective
-    except ImportError:
-        pass
-
 
 def add_custom_roles(directive_class):
     if not directive_class:

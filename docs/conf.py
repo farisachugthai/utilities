@@ -245,7 +245,6 @@ intersphinx_mapping = {
     'matplotlib': ('https://matplotlib.org', None),
     'python': ('https://docs.python.org/3/', None),
     'numpy': ('http://docs.scipy.org/doc/numpy/', None),
-    'numpydoc': ('https://numpydoc.readthedocs.io/', None),
 }
 
 # -- Options for todo extension ----------------------------------------------

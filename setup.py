@@ -63,14 +63,14 @@ about['__version__'] = '0.0.1'
 
 
 class UploadCommand(Command):
-    """Support setup.py upload."""
+    """Support :ref:`setup.py` upload."""
 
     description = 'Build and publish the package.'
     user_options = []
 
     @staticmethod
     def status(s):
-        """Print output in bold."""
+        """Print output in bold using ANSI escape sequences."""
         print('\033[1m{0}\033[0m'.format(s))
 
     def initialize_options(self):
@@ -90,12 +90,12 @@ class UploadCommand(Command):
         os.system('{0} setup.py sdist bdist_wheel --universal'.format(
             sys.executable))
 
-        self.status('Uploading the package to PyPI via Twine…')
-        os.system('twine upload dist/*')
+        # self.status('Uploading the package to PyPI via Twine…')
+        # os.system('twine upload dist/*')
 
-        self.status('Pushing git tags…')
-        os.system('git tag v{0}'.format(about['__version__']))
-        os.system('git push --tags')
+        # self.status('Pushing git tags…')
+        # os.system('git tag v{0}'.format(about['__version__']))
+        # os.system('git push --tags')
 
         sys.exit()
 
@@ -111,7 +111,8 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=('tests', )),
+    packages=find_packages(exclude=('tests',)),
+    # index='https://pypi.org/projects',
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
 

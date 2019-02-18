@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" Mod that shows an easy, consistent way to handle user input."""
+"""Mod that shows an easy, consistent way to handle user input."""
+import sys
 
 
 def yes_no_question(question):
-    """ Continuing prompt the user until valid input is provided."""
+    """Continuing prompt the user until valid input is provided."""
     while True:
         print(question)
         print(" [y/n] ")
@@ -18,5 +19,5 @@ def yes_no_question(question):
 
 
 if __name__ == "__main__":
-    print("Well I've got to admit this is embarassing. I thought you'd import"
+    sys.exit("Well I've got to admit this is embarassing. I thought you'd import"
           "me!")

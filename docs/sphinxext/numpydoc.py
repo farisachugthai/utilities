@@ -32,8 +32,8 @@ from sphinx.addnodes import pending_xref, desc_content
 if sphinx.__version__ < '1.0.1':
     raise RuntimeError("Sphinx 1.0.1 or newer is required")
 
-from .docscrape_sphinx import get_doc_object, SphinxDocString
-from . import __version__
+from docscrape_sphinx import get_doc_object, SphinxDocString
+__version__ = '1.0.0'
 
 if sys.version_info[0] >= 3:
     sixu = lambda s: s
@@ -44,8 +44,10 @@ HASH_LEN = 12
 
 
 def rename_references(app, what, name, obj, options, lines):
-    # decorate reference numbers so that there are no duplicates
-    # these are later undecorated in the doctree, in relabel_references
+    """Decorate reference numbers so that there are no duplicates.
+
+    These are later undecorated in the doctree, in relabel_references.
+    """
     references = set()
     for line in lines:
         line = line.strip()

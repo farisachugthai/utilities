@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-# Maintainer: Faris Chugthai 
+# Maintainer: Faris Chugthai
+
+# Before we get started let's set the preliminaries
+# OLDCWD=abspath(__file__)
+# dude fuck this
+
 
 # Is there a better way to do this than overwriting LD_LIBRARY_PATH?
 # How about we only do this if it's already empty
@@ -13,7 +18,7 @@ fi
 # -n is True if a string is not empty
 # This means that we first check if we're already in a venv.
 if [[ -n "$VIRTUAL_ENV" ]]; then
-    
+
     # If we're in a venv but the wrong one deactivate
     if [[ "$VIRTUAL_ENV" != "/home/faris/src/qutebrowser/.venv" ]]; then
         deactivate;

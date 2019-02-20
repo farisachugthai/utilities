@@ -6,10 +6,25 @@ This module currently assumes a lot but there could and should be a lot of
 ways to do this.
 
 However we haven't implemented the important part nor have we began
-utilizing argparse.
+utilizing :mod:`argparse`.
 
-Then as we keep going we can import pynvim, attach and possibly run
-this inside of nvim? Idk.
+Then as we keep going we can import :mod:`pynvim`, :func:`pynvim.attach()`
+and possibly run this inside of nvim?.
+
+Actually that might be where we want to start.
+
+.. code-block:: python3
+
+    if not os.environ.get('NVIM_LISTEN_ADDRESS'):  # we have no running nvim
+        subprocess.run(['nvim&'])  # are we allowed to do this?
+
+    import pynvim
+    vim = pynvim.attach('socket', path=os.environ.get('NVIM_LISTEN_ADDRESS'))
+    vim.command('edit $MYVIMRC')
+    vim_root = vim.current.buffer
+
+
+Or something to that effect.
 
 """
 import datetime
@@ -46,9 +61,11 @@ def main(nvim_root):
     profiling_log_file : file
         Creates file based on the current time in ISO format profiling nvim.
 
+
     .. todo::
 
         Allow the ``test.py`` file that we use for startup to be configured.
+
     """
     now = datetime.date.isoformat(datetime.datetime.now())
 

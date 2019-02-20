@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 """Symlink all of the files in one directory into another.
 
-Usage
-------
+This module intends to be similar to the Unix idiom
 
 .. code-block:: shell
 
-    `ln -s path/to/dest/* [path/to/src]`
+    ln -s path/to/dest/* [path/to/src]
+
+Examples
 
 """
 import os

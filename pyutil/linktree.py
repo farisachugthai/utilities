@@ -11,6 +11,7 @@ linktree
 
 Make a copy of a directory tree with symbolic links to all files in the
 original tree.
+
 All symbolic links go to a special symbolic link at the top, so you
 can easily fix things if the original source tree moves.
 

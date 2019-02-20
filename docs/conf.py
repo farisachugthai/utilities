@@ -43,13 +43,15 @@ sys.path.insert(0, os.path.abspath('./sphinxext'))
 sys.path.insert(0, os.path.abspath('../pyutil'))
 
 sys.path.insert(0, os.path.abspath('../pyutil/math'))
+
+logging.debug("Path is currently: " + str(sys.path))
 # -- Project information -----------------------------------------------------
 
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
-project = 'pyutil'
-copyright = '2018, Faris A Chugthai'
-author = 'Faris A Chugthai'
+project = u'pyutil'
+copyright = u'2018, Faris A Chugthai'
+author = u'Faris A Chugthai'
 
 # The short X.Y version
 version = '0.1'
@@ -165,7 +167,9 @@ html_sidebars = {
         'navigation.html',
         'relations.html',
         'searchbox.html',
+        'sourcelink.html',
         'donate.html',
+        'localtoc.html'
     ]
 }
 

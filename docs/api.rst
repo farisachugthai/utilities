@@ -7,7 +7,6 @@
     :glob:
     :hidden:
     :maxdepth: 1
-    :local:
 
     *
 

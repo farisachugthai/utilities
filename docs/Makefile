@@ -1,10 +1,10 @@
 # Minimal makefile for Sphinx documentation
 
-# Grabbed a few useful lines from:
-# https://raw.githubusercontent.com/python/cpython/3.7/Doc/Makefile
+# Do we emit errors if we don't use a var?
+PYTHON = python3
+
 
 # You can set these variables from the command line.
-PYTHON        = python3
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = .
 BUILDDIR      = _build
@@ -21,12 +21,9 @@ endif
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-.PHONY: help Makefile htmlview
+.PHONY: help Makefile
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-
-htmlview: html
-	 $(PYTHON) -c "import webbrowser; webbrowser.open('_build/html/index.html')"

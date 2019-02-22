@@ -43,15 +43,13 @@ sys.path.insert(0, os.path.abspath('./sphinxext'))
 sys.path.insert(0, os.path.abspath('../pyutil'))
 
 sys.path.insert(0, os.path.abspath('../pyutil/math'))
-
-logging.debug("Path is currently: " + str(sys.path))
 # -- Project information -----------------------------------------------------
 
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
-project = u'pyutil'
-copyright = u'2018, Faris A Chugthai'
-author = u'Faris A Chugthai'
+project = 'pyutil'
+copyright = '2018, Faris A Chugthai'
+author = 'Faris A Chugthai'
 
 # The short X.Y version
 version = '0.1'
@@ -132,16 +130,16 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+# html_theme = 'alabas'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
-    "github_user": "Faris A. Chugthai",
-    "github_repo": "utilities"
-}
+# html_theme_options = {
+#     "github_user": "Faris A. Chugthai",
+#     "github_repo": "utilities"
+# }
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -167,9 +165,7 @@ html_sidebars = {
         'navigation.html',
         'relations.html',
         'searchbox.html',
-        'sourcelink.html',
         'donate.html',
-        'localtoc.html'
     ]
 }
 
@@ -249,7 +245,6 @@ intersphinx_mapping = {
     'matplotlib': ('https://matplotlib.org', None),
     'python': ('https://docs.python.org/3/', None),
     'numpy': ('http://docs.scipy.org/doc/numpy/', None),
-    'numpydoc': ('https://numpydoc.readthedocs.io/', None),
 }
 
 # -- Options for todo extension ----------------------------------------------

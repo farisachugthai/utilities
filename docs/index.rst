@@ -8,18 +8,24 @@
 Welcome to utilities's documentation!
 =====================================
 
+.. toctree::
+   :hidden:
+
+   readme
+
 .. include:: literal
 
-    readme
+   readme
 
 .. toctree::
-    :caption: Table of Contents
-    :name: mastertoc
-    :maxdepth: 2
+   :caption: Table of Contents
+   :name: mastertoc
+   :maxdepth: 2
 
-    tutorial
-    math
-    api
+   tutorial
+   numpydoc
+   api
+
 
 Indices and tables
 ==================

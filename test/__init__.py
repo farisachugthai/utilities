@@ -21,8 +21,6 @@ import sys
 
 import pkg_resources
 
-from pyutil import *
-
 logging.getLogger(__name__).addHandler(NullHandler())
 
 pkg_resources.declare_namespace(__name__)

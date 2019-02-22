@@ -2,13 +2,18 @@
 # -*- coding: utf-8 -*-
 """Symlink all of the files in one directory into another.
 
+This is quite easily one of my most frequently used scripts.
+
+If we're given 2 args, treat it with the same syntax as ``ln -s`` or
+:func:`os.symlink()`
+
 Usage
 ------
-
 .. code-block:: shell
 
-    `ln -s path/to/dest/* [path/to/src]`
+    ln -s path/to/dest/* [path/to/src]
 
+Example.
 """
 import os
 import sys
@@ -17,20 +22,23 @@ import sys
 def dlink(dest, src):
     """Symlinks a directory from another one.
 
-    Utilize in an analogous way to Unix idiom
+    Parameters
+    ------------
+    dest: path like object
+        The directory where the original files are located.
 
-    .. code-block:: shell
+    src : str
+        Optional argument indicating the directory where the symlinks
+        are to be created.
+        If the src argument isn't provided, it is assumed that the current
+        working directory is the src dir.
 
-        `ln -s path/to/dir/*`
 
-    :param dest: The directory where the original files are located.
-    :param src: Optional argument indicating the directory where the symlinks
-    are to be created.
+    Returns
+    ---------
+    None
 
-    If the src argument isn't provided, it is assumed that the current working
-    directory is the src dir.
 
-    :return: None
     """
     for i in os.listdir(dest):
         # First let's set up the relative paths for our destination and src
@@ -58,7 +66,6 @@ def dlink(dest, src):
 if __name__ == '__main__':
     cwd = os.path.join(os.getcwd(), '')
 
-    # If we're given 2 args, treat it with the same syntax as ln -s or os.symlink
     src = sys.argv[-1] if len(sys.argv) == 3 else cwd
 
     # If we don't get 2 args shut down.

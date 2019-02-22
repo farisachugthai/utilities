@@ -3,20 +3,9 @@
 :mod:`API`
 ==========
 
-.. toctree::
-    :glob:
-    :hidden:
-    :maxdepth: 1
+.. contents::
+    :local:
 
-    *
-
-pyutil module
--------------
-
-.. automodule:: pyutil
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
 pyutil.backup\_nt\_and\_posix module
 ------------------------------------
@@ -130,6 +119,7 @@ pyutil.json\_sorter module
     :undoc-members:
     :show-inheritance:
 
+
 pyutil.lazy\_downloader module
 ------------------------------
 
@@ -138,6 +128,7 @@ pyutil.lazy\_downloader module
     :undoc-members:
     :show-inheritance:
 
+
 pyutil.linktree module
 ----------------------
 
@@ -145,6 +136,25 @@ pyutil.linktree module
     :members:
     :undoc-members:
     :show-inheritance:
+
+
+pyutil.math.gcd\_iter module
+----------------------------
+
+.. automodule:: pyutil.math.gcd_iter
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pyutil.math.gcd\_recur module
+-----------------------------
+
+.. automodule:: pyutil.math.gcd_recur
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 pyutil.mv\_to\_repo module
 ----------------------------

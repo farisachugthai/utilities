@@ -1,5 +1,3 @@
-.. _numpydoc:
-
 :mod:`numpydoc`
 =================
 
@@ -47,6 +45,11 @@ This code snippet is taken from the :mod:`sphinx` extension
 
 This proves to be useful as a programmatic way to validate docstrings.
 
+Feb 20, 2019:
+
+Just ran into the issue discussed with links at `Other points to keep in mind`_
+
+Had to redo the URL to my GitHub in a few spots.
 
 .. _format:
 

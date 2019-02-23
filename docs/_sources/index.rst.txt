@@ -7,7 +7,7 @@ Welcome to utilities's documentation!
 =====================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    `readme`_
    `tutorial`_

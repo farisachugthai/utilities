@@ -19,8 +19,7 @@ fh() { # {{{
 #                             fzf wiki                               #
 ######################################################################
 
-
-git_log() { # {{{
+git_log() { # {{{ log piped into less and displays show
   local show="git show --color=always \"\$(grep -m1 -o \"[a-f0-9]\{7\}\" <<< {})\""
   fzf --prompt='log' -e --no-sort --tiebreak=index \
     --bind="enter:execute:$show | less -R" \
@@ -29,35 +28,30 @@ git_log() { # {{{
     --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@")
 }
 # }}}
-
-# fbr - checkout git branch
-fbr() { # {{{
+fbr() { # checkout git branch {{{
   local branches branch
   branches=$(git branch -vv) &&
   branch=$(echo "$branches" | fzf +m) &&
-  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+  git checkout "$(echo "$branch" | awk '{print $1}' | sed "s/.* //")"
 }
 # }}}
-# fbr - checkout git branch (including remote branches)
-fbr() { # {{{
+fbr() { # {{{ checkout git branch (including remote branches). Uses fzf-tmux
   local branches branch
   branches=$(git branch --all | grep -v HEAD) &&
   branch=$(echo "$branches" |
            fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+  git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
 }
 # }}}
-# fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
-fbr() { # {{{
+fbr() { # {{{ checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
   local branches branch
   branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
   branch=$(echo "$branches" |
            fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+  git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
 }
 # }}}
-# fco - checkout git branch/tag
-fco() { # {{{
+fco() { # {{{ checkout git branch/tag
   local tags branches target
   tags=$(
     git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
@@ -68,11 +62,10 @@ fco() { # {{{
   target=$(
     (echo "$tags"; echo "$branches") |
     fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
-  git checkout $(echo "$target" | awk '{print $2}')
+  git checkout "$(echo "$target" | awk '{print $2}')"
 }
 # }}}
-# fco_preview - checkout git branch/tag, with a preview showing the commits between the tag/branch and HEAD
-fco_preview() { # {{{
+fco_preview() { # {{{ checkout git branch/tag, with a preview showing the commits between the tag/branch and HEAD
   local tags branches target
   tags=$(
 git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
@@ -84,19 +77,17 @@ sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
 (echo "$tags"; echo "$branches") |
     fzf --no-hscroll --no-multi --delimiter="\t" -n 2 \
         --ansi --preview="git log -200 --pretty=format:%s $(echo {+2..} |  sed 's/$/../' )" ) || return
-  git checkout $(echo "$target" | awk '{print $2}')
+  git checkout "$(echo "$target" | awk '{print $2}')"
 }
 # }}}
-# fcoc - checkout git commit
-fcoc() { # {{{
+fcoc() { # {{{ checkout git commit
   local commits commit
   commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
   commit=$(echo "$commits" | fzf --tac +s +m -e) &&
-  git checkout $(echo "$commit" | sed "s/ .*//")
+  git checkout "$(echo "$commit" | sed "s/ .*//")"
 }
 # }}}
-# fshow - git commit browser
-fshow() { # {{{
+fshow() { # {{{ git commit browser
   git log --graph --color=always \
       --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
   fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
@@ -107,20 +98,24 @@ fshow() { # {{{
 FZF-EOF"
 }
 # }}}
-alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
+glNoGraph(){  # An alias I converted into a function. cross your fingers
+    'git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
+}
+
+# Wait are these backslashes necessary inside of a single quote?
 _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+
 _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
-# fcoc_preview - checkout git commit with previews
-fcoc_preview() { # {{{
+
+fcoc_preview() { # {{{ checkout git commit with previews. Probably won't work because we don't have diff-so-fancy
   local commit
   commit=$( glNoGraph |
     fzf --no-sort --reverse --tiebreak=index --no-multi \
         --ansi --preview="$_viewGitLogLine" ) &&
-  git checkout $(echo "$commit" | sed "s/ .*//")
+  git checkout "$(echo "$commit" | sed "s/ .*//")"
 }
 # }}}
-# fshow_preview - git commit browser with previews
-fshow_preview() { # {{{
+fshow_preview() { # {{{ fshow_preview - git commit browser with previews
     glNoGraph |
         fzf --no-sort --reverse --tiebreak=index --no-multi \
             --ansi --preview="$_viewGitLogLine" \
@@ -129,15 +124,11 @@ fshow_preview() { # {{{
                 --bind "alt-y:execute:$_gitLogLineToHash | xclip"
 }
 # }}}
-# Create a gitignore file from [gitignore.io](http://gitignore.io):
-# (https://gist.github.com/phha/cb4f4bb07519dc494609792fb918e167)
-# fgst - pick files from git status -s
 is_in_git_repo() { # {{{
   git rev-parse HEAD > /dev/null 2>&1
 }
 # }}}
-
-fgst() { # {{{
+fgst() { # {{{ pick files from git status -s
   # "Nothing to see here, move along"
   is_in_git_repo || return
 
@@ -149,10 +140,7 @@ fgst() { # {{{
   echo
 }
 # }}}
-
-
-# ftags - search ctags
-ftags() { # {{{
+ftags() { # {{{ search ctags
   local line
   [ -e tags ] &&
   line=$(
@@ -162,3 +150,125 @@ ftags() { # {{{
                                       -c "silent tag $(cut -f2 <<< "$line")"
 }
 # }}}
+# From Choi's Gist not the wiki.
+fzf-down() { # {{{ fzf --height and border
+  fzf --height 50% "$@" --border
+}
+# }}}
+fgf() { # {{{ git status - preview diff
+  is_in_git_repo || return
+  git -c color.status=always status --short |
+  fzf-down -m --ansi --nth 2..,.. \
+    --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
+  cut -c4- | sed 's/.* -> //'
+}
+# }}}
+fgb() { # {{{
+  is_in_git_repo || return
+  git branch -a --color=always | grep -v '/HEAD\s' | sort |
+  fzf-down --ansi --multi --tac --preview-window right:70% \
+    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+  sed 's/^..//' | cut -d' ' -f1 |
+  sed 's#^remotes/##'
+}
+# }}}
+fgt() { # {{{
+  is_in_git_repo || return
+  git tag --sort -version:refname |
+  fzf-down --multi --preview-window right:70% \
+    --preview 'git show --color=always {} | head -'$LINES
+}
+# }}}
+fgh() { # {{{
+  is_in_git_repo || return
+  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
+  fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+    --header 'Press CTRL-S to toggle sort' \
+    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -'$LINES |
+  grep -o "[a-f0-9]\{7,\}"
+}
+# }}}
+fgr() { # {{{1 git remote
+  is_in_git_repo || return
+  git remote -v | awk '{print $1 "\t" $2}' | uniq |
+  fzf-down --tac \
+    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
+  cut -d$'\t' -f1
+}
+# }}}
+# Key bindings for each. {{{1
+bind '"\er": redraw-current-line'
+bind '"\C-g\C-f": "$(fgf)\e\C-e\er"'
+bind '"\C-g\C-b": "$(fgb)\e\C-e\er"'
+bind '"\C-g\C-t": "$(fgt)\e\C-e\er"'
+bind '"\C-g\C-h": "$(fgh)\e\C-e\er"'
+bind '"\C-g\C-r": "$(fgr)\e\C-e\er"'
+
+# Different gist
+gstash() { # {{{1 preview window for git stashes
+  local out k reflog
+  out=(
+    $(git stash list --pretty='%C(yellow)%gd %>(14)%Cgreen%cr %C(blue)%gs' |
+      fzf --ansi --no-sort --header='enter:show, ctrl-d:diff, ctrl-o:pop, ctrl-y:apply, ctrl-x:drop' \
+          --preview='git stash show --color=always -p $(cut -d" " -f1 <<< {}) | head -'$LINES \
+          --preview-window=down:50% --reverse \
+          --bind='enter:execute(git stash show --color=always -p $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
+          --bind='ctrl-d:execute(git diff --color=always $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
+          --expect=ctrl-o,ctrl-y,ctrl-x))
+  k=${out[0]}
+  reflog=${out[1]}
+  [ -n "$reflog" ] && case "$k" in
+    ctrl-o) git stash pop $reflog ;;
+    ctrl-y) git stash apply $reflog ;;
+    ctrl-x) git stash drop $reflog ;;
+  esac
+}
+
+# Updated versions of the above. From Choi's bashrc.
+
+gf() {
+  is_in_git_repo || return
+  git -c color.status=always status --short |
+  fzf-down -m --ansi --nth 2..,.. \
+    --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
+  cut -c4- | sed 's/.* -> //'
+}
+
+gb() {
+  is_in_git_repo || return
+  git branch -a --color=always | grep -v '/HEAD\s' | sort |
+  fzf-down --ansi --multi --tac --preview-window right:70% \
+    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -200' |
+  sed 's/^..//' | cut -d' ' -f1 |
+  sed 's#^remotes/##'
+}
+
+gt() {
+  is_in_git_repo || return
+  git tag --sort -version:refname |
+  fzf-down --multi --preview-window right:70% \
+    --preview 'git show --color=always {} | head -200'
+}
+
+gh() {
+  is_in_git_repo || return
+  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
+  fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+    --header 'Press CTRL-S to toggle sort' \
+    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -200' |
+  grep -o "[a-f0-9]\{7,\}"
+}
+
+gr() {
+  is_in_git_repo || return
+  git remote -v | awk '{print $1 "\t" $2}' | uniq |
+  fzf-down --tac \
+    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
+  cut -d$'\t' -f1
+}
+
+gs() {
+  is_in_git_repo || return
+  git stash list | fzf-down --reverse -d: --preview 'git show --color=always {1}' |
+  cut -d: -f1
+}

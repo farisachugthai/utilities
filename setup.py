@@ -30,16 +30,16 @@ REQUIRED = [
         'pynvim', 'IPython',
         # Project uses reStructuredText, so ensure that the docutils get
         # installed or upgraded on the target machine
-        'docutils>=0.3'
+        'docutils>=0.3',
+        'requests', 'sphinx', 'flake8'
 ]
 
 EXTRAS = {
-        'dev': ['requests', 'sphinx', 'flake8']
 }
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
+with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
 # Load the package's __version__.py module as a dictionary.

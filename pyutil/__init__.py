@@ -1,18 +1,20 @@
-# !/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Initialize the package for all scripts used in IPythom startup.
+"""Initialize the package for all scripts used in IPython startup.
 
 :File: __init__.py
 :Author: Faris Chugthai
-:Github: `https://github.com/farisachugthai`_
+`GitHub <https://github.com/farisachugthai>`_
 
 This module intends to establish a few different things.
 
-- Initialize logging in a general manner
-- Use :mod:`pkg_resources` provided by :mod:`setuptools` in order to
-create the directory as a namespace package
-- Define generic dunder methods
-- Extend the user's $PATH to include this directory even if it != os.cwd
+    - Initialize logging in a general manner.
+    - Use :mod:`pkg_resources` provided by :mod:`setuptools` in order to create the directory as a namespace package
+    - Define generic dunder methods.
+    - Extend the user's ``$PATH `` to include this directory even if it != os.cwd
+
+
+# NOQA F401
 
 """
 import logging

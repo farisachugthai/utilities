@@ -1,5 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
+
+:mod:`itersrc.py`
+==================
+
+.. module:: itersrc.py
+    :synopsis: Iterate over all of the python files in a directory recursively.
+
+:File: itersrc.py
+:Author: Faris Chugthai
+:Github: `https://github.com/farisachugthai`_
+:Date: |date|
+
+.. todo:: numpydoc and parameters.
+
+    Add the paths parameter here and check that it complies with Numpy
+    Docstring format. I believe we can run numpydoc.numpydoc over the file.
+
+"""
 import os
 import sys
 

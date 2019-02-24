@@ -3,16 +3,16 @@
 
 Motivation
 ------------
-
 This script aims to be platform agnostic and in the long term will be used
 on Windows, Linux, Mac and Android systems.
 
+
 Usage
 ------
-
 .. code-block:: shell
 
     python backup_nt_and_posix.py /path/to/dir
+
 
 """
 import os
@@ -24,7 +24,8 @@ from time import strftime
 def backup_directory(path):
     """Create a backup of a directory. Use the date and time as new name.
 
-    Returns:
+    Returns
+    --------
         None: means no error occurred.
         0: to signify the success
         -1 : to signify the failure
@@ -52,7 +53,7 @@ def backup_directory(path):
                                    stdin=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
         else:
-            return [-1, "Not supported on %s platform" % (os.name)]
+            return [-1, "Not supported on %s platform" % os.name]
 
         (out, err) = cmd.communicate()
 
@@ -69,5 +70,11 @@ def backup_directory(path):
 
 
 if __name__ == '__main__':
-    backupd = sys.argv[1]
+    try:
+        args = sys.argv[1:]
+    except IndexError:
+        sys.exit()
+
+    assert isinstance(args, list)
+    backupd = args[1]
     backup_directory(backupd)

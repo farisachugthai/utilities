@@ -1,26 +1,23 @@
 #!/usr/bin/env python
 """Backup a directory by appending the date and time and copying over.
 
-:mod:`backup_nt_and_posix`
-==========================
-
 Motivation
 ----------
-
 This script aims to be platform agnostic and in the long term will be used
 on Windows, Linux, Mac and Android systems.
 
 Usage
 ------
-
 .. code-block:: bash
 
     python backup_nt_and_posix.py /path/to/dir
+
 
 .. todo::
 
     Consider rewriting using classes to hold state based on OS.
     Then utilize :mod:`pathlib`.
+
 """
 import os
 import subprocess
@@ -33,14 +30,23 @@ def timestamped_dir(backup_dir):
 
     Parameters
     ----------
-    backup\_dir : Directory to backup
+    backup_dir : path-like object
+        Directory to backup
 
     Returns
     -------
-    None: means no error occurred.
-    0: to signify the success
-    -1 : to signify the failure
-    error string: the exact error string
+    None: NoneType
+        No error.
+    0: Int
+        Success
+    -1 : Int
+        Failure
+    error : string
+        the exact error string
+
+    .. todo:: Change this so that it utilizes :func:`subprocess.check_call()`
+    and we handle return codes in a better and more *true to form* way.
+
     """
 
     # Windows Specific Implementation

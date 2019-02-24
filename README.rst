@@ -1,5 +1,3 @@
-.. _readme:
-
 utilities
 ==========
 
@@ -7,7 +5,7 @@ utilities
 
 .. title:: utilities
 
-This repository houses a number of functional scripts I utilize to
+This repository houses a number of functional scripts that can be utilized to
 administer multiple workstations.
 
 

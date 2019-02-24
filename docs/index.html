@@ -1,436 +1,252 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
-<title>index.rst</title>
-<style type="text/css">
 
-/*
-:Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 7952 2016-07-26 18:15:59Z milde $
-:Copyright: This stylesheet has been placed in the public domain.
-
-Default cascading style sheet for the HTML output of Docutils.
-
-See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
-customize this style sheet.
-*/
-
-/* used to remove borders from tables and images */
-.borderless, table.borderless td, table.borderless th {
-  border: 0 }
-
-table.borderless td, table.borderless th {
-  /* Override padding for "table.docutils td" with "! important".
-     The right padding separates the table cells. */
-  padding: 0 0.5em 0 0 ! important }
-
-.first {
-  /* Override more specific margin styles with "! important". */
-  margin-top: 0 ! important }
-
-.last, .with-subtitle {
-  margin-bottom: 0 ! important }
-
-.hidden {
-  display: none }
-
-.subscript {
-  vertical-align: sub;
-  font-size: smaller }
-
-.superscript {
-  vertical-align: super;
-  font-size: smaller }
-
-a.toc-backref {
-  text-decoration: none ;
-  color: black }
-
-blockquote.epigraph {
-  margin: 2em 5em ; }
-
-dl.docutils dd {
-  margin-bottom: 0.5em }
-
-object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
-  overflow: hidden;
-}
-
-/* Uncomment (and remove this text!) to get bold-faced definition list terms
-dl.docutils dt {
-  font-weight: bold }
-*/
-
-div.abstract {
-  margin: 2em 5em }
-
-div.abstract p.topic-title {
-  font-weight: bold ;
-  text-align: center }
-
-div.admonition, div.attention, div.caution, div.danger, div.error,
-div.hint, div.important, div.note, div.tip, div.warning {
-  margin: 2em ;
-  border: medium outset ;
-  padding: 1em }
-
-div.admonition p.admonition-title, div.hint p.admonition-title,
-div.important p.admonition-title, div.note p.admonition-title,
-div.tip p.admonition-title {
-  font-weight: bold ;
-  font-family: sans-serif }
-
-div.attention p.admonition-title, div.caution p.admonition-title,
-div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title, .code .error {
-  color: red ;
-  font-weight: bold ;
-  font-family: sans-serif }
-
-/* Uncomment (and remove this text!) to get reduced vertical space in
-   compound paragraphs.
-div.compound .compound-first, div.compound .compound-middle {
-  margin-bottom: 0.5em }
-
-div.compound .compound-last, div.compound .compound-middle {
-  margin-top: 0.5em }
-*/
-
-div.dedication {
-  margin: 2em 5em ;
-  text-align: center ;
-  font-style: italic }
-
-div.dedication p.topic-title {
-  font-weight: bold ;
-  font-style: normal }
-
-div.figure {
-  margin-left: 2em ;
-  margin-right: 2em }
-
-div.footer, div.header {
-  clear: both;
-  font-size: smaller }
-
-div.line-block {
-  display: block ;
-  margin-top: 1em ;
-  margin-bottom: 1em }
-
-div.line-block div.line-block {
-  margin-top: 0 ;
-  margin-bottom: 0 ;
-  margin-left: 1.5em }
-
-div.sidebar {
-  margin: 0 0 0.5em 1em ;
-  border: medium outset ;
-  padding: 1em ;
-  background-color: #ffffee ;
-  width: 40% ;
-  float: right ;
-  clear: right }
-
-div.sidebar p.rubric {
-  font-family: sans-serif ;
-  font-size: medium }
-
-div.system-messages {
-  margin: 5em }
-
-div.system-messages h1 {
-  color: red }
-
-div.system-message {
-  border: medium outset ;
-  padding: 1em }
-
-div.system-message p.system-message-title {
-  color: red ;
-  font-weight: bold }
-
-div.topic {
-  margin: 2em }
-
-h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
-h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
-  margin-top: 0.4em }
-
-h1.title {
-  text-align: center }
-
-h2.subtitle {
-  text-align: center }
-
-hr.docutils {
-  width: 75% }
-
-img.align-left, .figure.align-left, object.align-left, table.align-left {
-  clear: left ;
-  float: left ;
-  margin-right: 1em }
-
-img.align-right, .figure.align-right, object.align-right, table.align-right {
-  clear: right ;
-  float: right ;
-  margin-left: 1em }
-
-img.align-center, .figure.align-center, object.align-center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-table.align-center {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.align-left {
-  text-align: left }
-
-.align-center {
-  clear: both ;
-  text-align: center }
-
-.align-right {
-  text-align: right }
-
-/* reset inner alignment in figures */
-div.align-right {
-  text-align: inherit }
-
-/* div.align-center * { */
-/*   text-align: left } */
-
-.align-top    {
-  vertical-align: top }
-
-.align-middle {
-  vertical-align: middle }
-
-.align-bottom {
-  vertical-align: bottom }
-
-ol.simple, ul.simple {
-  margin-bottom: 1em }
-
-ol.arabic {
-  list-style: decimal }
-
-ol.loweralpha {
-  list-style: lower-alpha }
-
-ol.upperalpha {
-  list-style: upper-alpha }
-
-ol.lowerroman {
-  list-style: lower-roman }
-
-ol.upperroman {
-  list-style: upper-roman }
-
-p.attribution {
-  text-align: right ;
-  margin-left: 50% }
-
-p.caption {
-  font-style: italic }
-
-p.credits {
-  font-style: italic ;
-  font-size: smaller }
-
-p.label {
-  white-space: nowrap }
-
-p.rubric {
-  font-weight: bold ;
-  font-size: larger ;
-  color: maroon ;
-  text-align: center }
-
-p.sidebar-title {
-  font-family: sans-serif ;
-  font-weight: bold ;
-  font-size: larger }
-
-p.sidebar-subtitle {
-  font-family: sans-serif ;
-  font-weight: bold }
-
-p.topic-title {
-  font-weight: bold }
-
-pre.address {
-  margin-bottom: 0 ;
-  margin-top: 0 ;
-  font: inherit }
-
-pre.literal-block, pre.doctest-block, pre.math, pre.code {
-  margin-left: 2em ;
-  margin-right: 2em }
-
-pre.code .ln { color: grey; } /* line numbers */
-pre.code, code { background-color: #eeeeee }
-pre.code .comment, code .comment { color: #5C6576 }
-pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
-pre.code .literal.string, code .literal.string { color: #0C5404 }
-pre.code .name.builtin, code .name.builtin { color: #352B84 }
-pre.code .deleted, code .deleted { background-color: #DEB0A1}
-pre.code .inserted, code .inserted { background-color: #A3D289}
-
-span.classifier {
-  font-family: sans-serif ;
-  font-style: oblique }
-
-span.classifier-delimiter {
-  font-family: sans-serif ;
-  font-weight: bold }
-
-span.interpreted {
-  font-family: sans-serif }
-
-span.option {
-  white-space: nowrap }
-
-span.pre {
-  white-space: pre }
-
-span.problematic {
-  color: red }
-
-span.section-subtitle {
-  /* font-size relative to parent (h1..h6 element) */
-  font-size: 80% }
-
-table.citation {
-  border-left: solid 1px gray;
-  margin-left: 1px }
-
-table.docinfo {
-  margin: 2em 4em }
-
-table.docutils {
-  margin-top: 0.5em ;
-  margin-bottom: 0.5em }
-
-table.footnote {
-  border-left: solid 1px black;
-  margin-left: 1px }
-
-table.docutils td, table.docutils th,
-table.docinfo td, table.docinfo th {
-  padding-left: 0.5em ;
-  padding-right: 0.5em ;
-  vertical-align: top }
-
-table.docutils th.field-name, table.docinfo th.docinfo-name {
-  font-weight: bold ;
-  text-align: left ;
-  white-space: nowrap ;
-  padding-left: 0 }
-
-/* "booktabs" style (no vertical lines) */
-table.docutils.booktabs {
-  border: 0px;
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-  border-collapse: collapse;
-}
-table.docutils.booktabs * {
-  border: 0px;
-}
-table.docutils.booktabs th {
-  border-bottom: thin solid;
-  text-align: left;
-}
-
-h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
-h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
-  font-size: 100% }
-
-ul.auto-toc {
-  list-style-type: none }
-
-</style>
-</head>
-<body>
-<div class="document">
-
-
-<!-- utilities documentation master file, created by
-sphinx-quickstart on Fri Dec 28 10:30:36 2018.
-You can adapt this file completely to your liking, but it should at least
-contain the root `toctree` directive. -->
-<div class="section" id="welcome-to-utilities-s-documentation">
-<h1>Welcome to utilities's documentation!</h1>
-<div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">C:/Users/faris/projects/utilities/docs/index.rst</tt>, line 9)</p>
-<p>Unknown directive type &quot;toctree&quot;.</p>
-<pre class="literal-block">
-.. toctree::
-   :maxdepth: 2
-   :glob:
-
-   ../pyutil.backup_nt_and_posix
-   ../pyutil.batch_renamer
-   ../pyutil.check_IP
-   ../pyutil.conda-export
-   ../pyutil.dir3
-   ../pyutil.dir_cleaner
-   ../pyutil.dlink
-   ../pyutil.dlink2
-   ../pyutil.dot_sym
-   ../pyutil.env
-   ../pyutil.find_pics
-   ../pyutil.inspect_module
-   ../pyutil.itersrc
-   ../pyutil.lazy_downloader
-   ../pyutil.linktree
-   ../pyutil.math
-   ../pyutil.mv_to_repo
-   ../pyutil.nvim-profiling
-   ../pyutil.ptags
-   ../pyutil.rclone
-   ../pyutil.script_helper
-   ../pyutil.strip_space
-   ../pyutil.sys_checks
-   ../pyutil.tmux-nvim
-   ../pyutil.yes_no_question
-   ../pyutil.yt_dl
-   ../pyutil.zillow-api
-
-</pre>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>utilities &#8212; pyutil 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="utilities" href="readme.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-utilities-s-documentation">
+<span id="index"></span><h1>Welcome to utilities’s documentation!<a class="headerlink" href="#welcome-to-utilities-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
 </div>
 </div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables</h1>
+<div class="section" id="utilities">
+<span id="readme"></span><h1>utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h1>
+<p>This repository houses a number of functional scripts I utilize to
+administer multiple workstations.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>One can install the package by:</p>
+<ul class="simple">
+<li>Cloning with git</li>
+<li>Running the setup.py file.</li>
+<li>Ensuring that the scripts in ./sh/ are in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></li>
+</ul>
+<p>If you are on a Unix-like system, the following should work perfectly then.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/farisachugthai/utilities
+<span class="nb">cd</span> utilities
+python3 setup.py build <span class="o">&amp;&amp;</span> python3 setup.py install
+
+<span class="c1"># The script at ./pyutil/dlink.py is useful for creating symlinks for every</span>
+<span class="c1"># file in a directory. If the directory ~/bin is in your path...</span>
+
+<span class="c1"># Check which directories are in the $PATH env var</span>
+<span class="nb">echo</span> <span class="nv">$PATH</span>
+
+<span class="c1"># Then link the scripts in ./sh to a directory in your path!</span>
+python3 dlink.py <span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/sh&quot;</span> ~/bin
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Modules can be used to:</p>
+<ul class="simple">
+<li><a class="reference external" href="pyutil/backup_nt_and_posix.py">Back up directories.</a></li>
+<li><a class="reference external" href="pyutil/lazy_downloader.py">Automate the process of downloading plain-text files from the Internet.</a></li>
+<li><a class="reference external" href="pyutil/yt_dl.py">Automate downloading videos from YouTube.</a></li>
+<li><a class="reference external" href="pyutil/linktree.py">Symlink files recursively</a></li>
+<li><a class="reference external" href="pyutil/inspect_module.py">Inspect varying python modules.</a></li>
+<li><a class="reference external" href="pyutil/env.py">Introspect environment variables.</a></li>
+<li><a class="reference external" href="pyutil/nvim_profiling.py">Profiling nvim startup time.</a></li>
+<li><a class="reference external" href="pyutil/strip_space.py">Strip trailing whitespace from a file.</a></li>
+</ul>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>MIT</p>
+</div>
+<div class="section" id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<p>Even though these are mostly scripts I’ve thrown together; I’d absolutely love
+any constructive criticism or pointers on how to get any module listed to work
+better!</p>
+<p>I hope it goes without saying, but if it doesn’t, please don’t hesitate
+to fork or create an issue.</p>
+<div class="toctree-wrapper compound" id="mastertoc">
+<p class="caption"><span class="caption-text">Table of Contents</span><a class="headerlink" href="#mastertoc" title="Permalink to this toctree">¶</a></p>
 <ul>
-<li><p class="first"><a href="#id1"><span class="problematic" id="id2">:ref:`genindex`</span></a></p>
-<div class="system-message" id="id1">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">C:/Users/faris/projects/utilities/docs/index.rst</tt>, line 44); <em><a href="#id2">backlink</a></em></p>
-<p>Unknown interpreted text role &quot;ref&quot;.</p>
-</div>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst - The pyutils tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#contributing">Contributing</a></li>
+</ul>
 </li>
-<li><p class="first"><a href="#id3"><span class="problematic" id="id4">:ref:`modindex`</span></a></p>
-<div class="system-message" id="id3">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">C:/Users/faris/projects/utilities/docs/index.rst</tt>, line 45); <em><a href="#id4">backlink</a></em></p>
-<p>Unknown interpreted text role &quot;ref&quot;.</p>
-</div>
+<li class="toctree-l1"><a class="reference internal" href="numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
+</ul>
 </li>
-<li><p class="first"><a href="#id5"><span class="problematic" id="id6">:ref:`search`</span></a></p>
-<div class="system-message" id="id5">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">C:/Users/faris/projects/utilities/docs/index.rst</tt>, line 46); <em><a href="#id6">backlink</a></em></p>
-<p>Unknown interpreted text role &quot;ref&quot;.</p>
-</div>
+<li class="toctree-l1"><a class="reference internal" href="api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.backup_nt_and_posix">pyutil.backup_nt_and_posix module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.batch_renamer">pyutil.batch_renamer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.check_IP">pyutil.check_IP module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.conda_export"><code class="docutils literal notranslate"><span class="pre">pyutil.conda_export</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.dir3">pyutil.dir3 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.dir_cleaner">pyutil.dir_cleaner module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.dlink">pyutil.dlink module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.dlink2">pyutil.dlink2 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.env">pyutil.env module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.env_checks">pyutil.env_checks module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.find_pics">pyutil.find_pics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.inspect_module">pyutil.inspect_module module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.itersrc">pyutil.itersrc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.json_sorter">pyutil.json_sorter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.lazy_downloader">pyutil.lazy_downloader module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.linktree">pyutil.linktree module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.math.gcd_iter">pyutil.math.gcd_iter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.math.gcd_recur">pyutil.math.gcd_recur module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.mv_to_repo">pyutil.mv_to_repo module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.nvim_profiling"><code class="docutils literal notranslate"><span class="pre">pyutil.nvim_profiling</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.ptags">pyutil.ptags module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.rclone">pyutil.rclone module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.script_helper">pyutil.script_helper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.strip_space">pyutil.strip_space module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.sys_checks">pyutil.sys_checks module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.wrap">pyutil.wrap module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.yes_no_question">pyutil.yes_no_question module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.zillow">pyutil.zillow module</a></li>
+</ul>
 </li>
 </ul>
 </div>
 </div>
-</body>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">utilities</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst - The pyutils tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="readme.html" title="next chapter">utilities</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+
+
+
+
+
+
+
+
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to utilities’s documentation!</a></li>
+<li><a class="reference internal" href="#utilities">utilities</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#contributing">Contributing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
 </html>

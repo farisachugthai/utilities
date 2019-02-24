@@ -11,6 +11,7 @@ Requires
 ---------
 rclone
 
+
 .. todo::
 
     - ``args`` is used as a parameter to both :class:`argparse.ArgumentParser()` and :func:`subprocess.run()`
@@ -21,6 +22,7 @@ rclone
     - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`
      to emulate rsync's file input.
 
+o
 """
 import argparse
 import os
@@ -46,8 +48,23 @@ def _parse_arguments(cwd=None):
         action='store',
         dest='src',
         default=cwd,
-        help="The source directory. "
-        "Defaults to the cwd.")
+        help="the source directory. "
+        "defaults to the cwd.")
+
+    # need to change all instances of dest becuase that's too confusing
+    # parser.add_argument(
+    #     action='store',
+    #     dest='src',
+    #     default=cwd,
+    #     help="The source directory. "
+    #     "Defaults to the cwd.")
+
+    parser.add_argument(
+        '-f',
+        '--follow',
+        action='store',
+        dest='follow',
+        help="Follow symlinks.")
 
     return parser
 
@@ -119,6 +136,11 @@ if __name__ == "__main__":
     # rewritten ground up.
 
     # Use :Glog if you want a reference of what was here.
-    parser = _parse_arguments()
+    parser = _parse_arguments(cwd)
 
-    parser.parse_args()
+    args = parser.parse_args()
+
+    if args.follow:
+
+        # rclone_follow()
+        pass

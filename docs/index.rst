@@ -13,9 +13,7 @@ Welcome to utilities's documentation!
 
    readme
 
-.. include:: literal
-
-   readme
+.. include:: readme.rst
 
 .. toctree::
    :caption: Table of Contents

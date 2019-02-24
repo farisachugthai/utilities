@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 # Maintainer: Faris Chugthai
-"""
-lazy_downloader
-==================
-
-.. module:: lazy_downloader
-    :synopsis: Automates downloading plain text files from the Web.
+"""Automates downloading plain text files from the Web.
 
 
 Parameters

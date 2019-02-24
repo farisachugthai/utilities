@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 """Configuration file for the Sphinx documentation builder.
 
+Sphinx Configuration File
+=========================
+
 This file does only contain a selection of the most common options. For a
 full list see the documentation:
 
@@ -24,6 +27,7 @@ As stated at:
 However, the filetype mapping came about in 1.8 so make sure to add that
 ``needs-sphinx=version`` bit
 
+
 """
 import logging
 import os
@@ -43,13 +47,15 @@ sys.path.insert(0, os.path.abspath('./sphinxext'))
 sys.path.insert(0, os.path.abspath('../pyutil'))
 
 sys.path.insert(0, os.path.abspath('../pyutil/math'))
+
+logging.debug("Path is currently: " + str(sys.path))
 # -- Project information -----------------------------------------------------
 
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
-project = 'pyutil'
-copyright = '2018, Faris A Chugthai'
-author = 'Faris A Chugthai'
+project = u'pyutil'
+copyright = u'2018, Faris A Chugthai'
+author = u'Faris A Chugthai'
 
 # The short X.Y version
 version = '0.1'
@@ -115,6 +121,7 @@ master_doc = 'index'
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
 # default_domain = 'python'
+default_role = 'py:obj'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -130,16 +137,16 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-# html_theme = 'alabas'
+# html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {
-#     "github_user": "Faris A. Chugthai",
-#     "github_repo": "utilities"
-# }
+html_theme_options = {
+    "github_user": "Faris A. Chugthai",
+    "github_repo": "utilities"
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -165,7 +172,9 @@ html_sidebars = {
         'navigation.html',
         'relations.html',
         'searchbox.html',
+        'sourcelink.html',
         'donate.html',
+        'localtoc.html'
     ]
 }
 
@@ -245,6 +254,7 @@ intersphinx_mapping = {
     'matplotlib': ('https://matplotlib.org', None),
     'python': ('https://docs.python.org/3/', None),
     'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'numpydoc': ('https://numpydoc.readthedocs.io/en/latest/', None),
 }
 
 # -- Options for todo extension ----------------------------------------------
@@ -260,8 +270,8 @@ viewcode_import = True
 # Autosummary
 # -----------------------------------------------------------------------------
 
-import glob  # noqa F402
-autosummary_generate = glob.glob("./*.rst")
+# import glob  # noqa F402
+autosummary_generate = True
 
 # -----------------------------------------------------------------------------
 # Napoleon settings

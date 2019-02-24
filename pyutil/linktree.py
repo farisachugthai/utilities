@@ -4,11 +4,6 @@
 
 Minor modifications for :mod:`flake8`, :mod:`pydocstyle` etc.
 
-linktree
-==========
-
-.. currentmodule:: linktree1
-
 Make a copy of a directory tree with symbolic links to all files in the
 original tree.
 
@@ -17,8 +12,7 @@ can easily fix things if the original source tree moves.
 
 Usage
 -------
-
-code-block:: shell
+.. code-block:: shell
 
     mklinks oldtree newtree
 

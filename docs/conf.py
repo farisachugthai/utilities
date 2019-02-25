@@ -38,15 +38,16 @@ logger = logging.getLogger(__name__)
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
+SOURCE_CODE = os.path.join('..', 'pyutil')
 
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('.'))
 
-sys.path.insert(0, os.path.abspath('./sphinxext'))
+sys.path.insert(0, os.path.abspath('sphinxext'))
 
-sys.path.insert(0, os.path.abspath('../pyutil'))
+sys.path.insert(0, os.path.abspath(SOURCE_CODE))
 
-sys.path.insert(0, os.path.abspath('../pyutil/math'))
+sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'math')))
 
 logging.debug("Path is currently: " + str(sys.path))
 # -- Project information -----------------------------------------------------
@@ -58,9 +59,9 @@ copyright = u'2018, Faris A Chugthai'
 author = u'Faris A Chugthai'
 
 # The short X.Y version
-version = '0.1'
+version = '0.0.1'
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '0.0.1'
 
 # -- General configuration ---------------------------------------------------
 
@@ -80,6 +81,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
 ]
@@ -143,10 +145,10 @@ pygments_style = 'sphinx'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
-    "github_user": "Faris A. Chugthai",
-    "github_repo": "utilities"
-}
+# html_theme_options = {
+#     "github_user": "Faris A. Chugthai",
+#     "github_repo": "utilities"
+# }
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

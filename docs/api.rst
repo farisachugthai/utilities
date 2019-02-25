@@ -7,7 +7,7 @@
     :local:
 
 
-pyutil.backup\_nt\_and\_posix module
+:mod:`backup_nt\_and\_posix` module
 ------------------------------------
 
 .. automodule:: pyutil.backup_nt_and_posix
@@ -16,7 +16,7 @@ pyutil.backup\_nt\_and\_posix module
     :show-inheritance:
 
 
-pyutil.batch\_renamer module
+:mod:`batch_renamer` module
 ----------------------------
 
 .. automodule:: pyutil.batch_renamer
@@ -25,7 +25,7 @@ pyutil.batch\_renamer module
     :show-inheritance:
 
 
-pyutil.check\_IP module
+:mod:`check_IP` module
 -----------------------
 
 .. automodule:: pyutil.check_IP
@@ -43,7 +43,7 @@ pyutil.check\_IP module
     :show-inheritance:
 
 
-pyutil.dir3 module
+:mod:`dir3` module
 ------------------
 
 .. automodule:: pyutil.dir3
@@ -52,7 +52,7 @@ pyutil.dir3 module
     :show-inheritance:
 
 
-pyutil.dir\_cleaner module
+:mod:`dir_cleaner` module
 --------------------------
 
 .. automodule:: pyutil.dir_cleaner
@@ -61,7 +61,7 @@ pyutil.dir\_cleaner module
     :show-inheritance:
 
 
-pyutil.dlink module
+:mod:`dlink` module
 -------------------
 
 .. automodule:: pyutil.dlink
@@ -70,7 +70,7 @@ pyutil.dlink module
     :show-inheritance:
 
 
-pyutil.dlink2 module
+:mod:`dlink2` module
 --------------------
 
 .. automodule:: pyutil.dlink2
@@ -79,7 +79,7 @@ pyutil.dlink2 module
     :show-inheritance:
 
 
-pyutil.env module
+:mod:`env` module
 -----------------
 
 .. automodule:: pyutil.env
@@ -88,7 +88,7 @@ pyutil.env module
     :show-inheritance:
 
 
-pyutil.env\_checks module
+:mod:`env_checks` module
 -------------------------
 
 .. automodule:: pyutil.env_checks
@@ -97,7 +97,7 @@ pyutil.env\_checks module
     :show-inheritance:
 
 
-pyutil.find\_pics module
+:mod:`find_pics` module
 ------------------------
 
 .. automodule:: pyutil.find_pics
@@ -106,7 +106,7 @@ pyutil.find\_pics module
     :show-inheritance:
 
 
-pyutil.inspect\_module module
+:mod:`inspect_module` module
 -----------------------------
 
 .. automodule:: pyutil.inspect_module
@@ -115,7 +115,7 @@ pyutil.inspect\_module module
     :show-inheritance:
 
 
-pyutil.itersrc module
+:mod:`itersrc` module
 ---------------------
 
 .. automodule:: pyutil.itersrc
@@ -124,7 +124,7 @@ pyutil.itersrc module
     :show-inheritance:
 
 
-pyutil.json\_sorter module
+:mod:`json_sorter` module
 --------------------------
 
 .. automodule:: pyutil.json_sorter
@@ -133,7 +133,7 @@ pyutil.json\_sorter module
     :show-inheritance:
 
 
-pyutil.lazy\_downloader module
+:mod:`lazy_downloader` module
 ------------------------------
 
 .. automodule:: pyutil.lazy_downloader
@@ -142,7 +142,7 @@ pyutil.lazy\_downloader module
     :show-inheritance:
 
 
-pyutil.linktree module
+:mod:`linktree` module
 ----------------------
 
 .. automodule:: pyutil.linktree
@@ -151,7 +151,7 @@ pyutil.linktree module
     :show-inheritance:
 
 
-pyutil.math.gcd\_iter module
+:mod:`math.gcd_iter` module
 ----------------------------
 
 .. automodule:: pyutil.math.gcd_iter
@@ -160,8 +160,7 @@ pyutil.math.gcd\_iter module
     :show-inheritance:
 
 
-
-pyutil.math.gcd\_recur module
+:mod:`math.gcd_recur` module
 -----------------------------
 
 .. automodule:: pyutil.math.gcd_recur
@@ -170,7 +169,25 @@ pyutil.math.gcd\_recur module
     :show-inheritance:
 
 
-pyutil.mv\_to\_repo module
+:mod:`math.gcd_iter` module
+----------------------------
+
+.. automodule:: pyutil.math.gcd_iter
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+:mod:`math.gcd_recur` module
+-----------------------------
+
+.. automodule:: pyutil.math.gcd_recur
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+:mod:`mv_to_repo` module
 ----------------------------
 
 .. automodule:: pyutil.mv_to_repo
@@ -206,7 +223,7 @@ pyutil.rclone module
     :show-inheritance:
 
 
-pyutil.script\_helper module
+:mod:`script_helper` module
 ----------------------------
 
 .. automodule:: pyutil.script_helper
@@ -224,7 +241,7 @@ pyutil.script\_helper module
     :show-inheritance:
 
 
-pyutil.sys\_checks module
+:mod:`sys_checks` module
 -------------------------
 
 .. automodule:: pyutil.sys_checks
@@ -242,7 +259,7 @@ pyutil.wrap module
     :show-inheritance:
 
 
-pyutil.yes\_no\_question module
+:mod:`yes_no\_question` module
 -------------------------------
 
 .. automodule:: pyutil.yes_no_question

@@ -3,11 +3,18 @@
 
 # set -euo pipefail
 
+# Feb 26, 2019: Idea on how to decide to use fzf or fzf-tmux
+
+# [[ -n $TMUX ]] means not in tmux
+[[ -z $TMUX ]] && comm=fzf-tmux || comm=fzf
+# or something to that effect
+
 # fzf_down: split down: {{{1
 fzf_down() {
   fzf --height 50% "$@" --border
 }
 
+# Move to fzf_git?
 # fzf_commits: commits in a repo: {{{1
 fzf_commits() {
   git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "

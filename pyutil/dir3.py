@@ -2,14 +2,9 @@
 # -*- coding: utf-8 -*-
 """Improve the :func:`dir()` by ignoring methods hidden by ``_``.
 
-Dir3
-======
-
-.. module:: dir3
-
 :File: dir3.py
 :Author: Faris Chugthai
-`GitHub https://github.com/farisachugthai`_
+`GitHub <https://github.com/farisachugthai>`_
 
 Background
 -----------
@@ -23,15 +18,15 @@ run in the session.
 This causes an incredibly long output that's difficult to parse quickly at
 best, and at worst, the output truncates and all valuable
 information is hidden. This function attempts to avoid that by
-hiding all private and/or mangled
-methods I.E. ones that begin with the characters ``_`` or ``__``.
+hiding all private and/or mangled methods I.E. ones that begin with the
+characters ``_`` or ``__``.
 
 It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 
 
 Attributes
 -----------
-ip (InteractiveShell):
+ip : InteractiveShell
     A global object representing the active IPython session. Contains varying
     packages as well as the current global namespace. Doesn't need to be
     defined in advance during an interactive session.
@@ -138,7 +133,7 @@ def _interactive(args):
 
     Parameters
     ------------
-    args : (iterable)
+    args : iterable
         The object to inspect.
 
 

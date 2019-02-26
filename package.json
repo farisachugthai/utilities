@@ -1,32 +1,24 @@
 {
   "name": "utilities",
-  "version": "1.0.0",
-  "description": "This repository houses a number of functional scripts I utilize to administer multiple workstations.",
+  "version": "0.0.1",
   "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "test": "test"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/farisachugthai/utilities.git"
-  },
+  "repository": "git@github.com:farisachugthai/utilities.git",
   "author": "Faris Chugthai <farischugthai@gmail.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/farisachugthai/utilities/issues"
-  },
-  "homepage": "https://github.com/farisachugthai/utilities#readme",
   "dependencies": {
-    "bash-language-server": "^1.5.5",
-    "neovim": "^4.2.1",
-    "prettier": "^1.16.4"
+    "neovim": "^4.2.1"
   },
-  "devDependencies": {
-    "eslint": "^5.13.0",
-    "eslint-config-google": "^0.12.0"
+  "resolutions": {
+    "tough-cookie": "2.5.0",
+    "punycode": "2.1.1",
+    "extsprintf": "1.4.0",
+    "minimist": "1.2.0",
+    "pump": "2.0.1",
+    "string-width": "2.1.1",
+    "strip-ansi": "4.0.0",
+    "is-fullwidth-code-point": "2.0.0",
+    "ansi-regex": "3.0.0",
+    "acorn": "6.1.0",
+    "whatwg-url": "7.0.0"
   }
 }

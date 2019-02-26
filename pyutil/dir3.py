@@ -2,14 +2,11 @@
 # -*- coding: utf-8 -*-
 """Improve the :func:`dir()` by ignoring methods hidden by ``_``.
 
-Dir3
-======
-
 .. module:: dir3
 
 :File: dir3.py
 :Author: Faris Chugthai
-`GitHub https://github.com/farisachugthai`_
+`GitHub <https://github.com/farisachugthai>`_
 
 Background
 -----------
@@ -31,10 +28,10 @@ It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 
 Attributes
 -----------
-ip (InteractiveShell):
-    A global object representing the active IPython session. Contains varying
-    packages as well as the current global namespace. Doesn't need to be
-    defined in advance during an interactive session.
+ip : :class:`IPython.core.interactiveshell.InteractiveShell()`
+    A global object representing the active :mod:`IPython` session.
+    Contains varying packages as well as the current global namespace.
+    Doesn't need to be defined in advance during an interactive session.
 
 
 .. todo::
@@ -46,8 +43,7 @@ ip (InteractiveShell):
 
 See Also
 ---------
-dir2(obj) -> list of strings
-
+:func:`IPython.utils.dir2.dir2() : list of strings
     Extended version of the Python builtin :func:`dir()`, which does a few
     extra checks.
 
@@ -60,21 +56,17 @@ dir2(obj) -> list of strings
 
 .. code-block:: python3
 
-    # Start building the attribute list via dir(), and then complete it
-    # with a few extra special-purpose calls.
-
     >>> try:
         >>> words = set(dir(obj))
     >>> except Exception:
         >>> # TypeError: dir(obj) does not return a list
         >>> words = set()
-
+    # Start building the attribute list via dir(), and then complete it
+    # with a few extra special-purpose calls.
     >>> if safe_hasattr(obj, '__class__'):
         >>> words |= set(dir(obj.__class__))
-
     # filter out non-string attributes which may be stuffed by dir() calls
     # and poor coding in third-party modules
-
     >>> words = [w for w in words if isinstance(w, str)]
     >>> return sorted(words)
 

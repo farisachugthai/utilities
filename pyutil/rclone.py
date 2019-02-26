@@ -22,7 +22,7 @@ rclone
     - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`
      to emulate rsync's file input.
 
-o
+
 """
 import argparse
 import os
@@ -94,9 +94,7 @@ def rclone_base_case(src, dst):
 
     This command assumes a use case and configures it rclone for it properly.
 
-    .. todo::
-
-        - rclone takes an argument for user-agent
+    .. todo:: rclone takes an argument for user-agent
 
     Parameters
     ----------
@@ -105,8 +103,9 @@ def rclone_base_case(src, dst):
 
     dst : path-like object
         destination to send files to. Can be configured as a local directory,
-          a dropbox directory, a google drive folder or a google cloud storage
-          bucket among many other things.
+        a dropbox directory, a google drive folder or a google cloud storage
+        bucket among many other things.
+
 
     Returns
     -------
@@ -128,9 +127,10 @@ def rclone_base_case(src, dst):
 if __name__ == "__main__":
     cwd = os.getcwd()
 
-    # This forces a Linux only implementation. Should expand the following to
-    # a function
-    home = os.path.expanduser("~")
+    try:
+        home = os.path.expanduser("~")
+    except OSError:
+        home = os.environ.get('userprofile')
 
     # Quite honestly most of everything below was garbage and needs to be
     # rewritten ground up.

@@ -35,6 +35,10 @@ def timestamped_dir(backup_dir):
 
     Returns
     -------
+    return_code, error message : list
+
+    The specific implementation of this is as follows.
+
     None: NoneType
         No error.
     0: Int
@@ -44,28 +48,23 @@ def timestamped_dir(backup_dir):
     error : string
         the exact error string
 
-    .. todo:: Change this so that it utilizes :func:`subprocess.check_call()`
-    and we handle return codes in a better and more *true to form* way.
+    .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` and we handle return codes in a better and more *true to form* way.
 
     """
-
-    # Windows Specific Implementation
     if os.name == "nt":
-        cmd = subprocess.Popen(["move", path, backup_dir],
-                               shell=True,
-                               stdout=subprocess.PIPE,
-                               stdin=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
+        shell_command = "move"
 
-    # POSIX
     elif os.name == "posix":
-        cmd = subprocess.Popen(["mv", path, backup_dir],
-                               shell=True,
-                               stdout=subprocess.PIPE,
-                               stdin=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
+        shell_command = "mv"
+
     else:
         return [-1, "Not supported on %s platform" % (os.name)]
+
+    cmd = subprocess.Popen([shell_command, path, backup_dir],
+                           shell=True,
+                           stdout=subprocess.PIPE,
+                           stdin=subprocess.PIPE,
+                           stderr=subprocess.PIPE)
 
     (out, err) = cmd.communicate()
 

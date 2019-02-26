@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Common utility functions used by various script execution tests
+"""Common utility functions used by various script execution tests.
 
 e.g. test_cmd_line, test_cmd_line_script and test_runpy
 """
@@ -14,14 +14,14 @@ import py_compile
 import zipfile
 
 from importlib.util import source_from_cache
-from test.support import make_legacy_pyc, strip_python_stderr
+from test import support
 
 # Cached result of the expensive test performed in the function below.
 __cached_interp_requires_environment = None
 
 
 def interpreter_requires_environment():
-    """Returns True based on sys.executable.
+    """Return True based on ``sys.executable``.
 
     If the interpreter requires environment variables in order to be
     able to run at all.
@@ -59,10 +59,10 @@ def interpreter_requires_environment():
 
 class _PythonRunResult(
         collections.namedtuple("_PythonRunResult", ("rc", "out", "err"))):
-    """Helper for reporting Python subprocess run results"""
+    """Helper for reporting Python subprocess run results."""
 
     def fail(self, cmd_line):
-        """Provide helpful details about failed subcommand runs"""
+        """Provide helpful details about failed subcommand runs."""
         # Limit to 80 lines to ASCII characters
         maxlen = 80 * 100
         out, err = self.out, self.err
@@ -86,8 +86,8 @@ class _PythonRunResult(
                              "---" % (self.rc, cmd_line, out, err))
 
 
-# Executing the interpreter in a subprocess
 def run_python_until_end(*args, **env_vars):
+    """Execute the interpreter in a subprocess."""
     env_required = interpreter_requires_environment()
     cwd = env_vars.pop('__cwd', None)
     if '__isolated' in env_vars:
@@ -140,7 +140,7 @@ def run_python_until_end(*args, **env_vars):
             proc.kill()
             subprocess._cleanup()
     rc = proc.returncode
-    err = strip_python_stderr(err)
+    err = support.strip_python_stderr(err)
     return _PythonRunResult(rc, out, err), cmd_line
 
 
@@ -166,10 +166,10 @@ def assert_python_ok(*args, **env_vars):
 
 
 def assert_python_failure(*args, **env_vars):
-    """
-    Assert that running the interpreter with `args` and optional environment
-    variables `env_vars` fails (rc != 0) and return a (return code, stdout,
-    stderr) tuple.
+    """Assert that running the interpreter fails in certain conditions.
+
+    Specifically, with ``args`` and optional environment variables ``env_vars``
+    fails (rc != 0) and return a (return code, stdout, stderr) tuple.
 
     See assert_python_ok() for more options.
     """
@@ -231,7 +231,8 @@ def make_zip_script(zip_dir, zip_basename, script_name, name_in_zip=None):
     if name_in_zip is None:
         parts = script_name.split(os.sep)
         if len(parts) >= 2 and parts[-2] == '__pycache__':
-            legacy_pyc = make_legacy_pyc(source_from_cache(script_name))
+            legacy_pyc = support.make_legacy_pyc(
+                source_from_cache(script_name))
             name_in_zip = os.path.basename(legacy_pyc)
             script_name = legacy_pyc
         else:
@@ -281,7 +282,7 @@ def make_zip_pkg(zip_dir,
     zip_file.close()
     for name in unlink:
         os.unlink(name)
-    #if test.support.verbose:
+    # if test.support.verbose:
     #    zip_file = zipfile.ZipFile(zip_name, 'r')
     #    print 'Contents of %r:' % zip_name
     #    zip_file.printdir()

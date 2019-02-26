@@ -5,9 +5,11 @@
 
 .. contents::
     :local:
+    :depth: 2
 
+.. how annoying is it that toctree uses maxdepth and contents uses depth as an option
 
-:mod:`backup_nt\_and\_posix` module
+:mod:`backup_nt_and_posix` module
 ------------------------------------
 
 .. automodule:: pyutil.backup_nt_and_posix
@@ -34,7 +36,7 @@
     :show-inheritance:
 
 
-:mod:`pyutil.conda_export` module
+:mod:`conda_export` module
 -----------------------------------
 
 .. automodule:: pyutil.conda_export
@@ -169,24 +171,6 @@
     :show-inheritance:
 
 
-:mod:`math.gcd_iter` module
-----------------------------
-
-.. automodule:: pyutil.math.gcd_iter
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-:mod:`math.gcd_recur` module
------------------------------
-
-.. automodule:: pyutil.math.gcd_recur
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 :mod:`mv_to_repo` module
 ----------------------------
 
@@ -205,7 +189,7 @@
     :show-inheritance:
 
 
-pyutil.ptags module
+:mod:`ptags` module
 -------------------
 
 .. automodule:: pyutil.ptags
@@ -214,7 +198,7 @@ pyutil.ptags module
     :show-inheritance:
 
 
-pyutil.rclone module
+:mod:`rclone` module
 --------------------
 
 .. automodule:: pyutil.rclone
@@ -250,7 +234,7 @@ pyutil.rclone module
     :show-inheritance:
 
 
-pyutil.wrap module
+:mod:`wrap` module
 ------------------
 
 .. automodule:: pyutil.wrap
@@ -259,7 +243,7 @@ pyutil.wrap module
     :show-inheritance:
 
 
-:mod:`yes_no\_question` module
+:mod:`yes_no_question` module
 -------------------------------
 
 .. automodule:: pyutil.yes_no_question
@@ -268,7 +252,7 @@ pyutil.wrap module
     :show-inheritance:
 
 
-pyutil.zillow module
+:mod:`zillow` module
 -------------------------
 
 .. automodule:: pyutil.zillow

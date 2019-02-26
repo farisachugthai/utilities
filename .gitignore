@@ -4,7 +4,6 @@
 searchindex.js
 robots.txt
 _build
-*.html
 !./docs/_templates/*.html
 objects.inv
 .buildinfo

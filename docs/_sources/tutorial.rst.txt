@@ -1,5 +1,8 @@
-Tutorial.rst - The pyutils tutorial
-===================================
+.. _tutorial:
+
+Tutorial.rst
+==============
+
 
 .. module:: tutorial
    :synopsis: The pyutils tutorial
@@ -8,25 +11,31 @@ This package combines different scripts that aide in working with computers
 ranging from Windows 10 to Linux to Ubuntu to automate regular,
 repetitive and error prone tasks.
 
+.. _tutorial-installation:
+
 Installation
 -------------
-
 .. code-block:: shell
 
    python setup.py build
    python setup.py install
 
-Alternatively
+
+Alternatively, one can run the setup script in develop mode.
 
 .. code-block:: shell
 
    python setup.py develop
+
 
 Which is similar to
 
 .. code-block:: shell
 
    pip wheel -e .
+
+
+.. tutorial-contributing:
 
 Contributing
 ------------

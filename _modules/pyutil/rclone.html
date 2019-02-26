@@ -1,0 +1,256 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pyutil.rclone &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyutil.rclone</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Rewriting rclone.sh as a python module.</span>
+
+<span class="sd">.. code-block:: bash</span>
+
+<span class="sd">    rclone.py src dst</span>
+
+
+<span class="sd">Requires</span>
+<span class="sd">---------</span>
+<span class="sd">rclone</span>
+
+
+<span class="sd">.. todo::</span>
+
+<span class="sd">    - ``args`` is used as a parameter to both :class:`argparse.ArgumentParser()` and :func:`subprocess.run()`</span>
+<span class="sd">        - Switch the name for one of them as this&#39;ll get confusing quickly.</span>
+<span class="sd">    - Set up a simple single use case backup.</span>
+<span class="sd">    - Add :func:`collections.ChainMap()` to set precedence of backupdir.</span>
+<span class="sd">    - Add in multiple invocations of rclone and create args to reflect use cases.</span>
+<span class="sd">    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`</span>
+<span class="sd">     to emulate rsync&#39;s file input.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse user-given arguments.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">cwd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Automate usage of rclone for simple backup creation.&quot;</span><span class="p">)</span>
+    <span class="c1"># parser.add_argument(dest=src, required=True, help=&#39;A directory, presumably local, to sync with a remote.&#39;)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">usage</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(prog)s</span><span class="s2"> [options]&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Automate usage of rclone for &quot;</span>
+        <span class="s2">&quot;simple backup creation.&quot;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;src&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the source directory. &quot;</span>
+        <span class="s2">&quot;defaults to the cwd.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># need to change all instances of dest becuase that&#39;s too confusing</span>
+    <span class="c1"># parser.add_argument(</span>
+    <span class="c1">#     action=&#39;store&#39;,</span>
+    <span class="c1">#     dest=&#39;src&#39;,</span>
+    <span class="c1">#     default=cwd,</span>
+    <span class="c1">#     help=&quot;The source directory. &quot;</span>
+    <span class="c1">#     &quot;Defaults to the cwd.&quot;)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-f&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--follow&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;follow&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Follow symlinks.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parser</span>
+
+
+<span class="k">def</span> <span class="nf">_dir_checker</span><span class="p">(</span><span class="n">dir_</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check that necessary directories exist.</span>
+
+<span class="sd">    If the default dst doesn&#39;t exist, definitely create it.</span>
+<span class="sd">    If the user provided src doesn&#39;t exist, crash without making one.</span>
+
+<span class="sd">    It&#39;s more likely that they typed the src dir incorrectly rather than</span>
+<span class="sd">    running the script aware of the fact that it is nonexistent.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dir_</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dir_</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;does not exist. Exiting.&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="rclone_base_case"><a class="viewcode-back" href="../../api.html#pyutil.rclone.rclone_base_case">[docs]</a><span class="k">def</span> <span class="nf">rclone_base_case</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Noop. Simply here to track the best and most general command to use.</span>
+
+<span class="sd">    For example, --follow is a flag that has conditionals associated it with it.</span>
+
+<span class="sd">    There are situations in which one wants to follow symlinks and others</span>
+<span class="sd">    that they don&#39;t.</span>
+
+<span class="sd">    This command assumes a use case and configures it rclone for it properly.</span>
+
+<span class="sd">    .. todo:: rclone takes an argument for user-agent</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    src : path-like object</span>
+<span class="sd">        directory to clone files from</span>
+
+<span class="sd">    dst : path-like object</span>
+<span class="sd">        destination to send files to. Can be configured as a local directory,</span>
+<span class="sd">        a dropbox directory, a google drive folder or a google cloud storage</span>
+<span class="sd">        bucket among many other things.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rclone&#39;</span><span class="p">,</span> <span class="s1">&#39;copy&#39;</span><span class="p">,</span> <span class="s1">&#39;--update&#39;</span><span class="p">,</span> <span class="s1">&#39;--track-renames&#39;</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">]</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+
+<span class="c1"># def rclone_follow(dst, src=cwd):</span>
+<span class="c1"># &quot;&quot;&quot;Follow symlinks.&quot;&quot;&quot;</span>
+<span class="c1"># cmd = [</span>
+<span class="c1"># &#39;rclone&#39;, &#39;copy&#39;, &#39;--update&#39;, &#39;--track-renames&#39;</span>
+<span class="c1"># &#39;--copy-links&#39;, src, dst</span>
+<span class="c1"># ]</span>
+<span class="c1"># subprocess.run(cmd)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="n">home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;userprofile&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Quite honestly most of everything below was garbage and needs to be</span>
+    <span class="c1"># rewritten ground up.</span>
+
+    <span class="c1"># Use :Glog if you want a reference of what was here.</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">follow</span><span class="p">:</span>
+
+        <span class="c1"># rclone_follow()</span>
+        <span class="k">pass</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyutil</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">utilities</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

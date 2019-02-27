@@ -17,12 +17,14 @@ Still uses old style strings as a result.
     img_1076.jpg --> Ashley_1.jpg
     img_1077.jpg --> Ashley_2.jpg
 
+
 .. todo::
 
     First things first ensure it works at all.
 
-    This would be quite an easy module to create unittests for IN ADDITION
-    to the fact that you could add some fixtures in and learn that.
+
+This would be quite an easy module to create unittests for IN ADDITION to the
+fact that you could add some fixtures in and learn that.
 
 """
 import argparse
@@ -35,6 +37,7 @@ import time
 
 class BatchRename(Template):
     """Delimiter for string substitutions."""
+
     delimiter = '%'
 
 

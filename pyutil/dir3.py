@@ -2,24 +2,24 @@
 # -*- coding: utf-8 -*-
 """Improve the :func:`dir()` by ignoring methods hidden by ``_``.
 
-:File: dir3.py
-:Author: Faris Chugthai
-`GitHub <https://github.com/farisachugthai>`_
 
 Background
 -----------
 :func:`dir()` is a phenomenal function for exploring both the global
 namespace and the exported methods of an object.
 
+
 However it can get incredibly messy, especially when :mod:`IPython`
 displays the placeholder variables for every cell that has been
 run in the session.
+
 
 This causes an incredibly long output that's difficult to parse quickly at
 best, and at worst, the output truncates and all valuable
 information is hidden. This function attempts to avoid that by
 hiding all private and/or mangled methods I.E. ones that begin with the
 characters ``_`` or ``__``.
+
 
 It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 

@@ -5,9 +5,10 @@
 
 .. contents::
     :local:
+    :depth: 2
 
 
-pyutil.backup\_nt\_and\_posix module
+:mod:`backup_nt_and_posix` module
 ------------------------------------
 
 .. automodule:: pyutil.backup_nt_and_posix
@@ -15,7 +16,8 @@ pyutil.backup\_nt\_and\_posix module
     :undoc-members:
     :show-inheritance:
 
-pyutil.batch\_renamer module
+
+:mod:`batch_renamer` module
 ----------------------------
 
 .. automodule:: pyutil.batch_renamer
@@ -23,7 +25,8 @@ pyutil.batch\_renamer module
     :undoc-members:
     :show-inheritance:
 
-pyutil.check\_IP module
+
+:mod:`check_IP` module
 -----------------------
 
 .. automodule:: pyutil.check_IP
@@ -31,7 +34,8 @@ pyutil.check\_IP module
     :undoc-members:
     :show-inheritance:
 
-:mod:`pyutil.conda_export` module
+
+:mod:`conda_export` module
 -----------------------------------
 
 .. automodule:: pyutil.conda_export
@@ -39,7 +43,8 @@ pyutil.check\_IP module
     :undoc-members:
     :show-inheritance:
 
-pyutil.dir3 module
+
+:mod:`dir3` module
 ------------------
 
 .. automodule:: pyutil.dir3
@@ -47,7 +52,8 @@ pyutil.dir3 module
     :undoc-members:
     :show-inheritance:
 
-pyutil.dir\_cleaner module
+
+:mod:`dir_cleaner` module
 --------------------------
 
 .. automodule:: pyutil.dir_cleaner
@@ -55,7 +61,8 @@ pyutil.dir\_cleaner module
     :undoc-members:
     :show-inheritance:
 
-pyutil.dlink module
+
+:mod:`dlink` module
 -------------------
 
 .. automodule:: pyutil.dlink
@@ -63,7 +70,8 @@ pyutil.dlink module
     :undoc-members:
     :show-inheritance:
 
-pyutil.dlink2 module
+
+:mod:`dlink2` module
 --------------------
 
 .. automodule:: pyutil.dlink2
@@ -71,7 +79,8 @@ pyutil.dlink2 module
     :undoc-members:
     :show-inheritance:
 
-pyutil.env module
+
+:mod:`env` module
 -----------------
 
 .. automodule:: pyutil.env
@@ -79,7 +88,8 @@ pyutil.env module
     :undoc-members:
     :show-inheritance:
 
-pyutil.env\_checks module
+
+:mod:`env_checks` module
 -------------------------
 
 .. automodule:: pyutil.env_checks
@@ -87,7 +97,8 @@ pyutil.env\_checks module
     :undoc-members:
     :show-inheritance:
 
-pyutil.find\_pics module
+
+:mod:`find_pics` module
 ------------------------
 
 .. automodule:: pyutil.find_pics
@@ -95,7 +106,8 @@ pyutil.find\_pics module
     :undoc-members:
     :show-inheritance:
 
-pyutil.inspect\_module module
+
+:mod:`inspect_module` module
 -----------------------------
 
 .. automodule:: pyutil.inspect_module
@@ -103,7 +115,8 @@ pyutil.inspect\_module module
     :undoc-members:
     :show-inheritance:
 
-pyutil.itersrc module
+
+:mod:`itersrc` module
 ---------------------
 
 .. automodule:: pyutil.itersrc
@@ -111,7 +124,8 @@ pyutil.itersrc module
     :undoc-members:
     :show-inheritance:
 
-pyutil.json\_sorter module
+
+:mod:`json_sorter` module
 --------------------------
 
 .. automodule:: pyutil.json_sorter
@@ -120,7 +134,7 @@ pyutil.json\_sorter module
     :show-inheritance:
 
 
-pyutil.lazy\_downloader module
+:mod:`lazy_downloader` module
 ------------------------------
 
 .. automodule:: pyutil.lazy_downloader
@@ -129,7 +143,7 @@ pyutil.lazy\_downloader module
     :show-inheritance:
 
 
-pyutil.linktree module
+:mod:`linktree` module
 ----------------------
 
 .. automodule:: pyutil.linktree
@@ -138,7 +152,7 @@ pyutil.linktree module
     :show-inheritance:
 
 
-pyutil.math.gcd\_iter module
+:mod:`math.gcd_iter` module
 ----------------------------
 
 .. automodule:: pyutil.math.gcd_iter
@@ -147,7 +161,7 @@ pyutil.math.gcd\_iter module
     :show-inheritance:
 
 
-pyutil.math.gcd\_recur module
+:mod:`math.gcd_recur` module
 -----------------------------
 
 .. automodule:: pyutil.math.gcd_recur
@@ -156,7 +170,7 @@ pyutil.math.gcd\_recur module
     :show-inheritance:
 
 
-pyutil.mv\_to\_repo module
+:mod:`mv_to_repo` module
 ----------------------------
 
 .. automodule:: pyutil.mv_to_repo
@@ -164,7 +178,8 @@ pyutil.mv\_to\_repo module
     :undoc-members:
     :show-inheritance:
 
-:mod:`pyutil.nvim_profiling` module
+
+:mod:`nvim_profiling` module
 -------------------------------------
 
 .. automodule:: pyutil.nvim_profiling
@@ -172,7 +187,8 @@ pyutil.mv\_to\_repo module
     :undoc-members:
     :show-inheritance:
 
-pyutil.ptags module
+
+:mod:`ptags` module
 -------------------
 
 .. automodule:: pyutil.ptags
@@ -180,7 +196,8 @@ pyutil.ptags module
     :undoc-members:
     :show-inheritance:
 
-pyutil.rclone module
+
+:mod:`rclone` module
 --------------------
 
 .. automodule:: pyutil.rclone
@@ -188,7 +205,8 @@ pyutil.rclone module
     :undoc-members:
     :show-inheritance:
 
-pyutil.script\_helper module
+
+:mod:`script_helper` module
 ----------------------------
 
 .. automodule:: pyutil.script_helper
@@ -196,7 +214,8 @@ pyutil.script\_helper module
     :undoc-members:
     :show-inheritance:
 
-pyutil.strip\_space module
+
+:mod:`strip_space`
 --------------------------
 
 .. automodule:: pyutil.strip_space
@@ -204,7 +223,8 @@ pyutil.strip\_space module
     :undoc-members:
     :show-inheritance:
 
-pyutil.sys\_checks module
+
+:mod:`sys_checks` module
 -------------------------
 
 .. automodule:: pyutil.sys_checks
@@ -213,7 +233,7 @@ pyutil.sys\_checks module
     :show-inheritance:
 
 
-pyutil.wrap module
+:mod:`wrap` module
 ------------------
 
 .. automodule:: pyutil.wrap
@@ -221,7 +241,8 @@ pyutil.wrap module
     :undoc-members:
     :show-inheritance:
 
-pyutil.yes\_no\_question module
+
+:mod:`yes_no_question` module
 -------------------------------
 
 .. automodule:: pyutil.yes_no_question
@@ -229,7 +250,8 @@ pyutil.yes\_no\_question module
     :undoc-members:
     :show-inheritance:
 
-pyutil.zillow module
+
+:mod:`zillow` module
 -------------------------
 
 .. automodule:: pyutil.zillow

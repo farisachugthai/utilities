@@ -180,7 +180,7 @@
     :show-inheritance:
 
 
-:mod:`pyutil.nvim_profiling` module
+:mod:`nvim_profiling` module
 -------------------------------------
 
 .. automodule:: pyutil.nvim_profiling
@@ -207,16 +207,7 @@
     :show-inheritance:
 
 
-:mod:`script_helper` module
-----------------------------
-
-.. automodule:: pyutil.script_helper
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-:mod:`pyutil.strip_space`
+:mod:`strip_space`
 --------------------------
 
 .. automodule:: pyutil.strip_space

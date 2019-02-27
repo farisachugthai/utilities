@@ -35,7 +35,7 @@ def get_public_ip():
 def get_hostname():
     """Get the user's hostname."""
     sock = socket.gethostname()
-    return ('Your hostname is: ' + sock)
+    return 'Your hostname is: ' + sock
 
 
 if '__name__' == '__main__':

@@ -5,39 +5,77 @@
 This module was originally used to fix my settings.json from VSCode.
 :File: json_sorter.py
 :Author: Faris Chugthai
-:Email: farischugthai@gmail.com
-:Github: https://github.com/farisachugthai
+`Github <https://github.com/farisachugthai>`_
 
-Attributes:
+Attributes
+----------
+fobj : path-like object
+    The file to fix.
 
-    fobj (pathlike_object): The file to fix.
+Example
+-------
+.. code:: bash
 
-Example:
+    python3 json_sorter.py /path/to/file.json
 
-    .. code:: bash
 
-        python3 json_sorter.py /path/to/file.json
 """
+import argparse
 import json
+import logging
+import os
 import sys
 
 
-def main(fobj):
-    """Reads in a JSON object, sorts it and then writes it back to a new file.
+def _parse_arguments():
+    """Parse arguments given by the user."""
+    parser = argparse.ArgumentParser(description=__doc__)
+
+    # TODO: Set to sys.stdin if empty.
+    parser.add_argument(
+        'input',
+        required=True,
+        type=argparse.FileType(''),
+        help="File to parse.")
+
+    parser.add_argument(
+        '-o',
+        '--output',
+        default=sys.stdout,
+        type=argparse.FileType(''),
+        help="File to write to. Defaults to stdout.")
+
+    parser.add_argument('-ll', '--loglevel', type=str,
+                        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+                        help='Set the logging level')
+
+    args = parser.parseargs()
+
+    if len(args) == 1:
+        parser.print_help()
+        sys.exit()
+
+    return args
+
+
+def main(file_obj):
+    """Read in a JSON object, sorts it and then writes it back to a new file.
 
     By writing to a new file, the user is allowed the opportunity to inspect
     the file and ensure that the desired results have been achieved.
 
     Parameters
     ----------
-    fobj: The file to read in
+    ``file_obj`` : path-like object
+        The file to read in
 
     Returns
     -------
     None
 
+
     """
-    with open(fobj) as f:
+    with open(file_obj) as f:
         settings = json.loads(f.read())
 
     json_str = json.dumps(settings, indent=4, sort_keys=True)
@@ -47,5 +85,11 @@ def main(fobj):
 
 
 if __name__ == "__main__":
-    fobj = sys.argv[1]
-    main(fobj)
+    args = _parse_arguments()
+
+    logging.basicConfig(level=args.loglevel)
+
+    fobj = args.input
+
+    if os.path.isfile(fobj):
+        main(fobj)

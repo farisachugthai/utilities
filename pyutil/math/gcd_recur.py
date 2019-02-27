@@ -4,8 +4,6 @@
 
 :File: gcd_recur.py
 :Author: Faris Chugthai
-:Github: `<https://github.com/farisachugthai>`_
-
 
 """
 import sys
@@ -27,4 +25,4 @@ if __name__ == "__main__":
     if len(args) > 2:
         a = args[1]
         b = args[2]
-    gcd_recur()
+    gcd_recur(a, b)

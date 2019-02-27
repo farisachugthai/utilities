@@ -1,10 +1,17 @@
 #!/usr/bin/env python
 """Backup a directory by appending the date and time and copying over.
 
+:mod:`backup_nt_and_posix`
+===========================
+
 Motivation
 ----------
+
 This script aims to be platform agnostic and in the long term will be used
 on Windows, Linux, Mac and Android systems.
+
+
+.. _backup-nt-and-posix-usage:
 
 Usage
 ------
@@ -13,10 +20,7 @@ Usage
     python backup_nt_and_posix.py /path/to/dir
 
 
-.. todo::
-
-    Consider rewriting using classes to hold state based on OS.
-    Then utilize :mod:`pathlib`.
+.. todo:: Consider rewriting using classes to hold state based on OS. Then utilize :mod:`pathlib`.
 
 """
 import os
@@ -30,25 +34,24 @@ def timestamped_dir(backup_dir):
 
     Parameters
     ----------
-    backup_dir : path-like object
+    ``backup_dir`` : path-like object
         Directory to backup
 
     Returns
     -------
-    return_code, error message : list
+    [``return_code``, ``error_message``] : list --> [int, str]
+        The specific implementation of this is as follows.
+        None: NoneType
+            No error.
+        0: Int
+            Success
+        -1 : Int
+            Failure
+        error : string
+            the exact error string
 
-    The specific implementation of this is as follows.
 
-    None: NoneType
-        No error.
-    0: Int
-        Success
-    -1 : Int
-        Failure
-    error : string
-        the exact error string
-
-    .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` and we handle return codes in a better and more *true to form* way.
+    .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` so we handle return codes in a better way.
 
     """
     if os.name == "nt":
@@ -58,7 +61,7 @@ def timestamped_dir(backup_dir):
         shell_command = "mv"
 
     else:
-        return [-1, "Not supported on %s platform" % (os.name)]
+        return [-1, "Not supported on %s platform" % os.name]
 
     cmd = subprocess.Popen([shell_command, path, backup_dir],
                            shell=True,
@@ -79,8 +82,11 @@ def timestamped_dir(backup_dir):
 if __name__ == "__main__":
     args = sys.argv[:]
 
-    path = args[1]
+    # if len(args) == 2:
 
-    if os.path.exists(path):
-        backup_dir = path + strftime('-%Y-%m-%d-%Hh%Mm%Ss')
-        timestamped_dir(backup_dir)
+    for directory in args[1:]:
+        path = args[directory]
+
+        if os.path.exists(path):
+            backup_dir = path + strftime('-%Y-%m-%d-%Hh%Mm%Ss')
+            timestamped_dir(backup_dir)

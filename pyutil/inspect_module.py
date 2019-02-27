@@ -2,14 +2,19 @@
 # -*- coding: utf-8 -*-
 """Explore the namespace and attributes of a module.
 
+Written before :mod:`pyclbr` was created.
+However Python3.6 now has the builtin module :mod:`pyclbr` so this entire
+script may be irrelevant.
+
 Parameters
 ----------
-`mod_name` : module to inspect
+``mod_name`` : module to inspect
     If no argument is provided, then use the namespace bound to the global
     :class:`IPython.core.interactiveshell.InteractiveShell()` object.
 
-However Python3.6 now has the builtin module :mod:`pyclbr` so this entire
-script may be irrelevant.
+Returns
+-------
+TODO
 
 """
 import importlib
@@ -32,13 +37,13 @@ def main(mod_name):
 
     Parameters
     ----------
-    `mod_name` : module
+    ``mod_name`` : module
         The provided module to inspect for the user.
 
 
     Returns
     --------
-    `mod_namespace` : methods and attributes
+    ``mod_namespace`` : methods and attributes
         The provided module's namespace.
 
 

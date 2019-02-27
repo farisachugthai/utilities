@@ -84,6 +84,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
+    # 'matplotlib.sphinxext.plot_directive',
     'numpydoc',
 ]
 
@@ -257,7 +258,7 @@ intersphinx_mapping = {
     'matplotlib': ('https://matplotlib.org', None),
     'python': ('https://docs.python.org/3/', None),
     'numpy': ('http://docs.scipy.org/doc/numpy/', None),
-    'numpydoc': ('https://numpydoc.readthedocs.io/en/latest/', None),
+    'ipython': ('https://ipython.readthedocs.io/en/stable/', None)
 }
 
 # -- Options for todo extension ----------------------------------------------

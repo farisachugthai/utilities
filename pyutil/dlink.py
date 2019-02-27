@@ -5,6 +5,8 @@
 If we're given 2 args, treat it with the same syntax as ``ln -s`` or
 :func:`os.symlink()`
 
+.. _dlink-usage:
+
 Usage
 ------
 .. code-block:: shell

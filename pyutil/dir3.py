@@ -2,10 +2,15 @@
 # -*- coding: utf-8 -*-
 """Improve the :func:`dir()` by ignoring methods hidden by ``_``.
 
+Dir3
+====
+
 .. module:: dir3
+
 
 :File: dir3.py
 :Author: Faris Chugthai
+
 `GitHub <https://github.com/farisachugthai>`_
 
 Background
@@ -43,10 +48,9 @@ ip : :class:`IPython.core.interactiveshell.InteractiveShell()`
 
 See Also
 ---------
-:func:`IPython.utils.dir2.dir2() : list of strings
+:func:`IPython.utils.dir2.dir2()` : list of strings
     Extended version of the Python builtin :func:`dir()`, which does a few
     extra checks.
-
     This version is guaranteed to return only a list of true
     strings, whereas :func:`dir()` returns anything that
     objects inject into themselves, even if they
@@ -124,13 +128,13 @@ def _interactive(args):
     """Define a private method for interactive use instead of ifmain block.
 
     As this file is currently used in IPython's startup, the
-    ifmain block will execute on startup which is not desired.
+    if-main block will execute on startup which is not desired.
 
     What we're looking for is more similar to an autoload feature.
 
     Parameters
     ------------
-    args : (iterable)
+    args : iterable
         The object to inspect.
 
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Beginning of script. Not finished.
+"""Deletes extraneous files.
 
-Run in $PREFIX/tmp.
+Run in ``$PREFIX/tmp.``
 
 Can modify to accept user input and fall back to that dir.
 
@@ -10,17 +10,20 @@ Implement once all the logic has panned out.
 
 .. todo::
 
-    - Write a second function that implemenents rm -r if `du dir==0`
+    - Write a second function that implemenents ``rm -r`` if ``du dir==0``
     - Failing that, specifically delete directories with only month old sockets
-        - $PREFIX/tmp/nvim-*
-        - $PREFIX/tmp/ssh-*
+        - `$PREFIX/tmp/nvim-*`_
+        - `$PREFIX/tmp/ssh-*`_
 
 Dec 01, 2018:
 
     I was writing this like on termux like 4 days ago. Cleaned up
-    ~/python/tutorials/fnmatch_.py and realized it was the exact same thing.
+    `<~/python/tutorials/fnmatch_.py>`_ and realized it's the exact same thing.
+
 """
 import os
+import shutil
+from glob import glob
 
 
 def dir_cleaner(i):
@@ -49,7 +52,7 @@ def extract_dir():
 
 
 def clean():
-    """Removes all pyc files. Add input for filetype later.
+    """Remove all pyc files. Add input for filetype later.
 
     :param filetype: File to iterately remove.
     :returns: NoneType

@@ -1,8 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Wrap text similarly to :func:`textwrap.dedent` but w/ multiple paragraphs
+r"""Wrap text similarly to :func:`textwrap.dedent()` but with multiple paragraphs.
 
-From IPython.utils.text
+From :mod:`IPython.utils.text`.
+
+Parameters
+----------
+todo : path-like object
+    Text to modify
+
+
+Returns
+-------
+todo
+
+
 """
 import re
 from textwrap import dedent, fill
@@ -14,10 +26,18 @@ def wrap_paragraphs(text, ncols=80):
     This is equivalent to textwrap.wrap, but with support for multiple
     paragraphs, as separated by empty lines.
 
+    Parameters
+    __________
+    text : str
+        todo
+
+
     Returns
     -------
+    todo
+        list of complete paragraphs, wrapped to fill `ncols` columns.
 
-    list of complete paragraphs, wrapped to fill `ncols` columns.
+
     """
     paragraph_re = re.compile(r'\n(\s*\n)+', re.MULTILINE)
     text = dedent(text).strip()

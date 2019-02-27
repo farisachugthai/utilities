@@ -19,8 +19,7 @@ rclone
     - Set up a simple single use case backup.
     - Add :func:`collections.ChainMap()` to set precedence of backupdir.
     - Add in multiple invocations of rclone and create args to reflect use cases.
-    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`
-     to emulate rsync's file input.
+    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync's file input.
 
 
 """
@@ -36,7 +35,7 @@ def _parse_arguments(cwd=None):
         cwd = os.getcwd()
 
     parser = argparse.ArgumentParser(
-        desc="Automate usage of rclone for simple backup creation.")
+        description="Automate usage of rclone for simple backup creation.")
     # parser.add_argument(dest=src, required=True, help='A directory, presumably local, to sync with a remote.')
     parser = argparse.ArgumentParser(
         usage="%(prog)s [options]",

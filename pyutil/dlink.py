@@ -7,13 +7,14 @@ This is quite easily one of my most frequently used scripts.
 If we're given 2 args, treat it with the same syntax as ``ln -s`` or
 :func:`os.symlink()`
 
+.. _dlink-usage:
+
 Usage
 ------
 .. code-block:: shell
 
     ln -s path/to/dest/* [path/to/src]
 
-Example.
 """
 import os
 import sys

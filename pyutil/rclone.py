@@ -12,17 +12,16 @@ Requires
 rclone
 
 
-.. todo::
+.. todo:: This nice little list.
 
     - ``args`` is used as a parameter to both :class:`argparse.ArgumentParser()` and :func:`subprocess.run()`
         - Switch the name for one of them as this'll get confusing quickly.
     - Set up a simple single use case backup.
     - Add :func:`collections.ChainMap()` to set precedence of backupdir.
     - Add in multiple invocations of rclone and create args to reflect use cases.
-    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`
-     to emulate rsync's file input.
+    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync's file input.
 
-o
+
 """
 import argparse
 import os

@@ -2,16 +2,21 @@
 # -*- coding: utf-8 -*-
 """Configuration file for the Sphinx documentation builder.
 
+Sphinx Configuration File
+=========================
+
 This file does only contain a selection of the most common options. For a
 full list see the documentation:
 
 :URL: `http://www.sphinx-doc.org/en/master/config`_
 
--- Path setup --------------------------------------------------------------
+Path Setup
+----------
+If extensions (or modules to document with autodoc) are in another
+directory, add these directories to sys.path here.
 
-If extensions (or modules to document with autodoc) are in another directory,
-add these directories to sys.path here. If the directory is relative to the
-documentation root, use os.path.abspath to make it absolute, like shown here.
+If the directory is relative to the documentation root, use
+:func:`os.path.abspath` to make it absolute, like shown here.
 
 .. code-block:: python3
 
@@ -24,6 +29,7 @@ As stated at:
 However, the filetype mapping came about in 1.8 so make sure to add that
 ``needs-sphinx=version`` bit
 
+
 """
 import logging
 import os
@@ -34,29 +40,33 @@ logger = logging.getLogger(__name__)
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
+SOURCE_CODE = os.path.join('..', 'pyutil')
 
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('.'))
 
-sys.path.insert(0, os.path.abspath('./sphinxext'))
+sys.path.insert(0, os.path.abspath('sphinxext'))
 
-sys.path.insert(0, os.path.abspath('../pyutil'))
+sys.path.insert(0, os.path.abspath(SOURCE_CODE))
 
-sys.path.insert(0, os.path.abspath('../pyutil/math'))
-# -- Project information -----------------------------------------------------
+sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'math')))
+
+logging.debug("Path is currently: " + str(sys.path))
+
+# -- Project information --------------------------------------------
 
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
-project = 'pyutil'
-copyright = '2018, Faris A Chugthai'
-author = 'Faris A Chugthai'
+project = u'pyutil'
+copyright = u'2018, Faris A Chugthai'
+author = u'Faris A Chugthai'
 
 # The short X.Y version
-version = '0.1'
+version = '0.0.1'
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '0.0.1'
 
-# -- General configuration ---------------------------------------------------
+# -- General configuration ------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
@@ -74,8 +84,11 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
+    # 'matplotlib.sphinxext.plot_directive',
+    'numpydoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -115,6 +128,7 @@ master_doc = 'index'
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
 # default_domain = 'python'
+default_role = 'py:obj'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -125,12 +139,12 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # So i overwrote the pygments.css file entirely so i wanna see what happens
 pygments_style = 'sphinx'
 
-# -- Options for HTML output -------------------------------------------------
+# -- Options for HTML output ----------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-# html_theme = 'alabas'
+# html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -165,16 +179,17 @@ html_sidebars = {
         'navigation.html',
         'relations.html',
         'searchbox.html',
+        'sourcelink.html',
         'donate.html',
     ]
 }
 
-# -- Options for HTMLHelp output ---------------------------------------------
+# -- Options for HTMLHelp output ------------------------------------
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'pyutil'
 
-# -- Options for LaTeX output ------------------------------------------------
+# -- Options for LaTeX output ---------------------------------------
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
@@ -202,13 +217,13 @@ latex_documents = [
      'manual'),
 ]
 
-# -- Options for manual page output ------------------------------------------
+# -- Options for manual page output ---------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [(master_doc, 'pyutil', 'Pyutil Documentation', [author], 1)]
 
-# -- Options for Texinfo output ----------------------------------------------
+# -- Options for Texinfo output -------------------------------------
 
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,
@@ -218,7 +233,7 @@ texinfo_documents = [
      'One line description of project.', 'Miscellaneous'),
 ]
 
-# -- Options for Epub output -------------------------------------------------
+# -- Options for Epub output ----------------------------------------
 
 # Bibliographic Dublin Core info.
 epub_title = project
@@ -235,9 +250,9 @@ epub_title = project
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
 
-# -- Extension configuration -------------------------------------------------
+# -- Extension configuration ----------------------------------------
 
-# -- Options for intersphinx extension ---------------------------------------
+# -- Options for intersphinx extension ------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
@@ -245,27 +260,28 @@ intersphinx_mapping = {
     'matplotlib': ('https://matplotlib.org', None),
     'python': ('https://docs.python.org/3/', None),
     'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'ipython': ('https://ipython.readthedocs.io/en/stable/', None)
 }
 
-# -- Options for todo extension ----------------------------------------------
+# -- Options for todo extension -------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
 # Viewcode
-# ---------
+# --------
 viewcode_import = True
 
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 # Autosummary
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 
-import glob  # noqa F402
-autosummary_generate = glob.glob("./*.rst")
+# import glob  # noqa F402
+autosummary_generate = True
 
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 # Napoleon settings
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 
 # Honestly all the defaults are great so leave them. Just annoyed that it
 # doesn't seem to be working!

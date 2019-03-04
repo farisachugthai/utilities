@@ -29,7 +29,6 @@ from pyutil.__about__ import (
     __copyright__,
     __description__,
     __docformat__,
-    __email__,
     __license__,
     __title__,
     __package_name__,

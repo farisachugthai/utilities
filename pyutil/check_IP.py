@@ -27,15 +27,15 @@ def get_public_ip():
 
         .. _Section: Installing packages for your project: `https://docs.python-guide.org/en/latest/dev/virtualenvs/`_
     """
-    response = requests.get('https://httpbin.org/ip')
-    rt = 'Your IP is {0}'.format(response.json()['origin'])
+    res = requests.get('https://httpbin.org/ip')
+    rt = 'Your IP is {0}'.format(res.json()['origin'])
     return rt
 
 
 def get_hostname():
     """Get the user's hostname."""
     sock = socket.gethostname()
-    return ('Your hostname is: ' + sock)
+    return 'Your hostname is: ' + sock
 
 
 if '__name__' == '__main__':

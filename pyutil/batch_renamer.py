@@ -106,3 +106,30 @@ if __name__ == '__main__':
 
     d = args.directory
     main(d)
+def fix_botched_renamer():
+    """Realistically nobody should ever be excited they wrote this but I just got a hotfix to work on the first try.
+    Parameters
+    ----------
+    I guess the files to fix?
+    
+    Returns
+    --------
+    Yo shit fixed.
+    
+    So I ran the following::
+    
+        >>> from glob import glob
+        >>> import shutil
+        >>> r = glob('*.rst')
+        >>> for i in r:
+            >>> shutil.move(i, 'source' + i)
+            
+    Thinking I was gonna move some restructured text files into the source directory. Nope. No path sep.
+    The below is how I fixed it, and I got it on the first try!!! I'm actually pretty pumped. No doc lookups or anything.
+    This is pure memory.
+    """
+    from glob import glob
+    r = glob('*.rst')
+    for i in r:
+        shutil.move(i, i.split('source')[1])
+    

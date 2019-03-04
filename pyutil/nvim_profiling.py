@@ -95,7 +95,7 @@ def find_init_files(nvim_root=None):
         to check whether we're on windows or not.
 
         If not check `<~/.config/nvim>`_ and if so check
-        `<%userprofile%\AppData\Local\nvim>`_
+        `<%userprofile%\\AppData\\Local\\nvim>`_
 
     """
     global OS

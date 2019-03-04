@@ -24,14 +24,14 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
-project = 'pyutil'
-copyright = '2018-2019, Faris A Chugthai'
-author = 'Faris A Chugthai'
+project = u'pyutil'
+copyright = u'2018-2019, Faris A Chugthai'
+author = u'Faris A Chugthai'
 
 # The short X.Y version
-version = ''
+version = '0.0.1'
 # The full version, including alpha/beta/rc tags
-release = ''
+release = '0.0.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -49,9 +49,14 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
+    'sphinx.ext.coverage',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages',
     'IPython.sphinxext.ipython_directive',
-    'IPython.sphinxext.ipython_console_highlighting'
+    'IPython.sphinxext.ipython_console_highlighting',
+    'numpydoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -65,8 +70,11 @@ templates_path = ['_templates']
 source_suffix = {
     '.rst': 'restructuredtext',
     '.txt': 'restructuredtext',
-    '.md': 'markdown',
+    '.md': 'markdown'
 }
+# The encoding of source files.
+source_encoding = 'utf-8'
+
 # As stated at:
 # :URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
 # However, the filetype mapping came about in 1.8 so make sure to add that
@@ -81,7 +89,12 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+# language = None
+
+# The reST default role (used for this markup: `text`) to use for all
+# documents.
+# default_domain = 'python'
+default_role = 'py:obj'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -103,7 +116,10 @@ html_theme = 'alabaster'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    "github_user": "Faris A. Chugthai",
+    "github_repo": "utilities"
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -117,15 +133,24 @@ html_static_path = ['_static']
 # defined by theme itself.  Builtin themes are using these templates by
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
-#
-# html_sidebars = {}
 
+# From the alabaster website
+html_sidebars = {
+    '**': [
+        'about.html',
+        'navigation.html',
+        'relations.html',
+        'searchbox.html',
+        'sourcelink.html',
+        'donate.html',
+        'localtoc.html'
+    ]
+}
 
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'pyutil'
-
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -195,7 +220,6 @@ texinfo_documents = [
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
 
-
 # -- Extension configuration -------------------------------------------------
 
 # -- Options for intersphinx extension ---------------------------------------
@@ -216,3 +240,28 @@ todo_include_todos = True
 # Viewcode
 # ---------
 viewcode_import = True
+
+# -----------------------------------------------------------------------------
+# Autosummary
+# -----------------------------------------------------------------------------
+
+# import glob  # noqa F402
+autosummary_generate = True
+
+# -----------------------------------------------------------------------------
+# Napoleon settings
+# -----------------------------------------------------------------------------
+
+# Honestly all the defaults are great so leave them. Just annoyed that it
+# doesn't seem to be working!
+# napoleon_google_docstring = True
+# napoleon_numpy_docstring = True
+# napoleon_include_init_with_doc = False
+# napoleon_include_private_with_doc = False
+# napoleon_include_special_with_doc = True
+# napoleon_use_admonition_for_examples = False
+# napoleon_use_admonition_for_notes = False
+# napoleon_use_admonition_for_references = False
+# napoleon_use_ivar = False
+# napoleon_use_param = True
+# napoleon_use_rtype = True

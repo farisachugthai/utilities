@@ -13,6 +13,14 @@ It does require being interactively run in the IPython shell or invoked with
     ipython dot_sym.ipy
 
 
+Attributes
+-----------
+home : str
+    The user's home directory.
+repo : str
+    The location of the source code.
+
+
 """
 import logging
 import os
@@ -51,7 +59,6 @@ def dir_checker(repo):
 
         Actually as it stands I don't think it looks in ``home`` to make dirs.
 
-
     """
     for directory in os.scandir(repo):
         if not directory.name.startswith('.') and not directory.is_dir():
@@ -86,14 +93,10 @@ def backup_prompt(file):
 def symlink_repo(file):
     """Symlink the dotfiles if nothing exists in the home directory.
 
-    .. todo
-    Attributes
-    -----------
-    home : str
-        The user's home directory.
-    repo : str
-        The location of the source code.
-
+    Parameters
+    ----------
+    file : path-like object
+        File to symlink to
     """
     try:
         home = os.path.join(os.path.expanduser("~"), "")
@@ -107,7 +110,7 @@ def symlink_repo(file):
         os.symlink(src, dest)
     except FileExistsError:
         if os.path.islink(dest):
-            # print("Sorry but a symlink to {0} already exists".format(dest))
+            logging.info("Sorry but a symlink to {0} already exists".format(dest))
             pass
         elif os.path.isfile(dest):
             print("Sorry but a file to {0} already exists".format(dest))

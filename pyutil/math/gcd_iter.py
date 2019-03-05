@@ -22,16 +22,26 @@ Jan 17, 2019:
 import sys
 
 
-def gcdIter(a, b):
+def gcd_iter(a, b):
+    """Find the greatest common denominator with 2 arbitrary integers.
+
+    Parameters
+    ----------
+    a : int
+        User provided integer
+    b : int
+        User provided integer
+
+    """
     orig_b = b
     orig_a = a
     if a > b:
-        while(b > 0):
+        while b > 0:
             if a % b == 0 and orig_b % b == 0:
                 return b
             b -= 1
     else:
-        while(a > 0):
+        while a > 0:
             if b % a == 0 and orig_a % a == 0:
                 return a
             a -= 1
@@ -42,4 +52,4 @@ if __name__ == "__main__":
     if len(args) > 2:
         a = args[1]
         b = args[2]
-    gcdIter()
+    gcd_iter(a, b)

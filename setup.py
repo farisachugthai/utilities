@@ -4,7 +4,7 @@
 
 Largely based off of the work done by @kennethreitz in his setup.py repository.
 
-:URL: https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py
+_`Kenneth Reitz setup.py template <https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py>`
 
 """
 import codecs
@@ -14,7 +14,10 @@ from shutil import rmtree
 
 from setuptools import setup, find_packages, Command
 
-# Metadata
+if sys.version_info[:2] < (3, 6):
+    raise RuntimeError("Python version >= 3.6 required.")
+
+# Metadata: {{{1
 
 NAME = 'utilities'
 AUTHOR = "Faris Chugthai",
@@ -52,8 +55,9 @@ if not VERSION:
         about['__version__'] = None
 
 
-class UploadCommand(Command):
-    """Support :ref:`setup.py` upload."""
+# }}}}
+class UploadCommand(Command):  # {{{1
+    """Support setup.py upload."""
 
     description = 'Build and publish the package.'
     user_options = []
@@ -64,12 +68,15 @@ class UploadCommand(Command):
         print('\033[1m{0}\033[0m'.format(s))
 
     def initialize_options(self):
+        """Initialize upload options."""
         pass
 
     def finalize_options(self):
+        """Finalize upload options."""
         pass
 
     def run(self):
+        """Upload package."""
         try:
             self.status('Removing previous builds…')
             rmtree(os.path.join(here, 'dist'))
@@ -89,7 +96,8 @@ class UploadCommand(Command):
         sys.exit()
 
 
-# Where the magic happens:
+# }}}
+# Where the magic happens: {{{1
 setup(
     name=NAME,
     version=about['__version__'],

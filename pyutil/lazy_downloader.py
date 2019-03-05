@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # Maintainer: Faris Chugthai
-"""
-lazy_downloader
-==================
+"""Automates downloading plain text files from the Web.
 
 .. module:: lazy_downloader
     :synopsis: Automates downloading plain text files from the Web.
@@ -12,8 +10,8 @@ Parameters
 url : str
 A url to download
 
-output_filename: path-like object
-A path to write the downloaded content to.
+``output_filename`` : path-like object
+    A path to write the downloaded content to.
 
 
 Usage
@@ -28,15 +26,7 @@ If the filename already exists on the system it will NOT be overwritten,
 and the script will safely exit.
 
 
-.. todo::
-
-    Can we check the MIME type and only import requests_html if we know we'll
-    need to?
-
-Feb 08, 2019:
-
-    There are all the errors I just got building this module.abs
-
+.. todo:: Can we check the MIME type and only import :mod:`requests` if we know we'll need to?
 
 """
 import argparse
@@ -54,13 +44,14 @@ def main(url, output_fname):
     url : str
     A url to download
 
-    output_filename: path-like object
-    A path to write the downloaded content to.
+    ``output_filename`` : path-like object
+        A path to write the downloaded content to.
+
 
     .. todo::
 
-    Figure out how to check that the file is plain text and not hit
-    constant false positives
+        Figure out how to check that the file is plain text and not hit
+        constant false positives
 
     .. todo::
 
@@ -71,8 +62,8 @@ def main(url, output_fname):
 
     .. todo::
 
-    Could add in a check. if the file is over a certain size use
-    `:func:requests.res.iter_chunk()`
+        Could add in a check. if the file is over a certain size use
+        :func:`requests.res.iter_chunk()`
 
     """
     res = requests.get(url)

@@ -16,10 +16,12 @@ Installation
 One can install the package by:
 
 * Cloning with git
-* Running the setup.py file.
+* Running the `setup.py`_ file.
 * Ensuring that the scripts in ./sh/ are in ``$PATH``
 
-If you are on a Unix-like system, the following should work perfectly then.
+If you are on a Unix-like system, the following will ensure everything
+below pyutil/ is in your PATH.
+
 
 
 .. code-block:: bash
@@ -27,7 +29,6 @@ If you are on a Unix-like system, the following should work perfectly then.
    git clone https://github.com/farisachugthai/utilities
    cd utilities
 
-   # The command below will ensure everything below pyutil/ is in your PATH
    python3 setup.py build && python3 setup.py install
 
    # The script at ./pyutil/dlink.py is useful for creating symlinks for every
@@ -38,6 +39,31 @@ If you are on a Unix-like system, the following should work perfectly then.
 
    # Then link the scripts in ./sh to a directory in your path!
    python3 pyutil/dlink.py "$PWD/sh" ~/bin
+
+For anyone using Windows 10, the Powershell installation will be slightly
+different; however, not tremendously.
+
+.. code-block:: powershell
+
+   git clone https://github.com/farisachugthai/utilities
+   # cd is aliased to Set-Location for most instances of Powershell; however in
+   # the interest of using domain specific built-ins:
+   Set-Location utilities
+   python3 setup.py build && python3 setup.py install
+
+   # To view the environment variable path, run:
+   Get-Childitem -path env:Path
+   # Then ensure that the directory you pick is in your path, and run
+   python3 pyutil\dlink.py "$PWD\sh" C:\Users\path\to\directory
+
+.. Building From Source
+.. ---------------------
+
+.. The documentation can be built as well. Commented out until the docs build more smoothly
+
+Usage
+------
+Modules can be used to:
 
 
 For anyone using Windows 10, the Powershell installation will be slightly
@@ -58,5 +84,12 @@ different; however, not tremendously.
    python3 pyutil\dlink.py "$PWD\sh" C:\Users\path\to\directory
 
 
-.. Building From Source
-.. ---------------------
+.. _`Back up directories.`: docs/api/pyutil/backup_nt_and_posix
+.. _`Automate the process of downloading plain-text files from the Internet.`: pyutil/lazy_downloader.py
+.. _`Automate downloading videos from YouTube.`: pyutil/yt_dl.py
+.. _`Symlink files recursively`: pyutil/linktree.py
+.. _`Inspect varying python modules.`: pyutil/inspect_module.py
+.. _`Introspect environment variables.`: pyutil/env.py
+.. _`Profiling nvim startup time.`: pyutil/nvim_profiling.py
+.. _`Strip trailing whitespace from a file.`: pyutil/strip_space.py
+.. _`setup.py`: setup.py

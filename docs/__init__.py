@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 """Initialize the package for all scripts used in IPython startup.
 
+
 :File: __init__.py
 :Author: Faris Chugthai
 
-`GitHub <https://github.com/farisachugthai>`_
+`Github <https://github.com/farisachugthai>`_
 
 This module intends to establish a few different things.
 
@@ -40,4 +41,4 @@ logging.getLogger(__name__).addHandler(NullHandler())
 
 pkg_resources.declare_namespace(__name__)
 
-__path__ = extend_path(sys.path, __file__)
+__path__ = extend_path(sys.path, __name__)

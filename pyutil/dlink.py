@@ -2,9 +2,22 @@
 # -*- coding: utf-8 -*-
 """Symlink all of the files in one directory into another.
 
-Usage::
+..module:: dlink
+    synopsis: Symlinks a directory of files from another.
+
+Synopsis
+--------
+This is quite easily one of my most frequently used scripts.
 
     `ln -s path/to/dest/* [path/to/src]`
+
+.. _dlink-usage:
+
+Usage
+------
+.. code-block:: shell
+
+    ln -s path/to/dest/* [path/to/src]
 
 """
 import os

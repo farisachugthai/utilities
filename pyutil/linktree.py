@@ -1,27 +1,29 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""From Python3.6 Examples in Ubuntu repositories.
+"""From the package "python3.6-examples" in the Ubuntu repositories.
 
 Minor modifications for flake8, pydocstyle etc.
-
-linktree
 
 Make a copy of a directory tree with symbolic links to all files in the
 original tree.
 All symbolic links go to a special symbolic link at the top, so you
 can easily fix things if the original source tree moves.
 
-Usage::
+Usage
+-----
+code-block:: shell
+
     mklinks oldtree newtree
 
-See also "mkreal".
+
+See Also
+--------
+mkreal
+
+
 """
 import os
 import sys
-
-LINK = '.LINK'  # Name of special symlink at the top.
-
-DEBUG = 0
 
 
 def main():
@@ -89,4 +91,8 @@ def linknames(old, new, link):
 
 
 if __name__ == '__main__':
+    LINK = '.LINK'  # Name of special symlink at the top.
+
+    DEBUG = 0
+
     sys.exit(main())

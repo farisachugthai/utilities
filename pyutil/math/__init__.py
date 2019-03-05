@@ -4,6 +4,7 @@
 
 :File: __init__.py
 :Author: Faris Chugthai
+
 `GitHub <https://github.com/farisachugthai>`_
 
 This module intends to establish a few different things.
@@ -14,7 +15,7 @@ This module intends to establish a few different things.
     - Extend the user's ``$PATH `` to include this directory even if it != os.cwd
 
 
-# NOQA F401
+NOQA F401
 
 """
 import logging
@@ -23,17 +24,6 @@ from pkgutil import extend_path
 import sys
 
 import pkg_resources
-
-from pyutil.__about__ import (
-    __author__,
-    __copyright__,
-    __description__,
-    __docformat__,
-    __email__,
-    __license__,
-    __title__,
-    __package_name__,
-)
 
 logging.getLogger(__name__).addHandler(NullHandler())
 

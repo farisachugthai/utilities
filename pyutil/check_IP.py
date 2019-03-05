@@ -2,30 +2,37 @@
 # -*- coding: utf-8 -*-
 """Print a user's public IP address and hostname.
 
-.. todo::
+Requires
+--------
+:mod:`requests`
 
-    Come up with a fallback if requests isn't installed.
+
+.. todo:: Come up with a fallback if requests isn't installed.
+
+
 """
 import socket
 import sys
-
-try:
-    import requests
-except ImportError:
-    sys.exit()
 
 
 def get_public_ip():
     """Fetch the user's public IP address by querying `<httpbin.org>`__.
 
-    :return rt: A formatted message displaying the user's IP address.
-    :rtype: str
+    Returns
+    -------
+    rt : str
+        A formatted message displaying the user's IP address.
+
 
     .. see also::
 
-    From Kenneth Reitz, owner of httpbin:
+        From Kenneth Reitz, owner of httpbin.
 
-        .. _Section: Installing packages for your project: `https://docs.python-guide.org/en/latest/dev/virtualenvs/`_
+
+    Installing packages for your project
+    ------------------------------------
+    `https://docs.python-guide.org/en/latest/dev/virtualenvs/`_
+
     """
     res = requests.get('https://httpbin.org/ip')
     rt = 'Your IP is {0}'.format(res.json()['origin'])
@@ -39,6 +46,11 @@ def get_hostname():
 
 
 if '__name__' == '__main__':
+    try:
+        import requests
+    except ImportError:
+        sys.exit()
+
     response = get_public_ip()
     print(response)
     print(get_hostname())

@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-
-:mod:`itersrc.py`
-==================
+"""Iterate over all of the python files in a directory recursively.
 
 .. module:: itersrc.py
     :synopsis: Iterate over all of the python files in a directory recursively.
 
 :File: itersrc.py
 :Author: Faris Chugthai
-:Github: `https://github.com/farisachugthai`_
-:Date: |date|
+`Github <https://github.com/farisachugthai>`_
 
 .. todo:: numpydoc and parameters.
 
@@ -29,11 +25,20 @@ def iter_source_code(paths):
     Taken with almost no modifications from pyflakes.
     This would be a great function to call with os.listdir('root') output.
 
-    @param paths: A list of paths.  Directories will be recursed into and
-        any .py files found will be yielded.  Any non-directories will be
-        yielded as-is.
+    Parameters
+    ----------
+    paths: list
+        A list of paths.  Directories will be recursed into and
+        any .py files found will be yielded.
+        Any non-directories will be yielded as-is.
 
-        :param paths:
+
+    Yields
+    ------
+    ``full_path`` : path-like object
+        Absolute path to a python file.
+
+
     """
     for path in paths:
         if os.path.isdir(path):

@@ -1,0 +1,34 @@
+
+.. code-block:: html+jinja
+
+   {{index}}
+
+   {{summary}}
+
+   {{extended_summary}}
+
+   {{parameters}}
+
+   {{returns}}
+
+   {{yields}}
+
+   {{other_parameters}}
+
+   {{raises}}
+
+   {{warns}}
+
+   {{warnings}}
+
+   {{see_also}}
+
+   {{notes}}
+
+   {{references}}
+
+   {{examples}}
+
+   {{attributes}}
+
+   {{methods}}

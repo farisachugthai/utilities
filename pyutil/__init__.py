@@ -18,21 +18,15 @@ This module intends to establish a few different things.
 
 """
 import logging
+import sys
 from logging import NullHandler
 from pkgutil import extend_path
-import sys
 
 import pkg_resources
 
-from pyutil.__about__ import (
-    __author__,
-    __copyright__,
-    __description__,
-    __docformat__,
-    __email__,
-    __license__,
-    __title__,
-    __package_name__,
+from pyutil.__about__ import (  # noqa F401
+    __author__, __copyright__, __description__, __docformat__,
+    __license__, __title__, __package_name__,
 )
 
 logging.getLogger(__name__).addHandler(NullHandler())

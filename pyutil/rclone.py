@@ -6,12 +6,14 @@
 
     rclone.py [src] dst
 
-.. requires::
+.. _rclone-requires
 
-    rclone
+Requires
+--------
+rclone
 
-The remaining roadmap.
-.. todo::
+
+.. todo:: This nice little list.
 
     - :param: args is used as a parameter to both ArgumentParser() and
       subprocess.run()
@@ -19,8 +21,8 @@ The remaining roadmap.
     - Set up a simple single use case backup.
     - Add collections.ChainMap() to set precedence of backupdir.
     - Add in multiple invocations of rclone and create args to reflect use cases.
-    - Expand argparse usage with `fromfile_prefix_chars` to emulate rsync's file
-      input.
+    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync's file input.
+
 
 """
 import argparse
@@ -31,8 +33,13 @@ import sys
 
 def _parse_arguments():
     """Parse user-given arguments."""
-    # parser = argparse.ArgumentParser("Automate usage of rclone for simple backup creation.")
+    if cwd is None:
+        cwd = os.getcwd()
+
+    parser = argparse.ArgumentParser(
+        description="Automate usage of rclone for simple backup creation.")
     # parser.add_argument(dest=src, required=True, help='A directory, presumably local, to sync with a remote.')
+
     parser = argparse.ArgumentParser(
         usage="%(prog)s [options]",
         description="Automate usage of rclone for \
@@ -41,8 +48,23 @@ def _parse_arguments():
     parser.add_argument(
         dest=src,
         default=cwd,
-        help="The source directory.\
-                        Defaults to the cwd.")
+        help="the source directory. "
+        "defaults to the cwd.")
+
+    # need to change all instances of dest becuase that's too confusing
+    # parser.add_argument(
+    #     action='store',
+    #     dest='src',
+    #     default=cwd,
+    #     help="The source directory. "
+    #     "Defaults to the cwd.")
+
+    parser.add_argument(
+        '-f',
+        '--follow',
+        action='store',
+        dest='follow',
+        help="Follow symlinks.")
 
     return parser
 
@@ -72,15 +94,18 @@ def rclone_base_case(src, dst):
 
     This command assumes a use case and configures it rclone for it properly.
 
-    .. todo::
-        - rclone takes an argument for user-agent
+    .. todo:: - rclone takes an argument for user-agent
 
     Parameters
     ----------
-    src : directory to clone files from
-    dst : destination to send files to. Can be configured as a local directory,
-          a dropbox directory, a google drive folder or a google cloud storage
-          bucket among many other things.
+    src : path-like object
+        directory to clone files from
+
+    dst : path-like object
+        destination to send files to. Can be configured as a local
+        directory, a dropbox directory, a google drive folder or a google
+        cloud storage bucket among many other things.
+
 
     Returns
     -------
@@ -102,11 +127,20 @@ def rclone_follow(dst, src=cwd):
 if __name__ == "__main__":
     cwd = os.getcwd()
 
-    # This forces a Linux only implementation. Should expand the following to
-    # a function
-    home = os.path.expanduser("~")
+    try:
+        home = os.path.expanduser("~")
+    except OSError:
+        home = os.environ.get('userprofile')
 
     # Quite honestly most of everything below was garbage and needs to be
     # rewritten ground up.
 
     # Use :Glog if you want a reference of what was here.
+    parser = _parse_arguments(cwd)
+
+    args = parser.parse_args()
+
+    if args.follow:
+
+        # rclone_follow()
+        pass

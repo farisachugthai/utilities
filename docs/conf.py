@@ -1,31 +1,63 @@
 # -*- coding: utf-8 -*-
-#
-# Configuration file for the Sphinx documentation builder.
-#
-# This file does only contain a selection of the most common options. For a
-# full list see the documentation:
-# http://www.sphinx-doc.org/en/master/config
+"""Configuration file for the Sphinx documentation builder.
+
+Sphinx Configuration File
+=========================
+
+This file does only contain a selection of the most common options. For a
+full list see the documentation:
+
+:URL: `http://www.sphinx-doc.org/en/master/config`_
+
+Path Setup
+----------
+If extensions (or modules to document with autodoc) are in another
+directory, add these directories to sys.path here.
+
+If the directory is relative to the documentation root, use
+:func:`os.path.abspath` to make it absolute, like shown here.
+
+.. code-block:: python3
+
+    sys.path.insert(0, os.path.abspath('.'))
+
+As stated at:
+
+:URL: `https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix`_
 
 # -- Path setup --------------------------------------------------------------
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
+
+"""
+import logging
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../pyutil/'))
 
-sys.path.insert(0, os.path.abspath('sphinxext'))
+logger = logging.getLogger(__name__)
+
+CONF_PATH = os.path.dirname(os.path.abspath(__file__))
+BUILD_PATH = os.path.join(CONF_PATH, 'build')
+SOURCE_PATH = os.path.join(CONF_PATH, '_source')
+SOURCE_CODE = os.path.join('..', 'pyutil')
 
 sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('.'))
 
-# -- Project information -----------------------------------------------------
+sys.path.insert(0, os.path.abspath('sphinxext'))
+
+sys.path.insert(0, os.path.abspath(SOURCE_CODE))
+
+sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'math')))
+
+logging.debug("Path is currently: " + str(sys.path))
+
+# -- Project information --------------------------------------------
 
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
 project = u'pyutil'
-copyright = u'2018-2019, Faris A Chugthai'
+copyright = u'2018, Faris A Chugthai'
 author = u'Faris A Chugthai'
 
 # The short X.Y version
@@ -33,8 +65,7 @@ version = '0.0.1'
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
 
-
-# -- General configuration ---------------------------------------------------
+# -- General configuration ------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
@@ -54,8 +85,9 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
-    'IPython.sphinxext.ipython_directive',
     'IPython.sphinxext.ipython_console_highlighting',
+    'IPython.sphinxext.ipython_directive',
+    # 'matplotlib.sphinxext.plot_directive',
     'numpydoc',
 ]
 
@@ -105,12 +137,12 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 pygments_style = 'monokai'
 
 
-# -- Options for HTML output -------------------------------------------------
+# -- Options for HTML output ----------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+# html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -147,12 +179,12 @@ html_sidebars = {
     ]
 }
 
-# -- Options for HTMLHelp output ---------------------------------------------
+# -- Options for HTMLHelp output ------------------------------------
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'pyutil'
 
-# -- Options for LaTeX output ------------------------------------------------
+# -- Options for LaTeX output ---------------------------------------
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
@@ -180,8 +212,7 @@ latex_documents = [
      'Faris A Chugthai', 'manual'),
 ]
 
-
-# -- Options for manual page output ------------------------------------------
+# -- Options for manual page output ---------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
@@ -191,7 +222,7 @@ man_pages = [
 ]
 
 
-# -- Options for Texinfo output ----------------------------------------------
+# -- Options for Texinfo output -------------------------------------
 
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,
@@ -202,8 +233,7 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-
-# -- Options for Epub output -------------------------------------------------
+# -- Options for Epub output ----------------------------------------
 
 # Bibliographic Dublin Core info.
 # epub_title = project
@@ -220,37 +250,38 @@ texinfo_documents = [
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
 
-# -- Extension configuration -------------------------------------------------
+# -- Extension configuration ----------------------------------------
 
-# -- Options for intersphinx extension ---------------------------------------
+# -- Options for intersphinx extension ------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    'python': ('https://docs.python.org/3', 'python-inv.txt'),
-    'pandas': 'https://pandas.pydata.org/pandas-docs/stable',
-    'matplotlib': 'http://matplotlib.org',
-    'flask': 'http://flask.pocoo.org/docs/latest/api',
+    'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
+    'matplotlib': ('https://matplotlib.org', None),
+    'python': ('https://docs.python.org/3/', None),
+    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'ipython': ('https://ipython.readthedocs.io/en/stable/', None)
 }
 
-# -- Options for todo extension ----------------------------------------------
+# -- Options for todo extension -------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
 # Viewcode
-# ---------
+# --------
 viewcode_import = True
 
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 # Autosummary
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 
 # import glob  # noqa F402
 autosummary_generate = True
 
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 # Napoleon settings
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 
 # Honestly all the defaults are great so leave them. Just annoyed that it
 # doesn't seem to be working!

@@ -26,10 +26,10 @@ It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 
 Attributes
 -----------
-ip : InteractiveShell
-    A global object representing the active IPython session. Contains varying
-    packages as well as the current global namespace. Doesn't need to be
-    defined in advance during an interactive session.
+ip : :class:`IPython.core.interactiveshell.InteractiveShell()`
+    A global object representing the active :mod:`IPython` session.
+    Contains varying packages as well as the current global namespace.
+    Doesn't need to be defined in advance during an interactive session.
 
 
 .. todo::
@@ -41,11 +41,9 @@ ip : InteractiveShell
 
 See Also
 ---------
-dir2(obj) -> list of strings
-
+:func:`IPython.utils.dir2.dir2()` : list of strings
     Extended version of the Python builtin :func:`dir()`, which does a few
     extra checks.
-
     This version is guaranteed to return only a list of true
     strings, whereas :func:`dir()` returns anything that
     objects inject into themselves, even if they
@@ -57,19 +55,15 @@ dir2(obj) -> list of strings
 
     # Start building the attribute list via dir(), and then complete it
     # with a few extra special-purpose calls.
-
     >>> try:
         >>> words = set(dir(obj))
     >>> except Exception:
         >>> # TypeError: dir(obj) does not return a list
         >>> words = set()
-
     >>> if safe_hasattr(obj, '__class__'):
         >>> words |= set(dir(obj.__class__))
-
     # filter out non-string attributes which may be stuffed by dir() calls
     # and poor coding in third-party modules
-
     >>> words = [w for w in words if isinstance(w, str)]
     >>> return sorted(words)
 
@@ -127,7 +121,7 @@ def _interactive(args):
     """Define a private method for interactive use instead of ifmain block.
 
     As this file is currently used in IPython's startup, the
-    ifmain block will execute on startup which is not desired.
+    if-main block will execute on startup which is not desired.
 
     What we're looking for is more similar to an autoload feature.
 

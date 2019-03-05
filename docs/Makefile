@@ -1,14 +1,14 @@
 # Minimal makefile for Sphinx documentation
 
-# Do we emit errors if we don't use a var?
-PYTHON = python3
-
+# Grabbed a few useful lines from:
+# https://raw.githubusercontent.com/python/cpython/3.7/Doc/Makefile
 
 # You can set these variables from the command line.
+PYTHON        = python3
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = .
 BUILDDIR      = _build
-# CONFDIR		  = "$(PWD)"
+# CONFDIR	  = $(PWD)
 SPHINXOPTS    =
 # -c "$(CONFDIR)" isn't working in sphinx opts
 
@@ -21,9 +21,16 @@ endif
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-.PHONY: help Makefile
+.PHONY: help Makefile htmlview
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+htmlview: html
+	 $(PYTHON) -c "import webbrowser; webbrowser.open('_build/html/index.html')"
+
+# Requires tabs. If setting values in your vimrc doesn't work type <C-v><Tab> to insert a tab literally.
+.magic:.
+		$(PYTHON) autogen_magics.py

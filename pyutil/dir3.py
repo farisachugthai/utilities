@@ -2,39 +2,34 @@
 # -*- coding: utf-8 -*-
 """Improve the :func:`dir()` by ignoring methods hidden by ``_``.
 
-Dir3
-======
-
-.. module:: dir3
-
-:File: dir3.py
-:Author: Faris Chugthai
-`GitHub https://github.com/farisachugthai`_
 
 Background
 -----------
 :func:`dir()` is a phenomenal function for exploring both the global
 namespace and the exported methods of an object.
 
+
 However it can get incredibly messy, especially when :mod:`IPython`
 displays the placeholder variables for every cell that has been
 run in the session.
 
+
 This causes an incredibly long output that's difficult to parse quickly at
 best, and at worst, the output truncates and all valuable
 information is hidden. This function attempts to avoid that by
-hiding all private and/or mangled
-methods I.E. ones that begin with the characters ``_`` or ``__``.
+hiding all private and/or mangled methods I.E. ones that begin with the
+characters ``_`` or ``__``.
+
 
 It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 
 
 Attributes
 -----------
-ip (InteractiveShell):
-    A global object representing the active IPython session. Contains varying
-    packages as well as the current global namespace. Doesn't need to be
-    defined in advance during an interactive session.
+ip : :class:`IPython.core.interactiveshell.InteractiveShell()`
+    A global object representing the active :mod:`IPython` session.
+    Contains varying packages as well as the current global namespace.
+    Doesn't need to be defined in advance during an interactive session.
 
 
 .. todo::
@@ -46,11 +41,9 @@ ip (InteractiveShell):
 
 See Also
 ---------
-dir2(obj) -> list of strings
-
+:func:`IPython.utils.dir2.dir2()` : list of strings
     Extended version of the Python builtin :func:`dir()`, which does a few
     extra checks.
-
     This version is guaranteed to return only a list of true
     strings, whereas :func:`dir()` returns anything that
     objects inject into themselves, even if they
@@ -62,19 +55,15 @@ dir2(obj) -> list of strings
 
     # Start building the attribute list via dir(), and then complete it
     # with a few extra special-purpose calls.
-
     >>> try:
         >>> words = set(dir(obj))
     >>> except Exception:
         >>> # TypeError: dir(obj) does not return a list
         >>> words = set()
-
     >>> if safe_hasattr(obj, '__class__'):
         >>> words |= set(dir(obj.__class__))
-
     # filter out non-string attributes which may be stuffed by dir() calls
     # and poor coding in third-party modules
-
     >>> words = [w for w in words if isinstance(w, str)]
     >>> return sorted(words)
 
@@ -132,13 +121,13 @@ def _interactive(args):
     """Define a private method for interactive use instead of ifmain block.
 
     As this file is currently used in IPython's startup, the
-    ifmain block will execute on startup which is not desired.
+    if-main block will execute on startup which is not desired.
 
     What we're looking for is more similar to an autoload feature.
 
     Parameters
     ------------
-    args : (iterable)
+    args : iterable
         The object to inspect.
 
 

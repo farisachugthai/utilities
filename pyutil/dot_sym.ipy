@@ -1,50 +1,106 @@
 #!/usr/bin/env ipython3
 # -*- coding: utf-8 -*-
 # Maintainer: Faris Chugthai
+"""Symlink all of the files in the dotfiles repo from ``$HOME``.
 
+This module doesn't not take any command-line arguments, parameters and does
+not maintain any state outside of the symlinks it creates.
+
+It does require being interactively run in the IPython shell or invoked with
+
+.. code-block:: shell
+
+    ipython dot_sym.ipy
+
+
+"""
+import logging
 import os
 import re
 import sys
+import subprocess
 
-from . import sys_checks
 
+def get_dotfiles(proj):
+    """Move to a pre-designated directory for the dotfiles and git clone them.
 
-def get_dotfiles():
-    """Move to a pre-designated directory for the dotfiles and git clone them."""
+    Uses :func:`os.system()` to run ``git clone`` in the shell. It then checks
+    the return code left by the system call.
+
+    However, there are a wide variety of reasons why a command may return
+    non-zero. Therefore, this section may need to be rewritten with subporcess
+    if this proves difficult to maintain.
+
+    """
     try:
         os.chdir(proj)
     # https://docs.python.org/3/library/exceptions.html#NotADirectoryError
-    except NotADirectoryError as e:
+    except NotADirectoryError:
         os.makedirs(proj)
         os.chdir(proj) or sys.exit("Couldn't create the necessary directory.")
 
-    # so this lil block is the obvious downside to os.system. maybe try subprocess
-    # and if that does nothing then we're going for the git mod
     ret = os.system("git clone git@github.com:farisachugthai/dotfiles.git")
     if ret != 0:
         print('Git clone failed. See err code: ' + str(ret))
 
 
-def dir_checker():
-    """ So this function is now a TODO because of os.scandir()"""
-    for root, dirs, files in os.walk(repo):
-        # Now lets do the folder check
-        if not os.path.isdir(root):
-            os.makedirs(root, exist_ok=False)
+def dir_checker(repo):
+    """Checks that all directories needed by ``repo`` exist in ``home``.
+
+    .. todo::
+
+        Actually as it stands I don't think it looks in ``home`` to make dirs.
 
 
-def backup_prompt():
-    res = input("Would you like to back up this file?")
-    matched = re.match("(Yy)+", res)
+    """
+    for directory in os.scandir(repo):
+        if not directory.name.startswith('.') and not directory.is_dir():
+            os.makedirs(repo, exist_ok=False)
+            logging.info("Directory " + os.path.abspath(directory.name)
+                         + "being created.")
+        elif not directory.name.startswith('.') and directory.is_dir():
+            logging.debug("Directory: " + os.path.abspath(directory.name)
+                          + "exists already.")
+
+
+def backup_prompt(file):
+    """Prompts the user to determine whether we should back up ``file``.
+
+    Parameters
+    -----------
+    file : path-like object
+        The file to backup
+
+    Returns
+    --------
+    Bool
+
+    """
+    res = input("Would you like to back up" + os.path.abspath(file) + "?")
+    matched = re.match("(Yy)[A-Za-z]*", res)
     if matched:
-        backup_file()
+        return True
+    return False
 
 
 def symlink_repo(file):
-    '''
-    Symlink the dotfiles if nothing exists in the home directory.
-    '''
+    """Symlink the dotfiles if nothing exists in the home directory.
 
+    .. todo
+    Attributes
+    -----------
+    home : str
+        The user's home directory.
+    repo : str
+        The location of the source code.
+
+    """
+    try:
+        home = os.path.join(os.path.expanduser("~"), "")
+    except OSError:
+        home = os.environ.get("%userprofile%")
+
+    repo = os.path.join(home, "projects", "dotfiles")
     src = os.path.join(repo, file)
     dest = os.path.join(home, file)
     try:
@@ -55,35 +111,39 @@ def symlink_repo(file):
             pass
         elif os.path.isfile(dest):
             print("Sorry but a file to {0} already exists".format(dest))
-            backup_prompt()
+            resp = backup_prompt(dest)
+            if resp:
+                # TODO: :meth:`backup_file(dest)`
+                pass
 
 
 def main():
-    '''Clone dotfiles to a user's home directory and then symlink to the repo.
+    """Clone dotfiles to a user's home directory and then symlink to the repo.
 
     Assumes Linux only because it has only been tested on Ubuntu and Termux.
-    '''
-
-    sys_checks()
-
-    # lets first mark where we're executing from
-    DIRNAME = os.path.dirname(os.path.absdir(__file__))
-
-    # let's get the files we need
-    get_dotfiles()
+    """
+    get_dotfiles(PROJ)
 
     # ensure all necessary directories are in $HOME
-    dir_checker()
+    dir_checker(REPO)
 
     # symlink every file you can find
-    repo_files = !git ls-files  # noqa
+    try:
+        repo_files = subprocess.check_output(['git', 'ls-files'])
+    except subprocess.CalledProcessError as e:
+        logging.debug("CalledProcessError was: " + str(e.returncode)
+                      + str(e.args) + str(e.stdout) + str(e.stderr))
+        sys.exit()
+
     for file in repo_files:
-        symlink_repo(file)
+        symlink_repo(file=file)
 
 
 if __name__ == '__main__':
     HOME = os.path.join(os.path.expanduser("~"), "")
-    PROJ = os.path.join(home, "projects")
-    REPO = os.path.join(proj, "dotfiles")
+    PROJ = os.path.join(HOME, "projects")
+    REPO = os.path.join(PROJ, "dotfiles")
+
+    logging.basicConfig()
 
     main()

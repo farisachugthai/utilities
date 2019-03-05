@@ -4,7 +4,7 @@
 
 :File: __init__.py
 :Author: Faris Chugthai
-:Github: `https://github.com/farisachugthai`_
+`Github <https://github.com/farisachugthai>`_
 
 This module intends to establish a few different things.
 
@@ -29,7 +29,6 @@ from pyutil.__about__ import (
     __copyright__,
     __description__,
     __docformat__,
-    __email__,
     __license__,
     __title__,
     __package_name__,

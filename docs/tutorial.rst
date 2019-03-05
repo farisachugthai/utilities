@@ -39,14 +39,15 @@ Which is similar to
 
 Contributing
 ------------
-This package has recently adopted the :ref:`numpy` convention for docstrings.
+This package has recently adopted the :mod:`numpy` convention for docstrings.
 As a result, all docstrings must conform to this standard.
 
 
-A bare template for a full docstring with all :ref:`numpy` subsections has been
+A bare template for a full docstring with all :mod:`numpy` subsections has been
 included below.
 
 .. include:: numpydoc_docstring.rst
 
 .. jesus i don't know why i struggled with that so much. Refer to
+
 .. http://docutils.sourceforge.net/docs/ref/rst/directives.html#include

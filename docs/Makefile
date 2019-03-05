@@ -8,7 +8,7 @@ PYTHON        = python3
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = .
 BUILDDIR      = _build
-# CONFDIR		  = "$(PWD)"
+# CONFDIR	  = $(PWD)
 SPHINXOPTS    =
 # -c "$(CONFDIR)" isn't working in sphinx opts
 
@@ -30,3 +30,7 @@ help:
 
 htmlview: html
 	 $(PYTHON) -c "import webbrowser; webbrowser.open('_build/html/index.html')"
+
+# Requires tabs. If setting values in your vimrc doesn't work type <C-v><Tab> to insert a tab literally.
+.magic:.
+		$(PYTHON) autogen_magics.py

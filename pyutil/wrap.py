@@ -27,15 +27,16 @@ def wrap_paragraphs(text, ncols=80):
     paragraphs, as separated by empty lines.
 
     Parameters
-    __________
+    ----------
     text : str
         todo
+    ncols : int
 
 
     Returns
     -------
-    todo
-        list of complete paragraphs, wrapped to fill `ncols` columns.
+    out_ps : list of str
+        list of complete paragraphs, wrapped to fill ``ncols`` columns.
 
 
     """

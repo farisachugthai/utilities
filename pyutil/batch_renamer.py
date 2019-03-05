@@ -17,12 +17,12 @@ Still uses old style strings as a result.
     img_1076.jpg --> Ashley_1.jpg
     img_1077.jpg --> Ashley_2.jpg
 
-.. todo::
 
-    First things first ensure it works at all.
+.. todo:: First things first ensure it works at all.
 
-    This would be quite an easy module to create unittests for IN ADDITION
-    to the fact that you could add some fixtures in and learn that.
+
+This would be quite an easy module to create unittests for IN ADDITION to the
+fact that you could add some fixtures in and learn that.
 
 """
 import argparse
@@ -35,16 +35,14 @@ import time
 
 class BatchRename(Template):
     """Delimiter for string substitutions."""
+
     delimiter = '%'
 
 
 def fix_extension():
     """Rename files that have have the wrong filename extension.
 
-    .. todo::
-
-        Fuck I didn't consider the case where there are 2 words
-        separated by dots that we want to keep.
+    .. todo:: Fuck I didn't consider the case where there are 2 words separated by dots that we want to keep.
     """
     for i in os.listdir('.'):
         parts = i.split(sep='.')
@@ -55,11 +53,16 @@ def fix_extension():
 def main(d):
     """Rename a dir of files.
 
-    .. todo::
+    Parameters
+    ----------
+    d : path-like object
+        The directory to iterate over.
 
-        Uhhhh??
 
-    :param d: The directory to iterate over.
+    Returns
+    -------
+    None
+
     """
     fmt = input('Enter rename style (%d-date %n-seqnum %f-format):  ')
     # Enter rename style (%d-date %n-seqnum %f-format):  Ashley_%n%f
@@ -96,13 +99,15 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
+        "directory",
         "-d",
         "--directory",
         help="Directory containing only the files to be renamed.")
 
     args = parser.parse_args()
 
-    logging.debug(args.directory)
-
     d = args.directory
+
+    logging.debug("The directory that was chosen was: " + str(d))
+
     main(d)

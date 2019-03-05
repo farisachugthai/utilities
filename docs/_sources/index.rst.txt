@@ -8,15 +8,14 @@
 Welcome to utilities's documentation!
 =====================================
 
-
-.. include:: readme.rst
-
-
 .. toctree::
    :hidden:
 
    readme
 
+.. include::
+
+   readme
 
 .. toctree::
    :caption: Table of Contents

@@ -33,17 +33,26 @@ It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 
 Attributes
 -----------
-ip : :class:`IPython.core.interactiveshell.InteractiveShell()`
+``_ip`` : :class:`IPython.core.interactiveshell.InteractiveShell()`
     A global object representing the active :mod:`IPython` session.
     Contains varying packages as well as the current global namespace.
     Doesn't need to be defined in advance during an interactive session.
 
 
-.. todo::
 
-    - Show some example usage.
-    - Should this function import or in any way be based off of :func:`IPython.utils.dir2.dir2()` via import?
-    - We'll probably need to import :func:`register_line_magic` or something.
+
+Should this function import or in any way be based off of :func:`IPython.utils.dir2.dir2()` via import?
+We'll probably need to import :func:`IPython.core.magic.register_line_magic()` or something.
+
+.. todo:: Show some example usage.
+
+.. code-block:: rst
+
+    .. ipython::
+        @okexcept
+
+        In[1]: dir3()
+        Out[1]: ...  # ELLIPSES
 
 
 See Also
@@ -82,9 +91,10 @@ import sys
 def dir3():
     """Filter unnecessary information from :func:`dir()` output.
 
-    Parameters
-    ------------
-    None
+    Attributes
+    ----------
+    ``_ip`` : |shell|
+        **TODO**
 
 
     Returns
@@ -93,9 +103,7 @@ def dir3():
         All methods that don't begin with ``_``.
 
 
-    .. todo::
-
-        More stringent filters will need to come.
+    .. todo:: More stringent filters will need to come.
 
 
     .. note::
@@ -105,16 +113,11 @@ def dir3():
 
 
     """
-    # This should silence the error from flake about ip being used but not
-    # defined
-    from IPython import get_ipython
-    ip = get_ipython()
-
     args = sys.argv[:]
     if len(args) == 2:
         output = _interactive(args)
     elif len(args) < 2:
-        global_namespace = ip.user_global_ns.keys()
+        global_namespace = _ip.user_global_ns.keys()
         output = _interactive(global_namespace)
     else:
         for i in range(args):
@@ -125,10 +128,7 @@ def dir3():
 
 
 def _interactive(args):
-    """Define a private method for interactive use instead of ifmain block.
-
-    As this file is currently used in IPython's startup, the
-    if-main block will execute on startup which is not desired.
+    """Define a private method for interactive use.
 
     What we're looking for is more similar to an autoload feature.
 
@@ -144,11 +144,6 @@ def _interactive(args):
         All methods that don't begin with '_'.
 
 
-    .. todo::
-
-        More stringent filters will come.
-
-
     """
     filtered = []
     for i in args:
@@ -157,3 +152,11 @@ def _interactive(args):
             filtered.append(i)
 
     return filtered
+
+
+if __name__ == "__main__":
+    from IPython import get_ipython
+    _ip = get_ipython()
+    output = dir3()
+
+    print(output)

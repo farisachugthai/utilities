@@ -5,7 +5,6 @@
 .. module:: itersrc.py
     :synopsis: Iterate over all of the python files in a directory recursively.
 
-
 :File: itersrc.py
 :Author: Faris Chugthai
 
@@ -31,15 +30,16 @@ def iter_source_code(paths):
 
     Parameters
     ----------
-    paths : A list of paths.
-        Directories will be recursed into and any .py files found will be
-        yielded.  Any non-directories will be yielded as-is.
+    paths: list
+        A list of paths.  Directories will be recursed into and
+        any .py files found will be yielded.
+        Any non-directories will be yielded as-is.
 
 
     Yields
     ------
-    full_path : path
-        An absolute path to python source code.
+    ``full_path`` : path-like object
+        Absolute path to a python file.
 
 
     """

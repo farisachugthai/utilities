@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Make a copy of a directory tree using symbolic links.
+"""From the package "python3.6-examples" in the Ubuntu repositories.
 
-linktree
-==========
-.. currentmodule:: linktree
+Minor modifications for :mod:`flake8`, :mod:`pydocstyle` etc.
 
 Make a copy of a directory tree with symbolic links to all files in the
 original tree.
@@ -12,15 +10,11 @@ original tree.
 All symbolic links go to a special symbolic link at the top, so you
 can easily fix things if the original source tree moves.
 
-From Python3.6 Examples in Ubuntu repositories.
-
-Minor modifications for :mod:`flake8`, :mod:`pydocstyle` etc.
-
 .. _linktree-usage:
 
 Usage
--------
-.. code-block:: shell
+-----
+code-block:: shell
 
     mklinks oldtree newtree
 
@@ -33,10 +27,6 @@ mkreal
 """
 import os
 import sys
-
-LINK = '.LINK'  # Name of special symlink at the top.
-
-DEBUG = 0
 
 
 def main():
@@ -104,4 +94,8 @@ def linknames(old, new, link):
 
 
 if __name__ == '__main__':
+    LINK = '.LINK'  # Name of special symlink at the top.
+
+    DEBUG = 0
+
     sys.exit(main())

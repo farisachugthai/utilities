@@ -10,6 +10,8 @@ original tree.
 All symbolic links go to a special symbolic link at the top, so you
 can easily fix things if the original source tree moves.
 
+.. _linktree-usage:
+
 Usage
 -----
 code-block:: shell

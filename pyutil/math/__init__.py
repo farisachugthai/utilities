@@ -4,7 +4,6 @@
 
 :File: __init__.py
 :Author: Faris Chugthai
-
 `GitHub <https://github.com/farisachugthai>`_
 
 This module intends to establish a few different things.
@@ -19,9 +18,9 @@ NOQA F401
 
 """
 import logging
+import sys
 from logging import NullHandler
 from pkgutil import extend_path
-import sys
 
 import pkg_resources
 

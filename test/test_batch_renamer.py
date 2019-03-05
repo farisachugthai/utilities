@@ -4,7 +4,7 @@
 
 :File: test_batch_renamer.py
 :Author: Faris Chugthai
-:Email: farischugthai@gmail.com
+
 :Github: https://github.com/farisachugthai
 
 """

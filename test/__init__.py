@@ -24,8 +24,8 @@ import sys
 import pkg_resources
 
 from pyutil.__about__ import (  # noqa F401
-    __author__, __copyright__, __description__, __docformat__, __email__,
-    __license__, __title__, __package_name__,
+    __author__, __copyright__, __description__, __docformat__, __license__,
+    __title__, __package_name__,
 )
 
 logging.getLogger(__name__).addHandler(NullHandler())

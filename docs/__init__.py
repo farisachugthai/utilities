@@ -31,7 +31,6 @@ from pyutil.__about__ import (
     __copyright__,
     __description__,
     __docformat__,
-    __email__,
     __license__,
     __title__,
     __package_name__,
@@ -41,4 +40,4 @@ logging.getLogger(__name__).addHandler(NullHandler())
 
 pkg_resources.declare_namespace(__name__)
 
-__path__ = extend_path(sys.path, __name__)
+__path__ = extend_path(sys.path, __file__)

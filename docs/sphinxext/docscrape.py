@@ -110,7 +110,7 @@ class ParseError(Exception):
         return message
 
 
-class NumpyDocString(collections.Mapping):
+class NumpyDocString(collections.abc.Mapping):
     """Parses a numpydoc string to an abstract representation
 
     Instances define a mapping from section title to structured data.

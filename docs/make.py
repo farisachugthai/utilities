@@ -52,7 +52,7 @@ Attributes
 
 """
 import argparse
-import logging  # if logging is imported in the :ref:`__init__.py do i have to import it here?
+import logging
 import os
 import shlex
 import subprocess

@@ -125,6 +125,35 @@ def main(nvim_root):
     ])
 
 
+def find_init_files():
+    """Discover the initialization files used for nvim.
+
+    Should theoretically work on both Windows and Unix systems.
+
+    Returns
+    --------
+    nvim_root : path-like object
+        The directory where nvim's configuration files are found.
+
+    .. todo::
+
+        Alright so if ``XDG_CONFIG_HOME`` isn't set we need
+        to check ~/.config/nvim and check whether we're on windows or not
+
+    """
+    global OS
+    OS = system()
+    if check_xdg_config_home():
+        nvim_root = os.path.join(os.environ.get('XDG_CONFIG_HOME'), '', 'nvim')
+        if not os.path.isdir(nvim_root):
+            logging.ERROR(
+                "XDG_CONFIG_HOME set but $XDG_CONFIG_HOME/nvim doesn't exist.")
+        else:
+            return nvim_root
+    else:
+        pass
+
+
 if __name__ == "__main__":
     nvim_root = find_init_files()
 

@@ -6,14 +6,13 @@
 
     rclone.py src dst
 
-.. _rclone-requires
 
 Requires
---------
+---------
 rclone
 
 
-.. todo:: This nice little list.
+.. todo::
 
     - ``args`` is used as a parameter to both :class:`argparse.ArgumentParser()` and :func:`subprocess.run()`
         - Switch the name for one of them as this'll get confusing quickly.
@@ -38,7 +37,6 @@ def _parse_arguments(cwd=None):
     parser = argparse.ArgumentParser(
         description="Automate usage of rclone for simple backup creation.")
     # parser.add_argument(dest=src, required=True, help='A directory, presumably local, to sync with a remote.')
-
     parser = argparse.ArgumentParser(
         usage="%(prog)s [options]",
         description="Automate usage of rclone for "
@@ -95,7 +93,7 @@ def rclone_base_case(src, dst):
 
     This command assumes a use case and configures it rclone for it properly.
 
-    .. todo:: - rclone takes an argument for user-agent
+    .. todo:: rclone takes an argument for user-agent
 
     Parameters
     ----------
@@ -103,9 +101,9 @@ def rclone_base_case(src, dst):
         directory to clone files from
 
     dst : path-like object
-        destination to send files to. Can be configured as a local
-        directory, a dropbox directory, a google drive folder or a google
-        cloud storage bucket among many other things.
+        destination to send files to. Can be configured as a local directory,
+        a dropbox directory, a google drive folder or a google cloud storage
+        bucket among many other things.
 
 
     Returns

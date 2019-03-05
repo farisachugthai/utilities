@@ -2,19 +2,24 @@
 # Maintainer: Faris Chugthai
 """Automates downloading plain text files from the Web.
 
-.. module:: lazy_downloader
-    :synopsis: Automates downloading plain text files from the Web.
+.. module:: pyutil.lazy_downloader
+
+
+As implemented currently, it will only correctly handle plain text; however,
+there are plans to implement the :mod:`mimetype` module and properly handle
+a much wider range of files.
 
 
 Parameters
------------
+----------
 url : str
     A url to download
 
-``output_filename`` : path-like object
+``output_filename``: path-like object
     A path to write the downloaded content to.
 
 
+.. _lazy-downloader-usage:
 Usage
 ------
 .. code-block:: shell
@@ -41,32 +46,25 @@ def main(url, output_fname):
     """Download URL and write to disk.
 
     Parameters
-    -----------
+    ----------
     url : str
         A url to download
 
-    ``output_filename`` : path-like object
+    ``output_fname``: path-like object
         A path to write the downloaded content to.
 
 
-    .. todo::
+    .. todo:: Figure out how to check that the file is plain text and not hit constant false positives
 
-        Figure out how to check that the file is plain text and not hit
-        constant false positives
+    .. todo:: Add headers.
 
-
-    .. todo::
-
-        .. code-block:: python
+        .. code-block:: python3
 
             if res.headers['Content-Type']:
                  pass
 
 
-    .. todo::
-
-        Could add in a check. if the file is over a certain size use
-        :func:`requests.res.iter_chunk()`
+    .. todo:: Could add in a check. if the file is over a certain size use `:func:requests.res.iter_chunk()`
 
     """
     res = requests.get(url)
@@ -80,7 +78,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog='lazy_downloader', description=__doc__)
 
-    parser.add_argument("URL", help="The URL to download. Must be plaintext.")
+    parser.add_argument(
+        "URL", required=True, help="The URL to download. Must be plaintext.")
 
     # Will need to learn how to parse and tokenize the URL to get a reasonable
     # guess for the filename though

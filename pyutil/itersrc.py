@@ -7,12 +7,15 @@
 
 :File: itersrc.py
 :Author: Faris Chugthai
+
 `Github <https://github.com/farisachugthai>`_
+
 
 .. todo:: numpydoc and parameters.
 
     Add the paths parameter here and check that it complies with Numpy
     Docstring format. I believe we can run numpydoc.numpydoc over the file.
+
 
 """
 import os
@@ -23,7 +26,7 @@ def iter_source_code(paths):
     """Iterate over all Python source files in C{paths}.
 
     Taken with almost no modifications from pyflakes.
-    This would be a great function to call with os.listdir('root') output.
+    This would be a great function to call with :func:`os.listdir('/')` output.
 
     Parameters
     ----------

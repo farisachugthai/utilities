@@ -55,14 +55,13 @@ with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
 # Load the package's __version__.py module as a dictionary.
-about = {}
+about = {'__version__': '0.0.1'}
 # if not VERSION:
 #     try:
 #         with open(os.path.join(here, NAME, '__version__.py')) as f:
 #             exec(f.read(), about)
 #     except IOError:  # the file doesn't exist
 #         about['__version__'] = None
-about['__version__'] = '0.0.1'
 
 
 # }}}}

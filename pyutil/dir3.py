@@ -86,9 +86,7 @@ def dir3():
         All methods that don't begin with ``_``.
 
 
-    .. todo::
-
-        More stringent filters will need to come.
+    .. todo:: More stringent filters will need to come.
 
 
     .. note::
@@ -137,11 +135,6 @@ def _interactive(args):
         All methods that don't begin with '_'.
 
 
-    .. todo::
-
-        More stringent filters will come.
-
-
     """
     filtered = []
     for i in args:
@@ -150,3 +143,11 @@ def _interactive(args):
             filtered.append(i)
 
     return filtered
+
+
+if __name__ == "__main__":
+    from IPython import get_ipython
+    _ip = get_ipython()
+    output = dir3()
+
+    print(output)

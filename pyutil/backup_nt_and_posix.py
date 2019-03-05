@@ -7,9 +7,8 @@ This script aims to be platform agnostic and in the long term will be used
 on Windows, Linux, Mac and Android systems.
 
 .. _backup-nt-and-posix-usage:
-
 Usage
-------
+-----
 .. code-block:: bash
 
     python3 backup_nt_and_posix.py /path/to/dir

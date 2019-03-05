@@ -15,6 +15,7 @@ repetitive and error prone tasks.
 
 Installation
 -------------
+
 .. code-block:: shell
 
    python setup.py build
@@ -35,10 +36,11 @@ Which is similar to
    pip wheel -e .
 
 
-.. tutorial-contributing:
+.. _tutorial-contributing:
 
 Contributing
 ------------
+
 This package has recently adopted the :mod:`numpy` convention for docstrings.
 As a result, all docstrings must conform to this standard.
 

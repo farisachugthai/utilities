@@ -16,6 +16,7 @@ class TestCheckIP(unittest.TestCase):
     In addition, appreciate the need to stop naming functions using verbs.
     TestCheck is such a clumsy sounding string of words.
     """
+
     def test_get_public_url(self):
         """Assert that we received a status code that indicated success."""
         response = check_IP.get_public_ip()

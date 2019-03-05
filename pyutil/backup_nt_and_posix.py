@@ -7,9 +7,8 @@ This script aims to be platform agnostic and in the long term will be used
 on Windows, Linux, Mac and Android systems.
 
 .. _backup-nt-and-posix-usage:
-
 Usage
-------
+-----
 .. code-block:: bash
 
     python3 backup_nt_and_posix.py /path/to/dir
@@ -66,46 +65,18 @@ def timestamped_dir(backup_dir):
                            stdin=subprocess.PIPE,
                            stderr=subprocess.PIPE)
 
-        # dir exists then backup old dir and create new
-        backup_dir = path + strftime('-%Y-%m-%d-%Hh%Mm%Ss')
+    (out, err) = cmd.communicate()
 
-        # Windows Specific Implementation
-        if os.name == "nt":
-            cmd = subprocess.Popen(["move", path, backup_dir],
-                                   shell=True,
-                                   stdout=subprocess.PIPE,
-                                   stdin=subprocess.PIPE,
-                                   stderr=subprocess.PIPE)
-
-        # POSIX
-        elif os.name == "posix":
-            cmd = subprocess.Popen(["mv", path, backup_dir],
-                                   shell=True,
-                                   stdout=subprocess.PIPE,
-                                   stdin=subprocess.PIPE,
-                                   stderr=subprocess.PIPE)
-        else:
-            return [-1, "Not supported on %s platform" % os.name]
-
-        (out, err) = cmd.communicate()
-
-        if len(err) != 0:
-            return [-1, err]
-
-        else:
-            os.mkdir(path)
-            return [0, None]
+    if len(err) != 0:
+        return [-1, err]
 
     else:
         os.mkdir(path)
         return [0, None]
 
 
-if __name__ == '__main__':
-    try:
-        args = sys.argv[1:]
-    except IndexError:
-        sys.exit()
+if __name__ == "__main__":
+    args = sys.argv[:]
 
     # if len(args) == 2:
 

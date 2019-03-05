@@ -37,16 +37,6 @@ def dir_cleaner(i):
                 pass  # more than likely dir not empty.
 
 
-if __name__ == "__main__":
-    try:
-        tmp = os.environ.get('PREFIX') + '/tmp/'
-    except (OSError, TypeError):
-        tmp = '/tmp/'
-    tmpd = os.scandir(tmp)
-    for i in tmpd:
-        dir_cleaner(i)
-
-
 def extract_dir():
     """Could be used in dir_cleaner. Yeah let's do that.
 

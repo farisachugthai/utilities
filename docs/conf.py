@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Configuration file for the Sphinx documentation builder.
 
@@ -25,14 +26,14 @@ As stated at:
 
 :URL: `https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix`_
 
-# -- Path setup --------------------------------------------------------------
+However, the filetype mapping came about in 1.8 so make sure to add that
+``needs-sphinx=version`` bit
 
 
 """
 import logging
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../pyutil/'))
 
 logger = logging.getLogger(__name__)
 
@@ -76,13 +77,12 @@ needs_sphinx = '1.7'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosectionlabel',
+    'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
-    'sphinx.ext.coverage',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     'IPython.sphinxext.ipython_console_highlighting',
@@ -97,21 +97,23 @@ templates_path = ['_templates']
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 
+source_suffix = ['.rst']
 # source_suffix = ['.rst', '.md']
 # or:
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.txt': 'restructuredtext',
-    '.md': 'markdown'
-}
+# source_suffix = {
+#     '.rst': 'restructuredtext',
+#     '.txt': 'restructuredtext',
+#     '.md': 'markdown',
+# }
+
 # The encoding of source files.
 source_encoding = 'utf-8'
 
-# As stated at:
-# :URL: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix
-# However, the filetype mapping came about in 1.8 so make sure to add that
-# ``needs-sphinx=version`` bit
-# source_suffix = '.rst'
+# source_parsers = {
+#     '.md': 'recommonmark.parser.CommonMarkParser',
+#     '.rst': 'sphinx.parsers.Parser',
+#     '.txt': 'sphinx.parsers.Parser'
+# }
 
 # The master toctree document.
 master_doc = 'index'
@@ -134,8 +136,8 @@ default_role = 'py:obj'
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'monokai'
-
+# So i overwrote the pygments.css file entirely so i wanna see what happens
+pygments_style = 'sphinx'
 
 # -- Options for HTML output ----------------------------------------
 
@@ -148,14 +150,17 @@ pygments_style = 'monokai'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
-    "github_user": "Faris A. Chugthai",
-    "github_repo": "utilities"
-}
+# html_theme_options = {
+#     "github_user": "Faris A. Chugthai",
+#     "github_repo": "utilities"
+# }
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
+
+# Modify alabaster with custom.css in this dir. Keeping this param the same
+# is required.
 html_static_path = ['_static']
 
 # Custom sidebar templates, must be a dictionary that maps document names
@@ -165,7 +170,8 @@ html_static_path = ['_static']
 # defined by theme itself.  Builtin themes are using these templates by
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
-
+#
+# html_sidebars = {}
 # From the alabaster website
 html_sidebars = {
     '**': [
@@ -175,7 +181,6 @@ html_sidebars = {
         'searchbox.html',
         'sourcelink.html',
         'donate.html',
-        'localtoc.html'
     ]
 }
 
@@ -208,19 +213,15 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pyutil.tex', 'Pyutil Documentation',
-     'Faris A Chugthai', 'manual'),
+    (master_doc, 'pyutil.tex', 'Pyutil Documentation', 'Faris A Chugthai',
+     'manual'),
 ]
 
 # -- Options for manual page output ---------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'pyutil', 'Pyutil Documentation',
-     [author], 1)
-]
-
+man_pages = [(master_doc, 'pyutil', 'Pyutil Documentation', [author], 1)]
 
 # -- Options for Texinfo output -------------------------------------
 
@@ -228,15 +229,14 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Pyutil', 'Pyutil Documentation',
-     author, 'Pyutil', 'One line description of project.',
-     'Miscellaneous'),
+    (master_doc, 'Pyutil', 'Pyutil Documentation', author, 'Pyutil',
+     'One line description of project.', 'Miscellaneous'),
 ]
 
 # -- Options for Epub output ----------------------------------------
 
 # Bibliographic Dublin Core info.
-# epub_title = project
+epub_title = project
 
 # The unique identifier of the text. This can be a ISBN number
 # or the project homepage.

@@ -2,12 +2,15 @@
 # -*- coding: utf-8 -*-
 """From the package "python3.6-examples" in the Ubuntu repositories.
 
-Minor modifications for flake8, pydocstyle etc.
+Minor modifications for :mod:`flake8`, :mod:`pydocstyle` etc.
 
 Make a copy of a directory tree with symbolic links to all files in the
 original tree.
+
 All symbolic links go to a special symbolic link at the top, so you
 can easily fix things if the original source tree moves.
+
+.. _linktree-usage:
 
 Usage
 -----

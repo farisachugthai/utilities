@@ -8,6 +8,7 @@
     :local:
     :depth: 2
 
+.. how annoying is it that toctree uses maxdepth and contents uses depth as an option
 
 :mod:`backup_nt_and_posix`
 ------------------------------------

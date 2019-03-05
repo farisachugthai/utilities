@@ -4,8 +4,7 @@
 
 :File: gcd_iter.py
 :Author: Faris Chugthai
-:Email: farischugthai@gmail.com
-:Github: https://github.com/farisachugthai
+:Github: `<https://github.com/farisachugthai>`_
 
 Jan 17, 2019:
 
@@ -13,11 +12,13 @@ Jan 17, 2019:
 
 .. todo::
 
-    Let's think about gcd(9, 12). It returned 6.
-    a decrements and then when it gets to 6, 12 % 6 == 0. So it works.
+    Let's think about ``gcd(9, 12)``. It returned 6.
+    ``a`` decrements and then when it gets to 6, 12 % 6 == 0. So it works.
+
     You need to save the original values of both variables in tmp vars
-    and then when you run the if a % b == 0, you need to do that in the form of
-    if a % b and original_b % b == 0 then you're good.
+    and then when you run the ``if a % b == 0``, do that in the form of
+    ``if a % b`` and ``original_b % b == 0`` then you're good.
+
 """
 import sys
 

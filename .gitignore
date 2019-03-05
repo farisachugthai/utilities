@@ -4,10 +4,11 @@
 searchindex.js
 robots.txt
 _build
-./*/*.html
+*.html
+!./docs/_templates/*.html
 objects.inv
-**.buildinfo
-docs/_build/*
+.buildinfo
+/docs/_build/*
 
 # Local files
 ###############
@@ -379,7 +380,6 @@ FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
-**node_modules/**
 node_modules/
 
 # Visual Studio 6 build log

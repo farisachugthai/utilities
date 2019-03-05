@@ -13,8 +13,8 @@ As you can see it adds the IPython directive as an option for the following
 from docutils.parsers.rst import directives
 from sphinx.directives.code import CodeBlock
 
-from ..checker import ROLES as CHECKER_ROLES
 from ..sourceblock import ROLES as SOURCEBLOCK_ROLES
+from ..checker import ROLES as CHECKER_ROLES
 
 try:
     from IPython.sphinxext.ipython_directive import IPythonDirective

@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """Create an installable package for the utilities repository.
 
-Largely based off of the work done by @kennethreitz in his setup.py repository.
+Largely based off of the work done by @kennethreitz in his setup.py_
+repository.
 
 _`Kenneth Reitz setup.py template <https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py>`
 
@@ -27,17 +28,25 @@ LICENSE = "MIT",
 KEYWORDS = "linux math science",
 URL = "https://github.com/farisachugthai/utilities",
 REQUIRES_PYTHON = '>=3.6.0'  # actually could be as bad as 3.7+ only.
-VERSION = None
+VERSION = '0.0.1'
 
-REQUIRED = [
-        'pynvim', 'IPython',
+ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+CONF_PATH = os.path.dirname(os.path.abspath('docs'))
+BUILD_PATH = os.path.join(CONF_PATH, 'build')
+SOURCE_PATH = os.path.join(CONF_PATH, '_source')
+
+REQUIRED = ['pynvim', 'IPython', 'youtube_dl']
+
+EXTRAS = {
+    'develop': ['requests', 'flake8', 'flake8-rst', 'yapf'],
+    'docs': [
+        'sphinx',
         # Project uses reStructuredText, so ensure that the docutils get
         # installed or upgraded on the target machine
         'docutils>=0.3',
-        'requests', 'sphinx', 'flake8'
-]
-
-EXTRAS = {
+        'recommonmark',
+        'numpydoc'
+    ]
 }
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -46,13 +55,13 @@ with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
 # Load the package's __version__.py module as a dictionary.
-about = {}
-if not VERSION:
-    try:
-        with open(os.path.join(here, NAME, '__version__.py')) as f:
-            exec(f.read(), about)
-    except IOError:  # the file doesn't exist
-        about['__version__'] = None
+about = {'__version__': '0.0.1'}
+# if not VERSION:
+#     try:
+#         with open(os.path.join(here, NAME, '__version__.py')) as f:
+#             exec(f.read(), about)
+#     except IOError:  # the file doesn't exist
+#         about['__version__'] = None
 
 
 # }}}}
@@ -64,7 +73,7 @@ class UploadCommand(Command):  # {{{1
 
     @staticmethod
     def status(s):
-        """Prints things in bold using ANSI escape sequences."""
+        """Print output in bold."""
         print('\033[1m{0}\033[0m'.format(s))
 
     def initialize_options(self):
@@ -84,14 +93,15 @@ class UploadCommand(Command):  # {{{1
             pass
 
         self.status('Building Source and Wheel (universal) distribution…')
-        os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+        os.system('{0} setup.py sdist bdist_wheel --universal'.format(
+            sys.executable))
 
-        # self.status('Uploading the package to PyPI via Twine…')
-        # os.system('twine upload dist/*')
+        self.status('Uploading the package to PyPI via Twine…')
+        os.system('twine upload dist/*')
 
-        # self.status('Pushing git tags…')
-        # os.system('git tag v{0}'.format(about['__version__']))
-        # os.system('git push --tags')
+        self.status('Pushing git tags…')
+        os.system('git tag v{0}'.format(about['__version__']))
+        os.system('git push --tags')
 
         sys.exit()
 
@@ -103,12 +113,12 @@ setup(
     version=about['__version__'],
     description=DESCRIPTION,
     long_description=long_description,
-    long_description_content_type='text/markdown',
+    long_description_content_type='text/restructuredtext',
     author=AUTHOR,
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=('tests',)),
+    packages=find_packages(exclude=('tests', )),
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
 
@@ -117,6 +127,7 @@ setup(
     # },
     install_requires=REQUIRED,
     extras_require=EXTRAS,
+    setup_requires=['nose>=1.0'],
     include_package_data=True,
     package_data={
         # If any package contains *.txt or *.rst files, include them:

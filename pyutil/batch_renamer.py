@@ -8,7 +8,7 @@ Largely argparse and doctest practice.
 From pydocs tutorials stdlib2 with some reformatting.
 Still uses old style strings as a result.
 
-.. code-block:: python
+.. code-block:: python3
 
     >>> os.listdir("/path/to/dir")
     ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
@@ -77,14 +77,15 @@ def main(d):
 def batch_mover(pattern):
     """Move files in the current working directory that match a pattern.
 
-    .. todo::
+    Parameters
+    ----------
+    pattern: str
+        Pattern to check filenames for.
 
-        Fix docstring to numpy style... in the meanwhile ensure all
-        3 of these render correctly as is.
+    Returns
+    -------
+    bool
 
-    :param pattern: Pattern to check filenames for.
-    :returns: True or False
-    :rtype: Bool
     """
     cwd = os.cwd()
     for i in os.scandir(cwd):
@@ -111,30 +112,3 @@ if __name__ == '__main__':
     logging.debug("The directory that was chosen was: " + str(d))
 
     main(d)
-def fix_botched_renamer():
-    """Realistically nobody should ever be excited they wrote this but I just got a hotfix to work on the first try.
-    Parameters
-    ----------
-    I guess the files to fix?
-    
-    Returns
-    --------
-    Yo shit fixed.
-    
-    So I ran the following::
-    
-        >>> from glob import glob
-        >>> import shutil
-        >>> r = glob('*.rst')
-        >>> for i in r:
-            >>> shutil.move(i, 'source' + i)
-            
-    Thinking I was gonna move some restructured text files into the source directory. Nope. No path sep.
-    The below is how I fixed it, and I got it on the first try!!! I'm actually pretty pumped. No doc lookups or anything.
-    This is pure memory.
-    """
-    from glob import glob
-    r = glob('*.rst')
-    for i in r:
-        shutil.move(i, i.split('source')[1])
-    

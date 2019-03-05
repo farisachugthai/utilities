@@ -7,6 +7,15 @@ Easier to group similar methods in one mod then have them scattered around.
 Below is a generic example of using the public methods to read in user
 defined configurations.
 
+Example
+---------
+
+.. code-block:: python
+
+    >>> from env_checks import check_xdg_config_home
+    >>> if check_xdg_config_home():
+        >>> with open('module.conf', 'rt') as f:
+            >>> configs = f.readlines()
 
 """
 import os

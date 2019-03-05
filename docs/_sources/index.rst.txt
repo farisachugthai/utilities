@@ -3,15 +3,27 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. _index:
+
 Welcome to utilities's documentation!
 =====================================
 
 .. toctree::
-   :maxdepth: 1
+   :hidden:
 
-   `readme`_
-   `tutorial`_
-   `api`_
+   readme
+
+.. include:: readme.rst
+
+.. toctree::
+   :caption: Table of Contents
+   :name: mastertoc
+   :maxdepth: 2
+
+   tutorial
+   numpydoc
+   api
+
 
 Indices and tables
 ==================

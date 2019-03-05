@@ -34,8 +34,8 @@ def get_public_ip():
     `https://docs.python-guide.org/en/latest/dev/virtualenvs/`_
 
     """
-    res = requests.get('https://httpbin.org/ip')
-    rt = 'Your IP is {0}'.format(res.json()['origin'])
+    response = requests.get('https://httpbin.org/ip')
+    rt = 'Your IP is {0}'.format(response.json()['origin'])
     return rt
 
 

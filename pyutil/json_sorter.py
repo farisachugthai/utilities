@@ -60,9 +60,12 @@ def _parse_arguments():
         type=argparse.FileType(mode='w'),
         help="File to write to. Defaults to stdout.")
 
-    parser.add_argument('-l', '--log_level', dest=log_level,
-                        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
-                        help='Set the logging level')
+    parser.add_argument(
+        '-l',
+        '--log_level',
+        dest=log_level,
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        help='Set the logging level')
 
     args = parser.parse_args()
 
@@ -101,7 +104,6 @@ def main(file_obj, output_file=sys.stdout):
 
 
 if __name__ == "__main__":
-
     args = _parse_arguments()
 
     if args.log_level:

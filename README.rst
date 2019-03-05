@@ -1,12 +1,15 @@
 .. _readme:
 
 utilities
-===========
+==========
 
 .. currentmodule:: readme
 
+.. title:: utilities
+
 This repository houses a number of functional scripts I utilize to
 administer multiple workstations.
+
 
 .. contents: Table of Contents
 
@@ -21,7 +24,6 @@ One can install the package by:
 
 If you are on a Unix-like system, the following will ensure everything
 below pyutil/ is in your PATH.
-
 
 
 .. code-block:: bash
@@ -43,7 +45,7 @@ below pyutil/ is in your PATH.
 For anyone using Windows 10, the Powershell installation will be slightly
 different; however, not tremendously.
 
-.. code-block:: powershell
+.. code-block:: ps1
 
    git clone https://github.com/farisachugthai/utilities
    # cd is aliased to Set-Location for most instances of Powershell; however in
@@ -65,24 +67,35 @@ Usage
 ------
 Modules can be used to:
 
+- `Back up directories.`_
 
-For anyone using Windows 10, the Powershell installation will be slightly
-different; however, not tremendously.
+- `Automate the process of downloading plain-text files from the Internet.`_
 
-.. code-block:: powershell
+- `Automate downloading videos from YouTube.`_
 
-   git clone https://github.com/farisachugthai/utilities
-   # cd is aliased to Set-Location for most instances of Powershell; however in
-   # the interest of using domain specific built-ins:
-   Set-Location utilities
-   python3 setup.py build && python3 setup.py install
+- `Symlink files recursively`_
 
-   # To view the environment variable path, run:
-   Get-Childitem -path env:Path
+- `Inspect varying python modules.`_
 
-   # Then ensure that the directory you pick is in your path, and run
-   python3 pyutil\dlink.py "$PWD\sh" C:\Users\path\to\directory
+- `Introspect environment variables.`_
 
+- `Profiling nvim startup time.`_
+
+- `Strip trailing whitespace from a file.`_
+
+
+License
+---------
+MIT
+
+Contributing
+--------------
+Even though these are mostly scripts I've thrown together; I'd absolutely love
+any constructive criticism or pointers on how to get any module listed to work
+better!
+
+I hope it goes without saying, but if it doesn't, please don't hesitate
+to fork or create an issue.
 
 .. _`Back up directories.`: docs/api/pyutil/backup_nt_and_posix
 .. _`Automate the process of downloading plain-text files from the Internet.`: pyutil/lazy_downloader.py

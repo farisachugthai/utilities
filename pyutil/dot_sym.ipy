@@ -107,7 +107,7 @@ def symlink_repo(file):
         os.symlink(src, dest)
     except FileExistsError:
         if os.path.islink(dest):
-            logging.info("Sorry but a symlink to {0} already exists".format(dest))
+            # print("Sorry but a symlink to {0} already exists".format(dest))
             pass
         elif os.path.isfile(dest):
             print("Sorry but a file to {0} already exists".format(dest))

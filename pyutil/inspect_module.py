@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 """Explore the namespace and attributes of a module.
 
-If no argument is provided then use the name bound to the local IPython object.
+Written before :mod:`pyclbr` was created.
+However Python3.6 now has the builtin module :mod:`pyclbr` so this entire
+script may be irrelevant.
 
 Parameters
 ----------
@@ -10,13 +12,20 @@ Parameters
     If no argument is provided, then use the namespace bound to the global
     :class:`IPython.core.interactiveshell.InteractiveShell()` object.
 
-
-However Python3.6 now has the builtin module :mod:`pyclbr` so this entire
-script may be irrelevant.
+Returns
+-------
+TODO
 
 """
 import importlib
 import sys
+
+try:
+    from IPython import get_ipython
+except ImportError:
+    pass
+else:
+    _ip = get_ipython()
 
 
 def main(mod_name):
@@ -54,19 +63,12 @@ def main(mod_name):
 
 if __name__ == '__main__':
     args = sys.argv[:]
-
-    try:
-        from IPython import get_ipython
-    except ImportError:
-        pass
-    else:
-        _ip = get_ipython()
-
     mod = args[1] if len(args) >= 2 else _ip
-    # ip is the ipython object that's loaded immediately after the interpreter
-    # starts
 
     if mod not in dir():
+        # There's a couple different ways you can explore the user namespace,
+        # and if we assume they're running in IPython i think they're immediately
+        # available under the _ip class.
         try:
             importlib.import_module(mod)
         except ImportError:

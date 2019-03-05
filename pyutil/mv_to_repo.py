@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Moves files from anywhere in the home directory to the dotfiles repo.
+"""
+:mod:`mv_to_repo`
+===================
+
+.. module:: `mv_to_repo`
+    :synopsis: Move files from the home directory to the dotfiles repo.
 
 This is a script I've been using for the better part of a year, so while
 the docstring formatting isn't consistent and there are a couple odd sections,
 this script has served a very utilitiarian purpose.
 
 May refactor one day. But it continues to work.
+
 """
 import os
 from pathlib import Path
@@ -15,7 +21,7 @@ import sys
 
 
 def sys_checks():
-    """Checks that system requirements are met."""
+    """Check that system requirements are met."""
     if sys.version_info < (3, 4):
         sys.exit("Requires Python3.4 and up")
 
@@ -25,7 +31,7 @@ def sys_checks():
 
 
 def repo_dir_check(dest):
-    """Checks that the directory is in the repository and make one otherwise."""
+    """Check that the directory is in the repository and make one otherwise."""
 
     if dest.is_dir() is not True:
         #  https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir
@@ -35,7 +41,6 @@ def repo_dir_check(dest):
 
 def backup_file(src):
     """Backs up file 'src' """
-    # TODO: Look into pros/cons of copy/copy2/copyfile
     # TODO2: Should we do anything if src.bak already exists?
     shutil.copy(str(src), str(src) + ".bak")
 
@@ -66,7 +71,9 @@ def main():
     if src.is_file() is not True:
         sys.exit("This is not a file. Aborting.")
 
-    cwd: Path = Path.cwd()
+    # cwd: Path = Path.cwd()
+    # Type annotation kills yapf.
+    cwd = Path.cwd()
     rel_path = Path.relative_to(cwd, home)
     # Setup the file we're moving to
     dest = sys.argv[2] if len(sys.argv) == 3 else Path.joinpath(repo, rel_path)

@@ -2080,12 +2080,12 @@ Line magics
     ::
     
       In [1]: %timeit pass
-      8.26 ns ± 0.12 ns per loop (mean ± std. dev. of 7 runs, 100000000 loops each)
+      8.26 ns Â± 0.12 ns per loop (mean Â± std. dev. of 7 runs, 100000000 loops each)
     
       In [2]: u = None
     
       In [3]: %timeit u is None
-      29.9 ns ± 0.643 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
+      29.9 ns Â± 0.643 ns per loop (mean Â± std. dev. of 7 runs, 10000000 loops each)
     
       In [4]: %timeit -r 4 u == None
     
@@ -2264,14 +2264,6 @@ Cell magics
       --no-stderr   Don't capture stderr.
       --no-stdout   Don't capture stdout.
       --no-display  Don't capture IPython's rich display.
-
-.. cellmagic:: cmd
-
-    %%cmd script magic
-    
-    Run cells with cmd in a subprocess.
-    
-    This is a shortcut for `%%script cmd`
 
 .. cellmagic:: html
 

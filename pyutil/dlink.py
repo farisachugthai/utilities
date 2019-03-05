@@ -9,7 +9,8 @@ Synopsis
 --------
 This is quite easily one of my most frequently used scripts.
 
-    `ln -s path/to/dest/* [path/to/src]`
+If we're given 2 args, treat it with the same syntax as ``ln -s`` or
+:func:`os.symlink()`
 
 .. _dlink-usage:
 
@@ -27,17 +28,23 @@ import sys
 def dlink(dest, src):
     """Symlinks a directory from another one.
 
-    Utilize in an analogous way to Unix idiom::
-        `ln -s path/to/dir/*`
+    Parameters
+    ------------
+    dest: path like object
+        The directory where the original files are located.
 
-    :param dest: The directory where the original files are located.
-    :param src: Optional argument indicating the directory where the symlinks
-    are to be created.
+    src : str
+        Optional argument indicating the directory where the symlinks
+        are to be created.
+        If the src argument isn't provided, it is assumed that the current
+        working directory is the src dir.
 
-    If the src argument isn't provided, it is assumed that the current working
-    directory is the src dir.
 
-    :return: None
+    Returns
+    ---------
+    None
+
+
     """
     for i in os.listdir(dest):
         # First let's set up the relative paths for our destination and src
@@ -47,7 +54,7 @@ def dlink(dest, src):
             # If the first item in dest is a dir, make sure it exists in src
             try:
                 os.mkdir(src_file, 0o777)
-            except IsADirectoryError as e:
+            except IsADirectoryError:
                 # If that dir exists already, move along.
                 pass
         elif os.path.isfile(dest_file):
@@ -65,7 +72,6 @@ def dlink(dest, src):
 if __name__ == '__main__':
     cwd = os.path.join(os.getcwd(), '')
 
-    # If we're given 2 args, treat it with the same syntax as ln -s or os.symlink
     src = sys.argv[-1] if len(sys.argv) == 3 else cwd
 
     # If we don't get 2 args shut down.

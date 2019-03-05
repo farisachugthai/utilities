@@ -45,7 +45,7 @@ below pyutil/ is in your PATH.
 For anyone using Windows 10, the Powershell installation will be slightly
 different; however, not tremendously.
 
-.. code-block:: powershell
+.. code-block:: ps1
 
    git clone https://github.com/farisachugthai/utilities
    # cd is aliased to Set-Location for most instances of Powershell; however in

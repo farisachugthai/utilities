@@ -8,7 +8,7 @@ Largely argparse and doctest practice.
 From pydocs tutorials stdlib2 with some reformatting.
 Still uses old style strings as a result.
 
-.. code-block:: python
+.. code-block:: python3
 
     >>> os.listdir("/path/to/dir")
     ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
@@ -77,14 +77,15 @@ def main(d):
 def batch_mover(pattern):
     """Move files in the current working directory that match a pattern.
 
-    .. todo::
+    Parameters
+    ----------
+    pattern: str
+        Pattern to check filenames for.
 
-        Fix docstring to numpy style... in the meanwhile ensure all
-        3 of these render correctly as is.
+    Returns
+    -------
+    bool
 
-    :param pattern: Pattern to check filenames for.
-    :returns: True or False
-    :rtype: Bool
     """
     cwd = os.cwd()
     for i in os.scandir(cwd):

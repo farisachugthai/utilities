@@ -5,25 +5,25 @@
 Run in ``$PREFIX/tmp.``
 
 Can modify to accept user input and fall back to that dir.
-
 Implement once all the logic has panned out.
 
-.. todo::
+.. todo:: Write a second function that implemenents ``rm -r`` if ``du dir==0``
 
-    - Write a second function that implemenents ``rm -r`` if ``du dir==0``
-    - Failing that, specifically delete directories with only month old sockets
-        - `$PREFIX/tmp/nvim-*`_
-        - `$PREFIX/tmp/ssh-*`_
+
+- Failing that, specifically delete directories with only month old sockets
+    - ``$PREFIX/tmp/nvim-*``
+    - ``$PREFIX/tmp/ssh-*``
 
 Dec 01, 2018:
 
     I was writing this like on termux like 4 days ago. Cleaned up
-    `<~/python/tutorials/fnmatch_.py>`_ and realized it's the exact same thing.
+    ~/python/tutorials/fnmatch.py and realized it's the exact same thing.
+
 
 """
+from glob import glob
 import os
 import shutil
-from glob import glob
 
 
 def dir_cleaner(i):
@@ -40,28 +40,24 @@ def dir_cleaner(i):
 def extract_dir():
     """Could be used in dir_cleaner. Yeah let's do that.
 
-    .. todo::
-
-        *sigh* alright so we need to add a check that the zip has a child dir in it.
-        Extracted 3 zips rn and its all mixed together :(
+    .. todo:: *sigh* alright so we need to add a check that the zip has a child dir in it. Extracted 3 zips rn and its all mixed together :(
     """
     for i in glob('*.zip'):
         shutil.unpack_archive(i)
         os.unlink(i)
-        return
 
 
-def clean():
+def clean(ftype='*.pyc', recursive=False):
     """Remove all pyc files. Add input for filetype later.
 
-    :param filetype: File to iterately remove.
-    :returns: NoneType
+    Parameters
+    ----------
+    ftype : filetype
+        File to iterately remove.
 
-    Yeah i said returns.
-    Use return instead of yield since the function call is gonna
-    either require ``list[clean()]`` or a loop.
     """
-    yield [os.unlink(i) for i in glob('*.pyc')]
+    j = [os.unlink(i) for i in glob(ftype, recursive=recursive)]
+    return j
 
 
 if __name__ == "__main__":

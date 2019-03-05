@@ -10,11 +10,13 @@ full list see the documentation:
 
 :URL: `http://www.sphinx-doc.org/en/master/config`_
 
--- Path setup --------------------------------------------------------------
+Path Setup
+----------
+If extensions (or modules to document with autodoc) are in another
+directory, add these directories to sys.path here.
 
-If extensions (or modules to document with autodoc) are in another directory,
-add these directories to sys.path here. If the directory is relative to the
-documentation root, use os.path.abspath to make it absolute, like shown here.
+If the directory is relative to the documentation root, use
+:func:`os.path.abspath` to make it absolute, like shown here.
 
 .. code-block:: python3
 
@@ -50,7 +52,8 @@ sys.path.insert(0, os.path.abspath(SOURCE_CODE))
 sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'math')))
 
 logging.debug("Path is currently: " + str(sys.path))
-# -- Project information -----------------------------------------------------
+
+# -- Project information --------------------------------------------
 
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
@@ -63,7 +66,7 @@ version = '0.0.1'
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
 
-# -- General configuration ---------------------------------------------------
+# -- General configuration ------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
@@ -136,7 +139,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # So i overwrote the pygments.css file entirely so i wanna see what happens
 pygments_style = 'sphinx'
 
-# -- Options for HTML output -------------------------------------------------
+# -- Options for HTML output ----------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
@@ -178,16 +181,15 @@ html_sidebars = {
         'searchbox.html',
         'sourcelink.html',
         'donate.html',
-        'localtoc.html'
     ]
 }
 
-# -- Options for HTMLHelp output ---------------------------------------------
+# -- Options for HTMLHelp output ------------------------------------
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'pyutil'
 
-# -- Options for LaTeX output ------------------------------------------------
+# -- Options for LaTeX output ---------------------------------------
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
@@ -215,13 +217,13 @@ latex_documents = [
      'manual'),
 ]
 
-# -- Options for manual page output ------------------------------------------
+# -- Options for manual page output ---------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [(master_doc, 'pyutil', 'Pyutil Documentation', [author], 1)]
 
-# -- Options for Texinfo output ----------------------------------------------
+# -- Options for Texinfo output -------------------------------------
 
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,
@@ -231,7 +233,7 @@ texinfo_documents = [
      'One line description of project.', 'Miscellaneous'),
 ]
 
-# -- Options for Epub output -------------------------------------------------
+# -- Options for Epub output ----------------------------------------
 
 # Bibliographic Dublin Core info.
 epub_title = project
@@ -248,9 +250,9 @@ epub_title = project
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
 
-# -- Extension configuration -------------------------------------------------
+# -- Extension configuration ----------------------------------------
 
-# -- Options for intersphinx extension ---------------------------------------
+# -- Options for intersphinx extension ------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
@@ -261,25 +263,25 @@ intersphinx_mapping = {
     'ipython': ('https://ipython.readthedocs.io/en/stable/', None)
 }
 
-# -- Options for todo extension ----------------------------------------------
+# -- Options for todo extension -------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
 # Viewcode
-# ---------
+# --------
 viewcode_import = True
 
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 # Autosummary
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 
 # import glob  # noqa F402
 autosummary_generate = True
 
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 # Napoleon settings
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------
 
 # Honestly all the defaults are great so leave them. Just annoyed that it
 # doesn't seem to be working!

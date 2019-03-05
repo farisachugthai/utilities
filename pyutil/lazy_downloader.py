@@ -2,18 +2,16 @@
 # Maintainer: Faris Chugthai
 """Automates downloading plain text files from the Web.
 
-Lazy Downloader
-===============
 .. module:: pyutil.lazy_downloader
 
 
 As implemented currently, it will only correctly handle plain text; however,
-there are plans to implement the :mod:`MIME` module and properly handle a
-much wider range of files.
+there are plans to implement the :mod:`mimetype` module and properly handle
+a much wider range of files.
 
 
 Parameters
------------
+----------
 url : str
     A url to download
 
@@ -22,7 +20,6 @@ url : str
 
 
 .. _lazy-downloader-usage:
-
 Usage
 ------
 .. code-block:: shell
@@ -49,7 +46,7 @@ def main(url, output_fname):
     """Download URL and write to disk.
 
     Parameters
-    -----------
+    ----------
     url : str
         A url to download
 
@@ -57,14 +54,11 @@ def main(url, output_fname):
         A path to write the downloaded content to.
 
 
-    TODO
-    -----
     .. todo:: Figure out how to check that the file is plain text and not hit constant false positives
-
 
     .. todo:: Add headers.
 
-        .. code-block:: python
+        .. code-block:: python3
 
             if res.headers['Content-Type']:
                  pass

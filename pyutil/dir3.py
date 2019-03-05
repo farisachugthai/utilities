@@ -2,57 +2,41 @@
 # -*- coding: utf-8 -*-
 """Improve the :func:`dir()` by ignoring methods hidden by ``_``.
 
-Dir3
-====
-
-.. module:: dir3
-
-
-:File: dir3.py
-:Author: Faris Chugthai
-
-`GitHub <https://github.com/farisachugthai>`_
 
 Background
 -----------
 :func:`dir()` is a phenomenal function for exploring both the global
 namespace and the exported methods of an object.
 
+
 However it can get incredibly messy, especially when :mod:`IPython`
 displays the placeholder variables for every cell that has been
 run in the session.
 
+
 This causes an incredibly long output that's difficult to parse quickly at
 best, and at worst, the output truncates and all valuable
 information is hidden. This function attempts to avoid that by
-hiding all private and/or mangled
-methods I.E. ones that begin with the characters ``_`` or ``__``.
+hiding all private and/or mangled methods I.E. ones that begin with the
+characters ``_`` or ``__``.
+
 
 It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 
 
 Attributes
 -----------
-``_ip`` : :class:`IPython.core.interactiveshell.InteractiveShell()`
+ip : :class:`IPython.core.interactiveshell.InteractiveShell()`
     A global object representing the active :mod:`IPython` session.
     Contains varying packages as well as the current global namespace.
     Doesn't need to be defined in advance during an interactive session.
 
 
+.. todo::
 
-
-Should this function import or in any way be based off of :func:`IPython.utils.dir2.dir2()` via import?
-We'll probably need to import :func:`IPython.core.magic.register_line_magic()` or something.
-
-.. todo:: Show some example usage.
-
-.. code-block:: rst
-
-    .. ipython::
-        @okexcept
-
-        In[1]: dir3()
-        Out[1]: ...  # ELLIPSES
+    - Show some example usage.
+    - Should this function import or in any way be based off of :func:`IPython.utils.dir2.dir2()` via import?
+    - We'll probably need to import :func:`register_line_magic` or something.
 
 
 See Also
@@ -69,13 +53,13 @@ See Also
 
 .. code-block:: python3
 
+    # Start building the attribute list via dir(), and then complete it
+    # with a few extra special-purpose calls.
     >>> try:
         >>> words = set(dir(obj))
     >>> except Exception:
         >>> # TypeError: dir(obj) does not return a list
         >>> words = set()
-    # Start building the attribute list via dir(), and then complete it
-    # with a few extra special-purpose calls.
     >>> if safe_hasattr(obj, '__class__'):
         >>> words |= set(dir(obj.__class__))
     # filter out non-string attributes which may be stuffed by dir() calls
@@ -91,10 +75,9 @@ import sys
 def dir3():
     """Filter unnecessary information from :func:`dir()` output.
 
-    Attributes
-    ----------
-    ``_ip`` : |shell|
-        **TODO**
+    Parameters
+    ------------
+    None
 
 
     Returns
@@ -113,11 +96,16 @@ def dir3():
 
 
     """
+    # This should silence the error from flake about ip being used but not
+    # defined
+    from IPython import get_ipython
+    ip = get_ipython()
+
     args = sys.argv[:]
     if len(args) == 2:
         output = _interactive(args)
     elif len(args) < 2:
-        global_namespace = _ip.user_global_ns.keys()
+        global_namespace = ip.user_global_ns.keys()
         output = _interactive(global_namespace)
     else:
         for i in range(args):
@@ -128,7 +116,10 @@ def dir3():
 
 
 def _interactive(args):
-    """Define a private method for interactive use.
+    """Define a private method for interactive use instead of ifmain block.
+
+    As this file is currently used in IPython's startup, the
+    if-main block will execute on startup which is not desired.
 
     What we're looking for is more similar to an autoload feature.
 

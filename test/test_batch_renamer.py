@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 """Test that the batch renamer handles filenames correctly.
 
+:File: test_batch_renamer.py
+:Author: Faris Chugthai
+
+:Github: https://github.com/farisachugthai
+
 """
 import unittest
 from pyutil import batch_renamer

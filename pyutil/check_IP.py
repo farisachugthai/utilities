@@ -31,7 +31,7 @@ def get_public_ip():
 
     Installing packages for your project
     ------------------------------------
-    `https://docs.python-guide.org/en/latest/dev/virtualenvs/`_
+    `<https://docs.python-guide.org/en/latest/dev/virtualenvs/>`_
 
     """
     response = requests.get('https://httpbin.org/ip')

@@ -10,12 +10,10 @@
 
 `Github <https://github.com/farisachugthai>`_
 
+.. changelog:: Mar 06, 2019
 
-.. todo:: numpydoc and parameters.
-
-    Add the paths parameter here and check that it complies with Numpy
-    Docstring format. I believe we can run numpydoc.numpydoc over the file.
-
+    Just added a check for python files. This could be useful as a base
+    for a test runner.
 
 """
 import os
@@ -26,14 +24,14 @@ def iter_source_code(paths):
     """Iterate over all Python source files in C{paths}.
 
     Taken with almost no modifications from pyflakes.
-    This would be a great function to call with :func:`os.listdir('/')` output.
+    This would be a great function to call with :func:`os.listdir('/')`
+    output.
 
     Parameters
     ----------
     paths: list
-        A list of paths.  Directories will be recursed into and
-        any .py files found will be yielded.
-        Any non-directories will be yielded as-is.
+        A list of paths.  Directories will be recursed into and any .py
+        files found will be yielded.
 
 
     Yields
@@ -47,8 +45,9 @@ def iter_source_code(paths):
         if os.path.isdir(path):
             for dirpath, dirnames, filenames in os.walk(path):
                 for filename in filenames:
-                    full_path = os.path.join(dirpath, filename)
-                    yield full_path
+                    if filename.ends_with('.py'):
+                        full_path = os.path.join(dirpath, filename)
+                        yield full_path
         else:
             yield path
 

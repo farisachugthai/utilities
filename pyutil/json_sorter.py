@@ -3,8 +3,10 @@
 """Reorganizes a JSON file with the keys sorted and indentation standardized.
 
 This module was originally used to fix my settings.json from VSCode.
+
 :File: json_sorter.py
 :Author: Faris Chugthai
+
 `Github <https://github.com/farisachugthai>`_
 
 Attributes
@@ -12,11 +14,13 @@ Attributes
 fobj : path-like object
     The file to fix.
 
+
 Example
 -------
 .. code:: bash
 
     python3 json_sorter.py /path/to/file.json
+
 
 Bug Fixes
 ---------
@@ -24,12 +28,14 @@ Currently trying to run this module and running into errors.
 
 Currently got this.
 
+
 .. code-block:: python3
 
     [ins] In [49]: args
     Out[49]: Namespace(WARNING=None, input=<_io.TextIOWrapper
     name='/data/data/com.termux/files/home/projects/viconf/.config/nvim/settings.json' mode='r' encoding='UTF-8'>,
     output=<_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>)
+
 
 Wth is this warning=None business????
 

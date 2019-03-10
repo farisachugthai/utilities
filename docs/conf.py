@@ -47,6 +47,7 @@ sys.path.insert(0, os.path.abspath('.'))
 
 sys.path.insert(0, os.path.abspath('sphinxext'))
 
+
 sys.path.insert(0, os.path.abspath(SOURCE_CODE))
 
 sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'math')))
@@ -88,7 +89,6 @@ extensions = [
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
     # 'matplotlib.sphinxext.plot_directive',
-    'numpydoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -288,7 +288,7 @@ autosummary_generate = True
 # napoleon_google_docstring = True
 # napoleon_numpy_docstring = True
 # napoleon_include_init_with_doc = False
-# napoleon_include_private_with_doc = False
+napoleon_include_private_with_doc = True
 # napoleon_include_special_with_doc = True
 # napoleon_use_admonition_for_examples = False
 # napoleon_use_admonition_for_notes = False
@@ -296,3 +296,13 @@ autosummary_generate = True
 # napoleon_use_ivar = False
 # napoleon_use_param = True
 # napoleon_use_rtype = True
+
+# ---
+# Add custom css from rtd
+# ---
+
+
+def setup(app):
+    """Add custom css styling."""
+    custom_css = os.path.abspath(os.path.join('_static', '', 'custom.css'))
+    app.add_stylesheet(custom_css)

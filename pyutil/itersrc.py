@@ -10,8 +10,7 @@
 
 `Github <https://github.com/farisachugthai>`_
 
-.. changelog:: Mar 06, 2019
-
+.. versionchanged:: 0.0.1
     Just added a check for python files. This could be useful as a base
     for a test runner.
 
@@ -24,7 +23,7 @@ def iter_source_code(paths):
     """Iterate over all Python source files in C{paths}.
 
     Taken with almost no modifications from pyflakes.
-    This would be a great function to call with :func:`os.listdir('/')`
+    This would be a great function to call with :func:`os.listdir()`
     output.
 
     Parameters
@@ -36,7 +35,7 @@ def iter_source_code(paths):
 
     Yields
     ------
-    ``full_path`` : path-like object
+    ``full_path`` : str
         Absolute path to a python file.
 
 

@@ -8,12 +8,8 @@
 Welcome to utilities's documentation!
 =====================================
 
-.. toctree::
-   :hidden:
 
-   readme
-
-.. include:: readme.rst
+.. include:: ../README.rst
 
 .. toctree::
    :caption: Table of Contents
@@ -22,7 +18,9 @@ Welcome to utilities's documentation!
 
    tutorial
    numpydoc
+   math
    api
+   todo
 
 
 Indices and tables

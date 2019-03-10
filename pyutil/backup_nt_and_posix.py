@@ -3,13 +3,13 @@
 
 Motivation
 ----------
-This script aims to be platform agnostic and in the long term will be used
-on Windows, Linux, Mac and Android systems.
 
-.. _backup-nt-and-posix-usage:
-Usage
------
-.. code-block:: bash
+This script aims to be platform agnostic and in the long term will be used on Windows, Linux, Mac and Android systems.
+
+
+.. rubric:: usage
+
+.. code-block:: sh
 
     python3 backup_nt_and_posix.py /path/to/dir
 
@@ -33,19 +33,10 @@ def timestamped_dir(backup_dir):
 
     Returns
     -------
-    [``return_code``, ``error_message``] : [int, str]
-        The specific implementation of this is as follows.
-        The return codes that could be returned are:
-            None: NoneType
-                No error.
-            0: Int
-                Success
-            -1 : Int
-                Failure
-        The error message:
-            error : string
-                The exact error string
-
+    ``err_code`` : int
+         Non-zero value indicates error code, or zero on success.
+    ``err_msg`` : str or None
+         Human readable error message, or None on success.
 
     .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` so we handle return codes in a better way.
 

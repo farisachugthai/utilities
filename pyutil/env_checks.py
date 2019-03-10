@@ -7,8 +7,8 @@ Easier to group similar methods in one mod then have them scattered around.
 Below is a generic example of using the public methods to read in user
 defined configurations.
 
-Example
--------
+.. rubric:: Example
+
 .. code-block:: python3
 
     >>> from env_checks import check_xdg_config_home
@@ -16,7 +16,7 @@ Example
         >>> with open('module.conf', 'rt') as f:
             >>> configs = f.readlines()
 
-1
+
 Matplotlib Env Checks
 ---------------------
 Mar 08, 2019
@@ -81,14 +81,6 @@ def check_xdg_config_home():
     -------
     Bool
 
-    Example
-    -------
-    .. code-block:: python3
-
-        >>> from env_checks import check_xdg_config_home
-        >>> if check_xdg_config_home():
-            >>> with open('module.conf', 'rt') as f:
-                >>> configs = f.readlines()
 
     """
     if os.environ.get('XDG_CONFIG_HOME'):
@@ -98,7 +90,12 @@ def check_xdg_config_home():
 
 
 def get_script_dir():
-    """Determine the directory the script is in."""
+    """Determine the directory the script is in.
+
+    Returns
+    -------
+    Directory the file is in : str
+    """
     return os.path.dirname(os.path.realpath(__file__))
 
 

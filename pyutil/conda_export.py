@@ -6,8 +6,7 @@ Assumes
 ---------
 Working conda installation.
 
-Example
---------
+.. rubric:: example
 
 .. code-block:: shell
 
@@ -15,16 +14,17 @@ Example
 
 Returns
 -------
-Separate text files. 2 for each environment.
-- One with general metadata
-- One with a list of packages.
+
+Separate text files. 2 for each environment.:
+
+    * One with general metadata
+    * One with a list of packages.
 
 
 .. todo::
 
     - Possibly refactor into more functions.
         - Would this warrant a class?
-    - Shell highlighting is really light. Hard to read.
     - Add logging. Return more useful info besides just printing.
 
 Work in progress.
@@ -68,8 +68,18 @@ def munging():
 
 
 def truncate(envs):
-    """Take the decoded environments and reduce them down to the parts we need."""
-    # I want this list comprehension to work so badly I cant tell you
+    """Take the output from :ref:`munging`and reduce and print to console.
+
+    Parameters
+    ----------
+    envs : str
+        Conda environments
+
+    Returns
+    -------
+    short_envs : list of strs
+        Shorter name of all envs. Printed to console.
+    """
     short_envs = []
 
     for env in envs:
@@ -87,4 +97,4 @@ if __name__ == "__main__":
 
     envs = truncate(full_name_envs)
 
-    print(envs)
+    print(str(envs))

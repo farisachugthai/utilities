@@ -1,3 +1,6 @@
+.. _todo:
+
+========
 TODO
 ========
 Not too dissimilar to the world's worst kanban board, this file is going

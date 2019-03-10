@@ -2,22 +2,14 @@
 # -*- coding: utf-8 -*-
 """Display an iterative method for determining the greatest common denom.
 
-:File: gcd_iter.py
-:Author: Faris Chugthai
-:Github: `<https://github.com/farisachugthai>`_
-
 Jan 17, 2019:
 
     Just added in :mod:`sys` so that we accept input from the user.
 
-.. todo::
 
-    Let's think about ``gcd(9, 12)``. It returned 6.
-    ``a`` decrements and then when it gets to 6, 12 % 6 == 0. So it works.
-
-    You need to save the original values of both variables in tmp vars
-    and then when you run the ``if a % b == 0``, do that in the form of
-    ``if a % b`` and ``original_b % b == 0`` then you're good.
+You need to save the original values of both variables in tmp vars
+and then when you run the ``if a % b == 0``, do that in the form of
+``if a % b`` and ``original_b % b == 0`` then you're good.
 
 """
 import sys
@@ -32,6 +24,10 @@ def gcd_iter(a, b):
         User provided integer
     b : int
         User provided integer
+
+    Returns
+    -------
+    gcd : int
 
     """
     orig_b = b

@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-:mod:`mv_to_repo`
-===================
+"""Move files from the home directory to the dotfiles repo.
 
 .. module:: `mv_to_repo`
     :synopsis: Move files from the home directory to the dotfiles repo.
@@ -31,18 +29,33 @@ def sys_checks():
 
 
 def repo_dir_check(dest):
-    """Check that the directory is in the repository and make one otherwise."""
+    """Check that the directory is in the repository and make one otherwise.
 
+    `Useful info about mkdir <https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir>`_
+    To mimic behavior of ``mkdir -p``, use flags parents=True and exists_ok=True
+
+    Parameters
+    ----------
+    dest : path-like object
+        Checks that the file to move has a corresponding directory in the repo
+
+
+    """
     if dest.is_dir() is not True:
-        #  https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir
-        # To mimic behavior of mkdir -p, use flags parents=True and exists_ok=True
         dest.mkdir(parents=True, exist_ok=True)
 
 
 def backup_file(src):
-    """Backs up file 'src' """
+    """Backs up file ``src``. Utilizes shutil.copy2 to retain metadata.
+
+    Parameters
+    ----------
+    src : path-like object
+        File to backup
+
+    """
     # TODO2: Should we do anything if src.bak already exists?
-    shutil.copy(str(src), str(src) + ".bak")
+    shutil.copy2(str(src), str(src) + ".bak")
 
 
 def main():

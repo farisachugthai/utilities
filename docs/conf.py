@@ -35,6 +35,9 @@ import logging
 import os
 import sys
 
+from pygments.sphinxext import PygmentsDoc
+from numpydoc import numpydoc
+
 logger = logging.getLogger(__name__)
 
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -46,7 +49,6 @@ sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('.'))
 
 sys.path.insert(0, os.path.abspath('sphinxext'))
-
 
 sys.path.insert(0, os.path.abspath(SOURCE_CODE))
 
@@ -88,7 +90,9 @@ extensions = [
     'sphinx.ext.githubpages',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
-    # 'matplotlib.sphinxext.plot_directive',
+    'matplotlib.sphinxext.plot_directive',
+    # 'pygments.sphinxext.PygmentsDoc',
+    # 'numpydoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -277,7 +281,7 @@ viewcode_import = True
 # -------------------------------------------------------------------
 
 # import glob  # noqa F402
-autosummary_generate = True
+autosummary_generate = False
 
 # -------------------------------------------------------------------
 # Napoleon settings
@@ -289,6 +293,7 @@ autosummary_generate = True
 # napoleon_numpy_docstring = True
 # napoleon_include_init_with_doc = False
 napoleon_include_private_with_doc = True
+
 # napoleon_include_special_with_doc = True
 # napoleon_use_admonition_for_examples = False
 # napoleon_use_admonition_for_notes = False

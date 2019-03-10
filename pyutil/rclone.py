@@ -7,9 +7,9 @@
     rclone.py src dst
 
 
-Requires
----------
-rclone
+.. rubric:: requires
+
+rclone, a Golang package.
 
 
 .. todo::
@@ -50,14 +50,6 @@ def _parse_arguments(cwd=None):
         help="the source directory. "
         "defaults to the cwd.")
 
-    # need to change all instances of dest becuase that's too confusing
-    # parser.add_argument(
-    #     action='store',
-    #     dest='src',
-    #     default=cwd,
-    #     help="The source directory. "
-    #     "Defaults to the cwd.")
-
     parser.add_argument(
         '-f',
         '--follow',
@@ -97,10 +89,10 @@ def rclone_base_case(src, dst):
 
     Parameters
     ----------
-    src : path-like object
+    src : str
         directory to clone files from
 
-    dst : path-like object
+    dst : str
         destination to send files to. Can be configured as a local directory,
         a dropbox directory, a google drive folder or a google cloud storage
         bucket among many other things.
@@ -115,13 +107,14 @@ def rclone_base_case(src, dst):
     subprocess.run(cmd)
 
 
-# def rclone_follow(dst, src=cwd):
-# """Follow symlinks."""
-# cmd = [
-# 'rclone', 'copy', '--update', '--track-renames'
-# '--copy-links', src, dst
-# ]
-# subprocess.run(cmd)
+def rclone_follow(dst, src):
+    """Follow symlinks."""
+    cmd = [
+        'rclone', 'copy', '--update', '--track-renames'
+        '--copy-links', src, dst
+    ]
+    subprocess.run(cmd)
+
 
 if __name__ == "__main__":
     cwd = os.getcwd()
@@ -139,7 +132,10 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if args.follow:
+    if args.src:
+        src = args.src
+    else:
+        src = cwd
 
-        # rclone_follow()
-        pass
+    if args.follow:
+        rclone_follow(dst, src)

@@ -3,20 +3,16 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. _index:
-
 Welcome to utilities's documentation!
 =====================================
 
-.. toctree::
-   :hidden:
-
-   readme
-
 .. include:: readme.rst
 
+
+Table of Contents
+-----------------
+
 .. toctree::
-   :caption: Table of Contents
    :name: mastertoc
    :maxdepth: 2
 

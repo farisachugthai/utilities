@@ -1,11 +1,11 @@
-.. _readme:
+.. _root-readme:
 
-utilities
-==========
+======
+pyutil
+======
 
 .. currentmodule:: readme
 
-.. title:: utilities
 
 This repository houses a number of functional scripts I utilize to
 administer multiple workstations.
@@ -14,24 +14,45 @@ administer multiple workstations.
 .. contents: Table of Contents
 
 
+.. _root-installation:
+
 Installation
 ------------
-One can install the package by:
+Python offers it's users a large number of ways to install new packages.
 
-* Cloning with git
-* Running the `setup.py`_ file.
-* Ensuring that the scripts in ./sh/ are in ``$PATH``
+One can install :ref:`pyutil` by:
+
+* Installing with pip
+
+Install from newest dev version in master branch
+
+.. code-block:: sh
+
+   pip install git+https://github.com/farisachugthai/utilities
+
+* Cloning with git and installing with pip
+
+.. code-block:: sh
+
+  git clone git+https://github.com/farisachugthai/utilities
+  pip install .
+
+* As an alternative to a pip install, obtain the source code and run the `setup.py`_ file.
 
 If you are on a Unix-like system, the following will ensure everything
 below pyutil/ is in your PATH.
 
 
-.. code-block:: bash
+.. code-block:: sh
 
    git clone https://github.com/farisachugthai/utilities
    cd utilities
 
    python3 setup.py build && python3 setup.py install
+
+* After which point, the only necessary step will be ensuring that the scripts in ./sh/ are in ``$PATH``.
+
+.. code-block:: sh
 
    # The script at ./pyutil/dlink.py is useful for creating symlinks for every
    # file in a directory. If the directory ~/bin is in your path...
@@ -42,10 +63,9 @@ below pyutil/ is in your PATH.
    # Then link the scripts in ./sh to a directory in your path!
    python3 pyutil/dlink.py "$PWD/sh" ~/bin
 
-For anyone using Windows 10, the Powershell installation will be slightly
-different; however, not tremendously.
+For users running Windows 10, the Powershell installation will be slightly different; however, not tremendously.
 
-.. code-block:: ps1
+.. code-block:: console
 
    git clone https://github.com/farisachugthai/utilities
    # cd is aliased to Set-Location for most instances of Powershell; however in
@@ -58,51 +78,43 @@ different; however, not tremendously.
    # Then ensure that the directory you pick is in your path, and run
    python3 pyutil\dlink.py "$PWD\sh" C:\Users\path\to\directory
 
-.. Building From Source
-.. ---------------------
 
-.. The documentation can be built as well. Commented out until the docs build more smoothly
+.. _root-docs:
 
-Usage
-------
-Modules can be used to:
+Building Documentation From Source
+----------------------------------
+The documentation can be read online at `GitHub pages <https://farisachugthai.github.io/utilities>`_
 
-- `Back up directories.`_
+However, the documentation can be built locally as well.
 
-- `Automate the process of downloading plain-text files from the Internet.`_
+After installing
 
-- `Automate downloading videos from YouTube.`_
+.. code-block:: shell
 
-- `Symlink files recursively`_
+   cd doc
+   make html
 
-- `Inspect varying python modules.`_
+Then, direct your browser to ``_build/html/index.html``.
 
-- `Introspect environment variables.`_
 
-- `Profiling nvim startup time.`_
+Testing
+-------
+To run the tests with the interpreter available as ``python``, use::
 
-- `Strip trailing whitespace from a file.`_
+    make test
 
+If you want to explicitly define which interpreter, e.g. ``python3``, use::
+
+    PYTHON=python3 make test
 
 License
----------
+-------
 MIT
 
 Contributing
---------------
-Even though these are mostly scripts I've thrown together; I'd absolutely love
-any constructive criticism or pointers on how to get any module listed to work
-better!
+------------
+Even though these are mostly scripts I've thrown together; I'd absolutely love any constructive criticism or pointers on how to get any module listed to work better!
 
-I hope it goes without saying, but if it doesn't, please don't hesitate
-to fork or create an issue.
+I hope it goes without saying, but if it doesn't, please don't hesitate to fork or create an issue.
 
-.. _`Back up directories.`: docs/api/pyutil/backup_nt_and_posix
-.. _`Automate the process of downloading plain-text files from the Internet.`: pyutil/lazy_downloader.py
-.. _`Automate downloading videos from YouTube.`: pyutil/yt_dl.py
-.. _`Symlink files recursively`: pyutil/linktree.py
-.. _`Inspect varying python modules.`: pyutil/inspect_module.py
-.. _`Introspect environment variables.`: pyutil/env.py
-.. _`Profiling nvim startup time.`: pyutil/nvim_profiling.py
-.. _`Strip trailing whitespace from a file.`: pyutil/strip_space.py
 .. _`setup.py`: setup.py

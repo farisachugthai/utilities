@@ -9,6 +9,7 @@
     <title>pyutil.linktree &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -35,9 +36,13 @@
   <h1>Source code for pyutil.linktree</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;From Python3.6 Examples in Ubuntu repositories.</span>
+<span class="sd">&quot;&quot;&quot;From the package &quot;python3.6-examples&quot; in the Ubuntu repositories.</span>
 
 <span class="sd">Minor modifications for :mod:`flake8`, :mod:`pydocstyle` etc.</span>
+
+<span class="sd">Mar 10, 2019:</span>
+
+<span class="sd">    Added logging.</span>
 
 <span class="sd">Make a copy of a directory tree with symbolic links to all files in the</span>
 <span class="sd">original tree.</span>
@@ -45,21 +50,17 @@
 <span class="sd">All symbolic links go to a special symbolic link at the top, so you</span>
 <span class="sd">can easily fix things if the original source tree moves.</span>
 
-<span class="sd">Usage</span>
-<span class="sd">-------</span>
-<span class="sd">.. code-block:: shell</span>
 
-<span class="sd">    mklinks oldtree newtree</span>
 
-<span class="sd">See also &quot;mkreal&quot;.</span>
+<span class="sd">See Also</span>
+<span class="sd">--------</span>
+<span class="sd">mkreal</span>
+
 
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="n">LINK</span> <span class="o">=</span> <span class="s1">&#39;.LINK&#39;</span>  <span class="c1"># Name of special symlink at the top.</span>
-
-<span class="n">DEBUG</span> <span class="o">=</span> <span class="mi">0</span>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.linktree.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
@@ -98,19 +99,20 @@
 <div class="viewcode-block" id="linknames"><a class="viewcode-back" href="../../api.html#pyutil.linktree.linknames">[docs]</a><span class="k">def</span> <span class="nf">linknames</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">link</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Recursively symlink a directory tree.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;linknames&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">link</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;linknames&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">link</span><span class="p">))</span>
+
     <span class="k">try</span><span class="p">:</span>
         <span class="n">names</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">old</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">old</span> <span class="o">+</span> <span class="s1">&#39;: warning: cannot listdir:&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">old</span> <span class="o">+</span> <span class="s1">&#39;: warning: cannot listdir:&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+
     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">):</span>
             <span class="n">oldname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="n">linkname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="n">newname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">DEBUG</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">oldname</span><span class="p">,</span> <span class="n">newname</span><span class="p">,</span> <span class="n">linkname</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">oldname</span><span class="p">,</span> <span class="n">newname</span><span class="p">,</span> <span class="n">linkname</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">oldname</span><span class="p">)</span> <span class="ow">and</span> \
                <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">oldname</span><span class="p">):</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -127,6 +129,12 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+
+    <span class="n">LINK</span> <span class="o">=</span> <span class="s1">&#39;.LINK&#39;</span>  <span class="c1"># Name of special symlink at the top.</span>
+
+    <span class="n">DEBUG</span> <span class="o">=</span> <span class="mi">0</span>
+
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </pre></div>
 
@@ -147,13 +155,11 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">

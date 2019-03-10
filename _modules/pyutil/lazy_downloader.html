@@ -9,6 +9,7 @@
     <title>pyutil.lazy_downloader &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -37,32 +38,29 @@
 <span class="c1"># Maintainer: Faris Chugthai</span>
 <span class="sd">&quot;&quot;&quot;Automates downloading plain text files from the Web.</span>
 
-
-<span class="sd">Parameters</span>
-<span class="sd">-----------</span>
-<span class="sd">url : str</span>
-<span class="sd">    A url to download</span>
-
-<span class="sd">output_filename: path-like object</span>
-<span class="sd">    A path to write the downloaded content to.</span>
+<span class="sd">.. module:: pyutil.lazy_downloader</span>
 
 
-<span class="sd">Usage</span>
-<span class="sd">------</span>
-<span class="sd">.. code-block:: shell</span>
-
-<span class="sd">    lazy_downloader url output_filename</span>
+<span class="sd">As implemented currently, it will only correctly handle plain text; however,</span>
+<span class="sd">there are plans to implement the :mod:`mimetype` module and properly handle</span>
+<span class="sd">a much wider range of files.</span>
 
 <span class="sd">Both parameters are required parameters.</span>
 
 <span class="sd">If the filename already exists on the system it will NOT be overwritten,</span>
 <span class="sd">and the script will safely exit.</span>
 
+<span class="sd">Parameters</span>
+<span class="sd">----------</span>
+<span class="sd">url : str</span>
+<span class="sd">    A url to download</span>
+<span class="sd">``output_filename``: path-like object</span>
+<span class="sd">    A path to write the downloaded content to.</span>
+
 
 <span class="sd">.. todo::</span>
 
-<span class="sd">    Can we check the MIME type and only import :mod:`requests` if we know</span>
-<span class="sd">    we&#39;ll need to?</span>
+<span class="sd">    Can we check the MIME type and only import :mod:`requests` if we know we&#39;ll need to?</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -75,33 +73,17 @@
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.lazy_downloader.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">output_fname</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Download URL and write to disk.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    -----------</span>
-<span class="sd">    url : str</span>
-<span class="sd">        A url to download</span>
-
-<span class="sd">    output_filename: path-like object</span>
-<span class="sd">        A path to write the downloaded content to.</span>
-
+<span class="sd">    .. todo:: Figure out how to check that the file is plain text and not hit constant false positives</span>
 
 <span class="sd">    .. todo::</span>
 
-<span class="sd">    Figure out how to check that the file is plain text and not hit</span>
-<span class="sd">    constant false positives</span>
-
-
-<span class="sd">    .. todo::</span>
-
-<span class="sd">        .. code-block:: python</span>
+<span class="sd">        .. code-block:: python3</span>
 
 <span class="sd">            if res.headers[&#39;Content-Type&#39;]:</span>
 <span class="sd">                 pass</span>
 
 
-<span class="sd">    .. todo::</span>
-
-<span class="sd">    Could add in a check. if the file is over a certain size use</span>
-<span class="sd">    `:func:requests.res.iter_chunk()`</span>
+<span class="sd">    .. todo:: Could add in a check. if the file is over a certain size use `:func:requests.res.iter_chunk()`</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
@@ -115,7 +97,8 @@
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="n">prog</span><span class="o">=</span><span class="s1">&#39;lazy_downloader&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;URL&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The URL to download. Must be plaintext.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;URL&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The URL to download. Must be plaintext.&quot;</span><span class="p">)</span>
 
     <span class="c1"># Will need to learn how to parse and tokenize the URL to get a reasonable</span>
     <span class="c1"># guess for the filename though</span>
@@ -153,13 +136,11 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">

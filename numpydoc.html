@@ -9,6 +9,7 @@
     <title>numpydoc &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
@@ -16,7 +17,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API" href="api.html" />
+    <link rel="next" title="math" href="math.html" />
     <link rel="prev" title="Tutorial.rst" href="tutorial.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -34,9 +35,9 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-numpydoc">
-<span id="numpydoc"></span><h1><a class="toc-backref" href="#id5"><a class="reference internal" href="#module-numpydoc" title="numpydoc: Summarizes how to work with and create Numpy style docstrings."><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpydoc</span></code></a></a><a class="headerlink" href="#module-numpydoc" title="Permalink to this headline">¶</a></h1>
-<p>This code snippet is taken from the <code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx</span></code> extension
+  <div class="section" id="numpydoc">
+<span id="id1"></span><h1><a class="toc-backref" href="#id6"><a class="reference internal" href="#module-numpydoc" title="numpydoc: Summarizes how to work with and create Numpy style docstrings."><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpydoc</span></code></a></a><a class="headerlink" href="#numpydoc" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-numpydoc"></span><p>This code snippet is taken from the <code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx</span></code> extension
 <code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinxcontrib.napoleon</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Example</span>
 <span class="o">-------</span>
@@ -76,28 +77,28 @@
 <p>Just ran into the issue discussed with links at <a class="reference internal" href="#other-points-to-keep-in-mind">Other points to keep in mind</a></p>
 <p>Had to redo the URL to my GitHub in a few spots.</p>
 <div class="section" id="numpydoc-docstring-guide">
-<span id="format"></span><h2><a class="toc-backref" href="#id6">numpydoc docstring guide</a><a class="headerlink" href="#numpydoc-docstring-guide" title="Permalink to this headline">¶</a></h2>
+<span id="format"></span><h2><a class="toc-backref" href="#id7">numpydoc docstring guide</a><a class="headerlink" href="#numpydoc-docstring-guide" title="Permalink to this headline">¶</a></h2>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#module-numpydoc" id="id5"><a class="reference internal" href="#module-numpydoc" title="numpydoc: Summarizes how to work with and create Numpy style docstrings."><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpydoc</span></code></a></a><ul>
-<li><a class="reference internal" href="#numpydoc-docstring-guide" id="id6">numpydoc docstring guide</a><ul>
-<li><a class="reference internal" href="#overview" id="id7">Overview</a></li>
-<li><a class="reference internal" href="#import-conventions" id="id8">Import conventions</a></li>
-<li><a class="reference internal" href="#docstring-standard" id="id9">Docstring Standard</a></li>
-<li><a class="reference internal" href="#sections" id="id10">Sections</a></li>
-<li><a class="reference internal" href="#documenting-classes" id="id11">Documenting classes</a><ul>
-<li><a class="reference internal" href="#class-docstring" id="id12">Class docstring</a></li>
-<li><a class="reference internal" href="#method-docstrings" id="id13">Method docstrings</a></li>
+<li><a class="reference internal" href="#numpydoc" id="id6"><a class="reference internal" href="#module-numpydoc" title="numpydoc: Summarizes how to work with and create Numpy style docstrings."><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpydoc</span></code></a></a><ul>
+<li><a class="reference internal" href="#numpydoc-docstring-guide" id="id7">numpydoc docstring guide</a><ul>
+<li><a class="reference internal" href="#overview" id="id8">Overview</a></li>
+<li><a class="reference internal" href="#import-conventions" id="id9">Import conventions</a></li>
+<li><a class="reference internal" href="#docstring-standard" id="id10">Docstring Standard</a></li>
+<li><a class="reference internal" href="#sections" id="id11">Sections</a></li>
+<li><a class="reference internal" href="#documenting-classes" id="id12">Documenting classes</a><ul>
+<li><a class="reference internal" href="#class-docstring" id="id13">Class docstring</a></li>
+<li><a class="reference internal" href="#method-docstrings" id="id14">Method docstrings</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#documenting-class-instances" id="id14">Documenting class instances</a></li>
-<li><a class="reference internal" href="#documenting-generators" id="id15">Documenting generators</a></li>
-<li><a class="reference internal" href="#documenting-constants" id="id16">Documenting constants</a></li>
-<li><a class="reference internal" href="#documenting-modules" id="id17">Documenting modules</a></li>
-<li><a class="reference internal" href="#other-points-to-keep-in-mind" id="id18">Other points to keep in mind</a></li>
-<li><a class="reference internal" href="#common-rest-concepts" id="id19">Common reST concepts</a></li>
-<li><a class="reference internal" href="#conclusion" id="id20">Conclusion</a></li>
+<li><a class="reference internal" href="#documenting-class-instances" id="id15">Documenting class instances</a></li>
+<li><a class="reference internal" href="#documenting-generators" id="id16">Documenting generators</a></li>
+<li><a class="reference internal" href="#documenting-constants" id="id17">Documenting constants</a></li>
+<li><a class="reference internal" href="#documenting-modules" id="id18">Documenting modules</a></li>
+<li><a class="reference internal" href="#other-points-to-keep-in-mind" id="id19">Other points to keep in mind</a></li>
+<li><a class="reference internal" href="#common-rest-concepts" id="id20">Common reST concepts</a></li>
+<li><a class="reference internal" href="#conclusion" id="id21">Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -108,13 +109,13 @@
 the numpydoc extension for <a class="reference external" href="http://sphinx-doc.org/">Sphinx</a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>For an accompanying example, see <span class="xref std std-ref">example.py</span>.</p>
+<p>For an accompanying example, see <a class="reference external" href="https://docs.scipy.org/doc/numpy/docs/howto_document.html#example" title="(in NumPy v1.16)"><span class="xref std std-ref">example.py</span></a>.</p>
 <p class="last">Some features described in this document require a recent version of
 <code class="docutils literal notranslate"><span class="pre">numpydoc</span></code>. For example, the <strong>Yields</strong> section was added in
 <code class="docutils literal notranslate"><span class="pre">numpydoc</span></code> 0.6.</p>
 </div>
 <div class="section" id="overview">
-<h3><a class="toc-backref" href="#id7">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt>We mostly follow the standard Python style conventions as described here:</dt>
 <dd><ul class="first last simple">
@@ -142,7 +143,7 @@ automatically checking syntax and style with flake8</li>
 </dl>
 </div>
 <div class="section" id="import-conventions">
-<h3><a class="toc-backref" href="#id8">Import conventions</a><a class="headerlink" href="#import-conventions" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9">Import conventions</a><a class="headerlink" href="#import-conventions" title="Permalink to this headline">¶</a></h3>
 <p>The following import conventions are used throughout the NumPy source
 and documentation:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -155,7 +156,7 @@ abbreviate it in the real world, so we avoid it in the documentation
 to avoid confusion.</p>
 </div>
 <div class="section" id="docstring-standard">
-<h3><a class="toc-backref" href="#id9">Docstring Standard</a><a class="headerlink" href="#docstring-standard" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">Docstring Standard</a><a class="headerlink" href="#docstring-standard" title="Permalink to this headline">¶</a></h3>
 <p>A documentation string (docstring) is a string that describes a module,
 function, class, or method definition.  The docstring is a special attribute
 of the object (<code class="docutils literal notranslate"><span class="pre">object.__doc__</span></code>) and, for consistency, is surrounded by
@@ -187,7 +188,7 @@ have written pre-processors to assist <a class="reference external" href="http:/
 facilitate reading the docstrings in text terminals.</p>
 </div>
 <div class="section" id="sections">
-<h3><a class="toc-backref" href="#id10">Sections</a><a class="headerlink" href="#sections" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">Sections</a><a class="headerlink" href="#sections" title="Permalink to this headline">¶</a></h3>
 <p>The docstring consists of a number of sections separated by headings (except
 for the deprecation warning). Each heading should be underlined in hyphens, and
 the section ordering should be consistent with the description below.</p>
@@ -451,11 +452,11 @@ include it as in the list as follows:</p>
    <span class="n">pp</span><span class="o">.</span> <span class="mi">585</span><span class="o">-</span><span class="mi">588</span><span class="p">,</span> <span class="mf">1996.</span>
 </pre></div>
 </div>
-<p>which renders as <a class="footnote-reference" href="#id3" id="id2">[1]</a>:</p>
-<table class="docutils footnote" frame="void" id="id3" rules="none">
+<p>which renders as <a class="footnote-reference" href="#id4" id="id3">[1]</a>:</p>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td><p class="first last">O. McNoleg, “The integration of GIS, remote sensing,
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td><p class="first last">O. McNoleg, “The integration of GIS, remote sensing,
 expert systems and adaptive co-kriging for environmental habitat
 modelling of the Highland Haggis using object-oriented, fuzzy-logic
 and neural-network techniques,” Computers &amp; Geosciences, vol. 22,
@@ -537,15 +538,15 @@ demonstrated function, must be explicit.</p>
 wrapped in <code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib's</span> <span class="pre">Sphinx</span> <span class="pre">`plot</span></code> directive
 &lt;<a class="reference external" href="http://matplotlib.org/sampledoc/extensions.html">http://matplotlib.org/sampledoc/extensions.html</a>&gt;`_.  When matplotlib is
 not explicitly imported, <code class="xref py py-obj docutils literal notranslate"> <span class="pre">plot::</span></code> can be used directly if
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.sphinxext.plot_directive</span></code> is loaded as a Sphinx extension in
+<a class="reference external" href="https://matplotlib.org/devel/plot_directive.html#module-matplotlib.sphinxext.plot_directive" title="(in Matplotlib v3.0.3)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.sphinxext.plot_directive</span></code></a> is loaded as a Sphinx extension in
 <code class="docutils literal notranslate"><span class="pre">conf.py</span></code>.</p>
 </li>
 </ol>
 </div>
 <div class="section" id="documenting-classes">
-<h3><a class="toc-backref" href="#id11">Documenting classes</a><a class="headerlink" href="#documenting-classes" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">Documenting classes</a><a class="headerlink" href="#documenting-classes" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="class-docstring">
-<h4><a class="toc-backref" href="#id12">Class docstring</a><a class="headerlink" href="#class-docstring" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id13">Class docstring</a><a class="headerlink" href="#class-docstring" title="Permalink to this headline">¶</a></h4>
 <p>Use the same sections as outlined above (all except <code class="docutils literal notranslate"><span class="pre">Returns</span></code> are
 applicable).  The constructor (<code class="docutils literal notranslate"><span class="pre">__init__</span></code>) should also be documented
 here, the <strong>Parameters</strong> section of the docstring details the constructors
@@ -604,7 +605,7 @@ Do not list private methods in the <strong>methods</strong> section.</p>
 <p>Note that <code class="xref py py-obj docutils literal notranslate"><span class="pre">self</span></code> is <em>not</em> listed as the first parameter of methods.</p>
 </div>
 <div class="section" id="method-docstrings">
-<h4><a class="toc-backref" href="#id13">Method docstrings</a><a class="headerlink" href="#method-docstrings" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id14">Method docstrings</a><a class="headerlink" href="#method-docstrings" title="Permalink to this headline">¶</a></h4>
 <p>Document these as you would any other function.  Do not include
 <code class="docutils literal notranslate"><span class="pre">self</span></code> in the list of parameters.  If a method has an equivalent function
 (which is the case for many ndarray methods for example), the function
@@ -615,7 +616,7 @@ as appropriate.</p>
 </div>
 </div>
 <div class="section" id="documenting-class-instances">
-<h3><a class="toc-backref" href="#id14">Documenting class instances</a><a class="headerlink" href="#documenting-class-instances" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15">Documenting class instances</a><a class="headerlink" href="#documenting-class-instances" title="Permalink to this headline">¶</a></h3>
 <p>Instances of classes that are part of the NumPy API (for example <code class="xref py py-obj docutils literal notranslate"><span class="pre">np.r_</span></code>
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">np,c_</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">np.index_exp</span></code>, etc.) may require some care. To give these
 instances a useful docstring, we do the following:</p>
@@ -630,14 +631,14 @@ sections.</li>
 </ul>
 </div>
 <div class="section" id="documenting-generators">
-<h3><a class="toc-backref" href="#id15">Documenting generators</a><a class="headerlink" href="#documenting-generators" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">Documenting generators</a><a class="headerlink" href="#documenting-generators" title="Permalink to this headline">¶</a></h3>
 <p>Generators should be documented just as functions are documented. The
 only difference is that one should use the <strong>Yields</strong> section instead
 of the <strong>Returns</strong> section. Support for the <strong>Yields</strong> section was added in
 <a class="reference external" href="https://github.com/numpy/numpydoc">numpydoc</a> version 0.6.</p>
 </div>
 <div class="section" id="documenting-constants">
-<h3><a class="toc-backref" href="#id16">Documenting constants</a><a class="headerlink" href="#documenting-constants" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">Documenting constants</a><a class="headerlink" href="#documenting-constants" title="Permalink to this headline">¶</a></h3>
 <p>Use the same sections as outlined for functions where applicable:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span> <span class="n">summary</span>
 <span class="mf">2.</span> <span class="n">extended</span> <span class="n">summary</span> <span class="p">(</span><span class="n">optional</span><span class="p">)</span>
@@ -652,7 +653,7 @@ to them like for for class instances), but will appear in the
 documentation built with Sphinx.</p>
 </div>
 <div class="section" id="documenting-modules">
-<h3><a class="toc-backref" href="#id17">Documenting modules</a><a class="headerlink" href="#documenting-modules" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">Documenting modules</a><a class="headerlink" href="#documenting-modules" title="Permalink to this headline">¶</a></h3>
 <p>Each module should have a docstring with at least a summary line. Other
 sections are optional, and should be used in the same order as for documenting
 functions when they are appropriate:</p>
@@ -672,7 +673,7 @@ source file(s) or the <code class="docutils literal notranslate"><span class="pr
 belong in docstrings.</p>
 </div>
 <div class="section" id="other-points-to-keep-in-mind">
-<h3><a class="toc-backref" href="#id18">Other points to keep in mind</a><a class="headerlink" href="#other-points-to-keep-in-mind" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">Other points to keep in mind</a><a class="headerlink" href="#other-points-to-keep-in-mind" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">Equations : as discussed in the <strong>Notes</strong> section above, LaTeX formatting
 should be kept to a minimum.  Often it’s possible to show equations as
@@ -719,7 +720,7 @@ To avoid this problem, use the inline hyperlink form:</p>
 </ul>
 </div>
 <div class="section" id="common-rest-concepts">
-<h3><a class="toc-backref" href="#id19">Common reST concepts</a><a class="headerlink" href="#common-rest-concepts" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id20">Common reST concepts</a><a class="headerlink" href="#common-rest-concepts" title="Permalink to this headline">¶</a></h3>
 <p>For paragraphs, indentation is significant and indicates indentation in the
 output. New paragraphs are marked with a blank line.</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">*italics*</span></code>, <code class="docutils literal notranslate"><span class="pre">**bold**</span></code> and <code class="docutils literal notranslate"><span class="pre">``monospace``</span></code> if needed in any
@@ -735,9 +736,9 @@ useful while editing.</p>
 followed.</p>
 </div>
 <div class="section" id="conclusion">
-<h3><a class="toc-backref" href="#id20">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id21">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
 <p>This document itself was written in ReStructuredText.
-<span class="xref std std-ref">An example</span> of the format shown here is available.</p>
+<a class="reference external" href="https://docs.scipy.org/doc/numpy/docs/howto_document.html#example" title="(in NumPy v1.16)"><span class="xref std std-ref">An example</span></a> of the format shown here is available.</p>
 </div>
 </div>
 </div>
@@ -759,17 +760,15 @@ followed.</p>
 
 
 <h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">
@@ -777,7 +776,7 @@ followed.</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="tutorial.html" title="previous chapter">Tutorial.rst</a></li>
-      <li>Next: <a href="api.html" title="next chapter"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+      <li>Next: <a href="math.html" title="next chapter">math</a></li>
   </ul></li>
 </ul>
 </div>
@@ -807,32 +806,6 @@ followed.</p>
 
 
 
-
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a><ul>
-<li><a class="reference internal" href="#numpydoc-docstring-guide">numpydoc docstring guide</a><ul>
-<li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#import-conventions">Import conventions</a></li>
-<li><a class="reference internal" href="#docstring-standard">Docstring Standard</a></li>
-<li><a class="reference internal" href="#sections">Sections</a></li>
-<li><a class="reference internal" href="#documenting-classes">Documenting classes</a><ul>
-<li><a class="reference internal" href="#class-docstring">Class docstring</a></li>
-<li><a class="reference internal" href="#method-docstrings">Method docstrings</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#documenting-class-instances">Documenting class instances</a></li>
-<li><a class="reference internal" href="#documenting-generators">Documenting generators</a></li>
-<li><a class="reference internal" href="#documenting-constants">Documenting constants</a></li>
-<li><a class="reference internal" href="#documenting-modules">Documenting modules</a></li>
-<li><a class="reference internal" href="#other-points-to-keep-in-mind">Other points to keep in mind</a></li>
-<li><a class="reference internal" href="#common-rest-concepts">Common reST concepts</a></li>
-<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
 
         </div>
       </div>

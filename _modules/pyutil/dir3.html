@@ -9,6 +9,7 @@
     <title>pyutil.dir3 &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -37,26 +38,24 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Improve the :func:`dir()` by ignoring methods hidden by ``_``.</span>
 
-<span class="sd">.. module:: dir3</span>
-
-<span class="sd">:File: dir3.py</span>
-<span class="sd">:Author: Faris Chugthai</span>
-<span class="sd">`GitHub &lt;https://github.com/farisachugthai&gt;`_</span>
 
 <span class="sd">Background</span>
 <span class="sd">-----------</span>
 <span class="sd">:func:`dir()` is a phenomenal function for exploring both the global</span>
 <span class="sd">namespace and the exported methods of an object.</span>
 
+
 <span class="sd">However it can get incredibly messy, especially when :mod:`IPython`</span>
 <span class="sd">displays the placeholder variables for every cell that has been</span>
 <span class="sd">run in the session.</span>
 
+
 <span class="sd">This causes an incredibly long output that&#39;s difficult to parse quickly at</span>
 <span class="sd">best, and at worst, the output truncates and all valuable</span>
 <span class="sd">information is hidden. This function attempts to avoid that by</span>
-<span class="sd">hiding all private and/or mangled</span>
-<span class="sd">methods I.E. ones that begin with the characters ``_`` or ``__``.</span>
+<span class="sd">hiding all private and/or mangled methods I.E. ones that begin with the</span>
+<span class="sd">characters ``_`` or ``__``.</span>
+
 
 <span class="sd">It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.</span>
 
@@ -78,10 +77,9 @@
 
 <span class="sd">See Also</span>
 <span class="sd">---------</span>
-<span class="sd">:func:`IPython.utils.dir2.dir2() : list of strings</span>
+<span class="sd">:func:`IPython.utils.dir2.dir2()` : list of strings</span>
 <span class="sd">    Extended version of the Python builtin :func:`dir()`, which does a few</span>
 <span class="sd">    extra checks.</span>
-
 <span class="sd">    This version is guaranteed to return only a list of true</span>
 <span class="sd">    strings, whereas :func:`dir()` returns anything that</span>
 <span class="sd">    objects inject into themselves, even if they</span>
@@ -91,13 +89,13 @@
 
 <span class="sd">.. code-block:: python3</span>
 
+<span class="sd">    # Start building the attribute list via dir(), and then complete it</span>
+<span class="sd">    # with a few extra special-purpose calls.</span>
 <span class="sd">    &gt;&gt;&gt; try:</span>
 <span class="sd">        &gt;&gt;&gt; words = set(dir(obj))</span>
 <span class="sd">    &gt;&gt;&gt; except Exception:</span>
 <span class="sd">        &gt;&gt;&gt; # TypeError: dir(obj) does not return a list</span>
 <span class="sd">        &gt;&gt;&gt; words = set()</span>
-<span class="sd">    # Start building the attribute list via dir(), and then complete it</span>
-<span class="sd">    # with a few extra special-purpose calls.</span>
 <span class="sd">    &gt;&gt;&gt; if safe_hasattr(obj, &#39;__class__&#39;):</span>
 <span class="sd">        &gt;&gt;&gt; words |= set(dir(obj.__class__))</span>
 <span class="sd">    # filter out non-string attributes which may be stuffed by dir() calls</span>
@@ -124,9 +122,7 @@
 <span class="sd">        All methods that don&#39;t begin with ``_``.</span>
 
 
-<span class="sd">    .. todo::</span>
-
-<span class="sd">        More stringent filters will need to come.</span>
+<span class="sd">    .. todo:: More stringent filters will need to come.</span>
 
 
 <span class="sd">    .. note::</span>
@@ -155,17 +151,17 @@
     <span class="k">return</span> <span class="n">output</span></div>
 
 
-<span class="k">def</span> <span class="nf">_interactive</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="_interactive"><a class="viewcode-back" href="../../api.html#pyutil.dir3._interactive">[docs]</a><span class="k">def</span> <span class="nf">_interactive</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Define a private method for interactive use instead of ifmain block.</span>
 
 <span class="sd">    As this file is currently used in IPython&#39;s startup, the</span>
-<span class="sd">    ifmain block will execute on startup which is not desired.</span>
+<span class="sd">    if-main block will execute on startup which is not desired.</span>
 
 <span class="sd">    What we&#39;re looking for is more similar to an autoload feature.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ------------</span>
-<span class="sd">    args : (iterable)</span>
+<span class="sd">    args : iterable</span>
 <span class="sd">        The object to inspect.</span>
 
 
@@ -175,11 +171,6 @@
 <span class="sd">        All methods that don&#39;t begin with &#39;_&#39;.</span>
 
 
-<span class="sd">    .. todo::</span>
-
-<span class="sd">        More stringent filters will come.</span>
-
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">filtered</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
@@ -187,7 +178,15 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
             <span class="n">filtered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">filtered</span>
+    <span class="k">return</span> <span class="n">filtered</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">IPython</span> <span class="k">import</span> <span class="n">get_ipython</span>
+    <span class="n">_ip</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">dir3</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -207,13 +206,11 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">

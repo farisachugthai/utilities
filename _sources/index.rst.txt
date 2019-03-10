@@ -5,28 +5,28 @@
 
 .. _index:
 
+=====================================
 Welcome to utilities's documentation!
 =====================================
 
+.. include:: ../README.rst
 
-.. include:: readme.rst
-
-
-.. toctree::
-   :hidden:
-
-   readme
-
+Table of Contents
+-----------------
 
 .. toctree::
-   :caption: Table of Contents
    :name: mastertoc
    :maxdepth: 2
 
    tutorial
    numpydoc
+   math
    api
+   todo
 
+Continue to the next page:
+
+:ref:`tutorial`
 
 Indices and tables
 ==================

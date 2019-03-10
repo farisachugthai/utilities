@@ -9,6 +9,7 @@
     <title>pyutil.batch_renamer &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -40,10 +41,10 @@
 <span class="sd">.. module:: batch_renamer.py</span>
 
 <span class="sd">Largely argparse and doctest practice.</span>
-<span class="sd">From pydocs tutorials stdlib2 with some reformatting.</span>
+<span class="sd">From `pydocs tutorials stdlib2`_ with some reformatting.</span>
 <span class="sd">Still uses old style strings as a result.</span>
 
-<span class="sd">.. code-block:: python</span>
+<span class="sd">.. code-block:: python3</span>
 
 <span class="sd">    &gt;&gt;&gt; os.listdir(&quot;/path/to/dir&quot;)</span>
 <span class="sd">    [&#39;img_1074.jpg&#39;, &#39;img_1076.jpg&#39;, &#39;img_1077.jpg&#39;]</span>
@@ -52,12 +53,14 @@
 <span class="sd">    img_1076.jpg --&gt; Ashley_1.jpg</span>
 <span class="sd">    img_1077.jpg --&gt; Ashley_2.jpg</span>
 
-<span class="sd">.. todo::</span>
 
-<span class="sd">    First things first ensure it works at all.</span>
+<span class="sd">.. todo:: First things first ensure it works at all.</span>
 
-<span class="sd">    This would be quite an easy module to create unittests for IN ADDITION</span>
-<span class="sd">    to the fact that you could add some fixtures in and learn that.</span>
+
+<span class="sd">This would be quite an easy module to create unittests for IN ADDITION to the</span>
+<span class="sd">fact that you could add some fixtures in and learn that.</span>
+
+<span class="sd">.. _`pydocs tutorials stdlib2`: https://docs.python.org/3/tutorial/stdlib2.html#templating</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -70,16 +73,15 @@
 
 <div class="viewcode-block" id="BatchRename"><a class="viewcode-back" href="../../api.html#pyutil.batch_renamer.BatchRename">[docs]</a><span class="k">class</span> <span class="nc">BatchRename</span><span class="p">(</span><span class="n">Template</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Delimiter for string substitutions.&quot;&quot;&quot;</span>
+
     <span class="n">delimiter</span> <span class="o">=</span> <span class="s1">&#39;%&#39;</span></div>
 
 
 <div class="viewcode-block" id="fix_extension"><a class="viewcode-back" href="../../api.html#pyutil.batch_renamer.fix_extension">[docs]</a><span class="k">def</span> <span class="nf">fix_extension</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Rename files that have have the wrong filename extension.</span>
 
-<span class="sd">    .. todo::</span>
+<span class="sd">    .. todo:: Fuck I didn&#39;t consider the case where there are 2 words separated by dots that we want to keep.</span>
 
-<span class="sd">        Fuck I didn&#39;t consider the case where there are 2 words</span>
-<span class="sd">        separated by dots that we want to keep.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
         <span class="n">parts</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
@@ -90,11 +92,16 @@
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.batch_renamer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Rename a dir of files.</span>
 
-<span class="sd">    .. todo::</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    d : str</span>
+<span class="sd">        The directory to iterate over.</span>
 
-<span class="sd">        Uhhhh??</span>
 
-<span class="sd">    :param d: The directory to iterate over.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fmt</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Enter rename style (</span><span class="si">%d</span><span class="s1">-date %n-seqnum </span><span class="si">%f</span><span class="s1">-format):  &#39;</span><span class="p">)</span>
     <span class="c1"># Enter rename style (%d-date %n-seqnum %f-format):  Ashley_%n%f</span>
@@ -109,14 +116,15 @@
 <div class="viewcode-block" id="batch_mover"><a class="viewcode-back" href="../../api.html#pyutil.batch_renamer.batch_mover">[docs]</a><span class="k">def</span> <span class="nf">batch_mover</span><span class="p">(</span><span class="n">pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Move files in the current working directory that match a pattern.</span>
 
-<span class="sd">    .. todo::</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pattern : str</span>
+<span class="sd">        Pattern to check filenames for.</span>
 
-<span class="sd">        Fix docstring to numpy style... in the meanwhile ensure all</span>
-<span class="sd">        3 of these render correctly as is.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
 
-<span class="sd">    :param pattern: Pattern to check filenames for.</span>
-<span class="sd">    :returns: True or False</span>
-<span class="sd">    :rtype: Bool</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">scandir</span><span class="p">(</span><span class="n">cwd</span><span class="p">):</span>
@@ -131,15 +139,17 @@
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;directory&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--directory&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Directory containing only the files to be renamed.&quot;</span><span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
-
     <span class="n">d</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">directory</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The directory that was chosen was: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+
     <span class="n">main</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 </pre></div>
 
@@ -160,13 +170,11 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">

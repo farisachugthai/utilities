@@ -9,6 +9,7 @@
     <title>pyutil.nvim_profiling &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -61,6 +62,30 @@
 
 <span class="sd">Or something to that effect.</span>
 
+<span class="sd">Feb 28, 2019</span>
+<span class="sd">Nice intuition man. Look what I found today.:</span>
+
+
+<span class="sd">.. code-block:: vim</span>
+
+<span class="sd">    stdpath({what})                 *stdpath()* *E6100*</span>
+<span class="sd">    Returns |standard-path| locations of various default files and directories.</span>
+
+<span class="sd">    {what}       Type    Description ~</span>
+<span class="sd">    cache        String  Cache directory. Arbitrary temporary</span>
+<span class="sd">                         storage for plugins, etc.</span>
+<span class="sd">    config       String  User configuration directory. The</span>
+<span class="sd">                         |init.vim| is stored here.</span>
+<span class="sd">    config_dirs  List    Additional configuration directories.</span>
+<span class="sd">    data         String  User data directory. The |shada-file|</span>
+<span class="sd">                         is stored here.</span>
+<span class="sd">    data_dirs    List    Additional data directories.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        :echo stdpath(&quot;config&quot;)</span>
+
+<span class="sd">Outputs `&lt;~/.config/nvim&gt;`_. So that should work.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -79,8 +104,35 @@
 
 
 <div class="viewcode-block" id="output_results"><a class="viewcode-back" href="../../api.html#pyutil.nvim_profiling.output_results">[docs]</a><span class="k">def</span> <span class="nf">output_results</span><span class="p">(</span><span class="n">output_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks that an directory named profiling exists.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;profiling&#39;</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;profiling&#39;</span><span class="p">))</span></div>
+
+
+<span class="k">def</span> <span class="nf">find_init_files</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Discover the initialization files used for nvim.</span>
+
+<span class="sd">    Should theoretically work on both Windows and Unix systems.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    nvim_root : path-like object</span>
+<span class="sd">        The directory where nvim&#39;s configuration files are found.</span>
+
+<span class="sd">    .. todo:: Alright so if ``XDG_CONFIG_HOME`` isn&#39;t set we need to check ~/.config/nvim and check whether we&#39;re on windows or not</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">OS</span>
+    <span class="n">OS</span> <span class="o">=</span> <span class="n">system</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">check_xdg_config_home</span><span class="p">():</span>
+        <span class="n">nvim_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XDG_CONFIG_HOME&#39;</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;nvim&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span>
+                <span class="s2">&quot;XDG_CONFIG_HOME set but $XDG_CONFIG_HOME/nvim doesn&#39;t exist.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">nvim_root</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.nvim_profiling.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">):</span>
@@ -97,9 +149,7 @@
 <span class="sd">        Creates file based on the current time in ISO format profiling nvim.</span>
 
 
-<span class="sd">    .. todo::</span>
-
-<span class="sd">        Allow the ``test.py`` file that we use for startup to be configured.</span>
+<span class="sd">    .. todo:: Allow the ``test.py`` file that we use for startup to be configured.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
@@ -141,9 +191,9 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">find_init_files</span><span class="p">()</span>
+    <span class="n">nvim_root</span> <span class="o">=</span> <span class="n">find_init_files</span><span class="p">()</span>
 
-    <span class="n">main</span><span class="p">()</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -163,13 +213,11 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">

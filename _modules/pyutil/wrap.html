@@ -9,6 +9,7 @@
     <title>pyutil.wrap &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -35,9 +36,21 @@
   <h1>Source code for pyutil.wrap</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Wrap text similarly to :func:`textwrap.dedent` but w/ multiple paragraphs</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Wrap text similarly to :func:`textwrap.dedent()` but with multiple paragraphs.</span>
 
-<span class="sd">From IPython.utils.text</span>
+<span class="sd">From :mod:`IPython.utils.text`.</span>
+
+<span class="sd">Parameters</span>
+<span class="sd">----------</span>
+<span class="sd">todo : path-like object</span>
+<span class="sd">    Text to modify</span>
+
+
+<span class="sd">Returns</span>
+<span class="sd">-------</span>
+<span class="sd">todo</span>
+
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">textwrap</span> <span class="k">import</span> <span class="n">dedent</span><span class="p">,</span> <span class="n">fill</span>
@@ -49,10 +62,19 @@
 <span class="sd">    This is equivalent to textwrap.wrap, but with support for multiple</span>
 <span class="sd">    paragraphs, as separated by empty lines.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    text : str</span>
+<span class="sd">        todo</span>
+<span class="sd">    ncols : int</span>
+
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
+<span class="sd">    out_ps : list of str</span>
+<span class="sd">        list of complete paragraphs, wrapped to fill ``ncols`` columns.</span>
 
-<span class="sd">    list of complete paragraphs, wrapped to fill `ncols` columns.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">paragraph_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n(\s*\n)+&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
@@ -86,13 +108,11 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">

@@ -16,6 +16,7 @@ objects.inv
 # Python specific
 ##################
 .mypy_cache/
+.eggs/
 
 # spyder projects
 ###################

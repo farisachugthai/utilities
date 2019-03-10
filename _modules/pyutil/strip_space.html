@@ -9,6 +9,7 @@
     <title>pyutil.strip_space &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -39,14 +40,15 @@
 
 <span class="sd">Leading whitespace is significant in Python so don&#39;t touch it.</span>
 
-<span class="sd">Requires::</span>
-<span class="sd">    Python 3.4&gt;</span>
+<span class="sd">Python Requirement</span>
+<span class="sd">------------------</span>
+<span class="sd">&lt;Python 3.4</span>
 
-<span class="sd">TODO::</span>
-<span class="sd">    Give some kind of undo option.</span>
-<span class="sd">    Needs more file checks.</span>
+<span class="sd">Still need to implement</span>
+<span class="sd">-----------------------</span>
+<span class="sd">Give some kind of undo option.</span>
+<span class="sd">Needs more file checks.</span>
 
-<span class="sd">WIP</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
@@ -54,7 +56,18 @@
 
 
 <div class="viewcode-block" id="backup"><a class="viewcode-back" href="../../api.html#pyutil.strip_space.backup">[docs]</a><span class="k">def</span> <span class="nf">backup</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Backs up a file before doing anything.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Backs up a file before doing anything.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    src : file</span>
+<span class="sd">        File to strip trailing whitespace from. Backed up before anything.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.bak&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">SameFileError</span><span class="p">,</span> <span class="n">shutil</span><span class="o">.</span><span class="n">SpecialFileError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -62,7 +75,18 @@
 
 
 <div class="viewcode-block" id="strip_space"><a class="viewcode-back" href="../../api.html#pyutil.strip_space.strip_space">[docs]</a><span class="k">def</span> <span class="nf">strip_space</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Strips all trailing whitespace out of a file.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Strips all trailing whitespace out of a file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    src : file</span>
+<span class="sd">    File to strip trailing whitespace from. Backed up before anything.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Clearing whitespace...&quot;</span><span class="p">)</span>
 
     <span class="k">with</span> <span class="n">src</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -74,23 +98,18 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.strip_space.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Setup all worker functions.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="o">.</span><span class="n">is_file</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-
-    <span class="n">backup</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
-
-    <span class="n">strip_space</span><span class="p">(</span><span class="n">src</span><span class="p">)</span></div>
-
-
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Usage: strip_space.py file_obj&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">src</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-    <span class="n">main</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="o">.</span><span class="n">is_file</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+    <span class="n">backup</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+
+    <span class="n">strip_space</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -110,13 +129,11 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">

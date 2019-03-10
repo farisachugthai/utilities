@@ -9,6 +9,7 @@
     <title>pyutil.rclone &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -42,9 +43,9 @@
 <span class="sd">    rclone.py src dst</span>
 
 
-<span class="sd">Requires</span>
-<span class="sd">---------</span>
-<span class="sd">rclone</span>
+<span class="sd">.. rubric:: Requires</span>
+
+<span class="sd">rclone, a Golang package.</span>
 
 
 <span class="sd">.. todo::</span>
@@ -54,24 +55,25 @@
 <span class="sd">    - Set up a simple single use case backup.</span>
 <span class="sd">    - Add :func:`collections.ChainMap()` to set precedence of backupdir.</span>
 <span class="sd">    - Add in multiple invocations of rclone and create args to reflect use cases.</span>
-<span class="sd">    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`</span>
-<span class="sd">     to emulate rsync&#39;s file input.</span>
+<span class="sd">    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync&#39;s file input.</span>
 
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shlex</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 
-<span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../api.html#pyutil.rclone._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parse user-given arguments.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">cwd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Automate usage of rclone for simple backup creation.&quot;</span><span class="p">)</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Automate usage of rclone for simple backup creation.&quot;</span><span class="p">)</span>
     <span class="c1"># parser.add_argument(dest=src, required=True, help=&#39;A directory, presumably local, to sync with a remote.&#39;)</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="n">usage</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(prog)s</span><span class="s2"> [options]&quot;</span><span class="p">,</span>
@@ -86,14 +88,6 @@
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the source directory. &quot;</span>
         <span class="s2">&quot;defaults to the cwd.&quot;</span><span class="p">)</span>
 
-    <span class="c1"># need to change all instances of dest becuase that&#39;s too confusing</span>
-    <span class="c1"># parser.add_argument(</span>
-    <span class="c1">#     action=&#39;store&#39;,</span>
-    <span class="c1">#     dest=&#39;src&#39;,</span>
-    <span class="c1">#     default=cwd,</span>
-    <span class="c1">#     help=&quot;The source directory. &quot;</span>
-    <span class="c1">#     &quot;Defaults to the cwd.&quot;)</span>
-
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s1">&#39;-f&#39;</span><span class="p">,</span>
         <span class="s1">&#39;--follow&#39;</span><span class="p">,</span>
@@ -101,14 +95,48 @@
         <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;follow&#39;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Follow symlinks.&quot;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">parser</span>
+    <span class="k">return</span> <span class="n">parser</span></div>
 
 
-<span class="k">def</span> <span class="nf">_dir_checker</span><span class="p">(</span><span class="n">dir_</span><span class="p">):</span>
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../api.html#pyutil.rclone.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Execute the required command in a subshell.</span>
+
+<span class="sd">    First the command is splited used typical shell grammer.</span>
+
+<span class="sd">    A new process is created, and from the resulting subprocess object,</span>
+<span class="sd">    the :func:`subprocess.Popen().wait()`.</span>
+
+<span class="sd">    This function returns the return code of split ``cmd``, so any</span>
+<span class="sd">    non-zero value will lead to a ``SystemExit`` with a passed value</span>
+<span class="sd">    of ``returncode``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cmd : str</span>
+<span class="sd">        The command to be called</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    process.returncode : int</span>
+<span class="sd">        The returncode from the process.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Cmd is: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cmd</span><span class="p">))</span>
+    <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">returncode</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">process</span><span class="o">.</span><span class="n">returncode</span></div>
+
+
+<div class="viewcode-block" id="_dir_checker"><a class="viewcode-back" href="../../api.html#pyutil.rclone._dir_checker">[docs]</a><span class="k">def</span> <span class="nf">_dir_checker</span><span class="p">(</span><span class="n">dir_</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Check that necessary directories exist.</span>
 
-<span class="sd">    If the default dst doesn&#39;t exist, definitely create it.</span>
-<span class="sd">    If the user provided src doesn&#39;t exist, crash without making one.</span>
+<span class="sd">    If the default ``dst`` doesn&#39;t exist, definitely create it.</span>
+<span class="sd">    If the user provided ``src`` doesn&#39;t exist, crash without making one.</span>
 
 <span class="sd">    It&#39;s more likely that they typed the src dir incorrectly rather than</span>
 <span class="sd">    running the script aware of the fact that it is nonexistent.</span>
@@ -116,13 +144,13 @@
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dir_</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dir_</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;does not exist. Exiting.&#39;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dir_</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;does not exist. Exiting.&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="rclone_base_case"><a class="viewcode-back" href="../../api.html#pyutil.rclone.rclone_base_case">[docs]</a><span class="k">def</span> <span class="nf">rclone_base_case</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Noop. Simply here to track the best and most general command to use.</span>
 
-<span class="sd">    For example, --follow is a flag that has conditionals associated it with it.</span>
+<span class="sd">    For example, ``--follow`` is a flag that has conditionals associated it with it.</span>
 
 <span class="sd">    There are situations in which one wants to follow symlinks and others</span>
 <span class="sd">    that they don&#39;t.</span>
@@ -131,12 +159,13 @@
 
 <span class="sd">    .. todo:: rclone takes an argument for user-agent</span>
 
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    src : path-like object</span>
+<span class="sd">    src : str</span>
 <span class="sd">        directory to clone files from</span>
 
-<span class="sd">    dst : path-like object</span>
+<span class="sd">    dst : str</span>
 <span class="sd">        destination to send files to. Can be configured as a local directory,</span>
 <span class="sd">        a dropbox directory, a google drive folder or a google cloud storage</span>
 <span class="sd">        bucket among many other things.</span>
@@ -148,16 +177,17 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rclone&#39;</span><span class="p">,</span> <span class="s1">&#39;copy&#39;</span><span class="p">,</span> <span class="s1">&#39;--update&#39;</span><span class="p">,</span> <span class="s1">&#39;--track-renames&#39;</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">]</span>
-    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+    <span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
 
 
-<span class="c1"># def rclone_follow(dst, src=cwd):</span>
-<span class="c1"># &quot;&quot;&quot;Follow symlinks.&quot;&quot;&quot;</span>
-<span class="c1"># cmd = [</span>
-<span class="c1"># &#39;rclone&#39;, &#39;copy&#39;, &#39;--update&#39;, &#39;--track-renames&#39;</span>
-<span class="c1"># &#39;--copy-links&#39;, src, dst</span>
-<span class="c1"># ]</span>
-<span class="c1"># subprocess.run(cmd)</span>
+<div class="viewcode-block" id="rclone_follow"><a class="viewcode-back" href="../../api.html#pyutil.rclone.rclone_follow">[docs]</a><span class="k">def</span> <span class="nf">rclone_follow</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Follow symlinks.&quot;&quot;&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;rclone&#39;</span><span class="p">,</span> <span class="s1">&#39;copy&#39;</span><span class="p">,</span> <span class="s1">&#39;--update&#39;</span><span class="p">,</span> <span class="s1">&#39;--track-renames&#39;</span>
+        <span class="s1">&#39;--copy-links&#39;</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">dst</span>
+    <span class="p">]</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
@@ -175,10 +205,13 @@
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">follow</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">src</span><span class="p">:</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">src</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">cwd</span>
 
-        <span class="c1"># rclone_follow()</span>
-        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">follow</span><span class="p">:</span>
+        <span class="n">rclone_follow</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -198,13 +231,11 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">

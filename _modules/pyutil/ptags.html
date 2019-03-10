@@ -9,6 +9,7 @@
     <title>pyutil.ptags &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -36,10 +37,13 @@
 <span></span><span class="ch">#!/usr/bin/python3.6</span>
 <span class="sd">&quot;&quot;&quot;Create a tags file for Python programs, usable with vi.</span>
 
-<span class="sd">Tagged are:</span>
-<span class="sd">    - functions (even inside other defs or classes)</span>
-<span class="sd">    - classes</span>
-<span class="sd">    - filenames</span>
+<span class="sd">Currently uses a regex to create a tags file.</span>
+
+<span class="sd">Files to tag</span>
+<span class="sd">------------</span>
+<span class="sd">- functions (even inside other defs or classes)</span>
+<span class="sd">- classes</span>
+<span class="sd">- filenames</span>
 
 <span class="sd">Warns about files it cannot open.</span>
 
@@ -47,15 +51,16 @@
 
 <span class="sd">Snagged from the scripts dir in python3.6-examples.</span>
 
-<span class="sd">TODO::</span>
-<span class="sd">    Add docstrings.</span>
-<span class="sd">    Use ipdb and step through while watching the tags var.</span>
-<span class="sd">    Initially it was defined outside the ifmain loop.</span>
+<span class="sd">.. todo:: Use ipdb and step through while watching the tags var.</span>
 
-<span class="sd">    I moved it, but without the global keyword I don&#39;t get how any changes</span>
-<span class="sd">    to tags in treat_file will propogate back to main.</span>
 
-<span class="sd">Otherwise add in pep257 compliant params. Try different styles and see what you like.</span>
+<span class="sd">Otherwise add in `PEP 257`_ compliant params.</span>
+<span class="sd">Try different styles and see what you like.</span>
+
+
+<span class="sd">.. _PEP 257:</span>
+<span class="sd">    https://www.python.org/dev/peps/pep-0257</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
@@ -75,7 +80,18 @@
 
 
 <div class="viewcode-block" id="treat_file"><a class="viewcode-back" href="../../api.html#pyutil.ptags.treat_file">[docs]</a><span class="k">def</span> <span class="nf">treat_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Find usable matches for tags file.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Find usable matches for tags file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : path-like object</span>
+<span class="sd">        File to generate tags from.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None : None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -122,13 +138,11 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">

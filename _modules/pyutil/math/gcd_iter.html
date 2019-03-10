@@ -9,6 +9,7 @@
     <title>pyutil.math.gcd_iter &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
@@ -37,38 +38,43 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Display an iterative method for determining the greatest common denom.</span>
 
-<span class="sd">:File: gcd_iter.py</span>
-<span class="sd">:Author: Faris Chugthai</span>
-<span class="sd">:Github: `&lt;https://github.com/farisachugthai&gt;`_</span>
-
 <span class="sd">Jan 17, 2019:</span>
 
 <span class="sd">    Just added in :mod:`sys` so that we accept input from the user.</span>
 
-<span class="sd">.. todo::</span>
 
-<span class="sd">    Let&#39;s think about ``gcd(9, 12)``. It returned 6.</span>
-<span class="sd">    ``a`` decrements and then when it gets to 6, 12 % 6 == 0. So it works.</span>
-
-<span class="sd">    You need to save the original values of both variables in tmp vars</span>
-<span class="sd">    and then when you run the ``if a % b == 0``, do that in the form of</span>
-<span class="sd">    ``if a % b`` and ``original_b % b == 0`` then you&#39;re good.</span>
+<span class="sd">You need to save the original values of both variables in tmp vars</span>
+<span class="sd">and then when you run the ``if a % b == 0``, do that in the form of</span>
+<span class="sd">``if a % b`` and ``original_b % b == 0`` then you&#39;re good.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 
-<div class="viewcode-block" id="gcd_iter"><a class="viewcode-back" href="../../../api.html#pyutil.math.gcd_iter.gcd_iter">[docs]</a><span class="k">def</span> <span class="nf">gcd_iter</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Find the greatest common denominator with 2 arbitrary integers.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="gcd_iter"><a class="viewcode-back" href="../../../math.html#pyutil.math.gcd_iter.gcd_iter">[docs]</a><span class="k">def</span> <span class="nf">gcd_iter</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Find the greatest common denominator with 2 arbitrary integers.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    a : int</span>
+<span class="sd">        User provided integer</span>
+<span class="sd">    b : int</span>
+<span class="sd">        User provided integer</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gcd : int</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">orig_b</span> <span class="o">=</span> <span class="n">b</span>
     <span class="n">orig_a</span> <span class="o">=</span> <span class="n">a</span>
     <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">:</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">b</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">orig_b</span> <span class="o">%</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">b</span>
             <span class="n">b</span> <span class="o">-=</span> <span class="mi">1</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">b</span> <span class="o">%</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">orig_a</span> <span class="o">%</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">a</span>
             <span class="n">a</span> <span class="o">-=</span> <span class="mi">1</span></div>
@@ -79,7 +85,7 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">a</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">gcd_iter</span><span class="p">()</span>
+    <span class="n">gcd_iter</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -99,13 +105,11 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">

@@ -9,6 +9,7 @@
     <title>API &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
@@ -16,7 +17,8 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="numpydoc" href="numpydoc.html" />
+    <link rel="next" title="TODO" href="todo.html" />
+    <link rel="prev" title="math" href="math.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -37,78 +39,79 @@
 <span id="id1"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code><a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#module-pyutil.backup_nt_and_posix" id="id9"><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code> module</a><ul>
-<li><a class="reference internal" href="#motivation" id="id10">Motivation</a></li>
-<li><a class="reference internal" href="#usage" id="id11">Usage</a></li>
+<li><a class="reference internal" href="#module-pyutil.backup_nt_and_posix" id="id5"><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code></a><ul>
+<li><a class="reference internal" href="#motivation" id="id6">Motivation</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.batch_renamer" id="id12"><code class="xref py py-mod docutils literal notranslate"><span class="pre">batch_renamer</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.check_IP" id="id13"><code class="xref py py-mod docutils literal notranslate"><span class="pre">check_IP</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.conda_export" id="id14"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code> module</a><ul>
-<li><a class="reference internal" href="#assumes" id="id15">Assumes</a></li>
+<li><a class="reference internal" href="#module-pyutil.batch_renamer" id="id7"><code class="xref py py-mod docutils literal notranslate"><span class="pre">batch_renamer</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.check_IP" id="id8"><code class="xref py py-mod docutils literal notranslate"><span class="pre">check_IP</span></code></a><ul>
+<li><a class="reference internal" href="#requires" id="id9">Requires</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.dir3" id="id16"><a class="reference internal" href="#module-dir3" title="dir3"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir3</span></code></a> module</a><ul>
-<li><a class="reference internal" href="#background" id="id17">Background</a></li>
+<li><a class="reference internal" href="#module-pyutil.conda_export" id="id10"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code></a><ul>
+<li><a class="reference internal" href="#assumes" id="id11">Assumes</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.dir_cleaner" id="id18"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir_cleaner</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.dlink" id="id19"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink</span></code> module</a><ul>
-<li><a class="reference internal" href="#id4" id="id20">Usage</a></li>
+<li><a class="reference internal" href="#module-pyutil.dir3" id="id12"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir3</span></code></a><ul>
+<li><a class="reference internal" href="#background" id="id13">Background</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.dlink2" id="id21"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink2</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.env" id="id22"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.env_checks" id="id23"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env_checks</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.find_pics" id="id24"><code class="xref py py-mod docutils literal notranslate"><span class="pre">find_pics</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.inspect_module" id="id25"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect_module</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.itersrc" id="id26"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itersrc</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.json_sorter" id="id27"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.lazy_downloader" id="id28"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code> module</a><ul>
-<li><a class="reference internal" href="#id6" id="id29">Usage</a></li>
+<li><a class="reference internal" href="#module-pyutil.dir_cleaner" id="id14"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir_cleaner</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.dlink" id="id15"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink</span></code></a><ul>
+<li><a class="reference internal" href="#synopsis" id="id16">Synopsis</a></li>
+<li><a class="reference internal" href="#usage" id="id17">Usage</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.linktree" id="id30"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linktree</span></code> module</a><ul>
-<li><a class="reference internal" href="#id7" id="id31">Usage</a></li>
+<li><a class="reference internal" href="#module-pyutil.dlink2" id="id18"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink2</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.env" id="id19"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.env_checks" id="id20"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env_checks</span></code></a><ul>
+<li><a class="reference internal" href="#matplotlib-env-checks" id="id21">Matplotlib Env Checks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.math.gcd_iter" id="id32"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math.gcd_iter</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.math.gcd_recur" id="id33"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math.gcd_recur</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.mv_to_repo" id="id34"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mv_to_repo</span></code> module</a><ul>
-<li><a class="reference internal" href="#module-`mv_to_repo`" id="id35"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.find_pics" id="id22"><code class="xref py py-mod docutils literal notranslate"><span class="pre">find_pics</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.g" id="id23"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.inspect_module" id="id24"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect_module</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.itersrc" id="id25"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itersrc</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.json_sorter" id="id26"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><ul>
+<li><a class="reference internal" href="#bug-fixes" id="id27">Bug Fixes</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.nvim_profiling" id="id36"><a class="reference internal" href="#module-pyutil.nvim_profiling" title="pyutil.nvim_profiling"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyutil.nvim_profiling</span></code></a> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.ptags" id="id37"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.rclone" id="id38"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code> module</a><ul>
-<li><a class="reference internal" href="#requires" id="id39">Requires</a></li>
+<li><a class="reference internal" href="#module-pyutil.lazy_downloader" id="id28"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.linktree" id="id29"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linktree</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.magic_aid" id="id30"><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code></a><ul>
+<li><a class="reference internal" href="#ipython-aliases" id="id31">IPython Aliases</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#script-helper-module" id="id40"><code class="xref py py-mod docutils literal notranslate"><span class="pre">script_helper</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.strip_space" id="id41"><a class="reference internal" href="#module-pyutil.strip_space" title="pyutil.strip_space"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyutil.strip_space</span></code></a></a></li>
-<li><a class="reference internal" href="#module-pyutil.sys_checks" id="id42"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.wrap" id="id43"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.yes_no_question" id="id44"><code class="xref py py-mod docutils literal notranslate"><span class="pre">yes_no_question</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.zillow" id="id45"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zillow</span></code> module</a></li>
+<li><a class="reference internal" href="#module-pyutil.mv_to_repo" id="id32"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.nvim_profiling" id="id33"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.ptags" id="id34"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code></a><ul>
+<li><a class="reference internal" href="#files-to-tag" id="id35">Files to tag</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyutil.rclone" id="id36"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.strip_space" id="id37"><code class="xref py py-mod docutils literal notranslate"><span class="pre">strip_space</span></code></a><ul>
+<li><a class="reference internal" href="#python-requirement" id="id38">Python Requirement</a></li>
+<li><a class="reference internal" href="#still-need-to-implement" id="id39">Still need to implement</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyutil.sys_checks" id="id40"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.wrap" id="id41"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.yes_no_question" id="id42"><code class="xref py py-mod docutils literal notranslate"><span class="pre">yes_no_question</span></code></a></li>
 </ul>
 </div>
 <div class="section" id="module-pyutil.backup_nt_and_posix">
-<span id="backup-nt-and-posix-module"></span><h2><a class="toc-backref" href="#id9"><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code> module</a><a class="headerlink" href="#module-pyutil.backup_nt_and_posix" title="Permalink to this headline">¶</a></h2>
+<span id="backup-nt-and-posix"></span><h2><a class="toc-backref" href="#id5"><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code></a><a class="headerlink" href="#module-pyutil.backup_nt_and_posix" title="Permalink to this headline">¶</a></h2>
 <p>Backup a directory by appending the date and time and copying over.</p>
 <div class="section" id="motivation">
-<h3><a class="toc-backref" href="#id10">Motivation</a><a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h3>
-<p>This script aims to be platform agnostic and in the long term will be used
-on Windows, Linux, Mac and Android systems.</p>
-</div>
-<div class="section" id="usage">
-<h3><a class="toc-backref" href="#id11">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python backup_nt_and_posix.py /path/to/dir
+<h3><a class="toc-backref" href="#id6">Motivation</a><a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h3>
+<p>This script aims to be platform agnostic and in the long term will be used on Windows, Linux, Mac and Android systems.</p>
+<p class="rubric">usage</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 backup_nt_and_posix.py /path/to/dir
 </pre></div>
 </div>
 <div class="admonition-todo admonition" id="index-0">
 <p class="first admonition-title">Todo</p>
-<p class="last">Consider rewriting using classes to hold state based on OS.
-Then utilize <code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code>.</p>
+<p class="last">Consider rewriting using classes to hold state based on OS. Then utilize <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#module-pathlib" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code></a>.</p>
 </div>
 <dl class="function">
 <dt id="pyutil.backup_nt_and_posix.timestamped_dir">
@@ -121,15 +124,11 @@ Then utilize <code class="xref py py-mod docutils literal notranslate"><span cla
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>backup_dir</strong> (<em>path-like object</em>) – Directory to backup</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul>
-<li><strong>return_code, error message</strong> (<em>list</em>)</li>
-<li><em>The specific implementation of this is as follows.</em></li>
-<li><strong>None</strong> (<em>NoneType</em>) – No error.</li>
-<li><strong>0</strong> (<em>Int</em>) – Success</li>
-<li><strong>-1</strong> (<em>Int</em>) – Failure</li>
-<li><strong>error</strong> (<em>string</em>) – the exact error string</li>
+<li><strong>``err_code``</strong> (<em>int</em>) – Non-zero value indicates error code, or zero on success.</li>
+<li><strong>``err_msg``</strong> (<em>str or None</em>) – Human readable error message, or None on success.</li>
 <li><div class="admonition-todo admonition" id="index-1">
 <p class="first admonition-title">Todo</p>
-<p class="last">Change this so that it utilizes <code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_call()</span></code> and we handle return codes in a better and more <em>true to form</em> way.</p>
+<p class="last">Change this so that it utilizes <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.check_call" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_call()</span></code></a> so we handle return codes in a better way.</p>
 </div>
 </li>
 </ul>
@@ -142,12 +141,12 @@ Then utilize <code class="xref py py-mod docutils literal notranslate"><span cla
 </div>
 </div>
 <div class="section" id="module-pyutil.batch_renamer">
-<span id="batch-renamer-module"></span><h2><a class="toc-backref" href="#id12"><code class="xref py py-mod docutils literal notranslate"><span class="pre">batch_renamer</span></code> module</a><a class="headerlink" href="#module-pyutil.batch_renamer" title="Permalink to this headline">¶</a></h2>
+<span id="batch-renamer"></span><h2><a class="toc-backref" href="#id7"><code class="xref py py-mod docutils literal notranslate"><span class="pre">batch_renamer</span></code></a><a class="headerlink" href="#module-pyutil.batch_renamer" title="Permalink to this headline">¶</a></h2>
 <p>Renames a directory of files based on a template.</p>
 <span class="target" id="module-batch_renamer.py"></span><p>Largely argparse and doctest practice.
-From pydocs tutorials stdlib2 with some reformatting.
+From <a class="reference external" href="https://docs.python.org/3/tutorial/stdlib2.html#templating">pydocs tutorials stdlib2</a> with some reformatting.
 Still uses old style strings as a result.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;/path/to/dir&quot;</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;/path/to/dir&quot;</span><span class="p">)</span>
 <span class="go">[&#39;img_1074.jpg&#39;, &#39;img_1076.jpg&#39;, &#39;img_1077.jpg&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span> <span class="n">batch_renamer</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="nb">dir</span>
 <span class="go">img_1074.jpg --&gt; Ashley_0.jpg</span>
@@ -157,42 +156,15 @@ Still uses old style strings as a result.</p>
 </div>
 <div class="admonition-todo admonition" id="index-2">
 <p class="first admonition-title">Todo</p>
-<p>First things first ensure it works at all.</p>
-<p class="last">This would be quite an easy module to create unittests for IN ADDITION
-to the fact that you could add some fixtures in and learn that.</p>
+<p class="last">First things first ensure it works at all.</p>
 </div>
+<p>This would be quite an easy module to create unittests for IN ADDITION to the
+fact that you could add some fixtures in and learn that.</p>
 <dl class="class">
 <dt id="pyutil.batch_renamer.BatchRename">
 <em class="property">class </em><code class="descclassname">pyutil.batch_renamer.</code><code class="descname">BatchRename</code><span class="sig-paren">(</span><em>template</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#BatchRename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.BatchRename" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">string.Template</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/string.html#string.Template" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">string.Template</span></code></a></p>
 <p>Delimiter for string substitutions.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>braceidpattern</strong></dt>
-<dd></dd>
-</dl>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Methods</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="66%" />
-<col width="34%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>safe_substitute</strong></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><td><strong>substitute</strong></td>
-<td>&#160;</td>
-</tr>
-</tbody>
-</table>
 <dl class="attribute">
 <dt id="pyutil.batch_renamer.BatchRename.delimiter">
 <code class="descname">delimiter</code><em class="property"> = '%'</em><a class="headerlink" href="#pyutil.batch_renamer.BatchRename.delimiter" title="Permalink to this definition">¶</a></dt>
@@ -209,20 +181,15 @@ to the fact that you could add some fixtures in and learn that.</p>
 <dt id="pyutil.batch_renamer.batch_mover">
 <code class="descclassname">pyutil.batch_renamer.</code><code class="descname">batch_mover</code><span class="sig-paren">(</span><em>pattern</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#batch_mover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.batch_mover" title="Permalink to this definition">¶</a></dt>
 <dd><p>Move files in the current working directory that match a pattern.</p>
-<div class="admonition-todo admonition" id="index-3">
-<p class="first admonition-title">Todo</p>
-<p class="last">Fix docstring to numpy style… in the meanwhile ensure all
-3 of these render correctly as is.</p>
-</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pattern</strong> – Pattern to check filenames for.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pattern</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Pattern to check filenames for.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True or False</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Bool</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
 </tr>
 </tbody>
 </table>
@@ -232,10 +199,9 @@ to the fact that you could add some fixtures in and learn that.</p>
 <dt id="pyutil.batch_renamer.fix_extension">
 <code class="descclassname">pyutil.batch_renamer.</code><code class="descname">fix_extension</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#fix_extension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.fix_extension" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rename files that have have the wrong filename extension.</p>
-<div class="admonition-todo admonition" id="index-4">
+<div class="admonition-todo admonition" id="index-3">
 <p class="first admonition-title">Todo</p>
-<p class="last">Fuck I didn’t consider the case where there are 2 words
-separated by dots that we want to keep.</p>
+<p class="last">Fuck I didn’t consider the case where there are 2 words separated by dots that we want to keep.</p>
 </div>
 </dd></dl>
 
@@ -243,15 +209,15 @@ separated by dots that we want to keep.</p>
 <dt id="pyutil.batch_renamer.main">
 <code class="descclassname">pyutil.batch_renamer.</code><code class="descname">main</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rename a dir of files.</p>
-<div class="admonition-todo admonition" id="index-5">
-<p class="first admonition-title">Todo</p>
-<p class="last">Uhhhh??</p>
-</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> – The directory to iterate over.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The directory to iterate over.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></td>
 </tr>
 </tbody>
 </table>
@@ -259,9 +225,18 @@ separated by dots that we want to keep.</p>
 
 </div>
 <div class="section" id="module-pyutil.check_IP">
-<span id="check-ip-module"></span><h2><a class="toc-backref" href="#id13"><code class="xref py py-mod docutils literal notranslate"><span class="pre">check_IP</span></code> module</a><a class="headerlink" href="#module-pyutil.check_IP" title="Permalink to this headline">¶</a></h2>
+<span id="check-ip"></span><h2><a class="toc-backref" href="#id8"><code class="xref py py-mod docutils literal notranslate"><span class="pre">check_IP</span></code></a><a class="headerlink" href="#module-pyutil.check_IP" title="Permalink to this headline">¶</a></h2>
 <p>Print a user’s public IP address and hostname.</p>
-<div class="admonition-todo admonition" id="index-6">
+<div class="section" id="requires">
+<h3><a class="toc-backref" href="#id9">Requires</a><a class="headerlink" href="#requires" title="Permalink to this headline">¶</a></h3>
+<p><code class="xref py py-mod docutils literal notranslate"><span class="pre">requests</span></code></p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p>From Kenneth Reitz, owner of httpbin.</p>
+<p>Installing packages for your project:</p>
+<p class="last"><a class="reference external" href="https://docs.python-guide.org/en/latest/dev/virtualenvs/">https://docs.python-guide.org/en/latest/dev/virtualenvs/</a></p>
+</div>
+<div class="admonition-todo admonition" id="index-4">
 <p class="first admonition-title">Todo</p>
 <p class="last">Come up with a fallback if requests isn’t installed.</p>
 </div>
@@ -269,6 +244,16 @@ separated by dots that we want to keep.</p>
 <dt id="pyutil.check_IP.get_hostname">
 <code class="descclassname">pyutil.check_IP.</code><code class="descname">get_hostname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/check_IP.html#get_hostname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.check_IP.get_hostname" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the user’s hostname.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>``host_return_msg``</strong> – A formatted message displaying the user’s IP address.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -279,25 +264,23 @@ separated by dots that we want to keep.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return rt:</th><td class="field-body">A formatted message displaying the user’s IP address.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>rt</strong> – A formatted message displaying the user’s IP address.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
 </tr>
 </tbody>
 </table>
-<p>From Kenneth Reitz, owner of httpbin:</p>
-<blockquote>
-<div></div></blockquote>
 </dd></dl>
 
 </div>
+</div>
 <div class="section" id="module-pyutil.conda_export">
-<span id="conda-export-module"></span><h2><a class="toc-backref" href="#id14"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code> module</a><a class="headerlink" href="#module-pyutil.conda_export" title="Permalink to this headline">¶</a></h2>
+<span id="conda-export"></span><h2><a class="toc-backref" href="#id10"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code></a><a class="headerlink" href="#module-pyutil.conda_export" title="Permalink to this headline">¶</a></h2>
 <p>Iterate over the list of conda environments that are present.</p>
 <div class="section" id="assumes">
-<h3><a class="toc-backref" href="#id15">Assumes</a><a class="headerlink" href="#assumes" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">Assumes</a><a class="headerlink" href="#assumes" title="Permalink to this headline">¶</a></h3>
 <p>Working conda installation.</p>
-<p class="rubric">Example</p>
+<p class="rubric">example</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 conda-export.py
 </pre></div>
 </div>
@@ -305,16 +288,18 @@ separated by dots that we want to keep.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body"><ul class="first last simple">
-<li><em>Separate text files. 2 for each environment.</em></li>
-<li><em>- One with general metadata</em></li>
-<li><em>- One with a list of packages.</em></li>
+<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body"><ul class="first simple">
+<li>One with general metadata</li>
+<li>One with a list of packages.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">rtype:</th><td class="field-body"><p class="first last">Separate text files. 2 for each environment.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="admonition-todo admonition" id="index-7">
+<div class="admonition-todo admonition" id="index-5">
 <p class="first admonition-title">Todo</p>
 <ul class="last simple">
 <li><dl class="first docutils">
@@ -325,7 +310,6 @@ separated by dots that we want to keep.</p>
 </dd>
 </dl>
 </li>
-<li>Shell highlighting is really light. Hard to read.</li>
 <li>Add logging. Return more useful info besides just printing.</li>
 </ul>
 </div>
@@ -342,7 +326,7 @@ separated by dots that we want to keep.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>envs</strong> – list of conda environments</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
 </tr>
 </tbody>
 </table>
@@ -351,42 +335,43 @@ separated by dots that we want to keep.</p>
 <dl class="function">
 <dt id="pyutil.conda_export.truncate">
 <code class="descclassname">pyutil.conda_export.</code><code class="descname">truncate</code><span class="sig-paren">(</span><em>envs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/conda_export.html#truncate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.conda_export.truncate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take the decoded environments and reduce them down to the parts we need.</p>
+<dd><p>Take the output from :ref:<a href="#id2"><span class="problematic" id="id3">`</span></a>munging`and reduce and print to console.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>envs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Conda environments</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>``short_envs``</strong> – Shorter name of all envs. Printed to console.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of strs</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
 </div>
 <div class="section" id="module-pyutil.dir3">
-<span id="dir3-module"></span><h2><a class="toc-backref" href="#id16"><a class="reference internal" href="#module-dir3" title="dir3"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir3</span></code></a> module</a><a class="headerlink" href="#module-pyutil.dir3" title="Permalink to this headline">¶</a></h2>
-<p>Improve the <code class="xref py py-func docutils literal notranslate"><span class="pre">dir()</span></code> by ignoring methods hidden by <code class="docutils literal notranslate"><span class="pre">_</span></code>.</p>
-<span class="target" id="module-dir3"></span><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">File:</th><td class="field-body">dir3.py</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Faris Chugthai</td>
-</tr>
-</tbody>
-</table>
-<p><a class="reference external" href="https://github.com/farisachugthai">GitHub</a></p>
+<span id="dir3"></span><h2><a class="toc-backref" href="#id12"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir3</span></code></a><a class="headerlink" href="#module-pyutil.dir3" title="Permalink to this headline">¶</a></h2>
+<p>Improve the <a class="reference external" href="https://docs.python.org/3/library/functions.html#dir" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dir()</span></code></a> by ignoring methods hidden by <code class="docutils literal notranslate"><span class="pre">_</span></code>.</p>
 <div class="section" id="background">
-<h3><a class="toc-backref" href="#id17">Background</a><a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h3>
-<p><code class="xref py py-func docutils literal notranslate"><span class="pre">dir()</span></code> is a phenomenal function for exploring both the global
+<h3><a class="toc-backref" href="#id13">Background</a><a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://docs.python.org/3/library/functions.html#dir" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dir()</span></code></a> is a phenomenal function for exploring both the global
 namespace and the exported methods of an object.</p>
-<p>However it can get incredibly messy, especially when <code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code>
+<p>However it can get incredibly messy, especially when <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>
 displays the placeholder variables for every cell that has been
 run in the session.</p>
 <p>This causes an incredibly long output that’s difficult to parse quickly at
 best, and at worst, the output truncates and all valuable
 information is hidden. This function attempts to avoid that by
-hiding all private and/or mangled
-methods I.E. ones that begin with the characters <code class="docutils literal notranslate"><span class="pre">_</span></code> or <code class="docutils literal notranslate"><span class="pre">__</span></code>.</p>
-<p>It also takes inspiration from <code class="xref py py-func docutils literal notranslate"><span class="pre">IPython.utils.dir2.dir2()</span></code>.</p>
+hiding all private and/or mangled methods I.E. ones that begin with the
+characters <code class="docutils literal notranslate"><span class="pre">_</span></code> or <code class="docutils literal notranslate"><span class="pre">__</span></code>.</p>
+<p>It also takes inspiration from <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.dir2.html#IPython.utils.dir2.dir2" title="(in IPython v7.3.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">IPython.utils.dir2.dir2()</span></code></a>.</p>
 <dl class="attribute">
-<dt id="dir3.ip">
-<code class="descclassname">dir3.</code><code class="descname">ip</code><a class="headerlink" href="#dir3.ip" title="Permalink to this definition">¶</a></dt>
-<dd><p>A global object representing the active <code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code> session.
+<dt id="pyutil.dir3.ip">
+<code class="descclassname">pyutil.dir3.</code><code class="descname">ip</code><a class="headerlink" href="#pyutil.dir3.ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>A global object representing the active <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a> session.
 Contains varying packages as well as the current global namespace.
 Doesn’t need to be defined in advance during an interactive session.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -399,47 +384,67 @@ Doesn’t need to be defined in advance during an interactive session.</p>
 </table>
 </dd></dl>
 
-<div class="admonition-todo admonition" id="index-8">
+<div class="admonition-todo admonition" id="index-6">
 <p class="first admonition-title">Todo</p>
 <ul class="last simple">
 <li>Show some example usage.</li>
-<li>Should this function import or in any way be based off of <code class="xref py py-func docutils literal notranslate"><span class="pre">IPython.utils.dir2.dir2()</span></code> via import?</li>
+<li>Should this function import or in any way be based off of <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.dir2.html#IPython.utils.dir2.dir2" title="(in IPython v7.3.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">IPython.utils.dir2.dir2()</span></code></a> via import?</li>
 <li>We’ll probably need to import <code class="xref py py-func docutils literal notranslate"><span class="pre">register_line_magic()</span></code> or something.</li>
 </ul>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt>:func:<a href="#id2"><span class="problematic" id="id3">`</span></a>IPython.utils.dir2.dir2() <span class="classifier-delimiter">:</span> <span class="classifier">list of strings</span></dt>
-<dd><p class="first">Extended version of the Python builtin <code class="xref py py-func docutils literal notranslate"><span class="pre">dir()</span></code>, which does a few
-extra checks.</p>
-<p class="last">This version is guaranteed to return only a list of true
-strings, whereas <code class="xref py py-func docutils literal notranslate"><span class="pre">dir()</span></code> returns anything that
+<dt><a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.dir2.html#IPython.utils.dir2.dir2" title="(in IPython v7.3.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">IPython.utils.dir2.dir2()</span></code></a> <span class="classifier-delimiter">:</span> <span class="classifier">list of strings</span></dt>
+<dd>Extended version of the Python builtin <a class="reference external" href="https://docs.python.org/3/library/functions.html#dir" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dir()</span></code></a>, which does a few
+extra checks.
+This version is guaranteed to return only a list of true
+strings, whereas <a class="reference external" href="https://docs.python.org/3/library/functions.html#dir" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dir()</span></code></a> returns anything that
 objects inject into themselves, even if they
 are later not really valid for attribute access (many
-extension libraries have such bugs).</p>
-</dd>
+extension libraries have such bugs).</dd>
 </dl>
 </div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
-<span class="go">    &gt;&gt;&gt; words = set(dir(obj))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-<span class="go">    &gt;&gt;&gt; # TypeError: dir(obj) does not return a list</span>
-<span class="go">    &gt;&gt;&gt; words = set()</span>
-<span class="go"># Start building the attribute list via dir(), and then complete it</span>
-<span class="go"># with a few extra special-purpose calls.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">safe_hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__class__&#39;</span><span class="p">):</span>
-<span class="go">    &gt;&gt;&gt; words |= set(dir(obj.__class__))</span>
-<span class="go"># filter out non-string attributes which may be stuffed by dir() calls</span>
-<span class="go"># and poor coding in third-party modules</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="nb">str</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start building the attribute list via dir(), and then complete it</span>
+<span class="c1"># with a few extra special-purpose calls.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">try</span><span class="p">:</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="c1"># TypeError: dir(obj) does not return a list</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">if</span> <span class="n">safe_hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__class__&#39;</span><span class="p">):</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">words</span> <span class="o">|=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="p">))</span>
+<span class="c1"># filter out non-string attributes which may be stuffed by dir() calls</span>
+<span class="c1"># and poor coding in third-party modules</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="nb">str</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="function">
+<dt id="pyutil.dir3._interactive">
+<code class="descclassname">pyutil.dir3.</code><code class="descname">_interactive</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir3.html#_interactive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir3._interactive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a private method for interactive use instead of ifmain block.</p>
+<p>As this file is currently used in IPython’s startup, the
+if-main block will execute on startup which is not desired.</p>
+<p>What we’re looking for is more similar to an autoload feature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> (<em>iterable</em>) – The object to inspect.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>filtered</strong> – All methods that don’t begin with ‘_’.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyutil.dir3.dir3">
 <code class="descclassname">pyutil.dir3.</code><code class="descname">dir3</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir3.html#dir3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir3.dir3" title="Permalink to this definition">¶</a></dt>
-<dd><p>Filter unnecessary information from <code class="xref py py-func docutils literal notranslate"><span class="pre">dir()</span></code> output.</p>
+<dd><p>Filter unnecessary information from <a class="reference external" href="https://docs.python.org/3/library/functions.html#dir" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dir()</span></code></a> output.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -448,11 +453,11 @@ extension libraries have such bugs).</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>output</strong> – All methods that don’t begin with <code class="docutils literal notranslate"><span class="pre">_</span></code>.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
 </tr>
 </tbody>
 </table>
-<div class="admonition-todo admonition" id="index-9">
+<div class="admonition-todo admonition" id="index-7">
 <p class="first admonition-title">Todo</p>
 <p class="last">More stringent filters will need to come.</p>
 </div>
@@ -466,47 +471,42 @@ getting unwieldy and as is requires a lot of state.</p>
 </div>
 </div>
 <div class="section" id="module-pyutil.dir_cleaner">
-<span id="dir-cleaner-module"></span><h2><a class="toc-backref" href="#id18"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir_cleaner</span></code> module</a><a class="headerlink" href="#module-pyutil.dir_cleaner" title="Permalink to this headline">¶</a></h2>
-<p>Beginning of script. Not finished.</p>
-<p>Run in $PREFIX/tmp.</p>
-<p>Can modify to accept user input and fall back to that dir.</p>
-<p>Implement once all the logic has panned out.</p>
-<div class="admonition-todo admonition" id="index-10">
+<span id="dir-cleaner"></span><h2><a class="toc-backref" href="#id14"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir_cleaner</span></code></a><a class="headerlink" href="#module-pyutil.dir_cleaner" title="Permalink to this headline">¶</a></h2>
+<p>Deletes extraneous files.</p>
+<p>Run in <code class="docutils literal notranslate"><span class="pre">$PREFIX/tmp.</span></code></p>
+<p>Can modify to accept user input and fall back to that dir.
+Implement once all the logic has panned out.</p>
+<div class="admonition-todo admonition" id="index-8">
 <p class="first admonition-title">Todo</p>
-<ul class="last simple">
-<li>Write a second function that implemenents rm -r if <code class="xref py py-obj docutils literal notranslate"><span class="pre">du</span> <span class="pre">dir==0</span></code></li>
+<p class="last">Write a second function that implemenents <code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">-r</span></code> if <code class="docutils literal notranslate"><span class="pre">du</span> <span class="pre">dir==0</span></code></p>
+</div>
+<ul class="simple">
 <li><dl class="first docutils">
 <dt>Failing that, specifically delete directories with only month old sockets</dt>
 <dd><ul class="first last">
-<li>$PREFIX/tmp/nvim-*</li>
-<li>$PREFIX/tmp/ssh-*</li>
+<li><code class="docutils literal notranslate"><span class="pre">$PREFIX/tmp/nvim-*</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">$PREFIX/tmp/ssh-*</span></code></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-</div>
 <p>Dec 01, 2018:</p>
 <blockquote>
 <div>I was writing this like on termux like 4 days ago. Cleaned up
-~/python/tutorials/<a href="#id46"><span class="problematic" id="id47">fnmatch_</span></a>.py and realized it was the exact same thing.</div></blockquote>
+~/python/tutorials/fnmatch.py and realized it’s the exact same thing.</div></blockquote>
 <dl class="function">
 <dt id="pyutil.dir_cleaner.clean">
-<code class="descclassname">pyutil.dir_cleaner.</code><code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.clean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes all pyc files. Add input for filetype later.</p>
+<code class="descclassname">pyutil.dir_cleaner.</code><code class="descname">clean</code><span class="sig-paren">(</span><em>ftype='*.pyc'</em>, <em>recursive=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all pyc files. Add input for filetype later.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filetype</strong> – File to iterately remove.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">NoneType</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ftype</strong> (<em>filetype</em>) – File to iterately remove.</td>
 </tr>
 </tbody>
 </table>
-<p>Yeah i said returns.
-Use return instead of yield since the function call is gonna
-either require <code class="docutils literal notranslate"><span class="pre">list[clean()]</span></code> or a loop.</p>
 </dd></dl>
 
 <dl class="function">
@@ -519,21 +519,28 @@ either require <code class="docutils literal notranslate"><span class="pre">list
 <dt id="pyutil.dir_cleaner.extract_dir">
 <code class="descclassname">pyutil.dir_cleaner.</code><code class="descname">extract_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#extract_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.extract_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Could be used in dir_cleaner. Yeah let’s do that.</p>
-<div class="admonition-todo admonition" id="index-11">
+<div class="admonition-todo admonition" id="index-9">
 <p class="first admonition-title">Todo</p>
-<p class="last"><em>sigh</em> alright so we need to add a check that the zip has a child dir in it.
-Extracted 3 zips rn and its all mixed together :(</p>
+<p class="last"><em>sigh</em> alright so we need to add a check that the zip has a child dir in it. Extracted 3 zips rn and its all mixed together :(</p>
 </div>
 </dd></dl>
 
 </div>
 <div class="section" id="module-pyutil.dlink">
-<span id="dlink-module"></span><h2><a class="toc-backref" href="#id19"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink</span></code> module</a><a class="headerlink" href="#module-pyutil.dlink" title="Permalink to this headline">¶</a></h2>
+<span id="dlink"></span><h2><a class="toc-backref" href="#id15"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink</span></code></a><a class="headerlink" href="#module-pyutil.dlink" title="Permalink to this headline">¶</a></h2>
 <p>Symlink all of the files in one directory into another.</p>
+<dl class="docutils">
+<dt>..module:: dlink</dt>
+<dd>synopsis: Symlinks a directory of files from another.</dd>
+</dl>
+<div class="section" id="synopsis">
+<h3><a class="toc-backref" href="#id16">Synopsis</a><a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h3>
+<p>This is quite easily one of my most frequently used scripts.</p>
 <p>If we’re given 2 args, treat it with the same syntax as <code class="docutils literal notranslate"><span class="pre">ln</span> <span class="pre">-s</span></code> or
-<code class="xref py py-func docutils literal notranslate"><span class="pre">os.symlink()</span></code></p>
-<div class="section" id="id4">
-<h3><a class="toc-backref" href="#id20">Usage</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<a class="reference external" href="https://docs.python.org/3/library/os.html#os.symlink" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.symlink()</span></code></a></p>
+</div>
+<div class="section" id="usage">
+<h3><a class="toc-backref" href="#id17">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ln -s path/to/dest/* <span class="o">[</span>path/to/src<span class="o">]</span>
 </pre></div>
 </div>
@@ -546,8 +553,8 @@ Extracted 3 zips rn and its all mixed together :(</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dest</strong> (<em>path like object</em>) – The directory where the original files are located.</li>
-<li><strong>src</strong> (<em>str</em>) – Optional argument indicating the directory where the symlinks
+<li><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The directory where the original files are located.</li>
+<li><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Optional argument indicating the directory where the symlinks
 are to be created.
 If the src argument isn’t provided, it is assumed that the current
 working directory is the src dir.</li>
@@ -557,7 +564,7 @@ working directory is the src dir.</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></p>
 </td>
 </tr>
 </tbody>
@@ -567,10 +574,10 @@ working directory is the src dir.</li>
 </div>
 </div>
 <div class="section" id="module-pyutil.dlink2">
-<span id="dlink2-module"></span><h2><a class="toc-backref" href="#id21"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink2</span></code> module</a><a class="headerlink" href="#module-pyutil.dlink2" title="Permalink to this headline">¶</a></h2>
+<span id="dlink2"></span><h2><a class="toc-backref" href="#id18"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink2</span></code></a><a class="headerlink" href="#module-pyutil.dlink2" title="Permalink to this headline">¶</a></h2>
 <p>Possibly rewrote the entire module in half as many lines.</p>
 <p>Now utilizes necessary libraries like glob.</p>
-<div class="admonition-todo admonition" id="index-12">
+<div class="admonition-todo admonition" id="index-10">
 <p class="first admonition-title">Todo</p>
 <p class="last">Argparse?</p>
 </div>
@@ -582,24 +589,76 @@ working directory is the src dir.</li>
 
 </div>
 <div class="section" id="module-pyutil.env">
-<span id="env-module"></span><h2><a class="toc-backref" href="#id22"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env</span></code> module</a><a class="headerlink" href="#module-pyutil.env" title="Permalink to this headline">¶</a></h2>
+<span id="env"></span><h2><a class="toc-backref" href="#id19"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env</span></code></a><a class="headerlink" href="#module-pyutil.env" title="Permalink to this headline">¶</a></h2>
 <p>Simple module that pretty prints the user’s environment variables.</p>
 <p>This is actually implemented as an IPython magic but to make it easier
 to use in a typical Python REPL it’s also implemented here.</p>
 <p>The if name == ‘__main__’ is left off so that it can be run directly
 or sourced.</p>
+<dl class="function">
+<dt id="pyutil.env.current">
+<code class="descclassname">pyutil.env.</code><code class="descname">current</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env.html#current"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env.current" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints all current environment variables.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pyutil.env_checks">
-<span id="env-checks-module"></span><h2><a class="toc-backref" href="#id23"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env_checks</span></code> module</a><a class="headerlink" href="#module-pyutil.env_checks" title="Permalink to this headline">¶</a></h2>
+<span id="env-checks"></span><h2><a class="toc-backref" href="#id20"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env_checks</span></code></a><a class="headerlink" href="#module-pyutil.env_checks" title="Permalink to this headline">¶</a></h2>
 <p>Run simple checks to ensure that a user’s environment has been set up.</p>
 <p>Easier to group similar methods in one mod then have them scattered around.</p>
 <p>Below is a generic example of using the public methods to read in user
 defined configurations.</p>
 <p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">env_checks</span> <span class="kn">import</span> <span class="n">check_xdg_config_home</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">env_checks</span> <span class="k">import</span> <span class="n">check_xdg_config_home</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">check_xdg_config_home</span><span class="p">():</span>
 <span class="go">    &gt;&gt;&gt; with open(&#39;module.conf&#39;, &#39;rt&#39;) as f:</span>
 <span class="go">        &gt;&gt;&gt; configs = f.readlines()</span>
+</pre></div>
+</div>
+<div class="section" id="matplotlib-env-checks">
+<h3><a class="toc-backref" href="#id21">Matplotlib Env Checks</a><a class="headerlink" href="#matplotlib-env-checks" title="Permalink to this headline">¶</a></h3>
+<p>Mar 08, 2019</p>
+<p>Just noticed today the following functions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">get_home</span><span class="p">()</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">_get_xdg_cache_dir</span><span class="p">()</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">_get_xdg_config_dir</span><span class="p">()</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">_get_data_path</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here’s an interesting way to memoize return values.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_logged_cached</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorator that logs a function&#39;s return value, and memoizes that value.</span>
+
+<span class="sd">    After ::</span>
+
+<span class="sd">        @_logged_cached(fmt)</span>
+<span class="sd">        def func(): ...</span>
+
+<span class="sd">    the first call to *func* will log its return value at the DEBUG level using</span>
+<span class="sd">    %-format string *fmt*, and memoize it; later calls to *func* will directly</span>
+<span class="sd">    return that value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Return the actual decorator.</span>
+        <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">_logged_cached</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
+
+    <span class="n">called</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+        <span class="k">nonlocal</span> <span class="n">called</span><span class="p">,</span> <span class="n">ret</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">called</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+            <span class="n">called</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
 </pre></div>
 </div>
 <dl class="function">
@@ -618,13 +677,6 @@ defined configurations.</p>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Example</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">env_checks</span> <span class="k">import</span> <span class="n">check_xdg_config_home</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">check_xdg_config_home</span><span class="p">():</span>
-<span class="go">    &gt;&gt;&gt; with open(&#39;module.conf&#39;, &#39;rt&#39;) as f:</span>
-<span class="go">        &gt;&gt;&gt; configs = f.readlines()</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="function">
@@ -635,7 +687,7 @@ defined configurations.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>env_var</strong> (<em>str</em>) – Environment variable to search for. Currently case-sensitive.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>env_var</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Environment variable to search for. Currently case-sensitive.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><strong>i</strong> (<em>dict_key</em>) – The environment variable searched for. Env vars are mapped as dicts.</td>
 </tr>
@@ -666,11 +718,37 @@ defined configurations.</p>
 <dt id="pyutil.env_checks.get_script_dir">
 <code class="descclassname">pyutil.env_checks.</code><code class="descname">get_script_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env_checks.html#get_script_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env_checks.get_script_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine the directory the script is in.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Directory the file is in</strong></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
+</div>
 <div class="section" id="module-pyutil.find_pics">
-<span id="find-pics-module"></span><h2><a class="toc-backref" href="#id24"><code class="xref py py-mod docutils literal notranslate"><span class="pre">find_pics</span></code> module</a><a class="headerlink" href="#module-pyutil.find_pics" title="Permalink to this headline">¶</a></h2>
+<span id="find-pics"></span><h2><a class="toc-backref" href="#id22"><code class="xref py py-mod docutils literal notranslate"><span class="pre">find_pics</span></code></a><a class="headerlink" href="#module-pyutil.find_pics" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-11">
+<p class="first admonition-title">Todo</p>
+<p class="last">Should accept command line arguments.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">File:</th><td class="field-body">find_pics.py</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Faris Chugthai</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://github.com/farisachugthai">Github</a></p>
 <dl class="function">
 <dt id="pyutil.find_pics.find_pics">
 <code class="descclassname">pyutil.find_pics.</code><code class="descname">find_pics</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/find_pics.html#find_pics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.find_pics.find_pics" title="Permalink to this definition">¶</a></dt>
@@ -679,35 +757,85 @@ defined configurations.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em> or </em><em>path-like object</em>) – path to a directory to check</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><em>path-like object</em>) – Path to a directory to check</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body">an re-match object</td>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><strong>f</strong> (<em>re.match object</em>) – Filename that matches a jpeg regex.</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition-todo admonition" id="index-13">
+<div class="admonition-todo admonition" id="index-12">
 <p class="first admonition-title">Todo</p>
 <p class="last">Format the match object so it’s more usable</p>
 </div>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pyutil.inspect_module">
-<span id="inspect-module-module"></span><h2><a class="toc-backref" href="#id25"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect_module</span></code> module</a><a class="headerlink" href="#module-pyutil.inspect_module" title="Permalink to this headline">¶</a></h2>
-<p>Explore the namespace and attributes of a module.</p>
+<div class="section" id="module-pyutil.g">
+<span id="g"></span><h2><a class="toc-backref" href="#id23"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><a class="headerlink" href="#module-pyutil.g" title="Permalink to this headline">¶</a></h2>
+<p>Export functions to ease IPython/Git interactions.</p>
+<div class="admonition-todo admonition" id="index-13">
+<p class="first admonition-title">Todo</p>
+<p class="last">What version of python was <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.check_output" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_output()</span></code></a> introduced in?</p>
+</div>
+<dl class="function">
+<dt id="pyutil.g.get_git_branch">
+<code class="descclassname">pyutil.g.</code><code class="descname">get_git_branch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_branch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_branch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the symbolic name for the current git branch.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.g.get_git_root">
+<code class="descclassname">pyutil.g.</code><code class="descname">get_git_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the root of a repo.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.g.get_git_upstream_remote">
+<code class="descclassname">pyutil.g.</code><code class="descname">get_git_upstream_remote</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_upstream_remote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_upstream_remote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the remote name to use for upstream branches.</p>
+<p>Uses “upstream” if it exists, “origin” otherwise</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.g.git_touch">
+<code class="descclassname">pyutil.g.</code><code class="descname">git_touch</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#git_touch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.git_touch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a file and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> it.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param <code class="xref py py-obj docutils literal notranslate"><span class="pre">mod_name</span></code>:</th><td class="field-body">If no argument is provided, then use the namespace bound to the global
-<code class="xref py py-class docutils literal notranslate"><span class="pre">IPython.core.interactiveshell.InteractiveShell()</span></code> object.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> (</em><em>path-like object</em><em>)</em>) – Path to a file that’s needs to be staged and added to the Git index.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">type <code class="xref py py-obj docutils literal notranslate"><span class="pre">mod_name</span></code>:</th><td class="field-body">module to inspect</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>None</strong></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></td>
 </tr>
 </tbody>
 </table>
-<p>:param However Python3.6 now has the builtin module <code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> so this entire:
-:param script may be irrelevant.:</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyutil.inspect_module">
+<span id="inspect-module"></span><h2><a class="toc-backref" href="#id24"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect_module</span></code></a><a class="headerlink" href="#module-pyutil.inspect_module" title="Permalink to this headline">¶</a></h2>
+<p>Explore the namespace and attributes of a module.</p>
+<p>Written before <a class="reference external" href="https://docs.python.org/3/library/pyclbr.html#module-pyclbr" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code></a> was created.
+However Python3.6 now has the builtin module <a class="reference external" href="https://docs.python.org/3/library/pyclbr.html#module-pyclbr" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code></a> so this entire
+script may be irrelevant.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param <code class="docutils literal notranslate"><span class="pre">mod_name</span></code>:</th><td class="field-body">If no argument is provided, then use the namespace bound to the global
+<code class="xref py py-class docutils literal notranslate"><span class="pre">IPython.core.interactiveshell.InteractiveShell()</span></code> object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type <code class="docutils literal notranslate"><span class="pre">mod_name</span></code>:</th><td class="field-body">module to inspect</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">rtype:</th><td class="field-body">TODO</td>
+</tr>
+</tbody>
+</table>
 <dl class="function">
 <dt id="pyutil.inspect_module.main">
 <code class="descclassname">pyutil.inspect_module.</code><code class="descname">main</code><span class="sig-paren">(</span><em>mod_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/inspect_module.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.inspect_module.main" title="Permalink to this definition">¶</a></dt>
@@ -721,7 +849,7 @@ comma separated list of modules to explore, or they could give a file.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mod_name</strong> (<em>module</em>) – The provided module to inspect for the user.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>`mod_namespace`</strong> – The provided module’s namespace.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>``mod_namespace``</strong> – The provided module’s namespace.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">methods and attributes</td>
 </tr>
@@ -731,39 +859,28 @@ comma separated list of modules to explore, or they could give a file.</p>
 
 </div>
 <div class="section" id="module-pyutil.itersrc">
-<span id="itersrc-module"></span><h2><a class="toc-backref" href="#id26"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itersrc</span></code> module</a><a class="headerlink" href="#module-pyutil.itersrc" title="Permalink to this headline">¶</a></h2>
+<span id="itersrc"></span><h2><a class="toc-backref" href="#id25"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itersrc</span></code></a><a class="headerlink" href="#module-pyutil.itersrc" title="Permalink to this headline">¶</a></h2>
 <p>Iterate over all of the python files in a directory recursively.</p>
-<span class="target" id="module-itersrc.py"></span><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">File:</th><td class="field-body">itersrc.py</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Faris Chugthai</td>
-</tr>
-</tbody>
-</table>
-<p><a class="reference external" href="https://github.com/farisachugthai">Github</a></p>
-<div class="admonition-todo admonition" id="index-14">
-<p class="first admonition-title">Todo</p>
-<p>numpydoc and parameters.</p>
-<p class="last">Add the paths parameter here and check that it complies with Numpy
-Docstring format. I believe we can run numpydoc.numpydoc over the file.</p>
+<span class="target" id="module-itersrc.py"></span><div class="versionchanged">
+<p><span class="versionmodified">Changed in version 0.0.1: </span>Just added a check for python files. This could be useful as a base
+for a test runner.</p>
 </div>
 <dl class="function">
 <dt id="pyutil.itersrc.iter_source_code">
 <code class="descclassname">pyutil.itersrc.</code><code class="descname">iter_source_code</code><span class="sig-paren">(</span><em>paths</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/itersrc.html#iter_source_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.itersrc.iter_source_code" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterate over all Python source files in C{paths}.</p>
 <p>Taken with almost no modifications from pyflakes.
-This would be a great function to call with <code class="xref py py-func docutils literal notranslate"><span class="pre">os.listdir('/')()</span></code> output.</p>
+This would be a great function to call with <a class="reference external" href="https://docs.python.org/3/library/os.html#os.listdir" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.listdir()</span></code></a>
+output.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>paths</strong> (<em>A list of paths.</em>) – Directories will be recursed into and any .py files found will be
-yielded.  Any non-directories will be yielded as-is.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>paths</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – A list of paths.  Directories will be recursed into and
+any .py files found will be yielded.
+Any non-directories will be yielded as-is.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><strong>full_path</strong> (<em>path</em>) – An absolute path to python source code.</td>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><strong>``full_path``</strong> (<em>str</em>) – Absolute path to a python file.</td>
 </tr>
 </tbody>
 </table>
@@ -771,13 +888,20 @@ yielded.  Any non-directories will be yielded as-is.</td>
 
 </div>
 <div class="section" id="module-pyutil.json_sorter">
-<span id="json-sorter-module"></span><h2><a class="toc-backref" href="#id27"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code> module</a><a class="headerlink" href="#module-pyutil.json_sorter" title="Permalink to this headline">¶</a></h2>
+<span id="json-sorter"></span><h2><a class="toc-backref" href="#id26"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><a class="headerlink" href="#module-pyutil.json_sorter" title="Permalink to this headline">¶</a></h2>
 <p>Reorganizes a JSON file with the keys sorted and indentation standardized.</p>
-<p>This module was originally used to fix my settings.json from VSCode.
-:File: json_sorter.py
-:Author: Faris Chugthai
-:Email: <a class="reference external" href="mailto:farischugthai&#37;&#52;&#48;gmail&#46;com">farischugthai<span>&#64;</span>gmail<span>&#46;</span>com</a>
-:Github: <a class="reference external" href="https://github.com/farisachugthai">https://github.com/farisachugthai</a></p>
+<p>This module was originally used to fix my settings.json from VSCode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">File:</th><td class="field-body">json_sorter.py</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Faris Chugthai</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://github.com/farisachugthai">Github</a></p>
 <dl class="attribute">
 <dt id="pyutil.json_sorter.fobj">
 <code class="descclassname">pyutil.json_sorter.</code><code class="descname">fobj</code><a class="headerlink" href="#pyutil.json_sorter.fobj" title="Permalink to this definition">¶</a></dt>
@@ -786,7 +910,7 @@ yielded.  Any non-directories will be yielded as-is.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">pathlike_object</td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">path-like object</td>
 </tr>
 </tbody>
 </table>
@@ -796,30 +920,54 @@ yielded.  Any non-directories will be yielded as-is.</td>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">json_sorter</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
+<div class="section" id="bug-fixes">
+<h3><a class="toc-backref" href="#id27">Bug Fixes</a><a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h3>
+<p>Currently trying to run this module and running into errors.</p>
+<p>Currently got this.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">ins</span><span class="p">]</span> <span class="n">In</span> <span class="p">[</span><span class="mi">49</span><span class="p">]:</span> <span class="n">args</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">49</span><span class="p">]:</span> <span class="n">Namespace</span><span class="p">(</span><span class="n">WARNING</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">input</span><span class="o">=&lt;</span><span class="n">_io</span><span class="o">.</span><span class="n">TextIOWrapper</span>
+<span class="n">name</span><span class="o">=</span><span class="s1">&#39;/data/data/com.termux/files/home/projects/viconf/.config/nvim/settings.json&#39;</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="n">output</span><span class="o">=&lt;</span><span class="n">_io</span><span class="o">.</span><span class="n">TextIOWrapper</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&lt;stdout&gt;&#39;</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Wth is this warning=None business????</p>
+<dl class="function">
+<dt id="pyutil.json_sorter._parse_arguments">
+<code class="descclassname">pyutil.json_sorter.</code><code class="descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter._parse_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse arguments given by the user.</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="pyutil.json_sorter.main">
-<code class="descclassname">pyutil.json_sorter.</code><code class="descname">main</code><span class="sig-paren">(</span><em>fobj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.main" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reads in a JSON object, sorts it and then writes it back to a new file.</p>
+<code class="descclassname">pyutil.json_sorter.</code><code class="descname">main</code><span class="sig-paren">(</span><em>file_obj</em>, <em>output_file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='utf-8'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in a JSON object, sorts it and then writes it back to a new file.</p>
 <p>By writing to a new file, the user is allowed the opportunity to inspect
 the file and ensure that the desired results have been achieved.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fobj</strong> (<em>The file to read in</em>) – </td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_obj</strong> (<em>path-like object</em>) – The file to read in</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 </div>
+</div>
 <div class="section" id="module-pyutil.lazy_downloader">
-<span id="lazy-downloader-module"></span><h2><a class="toc-backref" href="#id28"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code> module</a><a class="headerlink" href="#module-pyutil.lazy_downloader" title="Permalink to this headline">¶</a></h2>
+<span id="lazy-downloader"></span><h2><a class="toc-backref" href="#id28"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a><a class="headerlink" href="#module-pyutil.lazy_downloader" title="Permalink to this headline">¶</a></h2>
 <p>Automates downloading plain text files from the Web.</p>
+<span class="target" id="module-pyutil.lazy_downloader"></span><p>As implemented currently, it will only correctly handle plain text; however,
+there are plans to implement the <code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetype</span></code> module and properly handle
+a much wider range of files.</p>
+<p>Both parameters are required parameters.</p>
+<p>If the filename already exists on the system it will NOT be overwritten,
+and the script will safely exit.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -828,72 +976,55 @@ the file and ensure that the desired results have been achieved.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">type url:</th><td class="field-body">str</td>
 </tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">param output_filename:</th></tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param <code class="docutils literal notranslate"><span class="pre">output_filename</span></code>:</th></tr>
 <tr class="field-odd field"><td>&#160;</td><td class="field-body">A path to write the downloaded content to.</td>
 </tr>
-<tr class="field-even field"><th class="field-name" colspan="2">type output_filename:</th></tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type <code class="docutils literal notranslate"><span class="pre">output_filename</span></code>:</th></tr>
 <tr class="field-even field"><td>&#160;</td><td class="field-body">path-like object</td>
 </tr>
 </tbody>
 </table>
-<div class="section" id="id6">
-<h3><a class="toc-backref" href="#id29">Usage</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lazy_downloader url output_filename
-</pre></div>
-</div>
-<p>Both parameters are required parameters.</p>
-<p>If the filename already exists on the system it will NOT be overwritten,
-and the script will safely exit.</p>
-<div class="admonition-todo admonition" id="index-15">
+<div class="admonition-todo admonition" id="index-14">
 <p class="first admonition-title">Todo</p>
-<p class="last">Can we check the MIME type and only import <code class="xref py py-mod docutils literal notranslate"><span class="pre">requests</span></code> if we know
-we’ll need to?</p>
+<p class="last">Can we check the MIME type and only import <code class="xref py py-mod docutils literal notranslate"><span class="pre">requests</span></code> if we know we’ll need to?</p>
 </div>
 <dl class="function">
 <dt id="pyutil.lazy_downloader.main">
 <code class="descclassname">pyutil.lazy_downloader.</code><code class="descname">main</code><span class="sig-paren">(</span><em>url</em>, <em>output_fname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download URL and write to disk.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>url</strong> (<em>str</em>) – A url to download</li>
-<li><strong>output_filename</strong> (<em>path-like object</em>) – A path to write the downloaded content to.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Figure out how to check that the file is plain text and not hit
-constant false positives</p>
+<div class="admonition-todo admonition" id="index-15">
+<p class="first admonition-title">Todo</p>
+<p class="last">Figure out how to check that the file is plain text and not hit constant false positives</p>
+</div>
 <div class="admonition-todo admonition" id="index-16">
 <p class="first admonition-title">Todo</p>
-<div class="last highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">]:</span>
+<div class="last highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">]:</span>
      <span class="k">pass</span>
 </pre></div>
 </div>
 </div>
-<p>Could add in a check. if the file is over a certain size use
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">:func:requests.res.iter_chunk()</span></code></p>
+<div class="admonition-todo admonition" id="index-17">
+<p class="first admonition-title">Todo</p>
+<p class="last">Could add in a check. if the file is over a certain size use <code class="xref py py-obj docutils literal notranslate"><span class="pre">:func:requests.res.iter_chunk()</span></code></p>
+</div>
 </dd></dl>
 
 </div>
-</div>
 <div class="section" id="module-pyutil.linktree">
-<span id="linktree-module"></span><h2><a class="toc-backref" href="#id30"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linktree</span></code> module</a><a class="headerlink" href="#module-pyutil.linktree" title="Permalink to this headline">¶</a></h2>
-<p>From Python3.6 Examples in Ubuntu repositories.</p>
+<span id="linktree"></span><h2><a class="toc-backref" href="#id29"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linktree</span></code></a><a class="headerlink" href="#module-pyutil.linktree" title="Permalink to this headline">¶</a></h2>
+<p>From the package “python3.6-examples” in the Ubuntu repositories.</p>
 <p>Minor modifications for <code class="xref py py-mod docutils literal notranslate"><span class="pre">flake8</span></code>, <code class="xref py py-mod docutils literal notranslate"><span class="pre">pydocstyle</span></code> etc.</p>
+<p>Mar 10, 2019:</p>
+<blockquote>
+<div>Added logging.</div></blockquote>
 <p>Make a copy of a directory tree with symbolic links to all files in the
 original tree.</p>
 <p>All symbolic links go to a special symbolic link at the top, so you
 can easily fix things if the original source tree moves.</p>
-<div class="section" id="id7">
-<h3><a class="toc-backref" href="#id31">Usage</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mklinks oldtree newtree
-</pre></div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mkreal</span></code></p>
 </div>
-<p>See also “mkreal”.</p>
 <dl class="function">
 <dt id="pyutil.linktree.linknames">
 <code class="descclassname">pyutil.linktree.</code><code class="descname">linknames</code><span class="sig-paren">(</span><em>old</em>, <em>new</em>, <em>link</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/linktree.html#linknames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.linktree.linknames" title="Permalink to this definition">¶</a></dt>
@@ -907,105 +1038,106 @@ can easily fix things if the original source tree moves.</p>
 </dd></dl>
 
 </div>
-</div>
-<div class="section" id="module-pyutil.math.gcd_iter">
-<span id="math-gcd-iter-module"></span><h2><a class="toc-backref" href="#id32"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math.gcd_iter</span></code> module</a><a class="headerlink" href="#module-pyutil.math.gcd_iter" title="Permalink to this headline">¶</a></h2>
-<p>Display an iterative method for determining the greatest common denom.</p>
+<div class="section" id="module-pyutil.magic_aid">
+<span id="magic-aid"></span><h2><a class="toc-backref" href="#id30"><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code></a><a class="headerlink" href="#module-pyutil.magic_aid" title="Permalink to this headline">¶</a></h2>
+<p>Create a script for searching through aliases.</p>
+<div class="section" id="ipython-aliases">
+<h3><a class="toc-backref" href="#id31">IPython Aliases</a><a class="headerlink" href="#ipython-aliases" title="Permalink to this headline">¶</a></h3>
+<p>By invoking <code class="docutils literal notranslate"><span class="pre">%rehashx</span></code> on <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>’s startup, there are
+regularly more than 1000 aliases in the namespace.</p>
+<p>This makes basic lookups slightly more involved.</p>
+<p>As I’ve ran this script twice in the last 2 days I figured time to save it.</p>
+<dl class="function">
+<dt id="pyutil.magic_aid.inspector">
+<code class="descclassname">pyutil.magic_aid.</code><code class="descname">inspector</code><span class="sig-paren">(</span><em>char</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/magic_aid.html#inspector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.magic_aid.inspector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do a simple search for aliased names in <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
+<p>This function independently initializes IPython so that it can be
+easily imported and run.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">File:</th><td class="field-body">gcd_iter.py</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>char</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Character to search through available magics for.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Faris Chugthai</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>results</strong> – All matching magics</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Github:</th><td class="field-body"><a class="reference external" href="https://github.com/farisachugthai">https://github.com/farisachugthai</a></td>
-</tr>
-</tbody>
-</table>
-<p>Jan 17, 2019:</p>
-<blockquote>
-<div>Just added in <code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> so that we accept input from the user.</div></blockquote>
-<div class="admonition-todo admonition" id="index-17">
-<p class="first admonition-title">Todo</p>
-<p>Let’s think about <code class="docutils literal notranslate"><span class="pre">gcd(9,</span> <span class="pre">12)</span></code>. It returned 6.
-<code class="docutils literal notranslate"><span class="pre">a</span></code> decrements and then when it gets to 6, 12 % 6 == 0. So it works.</p>
-<p class="last">You need to save the original values of both variables in tmp vars
-and then when you run the <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">a</span> <span class="pre">%</span> <span class="pre">b</span> <span class="pre">==</span> <span class="pre">0</span></code>, do that in the form of
-<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">a</span> <span class="pre">%</span> <span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">original_b</span> <span class="pre">%</span> <span class="pre">b</span> <span class="pre">==</span> <span class="pre">0</span></code> then you’re good.</p>
-</div>
-<dl class="function">
-<dt id="pyutil.math.gcd_iter.gcd_iter">
-<code class="descclassname">pyutil.math.gcd_iter.</code><code class="descname">gcd_iter</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/math/gcd_iter.html#gcd_iter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.math.gcd_iter.gcd_iter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find the greatest common denominator with 2 arbitrary integers.</p>
-</dd></dl>
-
-</div>
-<div class="section" id="module-pyutil.math.gcd_recur">
-<span id="math-gcd-recur-module"></span><h2><a class="toc-backref" href="#id33"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math.gcd_recur</span></code> module</a><a class="headerlink" href="#module-pyutil.math.gcd_recur" title="Permalink to this headline">¶</a></h2>
-<p>Find the greatest common denominator using a slightly different algorithm.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">File:</th><td class="field-body">gcd_recur.py</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Faris Chugthai</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Github:</th><td class="field-body"><a class="reference external" href="https://github.com/farisachugthai">https://github.com/farisachugthai</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of strs</td>
 </tr>
 </tbody>
 </table>
-<dl class="function">
-<dt id="pyutil.math.gcd_recur.gcd_recur">
-<code class="descclassname">pyutil.math.gcd_recur.</code><code class="descname">gcd_recur</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/math/gcd_recur.html#gcd_recur"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.math.gcd_recur.gcd_recur" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find the greatest common denominator with 2 arbitrary integers.</p>
 </dd></dl>
 
+</div>
 </div>
 <div class="section" id="module-pyutil.mv_to_repo">
-<span id="mv-to-repo-module"></span><h2><a class="toc-backref" href="#id34"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mv_to_repo</span></code> module</a><a class="headerlink" href="#module-pyutil.mv_to_repo" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="module-`mv_to_repo`">
-<span id="mv-to-repo"></span><h3><a class="toc-backref" href="#id35"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a><a class="headerlink" href="#module-`mv_to_repo`" title="Permalink to this headline">¶</a></h3>
-<p>This is a script I’ve been using for the better part of a year, so while
-the docstring formatting isn’t consistent and there are a couple odd sections,
-this script has served a very utilitiarian purpose.</p>
+<span id="mv-to-repo"></span><h2><a class="toc-backref" href="#id32"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a><a class="headerlink" href="#module-pyutil.mv_to_repo" title="Permalink to this headline">¶</a></h2>
+<p>Move files from the home directory to the dotfiles repo.</p>
+<span class="target" id="module-`mv_to_repo`"></span><p>This is a script I’ve been using for the better part of a year, so while
+the docstring formatting isn’t consistent and there are a couple odd
+sections, this script has served a very utilitiarian purpose.</p>
 <p>May refactor one day. But it continues to work.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This module assumes a Unix OS and a python interpreter above version 3.4.</p>
+</div>
 <dl class="function">
 <dt id="pyutil.mv_to_repo.backup_file">
 <code class="descclassname">pyutil.mv_to_repo.</code><code class="descname">backup_file</code><span class="sig-paren">(</span><em>src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/mv_to_repo.html#backup_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.mv_to_repo.backup_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Backs up file ‘src’</p>
+<dd><p>Backs up file <code class="docutils literal notranslate"><span class="pre">src</span></code>. Utilizes <a class="reference external" href="https://docs.python.org/3/library/shutil.html#shutil.copy2" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">shutil.copy2()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – File to backup</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.mv_to_repo.main">
 <code class="descclassname">pyutil.mv_to_repo.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/mv_to_repo.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.mv_to_repo.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dispatch the remaining implementation of the module.</p>
-<p>Determine if a file name is in the current directory or absolute path.
-Then set up a relative path from $HOME. Use the root of the repo as the new
-root and move the file there, all while creating directories and backups.</p>
-<p>Runs checks, calls func to backup file ‘src’, moves it to the dotfiles
+<p>Determine if a file name is in the current directory or absolute path.</p>
+<p>Then set up a relative path from <code class="docutils literal notranslate"><span class="pre">$HOME</span></code>. Use the root of the repo
+as the new root and move the file there, all while creating
+directories and backups.</p>
+<p>Runs checks, calls func to backup file <code class="xref py py-obj docutils literal notranslate"><span class="pre">src</span></code>, moves it to the dotfiles
 repo and symlinks it.
-Moves file to a hardcoded path but will be generalized to take as an argument.</p>
+Moves file to a hardcoded path but will be generalized to take as an
+argument.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>of file to backup</strong><strong>, </strong><strong>move and symlink.</strong> (<em>Name</em>) – </td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of file to backup, move and symlink.</li>
+<li><strong>Assumes</strong> – </li>
+<li><strong>-------</strong> – User runs the script from inside the folder of the file they want to
+move.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>Assumes:</dt>
-<dd>User runs the script from inside the folder of the file they want to
-move.</dd>
-</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.mv_to_repo.repo_dir_check">
 <code class="descclassname">pyutil.mv_to_repo.</code><code class="descname">repo_dir_check</code><span class="sig-paren">(</span><em>dest</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/mv_to_repo.html#repo_dir_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.mv_to_repo.repo_dir_check" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check that the directory is in the repository and make one otherwise.</p>
+<p><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir">Useful info about mkdir</a>:</p>
+<blockquote>
+<div>To mimic behavior of <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">-p</span></code>, use flags <code class="docutils literal notranslate"><span class="pre">parents=True</span></code> and
+<code class="docutils literal notranslate"><span class="pre">exists_ok=True</span></code></div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Checks that the file to move has a corresponding directory in the repo</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -1015,14 +1147,13 @@ move.</dd>
 </dd></dl>
 
 </div>
-</div>
 <div class="section" id="module-pyutil.nvim_profiling">
-<span id="pyutil-nvim-profiling-module"></span><h2><a class="toc-backref" href="#id36"><a class="reference internal" href="#module-pyutil.nvim_profiling" title="pyutil.nvim_profiling"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyutil.nvim_profiling</span></code></a> module</a><a class="headerlink" href="#module-pyutil.nvim_profiling" title="Permalink to this headline">¶</a></h2>
+<span id="nvim-profiling"></span><h2><a class="toc-backref" href="#id33"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a><a class="headerlink" href="#module-pyutil.nvim_profiling" title="Permalink to this headline">¶</a></h2>
 <p>Automate profiling nvim.</p>
 <p>This module currently assumes a lot but there could and should be a lot of
 ways to do this.</p>
 <p>However we haven’t implemented the important part nor have we began
-utilizing <code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code>.</p>
+utilizing <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a>.</p>
 <p>Then as we keep going we can import <code class="xref py py-mod docutils literal notranslate"><span class="pre">pynvim</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">pynvim.attach()</span></code>
 and possibly run this inside of nvim?.</p>
 <p>Actually that might be where we want to start.</p>
@@ -1036,6 +1167,26 @@ and possibly run this inside of nvim?.</p>
 </pre></div>
 </div>
 <p>Or something to that effect.</p>
+<p>Feb 28, 2019
+Nice intuition man. Look what I found today.:</p>
+<div class="highlight-vim notranslate"><div class="highlight"><pre><span></span>stdpath<span class="p">(</span>{what}<span class="p">)</span>                 *stdpath<span class="p">()</span>* *E6100*
+Returns <span class="p">|</span>standard<span class="p">-</span><span class="nb">path</span><span class="p">|</span> locations of various default <span class="k">files</span> and directories.
+
+{what}       Type    Description <span class="p">~</span>
+cache        String  Cache <span class="nb">directory</span>. Arbitrary temporary
+                     storage <span class="k">for</span> plugins<span class="p">,</span> etc.
+config       String  <span class="nb">User</span> configuration <span class="nb">directory</span>. The
+                     <span class="p">|</span>init.<span class="k">vim</span><span class="p">|</span> <span class="k">is</span> stored here.
+config_dirs  List    Additional configuration directories.
+data         String  <span class="nb">User</span> data <span class="nb">directory</span>. The <span class="p">|</span>shada<span class="p">-</span><span class="k">file</span><span class="p">|</span>
+                     <span class="k">is</span> stored here.
+data_dirs    List    Additional data directories.
+
+Example:
+    :echo stdpath<span class="p">(</span><span class="s2">&quot;config&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Outputs <a class="reference external" href="~/.config/nvim">~/.config/nvim</a>. So that should work.</p>
 <dl class="function">
 <dt id="pyutil.nvim_profiling.find_init_files">
 <code class="descclassname">pyutil.nvim_profiling.</code><code class="descname">find_init_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#find_init_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.find_init_files" title="Permalink to this definition">¶</a></dt>
@@ -1081,34 +1232,30 @@ to check ~/.config/nvim and check whether we’re on windows or not</li>
 <dl class="function">
 <dt id="pyutil.nvim_profiling.output_results">
 <code class="descclassname">pyutil.nvim_profiling.</code><code class="descname">output_results</code><span class="sig-paren">(</span><em>output_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#output_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.output_results" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Checks that an directory named profiling exists.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-pyutil.ptags">
-<span id="ptags-module"></span><h2><a class="toc-backref" href="#id37"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code> module</a><a class="headerlink" href="#module-pyutil.ptags" title="Permalink to this headline">¶</a></h2>
+<span id="ptags"></span><h2><a class="toc-backref" href="#id34"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code></a><a class="headerlink" href="#module-pyutil.ptags" title="Permalink to this headline">¶</a></h2>
 <p>Create a tags file for Python programs, usable with vi.</p>
-<dl class="docutils">
-<dt>Tagged are:</dt>
-<dd><ul class="first last simple">
+<p>Currently uses a regex to create a tags file.</p>
+<div class="section" id="files-to-tag">
+<h3><a class="toc-backref" href="#id35">Files to tag</a><a class="headerlink" href="#files-to-tag" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
 <li>functions (even inside other defs or classes)</li>
 <li>classes</li>
 <li>filenames</li>
 </ul>
-</dd>
-</dl>
 <p>Warns about files it cannot open.</p>
 <p>No warnings about duplicate tags.</p>
 <p>Snagged from the scripts dir in python3.6-examples.</p>
-<dl class="docutils">
-<dt>TODO::</dt>
-<dd><p class="first">Add docstrings.
-Use ipdb and step through while watching the tags var.
-Initially it was defined outside the ifmain loop.</p>
-<p class="last">I moved it, but without the global keyword I don’t get how any changes
-to tags in treat_file will propogate back to main.</p>
-</dd>
-</dl>
-<p>Otherwise add in pep257 compliant params. Try different styles and see what you like.</p>
+<div class="admonition-todo admonition" id="index-19">
+<p class="first admonition-title">Todo</p>
+<p class="last">Use ipdb and step through while watching the tags var.</p>
+</div>
+<p>Otherwise add in <a class="reference external" href="https://www.python.org/dev/peps/pep-0257">PEP 257</a> compliant params.
+Try different styles and see what you like.</p>
 <dl class="function">
 <dt id="pyutil.ptags.main">
 <code class="descclassname">pyutil.ptags.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/ptags.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ptags.main" title="Permalink to this definition">¶</a></dt>
@@ -1119,23 +1266,35 @@ to tags in treat_file will propogate back to main.</p>
 <dt id="pyutil.ptags.treat_file">
 <code class="descclassname">pyutil.ptags.</code><code class="descname">treat_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/ptags.html#treat_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ptags.treat_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find usable matches for tags file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>path-like object</em>) – File to generate tags from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>None</strong></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
+</div>
 <div class="section" id="module-pyutil.rclone">
-<span id="rclone-module"></span><h2><a class="toc-backref" href="#id38"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code> module</a><a class="headerlink" href="#module-pyutil.rclone" title="Permalink to this headline">¶</a></h2>
+<span id="rclone"></span><h2><a class="toc-backref" href="#id36"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code></a><a class="headerlink" href="#module-pyutil.rclone" title="Permalink to this headline">¶</a></h2>
 <p>Rewriting rclone.sh as a python module.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rclone.py src dst
 </pre></div>
 </div>
-<div class="section" id="requires">
-<h3><a class="toc-backref" href="#id39">Requires</a><a class="headerlink" href="#requires" title="Permalink to this headline">¶</a></h3>
-<p>rclone</p>
-<div class="admonition-todo admonition" id="index-19">
+<p class="rubric">Requires</p>
+<p>rclone, a Golang package.</p>
+<div class="admonition-todo admonition" id="index-20">
 <p class="first admonition-title">Todo</p>
-<ul class="simple">
+<ul class="last simple">
 <li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">args</span></code> is used as a parameter to both <code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.run()</span></code></dt>
+<dt><code class="docutils literal notranslate"><span class="pre">args</span></code> is used as a parameter to both <code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser()</span></code> and <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.run" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.run()</span></code></a></dt>
 <dd><ul class="first last">
 <li>Switch the name for one of them as this’ll get confusing quickly.</li>
 </ul>
@@ -1145,20 +1304,34 @@ to tags in treat_file will propogate back to main.</p>
 <li>Set up a simple single use case backup.</li>
 <li>Add <code class="xref py py-func docutils literal notranslate"><span class="pre">collections.ChainMap()</span></code> to set precedence of backupdir.</li>
 <li>Add in multiple invocations of rclone and create args to reflect use cases.</li>
-<li>Expand <code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> usage with <code class="xref py py-func docutils literal notranslate"><span class="pre">argparse.fromfile_prefix_chars()</span></code></li>
+<li>Expand <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> usage with <code class="xref py py-func docutils literal notranslate"><span class="pre">argparse.fromfile_prefix_chars()</span></code> to emulate rsync’s file input.</li>
 </ul>
-<blockquote class="last">
-<div>to emulate rsync’s file input.</div></blockquote>
 </div>
+<dl class="function">
+<dt id="pyutil.rclone._dir_checker">
+<code class="descclassname">pyutil.rclone.</code><code class="descname">_dir_checker</code><span class="sig-paren">(</span><em>dir_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#_dir_checker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone._dir_checker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that necessary directories exist.</p>
+<p>If the default <code class="docutils literal notranslate"><span class="pre">dst</span></code> doesn’t exist, definitely create it.
+If the user provided <code class="docutils literal notranslate"><span class="pre">src</span></code> doesn’t exist, crash without making one.</p>
+<p>It’s more likely that they typed the src dir incorrectly rather than
+running the script aware of the fact that it is nonexistent.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.rclone._parse_arguments">
+<code class="descclassname">pyutil.rclone.</code><code class="descname">_parse_arguments</code><span class="sig-paren">(</span><em>cwd=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone._parse_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse user-given arguments.</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="pyutil.rclone.rclone_base_case">
 <code class="descclassname">pyutil.rclone.</code><code class="descname">rclone_base_case</code><span class="sig-paren">(</span><em>src</em>, <em>dst</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#rclone_base_case"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.rclone_base_case" title="Permalink to this definition">¶</a></dt>
 <dd><p>Noop. Simply here to track the best and most general command to use.</p>
-<p>For example, –follow is a flag that has conditionals associated it with it.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">--follow</span></code> is a flag that has conditionals associated it with it.</p>
 <p>There are situations in which one wants to follow symlinks and others
 that they don’t.</p>
 <p>This command assumes a use case and configures it rclone for it properly.</p>
-<div class="admonition-todo admonition" id="index-20">
+<div class="admonition-todo admonition" id="index-21">
 <p class="first admonition-title">Todo</p>
 <p class="last">rclone takes an argument for user-agent</p>
 </div>
@@ -1167,8 +1340,8 @@ that they don’t.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>src</strong> (<em>path-like object</em>) – directory to clone files from</li>
-<li><strong>dst</strong> (<em>path-like object</em>) – destination to send files to. Can be configured as a local directory,
+<li><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – directory to clone files from</li>
+<li><strong>dst</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – destination to send files to. Can be configured as a local directory,
 a dropbox directory, a google drive folder or a google cloud storage
 bucket among many other things.</li>
 </ul>
@@ -1177,7 +1350,92 @@ bucket among many other things.</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.rclone.rclone_follow">
+<code class="descclassname">pyutil.rclone.</code><code class="descname">rclone_follow</code><span class="sig-paren">(</span><em>dst</em>, <em>src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#rclone_follow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.rclone_follow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Follow symlinks.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.rclone.run">
+<code class="descclassname">pyutil.rclone.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the required command in a subshell.</p>
+<p>First the command is splited used typical shell grammer.</p>
+<p>A new process is created, and from the resulting subprocess object,
+the <code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.Popen().wait()</span></code>.</p>
+<p>This function returns the return code of split <code class="docutils literal notranslate"><span class="pre">cmd</span></code>, so any
+non-zero value will lead to a <code class="docutils literal notranslate"><span class="pre">SystemExit</span></code> with a passed value
+of <code class="docutils literal notranslate"><span class="pre">returncode</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The command to be called</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>process.returncode</strong> – The returncode from the process.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyutil.strip_space">
+<span id="strip-space"></span><h2><a class="toc-backref" href="#id37"><code class="xref py py-mod docutils literal notranslate"><span class="pre">strip_space</span></code></a><a class="headerlink" href="#module-pyutil.strip_space" title="Permalink to this headline">¶</a></h2>
+<p>Strip only trailing whitespace from a file.</p>
+<p>Leading whitespace is significant in Python so don’t touch it.</p>
+<div class="section" id="python-requirement">
+<h3><a class="toc-backref" href="#id38">Python Requirement</a><a class="headerlink" href="#python-requirement" title="Permalink to this headline">¶</a></h3>
+<p>&lt;Python 3.4</p>
+</div>
+<div class="section" id="still-need-to-implement">
+<h3><a class="toc-backref" href="#id39">Still need to implement</a><a class="headerlink" href="#still-need-to-implement" title="Permalink to this headline">¶</a></h3>
+<p>Give some kind of undo option.
+Needs more file checks.</p>
+<dl class="function">
+<dt id="pyutil.strip_space.backup">
+<code class="descclassname">pyutil.strip_space.</code><code class="descname">backup</code><span class="sig-paren">(</span><em>src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/strip_space.html#backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.strip_space.backup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Backs up a file before doing anything.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>src</strong> (<em>file</em>) – File to strip trailing whitespace from. Backed up before anything.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.strip_space.strip_space">
+<code class="descclassname">pyutil.strip_space.</code><code class="descname">strip_space</code><span class="sig-paren">(</span><em>src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/strip_space.html#strip_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.strip_space.strip_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Strips all trailing whitespace out of a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src</strong> (<em>file</em>) – </li>
+<li><strong>to strip trailing whitespace from. Backed up before anything.</strong> (<em>File</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></p>
 </td>
 </tr>
 </tbody>
@@ -1186,42 +1444,8 @@ bucket among many other things.</li>
 
 </div>
 </div>
-<div class="section" id="script-helper-module">
-<h2><a class="toc-backref" href="#id40"><code class="xref py py-mod docutils literal notranslate"><span class="pre">script_helper</span></code> module</a><a class="headerlink" href="#script-helper-module" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-pyutil.strip_space">
-<span id="pyutil-strip-space"></span><h2><a class="toc-backref" href="#id41"><a class="reference internal" href="#module-pyutil.strip_space" title="pyutil.strip_space"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyutil.strip_space</span></code></a></a><a class="headerlink" href="#module-pyutil.strip_space" title="Permalink to this headline">¶</a></h2>
-<p>Strip only trailing whitespace from a file.</p>
-<p>Leading whitespace is significant in Python so don’t touch it.</p>
-<dl class="docutils">
-<dt>Requires::</dt>
-<dd>Python 3.4&gt;</dd>
-<dt>TODO::</dt>
-<dd>Give some kind of undo option.
-Needs more file checks.</dd>
-</dl>
-<p>WIP</p>
-<dl class="function">
-<dt id="pyutil.strip_space.backup">
-<code class="descclassname">pyutil.strip_space.</code><code class="descname">backup</code><span class="sig-paren">(</span><em>src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/strip_space.html#backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.strip_space.backup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Backs up a file before doing anything.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.strip_space.main">
-<code class="descclassname">pyutil.strip_space.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/strip_space.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.strip_space.main" title="Permalink to this definition">¶</a></dt>
-<dd><p>Setup all worker functions.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.strip_space.strip_space">
-<code class="descclassname">pyutil.strip_space.</code><code class="descname">strip_space</code><span class="sig-paren">(</span><em>src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/strip_space.html#strip_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.strip_space.strip_space" title="Permalink to this definition">¶</a></dt>
-<dd><p>Strips all trailing whitespace out of a file.</p>
-</dd></dl>
-
-</div>
 <div class="section" id="module-pyutil.sys_checks">
-<span id="sys-checks-module"></span><h2><a class="toc-backref" href="#id42"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code> module</a><a class="headerlink" href="#module-pyutil.sys_checks" title="Permalink to this headline">¶</a></h2>
+<span id="sys-checks"></span><h2><a class="toc-backref" href="#id40"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code></a><a class="headerlink" href="#module-pyutil.sys_checks" title="Permalink to this headline">¶</a></h2>
 <p>Module to check a user is utilizing the proper version of python.</p>
 <p>Even outside of the 2 to 3 incompatibilities, the standard library
 introduces new modules often enough that it’s useful to check.</p>
@@ -1235,7 +1459,7 @@ introduces new modules often enough that it’s useful to check.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 must_be_three.py
 </pre></div>
 </div>
-<div class="admonition-todo admonition" id="index-21">
+<div class="admonition-todo admonition" id="index-22">
 <p class="first admonition-title">Todo</p>
 <p class="last">Uh actually execute the above because now I’m interested…</p>
 </div>
@@ -1249,8 +1473,8 @@ nonsense names.</p>
 <dt id="pyutil.sys_checks.py_gt_exit">
 <code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_gt_exit</code><span class="sig-paren">(</span><em>min_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt_exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt_exit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check a user’s python version is higher than some floor value.</p>
-<p>For example, the <code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> was only introduced in python3.2.</p>
-<div class="admonition-todo admonition" id="index-22">
+<p>For example, the <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> was only introduced in python3.2.</p>
+<div class="admonition-todo admonition" id="index-23">
 <p class="first admonition-title">Todo</p>
 <p class="last">Possibly change API so funcs return a value on success.</p>
 </div>
@@ -1283,7 +1507,7 @@ nonsense names.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>max_py_version</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>tuple</em>) – The highest version of python that can be used</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>max_py_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – The highest version of python that can be used</td>
 </tr>
 </tbody>
 </table>
@@ -1297,9 +1521,23 @@ nonsense names.</p>
 
 </div>
 <div class="section" id="module-pyutil.wrap">
-<span id="wrap-module"></span><h2><a class="toc-backref" href="#id43"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code> module</a><a class="headerlink" href="#module-pyutil.wrap" title="Permalink to this headline">¶</a></h2>
-<p>Wrap text similarly to <code class="xref py py-func docutils literal notranslate"><span class="pre">textwrap.dedent()</span></code> but w/ multiple paragraphs</p>
-<p>From IPython.utils.text</p>
+<span id="wrap"></span><h2><a class="toc-backref" href="#id41"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code></a><a class="headerlink" href="#module-pyutil.wrap" title="Permalink to this headline">¶</a></h2>
+<p>Wrap text similarly to <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.dedent" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">textwrap.dedent()</span></code></a> but with multiple paragraphs.</p>
+<p>From <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.text.html#module-IPython.utils.text" title="(in IPython v7.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython.utils.text</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param todo:</th><td class="field-body">Text to modify</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type todo:</th><td class="field-body">path-like object</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">rtype:</th><td class="field-body">todo</td>
+</tr>
+</tbody>
+</table>
 <dl class="function">
 <dt id="pyutil.wrap.wrap_paragraphs">
 <code class="descclassname">pyutil.wrap.</code><code class="descname">wrap_paragraphs</code><span class="sig-paren">(</span><em>text</em>, <em>ncols=80</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/wrap.html#wrap_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.wrap.wrap_paragraphs" title="Permalink to this definition">¶</a></dt>
@@ -1310,9 +1548,17 @@ paragraphs, as separated by empty lines.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – todo</li>
+<li><strong>ncols</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – </li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list of complete paragraphs, wrapped to fill <code class="xref py py-obj docutils literal notranslate"><span class="pre">ncols</span></code> columns.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out_ps</strong> – list of complete paragraphs, wrapped to fill <code class="docutils literal notranslate"><span class="pre">ncols</span></code> columns.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of str</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1320,7 +1566,7 @@ paragraphs, as separated by empty lines.</p>
 
 </div>
 <div class="section" id="module-pyutil.yes_no_question">
-<span id="yes-no-question-module"></span><h2><a class="toc-backref" href="#id44"><code class="xref py py-mod docutils literal notranslate"><span class="pre">yes_no_question</span></code> module</a><a class="headerlink" href="#module-pyutil.yes_no_question" title="Permalink to this headline">¶</a></h2>
+<span id="yes-no-question"></span><h2><a class="toc-backref" href="#id42"><code class="xref py py-mod docutils literal notranslate"><span class="pre">yes_no_question</span></code></a><a class="headerlink" href="#module-pyutil.yes_no_question" title="Permalink to this headline">¶</a></h2>
 <p>Mod that shows an easy, consistent way to handle user input.</p>
 <dl class="function">
 <dt id="pyutil.yes_no_question.yes_no_question">
@@ -1328,9 +1574,6 @@ paragraphs, as separated by empty lines.</p>
 <dd><p>Continuing prompt the user until valid input is provided.</p>
 </dd></dl>
 
-</div>
-<div class="section" id="module-pyutil.zillow">
-<span id="zillow-module"></span><h2><a class="toc-backref" href="#id45"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zillow</span></code> module</a><a class="headerlink" href="#module-pyutil.zillow" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -1351,51 +1594,48 @@ paragraphs, as separated by empty lines.</p>
 
 
 <h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="math.html">math</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">API</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.backup_nt_and_posix"><code class="docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.batch_renamer"><code class="docutils literal notranslate"><span class="pre">batch_renamer</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.check_IP"><code class="docutils literal notranslate"><span class="pre">check_IP</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.conda_export"><code class="docutils literal notranslate"><span class="pre">conda_export</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dir3"><code class="docutils literal notranslate"><span class="pre">dir3</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dir_cleaner"><code class="docutils literal notranslate"><span class="pre">dir_cleaner</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dlink"><code class="docutils literal notranslate"><span class="pre">dlink</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dlink2"><code class="docutils literal notranslate"><span class="pre">dlink2</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.env"><code class="docutils literal notranslate"><span class="pre">env</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.env_checks"><code class="docutils literal notranslate"><span class="pre">env_checks</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.find_pics"><code class="docutils literal notranslate"><span class="pre">find_pics</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.inspect_module"><code class="docutils literal notranslate"><span class="pre">inspect_module</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.itersrc"><code class="docutils literal notranslate"><span class="pre">itersrc</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.json_sorter"><code class="docutils literal notranslate"><span class="pre">json_sorter</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.lazy_downloader"><code class="docutils literal notranslate"><span class="pre">lazy_downloader</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.linktree"><code class="docutils literal notranslate"><span class="pre">linktree</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.math.gcd_iter"><code class="docutils literal notranslate"><span class="pre">math.gcd_iter</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.math.gcd_recur"><code class="docutils literal notranslate"><span class="pre">math.gcd_recur</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.mv_to_repo"><code class="docutils literal notranslate"><span class="pre">mv_to_repo</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.nvim_profiling"><code class="docutils literal notranslate"><span class="pre">pyutil.nvim_profiling</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.ptags"><code class="docutils literal notranslate"><span class="pre">ptags</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.rclone"><code class="docutils literal notranslate"><span class="pre">rclone</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#script-helper-module"><code class="docutils literal notranslate"><span class="pre">script_helper</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.strip_space"><code class="docutils literal notranslate"><span class="pre">pyutil.strip_space</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.sys_checks"><code class="docutils literal notranslate"><span class="pre">sys_checks</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.wrap"><code class="docutils literal notranslate"><span class="pre">wrap</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.yes_no_question"><code class="docutils literal notranslate"><span class="pre">yes_no_question</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.zillow"><code class="docutils literal notranslate"><span class="pre">zillow</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.backup_nt_and_posix"><code class="docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.batch_renamer"><code class="docutils literal notranslate"><span class="pre">batch_renamer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.check_IP"><code class="docutils literal notranslate"><span class="pre">check_IP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.conda_export"><code class="docutils literal notranslate"><span class="pre">conda_export</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dir3"><code class="docutils literal notranslate"><span class="pre">dir3</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dir_cleaner"><code class="docutils literal notranslate"><span class="pre">dir_cleaner</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dlink"><code class="docutils literal notranslate"><span class="pre">dlink</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dlink2"><code class="docutils literal notranslate"><span class="pre">dlink2</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.env_checks"><code class="docutils literal notranslate"><span class="pre">env_checks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.find_pics"><code class="docutils literal notranslate"><span class="pre">find_pics</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.g"><code class="docutils literal notranslate"><span class="pre">g</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.inspect_module"><code class="docutils literal notranslate"><span class="pre">inspect_module</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.itersrc"><code class="docutils literal notranslate"><span class="pre">itersrc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.json_sorter"><code class="docutils literal notranslate"><span class="pre">json_sorter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.lazy_downloader"><code class="docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.linktree"><code class="docutils literal notranslate"><span class="pre">linktree</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.magic_aid"><code class="docutils literal notranslate"><span class="pre">magic_aid</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.mv_to_repo"><code class="docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.nvim_profiling"><code class="docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.ptags"><code class="docutils literal notranslate"><span class="pre">ptags</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.rclone"><code class="docutils literal notranslate"><span class="pre">rclone</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.strip_space"><code class="docutils literal notranslate"><span class="pre">strip_space</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.sys_checks"><code class="docutils literal notranslate"><span class="pre">sys_checks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.wrap"><code class="docutils literal notranslate"><span class="pre">wrap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.yes_no_question"><code class="docutils literal notranslate"><span class="pre">yes_no_question</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="numpydoc.html" title="previous chapter"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+      <li>Previous: <a href="math.html" title="previous chapter">math</a></li>
+      <li>Next: <a href="todo.html" title="next chapter">TODO</a></li>
   </ul></li>
 </ul>
 </div>
@@ -1425,66 +1665,6 @@ paragraphs, as separated by empty lines.</p>
 
 
 
-
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">API</span></code></a><ul>
-<li><a class="reference internal" href="#module-pyutil.backup_nt_and_posix"><code class="docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code> module</a><ul>
-<li><a class="reference internal" href="#motivation">Motivation</a></li>
-<li><a class="reference internal" href="#usage">Usage</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-pyutil.batch_renamer"><code class="docutils literal notranslate"><span class="pre">batch_renamer</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.check_IP"><code class="docutils literal notranslate"><span class="pre">check_IP</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.conda_export"><code class="docutils literal notranslate"><span class="pre">conda_export</span></code> module</a><ul>
-<li><a class="reference internal" href="#assumes">Assumes</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-pyutil.dir3"><code class="docutils literal notranslate"><span class="pre">dir3</span></code> module</a><ul>
-<li><a class="reference internal" href="#background">Background</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-pyutil.dir_cleaner"><code class="docutils literal notranslate"><span class="pre">dir_cleaner</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.dlink"><code class="docutils literal notranslate"><span class="pre">dlink</span></code> module</a><ul>
-<li><a class="reference internal" href="#id4">Usage</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-pyutil.dlink2"><code class="docutils literal notranslate"><span class="pre">dlink2</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.env"><code class="docutils literal notranslate"><span class="pre">env</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.env_checks"><code class="docutils literal notranslate"><span class="pre">env_checks</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.find_pics"><code class="docutils literal notranslate"><span class="pre">find_pics</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.inspect_module"><code class="docutils literal notranslate"><span class="pre">inspect_module</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.itersrc"><code class="docutils literal notranslate"><span class="pre">itersrc</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.json_sorter"><code class="docutils literal notranslate"><span class="pre">json_sorter</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.lazy_downloader"><code class="docutils literal notranslate"><span class="pre">lazy_downloader</span></code> module</a><ul>
-<li><a class="reference internal" href="#id6">Usage</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-pyutil.linktree"><code class="docutils literal notranslate"><span class="pre">linktree</span></code> module</a><ul>
-<li><a class="reference internal" href="#id7">Usage</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-pyutil.math.gcd_iter"><code class="docutils literal notranslate"><span class="pre">math.gcd_iter</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.math.gcd_recur"><code class="docutils literal notranslate"><span class="pre">math.gcd_recur</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.mv_to_repo"><code class="docutils literal notranslate"><span class="pre">mv_to_repo</span></code> module</a><ul>
-<li><a class="reference internal" href="#module-`mv_to_repo`"><code class="docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-pyutil.nvim_profiling"><code class="docutils literal notranslate"><span class="pre">pyutil.nvim_profiling</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.ptags"><code class="docutils literal notranslate"><span class="pre">ptags</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.rclone"><code class="docutils literal notranslate"><span class="pre">rclone</span></code> module</a><ul>
-<li><a class="reference internal" href="#requires">Requires</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#script-helper-module"><code class="docutils literal notranslate"><span class="pre">script_helper</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.strip_space"><code class="docutils literal notranslate"><span class="pre">pyutil.strip_space</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.sys_checks"><code class="docutils literal notranslate"><span class="pre">sys_checks</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.wrap"><code class="docutils literal notranslate"><span class="pre">wrap</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.yes_no_question"><code class="docutils literal notranslate"><span class="pre">yes_no_question</span></code> module</a></li>
-<li><a class="reference internal" href="#module-pyutil.zillow"><code class="docutils literal notranslate"><span class="pre">zillow</span></code> module</a></li>
-</ul>
-</li>
-</ul>
 
         </div>
       </div>

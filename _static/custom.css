@@ -3,8 +3,8 @@
 /* -- page layout ----------------------------------------------------------- */
 
 body {
-    font-family: Georgia, serif;
-    font-size: 17px;
+    font-family: 'Fira Code', serif;
+    font-size: 14px;
     background-color: #fff;
     color: #000;
     margin: 0;
@@ -327,7 +327,7 @@ p.admonition-title:after {
 }
 
 pre, tt, code {
-    font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+    font-family: 'FiraCode', 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
     font-size: 0.9em;
 }
 

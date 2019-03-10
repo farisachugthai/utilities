@@ -9,6 +9,7 @@
     <title>pyutil.json_sorter &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -38,52 +39,126 @@
 <span class="sd">&quot;&quot;&quot;Reorganizes a JSON file with the keys sorted and indentation standardized.</span>
 
 <span class="sd">This module was originally used to fix my settings.json from VSCode.</span>
+
 <span class="sd">:File: json_sorter.py</span>
 <span class="sd">:Author: Faris Chugthai</span>
-<span class="sd">:Email: farischugthai@gmail.com</span>
-<span class="sd">:Github: https://github.com/farisachugthai</span>
 
-<span class="sd">Attributes:</span>
+<span class="sd">`Github &lt;https://github.com/farisachugthai&gt;`_</span>
 
-<span class="sd">    fobj (pathlike_object): The file to fix.</span>
+<span class="sd">Attributes</span>
+<span class="sd">----------</span>
+<span class="sd">fobj : path-like object</span>
+<span class="sd">    The file to fix.</span>
 
-<span class="sd">Example:</span>
 
-<span class="sd">    .. code:: bash</span>
+<span class="sd">Example</span>
+<span class="sd">-------</span>
+<span class="sd">.. code:: bash</span>
 
-<span class="sd">        python3 json_sorter.py /path/to/file.json</span>
+<span class="sd">    python3 json_sorter.py /path/to/file.json</span>
+
+
+<span class="sd">Bug Fixes</span>
+<span class="sd">---------</span>
+<span class="sd">Currently trying to run this module and running into errors.</span>
+
+<span class="sd">Currently got this.</span>
+
+
+<span class="sd">.. code-block:: python3</span>
+
+<span class="sd">    [ins] In [49]: args</span>
+<span class="sd">    Out[49]: Namespace(WARNING=None, input=&lt;_io.TextIOWrapper</span>
+<span class="sd">    name=&#39;/data/data/com.termux/files/home/projects/viconf/.config/nvim/settings.json&#39; mode=&#39;r&#39; encoding=&#39;UTF-8&#39;&gt;,</span>
+<span class="sd">    output=&lt;_io.TextIOWrapper name=&#39;&lt;stdout&gt;&#39; mode=&#39;w&#39; encoding=&#39;utf-8&#39;&gt;)</span>
+
+
+<span class="sd">Wth is this warning=None business????</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
+<span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;WARNING&#39;</span>
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.json_sorter.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">fobj</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Reads in a JSON object, sorts it and then writes it back to a new file.</span>
+
+<div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../api.html#pyutil.json_sorter._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Parse arguments given by the user.&quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;input&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;File to parse.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-o&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--output&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">),</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;File to write to. Defaults to stdout.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-l&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--log_level&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="n">log_level</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="s1">&#39;INFO&#39;</span><span class="p">,</span> <span class="s1">&#39;WARNING&#39;</span><span class="p">,</span> <span class="s1">&#39;ERROR&#39;</span><span class="p">,</span> <span class="s1">&#39;CRITICAL&#39;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set the logging level&#39;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="c1"># Actually can&#39;t do this</span>
+    <span class="c1"># if len(args) == 1:</span>
+    <span class="c1">#     parser.print_help()</span>
+    <span class="c1">#     sys.exit()</span>
+
+    <span class="k">return</span> <span class="n">args</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.json_sorter.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">file_obj</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read in a JSON object, sorts it and then writes it back to a new file.</span>
 
 <span class="sd">    By writing to a new file, the user is allowed the opportunity to inspect</span>
 <span class="sd">    the file and ensure that the desired results have been achieved.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    fobj: The file to read in</span>
+<span class="sd">    ``file_obj`` : path-like object</span>
+<span class="sd">        The file to read in</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    None</span>
 
+
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fobj</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_obj</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">settings</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 
     <span class="n">json_str</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;settings.test.json&#39;</span><span class="p">,</span> <span class="s1">&#39;xt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s1">&#39;xt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json_str</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">fobj</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">main</span><span class="p">(</span><span class="n">fobj</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">log_level</span><span class="p">:</span>
+        <span class="n">log_level</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">log_level</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">log_level</span><span class="p">)</span>
+
+    <span class="n">fobj</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">input</span>
+
+    <span class="n">o_file</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">):</span>
+        <span class="n">main</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">o_file</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -103,13 +178,11 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
 
 <div class="relations">

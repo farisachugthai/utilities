@@ -3,7 +3,7 @@
 """Symlink all of the files in one directory into another.
 
 ..module:: dlink
-    synopsis: Symlinks a directory of files from another.
+    :synopsis: Symlinks a directory of files from another.
 
 Synopsis
 --------
@@ -12,7 +12,7 @@ This is quite easily one of my most frequently used scripts.
 If we're given 2 args, treat it with the same syntax as ``ln -s`` or
 :func:`os.symlink()`
 
-.. _dlink-usage:
+.. _dlink-usage::
 
 Usage
 ------

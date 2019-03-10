@@ -6,7 +6,7 @@
 Welcome to utilities's documentation!
 =====================================
 
-.. include:: readme.rst
+.. include:: ../README
 
 
 Table of Contents
@@ -19,6 +19,7 @@ Table of Contents
    tutorial
    numpydoc
    api
+   todo
 
 
 Indices and tables

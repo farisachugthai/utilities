@@ -1,10 +1,11 @@
+====
 TODO
-========
+====
 Not too dissimilar to the world's worst kanban board, this file is going
 to be a manually created index for every **TODO** I write in this repo.
 
 docs
------
+----
 It's not much but the docs build. However your readme file still renders as
 markdown so you'll probably wanna change the file extension there and rewrite
 it.
@@ -12,7 +13,7 @@ it.
 **02-06-19**
 
 syntax highlighting
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 Just like that they don't. As a mental note when the build works again try this
 

@@ -35,17 +35,18 @@ CONF_PATH = os.path.dirname(os.path.abspath('docs'))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 
-REQUIRED = ['pynvim', 'IPython', 'youtube_dl']
+REQUIRED = [
+    'pynvim', 'IPython', 'youtube_dl', 'requests', 'pygments', 'numpydoc',
+    'matplotlib'
+]
 
 EXTRAS = {
-    'develop': ['requests', 'flake8', 'flake8-rst', 'yapf'],
+    'develop': ['flake8', 'flake8-rst', 'yapf'],
     'docs': [
         'sphinx',
         # Project uses reStructuredText, so ensure that the docutils get
         # installed or upgraded on the target machine
         'docutils>=0.3',
-        'recommonmark',
-        'numpydoc'
     ]
 }
 
@@ -56,6 +57,7 @@ with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
 
 # Load the package's __version__.py module as a dictionary.
 about = {'__version__': '0.0.1'}
+
 # if not VERSION:
 #     try:
 #         with open(os.path.join(here, NAME, '__version__.py')) as f:

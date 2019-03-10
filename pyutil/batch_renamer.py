@@ -5,7 +5,7 @@
 .. module:: batch_renamer.py
 
 Largely argparse and doctest practice.
-From pydocs tutorials stdlib2 with some reformatting.
+From `pydocs tutorials stdlib2`_ with some reformatting.
 Still uses old style strings as a result.
 
 .. code-block:: python3
@@ -23,6 +23,8 @@ Still uses old style strings as a result.
 
 This would be quite an easy module to create unittests for IN ADDITION to the
 fact that you could add some fixtures in and learn that.
+
+.. _`pydocs tutorials stdlib2`: https://docs.python.org/3/tutorial/stdlib2.html#templating
 
 """
 import argparse
@@ -43,6 +45,7 @@ def fix_extension():
     """Rename files that have have the wrong filename extension.
 
     .. todo:: Fuck I didn't consider the case where there are 2 words separated by dots that we want to keep.
+
     """
     for i in os.listdir('.'):
         parts = i.split(sep='.')
@@ -55,7 +58,7 @@ def main(d):
 
     Parameters
     ----------
-    d : path-like object
+    d : str
         The directory to iterate over.
 
 
@@ -79,7 +82,7 @@ def batch_mover(pattern):
 
     Parameters
     ----------
-    pattern: str
+    pattern : str
         Pattern to check filenames for.
 
     Returns

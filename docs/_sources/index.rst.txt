@@ -9,10 +9,10 @@ Welcome to utilities's documentation!
 =====================================
 
 
-.. include:: ../README.rst
+Table of Contents
+-----------------
 
 .. toctree::
-   :caption: Table of Contents
    :name: mastertoc
    :maxdepth: 2
 

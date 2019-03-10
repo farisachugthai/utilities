@@ -2,6 +2,13 @@
 # -*- coding: utf-8 -*-
 """Find the greatest common denominator using a slightly different algorithm.
 
+
+Plot Examples
+-------------
+>>> import matplotlib.pyplot as plt
+>>> plt.plot([1,2,3],[4,5,6])
+>>> plt.show()
+
 """
 import sys
 

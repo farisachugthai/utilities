@@ -7,7 +7,7 @@
     rclone.py src dst
 
 
-.. rubric:: requires
+.. rubric:: Requires
 
 rclone, a Golang package.
 
@@ -24,7 +24,9 @@ rclone, a Golang package.
 
 """
 import argparse
+import logging
 import os
+import shlex
 import subprocess
 import sys
 
@@ -60,11 +62,45 @@ def _parse_arguments(cwd=None):
     return parser
 
 
+def run(cmd):
+    """Execute the required command in a subshell.
+
+    First the command is splited used typical shell grammer.
+
+    A new process is created, and from the resulting subprocess object,
+    the :func:`subprocess.Popen().wait()`.
+
+    This function returns the return code of split ``cmd``, so any
+    non-zero value will lead to a ``SystemExit`` with a passed value
+    of ``returncode``.
+
+    Parameters
+    ----------
+    cmd : str
+        The command to be called
+
+    Returns
+    -------
+    process.returncode : int
+        The returncode from the process.
+
+
+    """
+    cmd = shlex.split(cmd)
+    logging.debug("Cmd is: " + str(cmd))
+    process = subprocess.Popen(cmd)
+
+    if process.wait():
+        raise SystemExit(process.returncode)
+    else:
+        return process.returncode
+
+
 def _dir_checker(dir_):
     """Check that necessary directories exist.
 
-    If the default dst doesn't exist, definitely create it.
-    If the user provided src doesn't exist, crash without making one.
+    If the default ``dst`` doesn't exist, definitely create it.
+    If the user provided ``src`` doesn't exist, crash without making one.
 
     It's more likely that they typed the src dir incorrectly rather than
     running the script aware of the fact that it is nonexistent.
@@ -78,7 +114,7 @@ def _dir_checker(dir_):
 def rclone_base_case(src, dst):
     """Noop. Simply here to track the best and most general command to use.
 
-    For example, --follow is a flag that has conditionals associated it with it.
+    For example, ``--follow`` is a flag that has conditionals associated it with it.
 
     There are situations in which one wants to follow symlinks and others
     that they don't.
@@ -86,6 +122,7 @@ def rclone_base_case(src, dst):
     This command assumes a use case and configures it rclone for it properly.
 
     .. todo:: rclone takes an argument for user-agent
+
 
     Parameters
     ----------
@@ -104,7 +141,7 @@ def rclone_base_case(src, dst):
 
     """
     cmd = ['rclone', 'copy', '--update', '--track-renames', src, dst]
-    subprocess.run(cmd)
+    run(cmd)
 
 
 def rclone_follow(dst, src):
@@ -113,7 +150,7 @@ def rclone_follow(dst, src):
         'rclone', 'copy', '--update', '--track-renames'
         '--copy-links', src, dst
     ]
-    subprocess.run(cmd)
+    run(cmd)
 
 
 if __name__ == "__main__":

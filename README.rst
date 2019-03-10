@@ -45,7 +45,7 @@ below pyutil/ is in your PATH.
 For anyone using Windows 10, the Powershell installation will be slightly
 different; however, not tremendously.
 
-.. code-block:: ps1
+.. code-block:: console
 
    git clone https://github.com/farisachugthai/utilities
    # cd is aliased to Set-Location for most instances of Powershell; however in
@@ -62,26 +62,6 @@ different; however, not tremendously.
 .. ---------------------
 
 .. The documentation can be built as well. Commented out until the docs build more smoothly
-
-Usage
-------
-Modules can be used to:
-
-- `Back up directories.`_
-
-- `Automate the process of downloading plain-text files from the Internet.`_
-
-- `Automate downloading videos from YouTube.`_
-
-- `Symlink files recursively`_
-
-- `Inspect varying python modules.`_
-
-- `Introspect environment variables.`_
-
-- `Profiling nvim startup time.`_
-
-- `Strip trailing whitespace from a file.`_
 
 
 License

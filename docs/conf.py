@@ -35,17 +35,13 @@ import logging
 import os
 import sys
 
-from pygments.sphinxext import PygmentsDoc
-from numpydoc import numpydoc
-
-logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.WARNING)
 
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 SOURCE_CODE = os.path.join('..', 'pyutil')
 
-sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('.'))
 
 sys.path.insert(0, os.path.abspath('sphinxext'))
@@ -54,7 +50,9 @@ sys.path.insert(0, os.path.abspath(SOURCE_CODE))
 
 sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'math')))
 
-logging.debug("Path is currently: " + str(sys.path))
+print('\n'.join(sys.path))
+# logging.debug("Path is currently: " + .'\n'.join([i for i in sys.path[:]]))
+
 
 # -- Project information --------------------------------------------
 
@@ -91,8 +89,8 @@ extensions = [
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
     'matplotlib.sphinxext.plot_directive',
-    # 'pygments.sphinxext.PygmentsDoc',
     # 'numpydoc',
+    'magics',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -263,7 +261,7 @@ intersphinx_mapping = {
     'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
     'matplotlib': ('https://matplotlib.org', None),
     'python': ('https://docs.python.org/3/', None),
-    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
     'ipython': ('https://ipython.readthedocs.io/en/stable/', None)
 }
 

@@ -32,7 +32,8 @@ from sphinx.addnodes import pending_xref, desc_content
 if sphinx.__version__ < '1.0.1':
     raise RuntimeError("Sphinx 1.0.1 or newer is required")
 
-from .docscrape_sphinx import SphinxDocString
+from docscrape_sphinx import SphinxDocString
+from docscrape_sphinx import get_doc_object
 
 if sys.version_info[0] >= 3:
     sixu = lambda s: s
@@ -204,8 +205,7 @@ def setup(app, get_doc_object_=get_doc_object):
 
     app.setup_extension('sphinx.ext.autosummary')
 
-    metadata = {'version': __version__, 'parallel_read_safe': True}
-    return metadata
+    return
 
 
 # ------------------------------------------------------------------------------

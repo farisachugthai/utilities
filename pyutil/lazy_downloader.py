@@ -9,30 +9,22 @@ As implemented currently, it will only correctly handle plain text; however,
 there are plans to implement the :mod:`mimetype` module and properly handle
 a much wider range of files.
 
-
-Parameters
-----------
-url : str
-    A url to download
-
-``output_filename``: path-like object
-    A path to write the downloaded content to.
-
-
-.. _lazy-downloader-usage:
-Usage
-------
-.. code-block:: shell
-
-    lazy_downloader url output_filename
-
 Both parameters are required parameters.
 
 If the filename already exists on the system it will NOT be overwritten,
 and the script will safely exit.
 
+Parameters
+----------
+url : str
+    A url to download
+``output_filename``: path-like object
+    A path to write the downloaded content to.
 
-.. todo:: Can we check the MIME type and only import :mod:`requests` if we know we'll need to?
+
+.. todo::
+
+    Can we check the MIME type and only import :mod:`requests` if we know we'll need to?
 
 """
 import argparse
@@ -45,18 +37,9 @@ import requests
 def main(url, output_fname):
     """Download URL and write to disk.
 
-    Parameters
-    ----------
-    url : str
-        A url to download
-
-    ``output_fname``: path-like object
-        A path to write the downloaded content to.
-
-
     .. todo:: Figure out how to check that the file is plain text and not hit constant false positives
 
-    .. todo:: Add headers.
+    .. todo::
 
         .. code-block:: python3
 

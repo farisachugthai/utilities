@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 """Create a script for searching through aliases.
 
+IPython Aliases
+---------------
 By invoking ``%rehashx`` on :mod:`IPython`'s startup, there are
 regularly more than 1000 aliases in the namespace.
 
@@ -15,9 +17,25 @@ from IPython import get_ipython
 
 
 def inspector(char):
-    """Do a simple search for aliased names in :mod:`IPython`."""
-    # Run line magic func?
-    alias = %alias
+    """Do a simple search for aliased names in :mod:`IPython`.
+
+    This function independently initializes IPython so that it can be
+    easily imported and run.
+
+    Parameters
+    ----------
+    char : str
+        Character to search through available magics for.
+
+    Returns
+    -------
+    results : list of strs
+        All matching magics
+
+    """
+    _ip = get_ipython()
+
+    alias = _ip.run_line_magic('alias', 'line')
 
     results = []
     for i in alias:
@@ -27,8 +45,15 @@ def inspector(char):
 
 
 if __name__ == "__main__":
+    matches = []
+
     if len(sys.argv) == 2:
         char = sys.argv[1]
 
+    elif len(sys.argv) > 2:
+        for i in sys.argv[1:]:
+            matches.append(inspector(i))
+
     matches = inspector(char)
+
     print(matches)

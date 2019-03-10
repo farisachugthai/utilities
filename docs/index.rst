@@ -5,14 +5,16 @@
 
 .. _index:
 
+=====================================
 Welcome to utilities's documentation!
 =====================================
 
-
 .. include:: ../README.rst
 
+Table of Contents
+-----------------
+
 .. toctree::
-   :caption: Table of Contents
    :name: mastertoc
    :maxdepth: 2
 
@@ -22,6 +24,9 @@ Welcome to utilities's documentation!
    api
    todo
 
+Continue to the next page:
+
+:ref:`tutorial`
 
 Indices and tables
 ==================

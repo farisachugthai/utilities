@@ -6,7 +6,7 @@
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 .. how annoying is it that toctree uses maxdepth and contents uses depth as an option
 

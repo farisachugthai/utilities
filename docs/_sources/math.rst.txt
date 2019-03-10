@@ -6,14 +6,6 @@ math
 These are a few modules created in order to practice using computational
 analysis to solve problems.
 
-.. toctree::
-    :maxdepth: 1
-    :numbered:
-    :titlesonly:
-
-    math/gcd_iter
-    math/gcd_recur
-
 
 :mod:`math.gcd_iter`
 ----------------------------
@@ -31,4 +23,3 @@ analysis to solve problems.
     :members:
     :undoc-members:
     :show-inheritance:
-

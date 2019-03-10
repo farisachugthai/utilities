@@ -2,10 +2,6 @@
 # -*- coding: utf-8 -*-
 """Initialize the package for all scripts used in IPython startup.
 
-:File: __init__.py
-:Author: Faris Chugthai
-`GitHub <https://github.com/farisachugthai>`_
-
 This module intends to establish a few different things.
 
     - Initialize logging in a general manner.
@@ -23,6 +19,8 @@ from logging import NullHandler
 from pkgutil import extend_path
 
 import pkg_resources
+
+from pyutil.__about__ import *  # noqa F403
 
 logging.getLogger(__name__).addHandler(NullHandler())
 

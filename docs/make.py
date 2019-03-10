@@ -18,7 +18,7 @@ We could, in addition to automatic documentation builds, attempt to automate
 installation of the package with subcommands. Uhm well argparse doesn't really
 give us that functionality so it'd be more like
 
-:: shell
+.. sourcecode:: shell
 
     python make.py --install
 
@@ -28,11 +28,12 @@ Utilizing IPython's Sphinx plugin
 ---------------------------------
 This never occured to me to do this...
 
-.. code-block:: python
+.. code-block:: python3
 
     from IPython.sphinxext import ipython_directive, ipython_console_highlighting
     # Then initialize a sphinx instance to pass to the console one
     ipython_console_highlighting.setup(app)
+
 
 .. todo:: Document initializing a Sphinx instance. Off the top of my head, it
           requires setting src_dir and conf_dir so possibly gonna be easier
@@ -44,9 +45,15 @@ Attributes
 ``builder`` : str
     The filetype that ``make`` will invoke ``sphinx-build`` to create
 
-.. todo:: Check that the f string syntax is correct. Possibly now need to import sys_checks and ensure that we have python > 3.6
+.. todo:: 
 
-.. todo:: Copy the sources over to the right spot. And that static dir I guess. shutil.copytree(src, dst)
+    Check that the f string syntax is correct. 
+    Possibly now need to import sys_checks and ensure that we have python > 3.6
+
+.. todo::
+
+    Copy the sources over to the right spot.
+    And that static dir I guess. shutil.copytree(src, dst)
 
 .. todo:: Fix the way logging is set up here.
 

@@ -5,10 +5,6 @@
 .. module:: itersrc.py
     :synopsis: Iterate over all of the python files in a directory recursively.
 
-:File: itersrc.py
-:Author: Faris Chugthai
-
-`Github <https://github.com/farisachugthai>`_
 
 .. versionchanged:: 0.0.1
     Just added a check for python files. This could be useful as a base
@@ -29,8 +25,9 @@ def iter_source_code(paths):
     Parameters
     ----------
     paths: list
-        A list of paths.  Directories will be recursed into and any .py
-        files found will be yielded.
+        A list of paths.  Directories will be recursed into and
+        any .py files found will be yielded.
+        Any non-directories will be yielded as-is.
 
 
     Yields
@@ -52,5 +49,5 @@ def iter_source_code(paths):
 
 
 if __name__ == "__main__":
-    paths = sys.argv[:]
+    paths = sys.argv[1:]
     iter_source_code(paths)

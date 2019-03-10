@@ -75,10 +75,13 @@ def truncate(envs):
     envs : str
         Conda environments
 
+
     Returns
     -------
-    short_envs : list of strs
+    ``short_envs`` : list of strs
         Shorter name of all envs. Printed to console.
+
+
     """
     short_envs = []
 

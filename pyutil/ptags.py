@@ -15,11 +15,15 @@ No warnings about duplicate tags.
 
 Snagged from the scripts dir in python3.6-examples.
 
-.. todo:: Add docstrings. Use ipdb and step through while watching the tags var. Initially it was defined outside the ifmain loop.
+.. todo:: Use ipdb and step through while watching the tags var.
 
 
-Otherwise add in :ref:`PEP257` compliant params.
+Otherwise add in `PEP 257`_ compliant params.
 Try different styles and see what you like.
+
+
+.. _PEP 257:
+    https://www.python.org/dev/peps/pep-0257
 
 """
 import os
@@ -49,7 +53,7 @@ def treat_file(filename):
 
     Returns
     -------
-    None
+    None : None
 
     """
     try:

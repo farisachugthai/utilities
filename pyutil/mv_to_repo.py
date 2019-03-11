@@ -6,10 +6,14 @@
     :synopsis: Move files from the home directory to the dotfiles repo.
 
 This is a script I've been using for the better part of a year, so while
-the docstring formatting isn't consistent and there are a couple odd sections,
-this script has served a very utilitiarian purpose.
+the docstring formatting isn't consistent and there are a couple odd
+sections, this script has served a very utilitiarian purpose.
 
 May refactor one day. But it continues to work.
+
+Note
+----
+This module assumes a Unix OS and a python interpreter above version 3.4.
 
 """
 import os
@@ -31,12 +35,14 @@ def sys_checks():
 def repo_dir_check(dest):
     """Check that the directory is in the repository and make one otherwise.
 
-    `Useful info about mkdir <https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir>`_
-    To mimic behavior of ``mkdir -p``, use flags parents=True and exists_ok=True
+    `Useful info about mkdir <https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir>`_:
+
+        To mimic behavior of ``mkdir -p``, use flags ``parents=True`` and
+        ``exists_ok=True``
 
     Parameters
     ----------
-    dest : path-like object
+    dest : str
         Checks that the file to move has a corresponding directory in the repo
 
 
@@ -46,15 +52,14 @@ def repo_dir_check(dest):
 
 
 def backup_file(src):
-    """Backs up file ``src``. Utilizes shutil.copy2 to retain metadata.
+    """Backs up file ``src``. Utilizes :func:`shutil.copy2`.
 
     Parameters
     ----------
-    src : path-like object
+    src : str
         File to backup
 
     """
-    # TODO2: Should we do anything if src.bak already exists?
     shutil.copy2(str(src), str(src) + ".bak")
 
 
@@ -62,17 +67,23 @@ def main():
     """Dispatch the remaining implementation of the module.
 
     Determine if a file name is in the current directory or absolute path.
-    Then set up a relative path from $HOME. Use the root of the repo as the new
-    root and move the file there, all while creating directories and backups.
 
-    Runs checks, calls func to backup file 'src', moves it to the dotfiles
+    Then set up a relative path from ``$HOME``. Use the root of the repo
+    as the new root and move the file there, all while creating
+    directories and backups.
+
+    Runs checks, calls func to backup file `src`, moves it to the dotfiles
     repo and symlinks it.
-    Moves file to a hardcoded path but will be generalized to take as an argument.
+    Moves file to a hardcoded path but will be generalized to take as an
+    argument.
 
-    Parameters:
+    Parameters
+    ----------
+    src : str
         Name of file to backup, move and symlink.
 
-    Assumes:
+    Assumes
+    -------
         User runs the script from inside the folder of the file they want to
         move.
     """

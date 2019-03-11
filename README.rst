@@ -48,7 +48,7 @@ below pyutil/ is in your PATH.
    git clone https://github.com/farisachugthai/utilities
    cd utilities
 
-   python3 setup.py build && python3 setup.py install
+   python3 setup.py bdist_wheel && python3 -m pip install -U -e .
 
 * After which point, the only necessary step will be ensuring that the scripts in ./sh/ are in ``$PATH``.
 
@@ -69,13 +69,16 @@ different; however, not tremendously.
 .. code-block:: console
 
    git clone https://github.com/farisachugthai/utilities
-   # cd is aliased to Set-Location for most instances of Powershell; however in
-   # the interest of using domain specific built-ins:
+
+   # `cd` is aliased to Set-Location for most instances of Powershell;
+   # however in the interest of using domain specific built-ins:
    Set-Location utilities
-   python3 setup.py build && python3 setup.py install
+
+   python3 setup.py bdist_wheel && python3 -m pip install -U -e .
 
    # To view the environment variable path, run:
    Get-Childitem -path env:Path
+
    # Then ensure that the directory you pick is in your path, and run
    python3 pyutil\dlink.py "$PWD\sh" C:\Users\path\to\directory
 
@@ -97,14 +100,22 @@ After installing
 
 Then, direct your browser to ``_build/html/index.html``.
 
+To do so in a more direct manner, a *htmlview* target has been created
+in the :ref:`docs/Makefile`.
+
+This target will build the documentation and open up your default web browser.
 
 Testing
 -------
-To run the tests with the interpreter available as ``python``, use::
+To run the tests with the interpreter available as ``python``, use
+
+.. code-block:: sh
 
     make test
 
-If you want to explicitly define which interpreter, e.g. ``python3``, use::
+If you want to explicitly define which interpreter, e.g. ``python3``, use
+
+.. code-block:: sh
 
     PYTHON=python3 make test
 

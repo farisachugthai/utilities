@@ -4,19 +4,16 @@
 
 Minor modifications for :mod:`flake8`, :mod:`pydocstyle` etc.
 
+Mar 10, 2019:
+
+    Added logging.
+
 Make a copy of a directory tree with symbolic links to all files in the
 original tree.
 
 All symbolic links go to a special symbolic link at the top, so you
 can easily fix things if the original source tree moves.
 
-.. _linktree-usage:
-
-Usage
------
-code-block:: shell
-
-    mklinks oldtree newtree
 
 
 See Also
@@ -25,6 +22,7 @@ mkreal
 
 
 """
+import logging
 import os
 import sys
 
@@ -65,19 +63,20 @@ def main():
 def linknames(old, new, link):
     """Recursively symlink a directory tree."""
     if DEBUG:
-        print('linknames', (old, new, link))
+        logging.info('linknames', str(old, new, link))
+
     try:
         names = os.listdir(old)
     except OSError as msg:
-        print(old + ': warning: cannot listdir:', msg)
-        return
+        logging.warning(old + ': warning: cannot listdir:', msg)
+
     for name in names:
         if name not in (os.curdir, os.pardir):
             oldname = os.path.join(old, name)
             linkname = os.path.join(link, name)
             newname = os.path.join(new, name)
             if DEBUG > 1:
-                print(oldname, newname, linkname)
+                logging.debug(oldname, newname, linkname)
             if os.path.isdir(oldname) and \
                not os.path.islink(oldname):
                 try:
@@ -94,6 +93,8 @@ def linknames(old, new, link):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.WARNING)
+
     LINK = '.LINK'  # Name of special symlink at the top.
 
     DEBUG = 0

@@ -7,6 +7,16 @@ Requires
 :mod:`requests`
 
 
+See Also
+--------
+From Kenneth Reitz, owner of `httpbin`_.
+
+.. _`httpbin`: https://httpbin.org/ip
+
+Installing packages for your project:
+
+`<https://docs.python-guide.org/en/latest/dev/virtualenvs/>`_
+
 .. todo:: Come up with a fallback if requests isn't installed.
 
 
@@ -20,17 +30,9 @@ def get_public_ip():
 
     Returns
     -------
-    rt : str
+    `rt` : str
         A formatted message displaying the user's IP address.
 
-
-    .. see also::
-
-        From Kenneth Reitz, owner of httpbin.
-
-    Installing packages for your project
-    ------------------------------------
-    `<https://docs.python-guide.org/en/latest/dev/virtualenvs>`_
 
     """
     response = requests.get('https://httpbin.org/ip')
@@ -43,7 +45,7 @@ def get_hostname():
 
     Returns
     -------
-    host_return_msg : str
+    `host_return_msg` : str
         A formatted message displaying the user's IP address.
 
     """

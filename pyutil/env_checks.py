@@ -7,8 +7,10 @@ Easier to group similar methods in one mod then have them scattered around.
 Below is a generic example of using the public methods to read in user
 defined configurations.
 
-Example
--------
+.. rubric:: Example
+
+.. does this get doctested? hope not
+
 .. code-block:: python3
 
     >>> from env_checks import check_xdg_config_home
@@ -73,13 +75,9 @@ import os
 def check_xdg_config_home():
     """Check to see if ``$XDG_CONFIG_HOME`` has been defined.
 
-    Parameters
-    ----------
-    None
-
     Returns
     -------
-    Bool
+    `bool`
 
     Example
     -------
@@ -98,21 +96,27 @@ def check_xdg_config_home():
 
 
 def get_script_dir():
-    """Determine the directory the script is in."""
+    """Determine the directory the script is in.
+
+    Returns
+    -------
+    Directory the file is in : str
+
+    """
     return os.path.dirname(os.path.realpath(__file__))
 
 
 def env_check(env_var):
-    """Search the current namescope for variable ``env_var``.
+    """Search the current namescope for variable `env_var`.
 
     Parameters
     ----------
-    env_var : str
+    `env_var` : str
         Environment variable to search for. Currently case-sensitive.
 
     Yields
     ------
-    i : dict_key
+    `i` : dict_key
         The environment variable searched for. Env vars are mapped as dicts.
 
     Example

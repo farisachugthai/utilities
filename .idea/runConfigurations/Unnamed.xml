@@ -1,0 +1,19 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Unnamed" type="JupiterNotebook" factoryName="Jupyter Notebook" editBeforeRun="true" nameIsGenerated="true">
+    <module name="utilities" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="PYTHONUNBUFFERED" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="$USER_HOME$/miniconda3/envs/utilities/bin/python" />
+    <option name="WORKING_DIRECTORY" value="" />
+    <option name="IS_MODULE_SDK" value="false" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <option name="additionalOptions" value="" />
+    <option name="ipnbHost" value="127.0.0.1" />
+    <option name="ipnbPort" value="8888" />
+    <method v="2" />
+  </configuration>
+</component>

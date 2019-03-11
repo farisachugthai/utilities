@@ -1,5 +1,6 @@
 .. _math.rst:
 
+===========
 math
 ===========
 
@@ -7,19 +8,19 @@ These are a few modules created in order to practice using computational
 analysis to solve problems.
 
 
-:mod:`math.gcd_iter`
+:mod:`gcd_iter`
 ----------------------------
 
-.. automodule:: pyutil.math.gcd_iter
+.. automodule:: pyutil.numerical.gcd_iter
     :members:
     :undoc-members:
     :show-inheritance:
 
 
-:mod:`math.gcd_recur`
+:mod:`gcd_recur`
 -----------------------------
 
-.. automodule:: pyutil.math.gcd_recur
+.. automodule:: pyutil.numerical.gcd_recur
     :members:
     :undoc-members:
     :show-inheritance:

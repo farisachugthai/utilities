@@ -48,7 +48,7 @@ sys.path.insert(0, os.path.abspath('sphinxext'))
 
 sys.path.insert(0, os.path.abspath(SOURCE_CODE))
 
-sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'math')))
+sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'numerical')))
 
 print('\n'.join(sys.path))
 # logging.debug("Path is currently: " + .'\n'.join([i for i in sys.path[:]]))
@@ -152,10 +152,10 @@ pygments_style = 'sphinx'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {
-#     "github_user": "Faris A. Chugthai",
-#     "github_repo": "utilities"
-# }
+html_theme_options = {
+    "github_user": "Faris A. Chugthai",
+    "github_repo": "utilities"
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

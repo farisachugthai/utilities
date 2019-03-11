@@ -12,14 +12,16 @@ Still uses old style strings as a result.
 
     >>> os.listdir("/path/to/dir")
     ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
-    >>>  batch_renamer.py /path/to/dir
+
+.. code-block:: shell-session
+
+    batch_renamer.py /path/to/dir
     img_1074.jpg --> Ashley_0.jpg
     img_1076.jpg --> Ashley_1.jpg
     img_1077.jpg --> Ashley_2.jpg
 
 
 .. todo:: First things first ensure it works at all.
-
 
 This would be quite an easy module to create unittests for IN ADDITION to the
 fact that you could add some fixtures in and learn that.
@@ -34,11 +36,31 @@ import shutil
 from string import Template
 import time
 
+import pyutil
+
 
 class BatchRename(Template):
     """Delimiter for string substitutions."""
 
     delimiter = '%'
+
+
+def _parse_arguments():
+    """Parse user arguments."""
+    parser = argparse.ArgumentParser(description=__doc__)
+
+    # should add in either globbing or fnmatch capabilities
+    parser.add_argument(
+        "directory",
+        nargs=1,
+        help="Directory containing only the files to be renamed.")
+
+    parser.add_argument('-V', '--version', action='version',
+                        version='%(prog)s' + pyutil.__about__['version'])
+
+    args = parser.parse_args()
+
+    return args
 
 
 def fix_extension():
@@ -98,19 +120,16 @@ def batch_mover(pattern):
 
 if __name__ == '__main__':
 
-    logging.basicConfig()
+    args = _parse_arguments()
 
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument(
-        "directory",
-        "-d",
-        "--directory",
-        help="Directory containing only the files to be renamed.")
-
-    args = parser.parse_args()
+    assert args.directory
 
     d = args.directory
+
+    # Wait until we're sure we got the args we needed before setting the log
+    # level.
+    # Now we can configure that level based on user input and default to WARNING
+    logging.basicConfig(level=logging.WARNING)
 
     logging.debug("The directory that was chosen was: " + str(d))
 

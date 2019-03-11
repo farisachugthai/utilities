@@ -1,3 +1,5 @@
+.. _numpydoc:
+
 :mod:`numpydoc`
 =================
 

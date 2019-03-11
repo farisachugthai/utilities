@@ -44,11 +44,8 @@ def strip_space(src):
     Parameters
     ----------
     src : file
-    File to strip trailing whitespace from. Backed up before anything.
+        File to strip trailing whitespace from. Backed up before anything.
 
-    Returns
-    -------
-    None
 
     """
     print("Clearing whitespace...")

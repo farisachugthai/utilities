@@ -3,11 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. _index:
+
+=====================================
 Welcome to utilities's documentation!
 =====================================
 
-.. include:: ../README
-
+.. include:: ../README.rst
 
 Table of Contents
 -----------------
@@ -18,9 +20,13 @@ Table of Contents
 
    tutorial
    numpydoc
+   math
    api
    todo
 
+Continue to the next page:
+
+:ref:`tutorial`
 
 Indices and tables
 ==================

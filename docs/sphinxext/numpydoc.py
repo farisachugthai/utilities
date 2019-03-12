@@ -28,12 +28,17 @@ import sys
 import sphinx
 from docutils.nodes import citation, Text
 from sphinx.addnodes import pending_xref, desc_content
+from docutils.statemachine import ViewList
+from sphinx.domains.c import CDomain
+from sphinx.domains.python import PythonDomain
+
+from numpydoc.docscrape_sphinx import get_doc_object
+from numpydoc.docscrape_sphinx import SphinxDocString
+
 
 if sphinx.__version__ < '1.0.1':
     raise RuntimeError("Sphinx 1.0.1 or newer is required")
 
-from docscrape_sphinx import SphinxDocString
-from docscrape_sphinx import get_doc_object
 
 if sys.version_info[0] >= 3:
     sixu = lambda s: s
@@ -93,8 +98,8 @@ def relabel_references(app, doc):
         new_text = Text(new_label)
         label_node.replace(label_node[0], new_text)
 
-        for id in citation_node['backrefs']:
-            ref = doc.ids[id]
+        for idx in citation_node['backrefs']:
+            ref = doc.ids[idx]
             ref_text = ref[0]
 
             # Sphinx has created pending_xref nodes with [reftext] text.
@@ -211,10 +216,6 @@ def setup(app, get_doc_object_=get_doc_object):
 # ------------------------------------------------------------------------------
 # Docstring-mangling domains
 # ------------------------------------------------------------------------------
-
-from docutils.statemachine import ViewList
-from sphinx.domains.c import CDomain
-from sphinx.domains.python import PythonDomain
 
 
 class ManglingDomainBase(object):

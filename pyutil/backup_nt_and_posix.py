@@ -3,16 +3,8 @@
 
 Motivation
 ----------
-
-This script aims to be platform agnostic and in the long term will be used on Windows, Linux, Mac and Android systems.
-
-
-.. rubric:: usage
-
-.. code-block:: sh
-
-    python3 backup_nt_and_posix.py /path/to/dir
-
+This script aims to be platform agnostic and in the long term will be used on
+Windows, Linux, Mac and Android systems.
 
 .. todo:: Consider rewriting using classes to hold state based on OS. Then utilize :mod:`pathlib`.
 
@@ -26,19 +18,20 @@ from time import strftime
 def timestamped_dir(backup_dir):
     r"""Create a backup of a directory. Append date and time to new dir name.
 
+    .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` so we handle return codes in a better way.
+
+
     Parameters
     ----------
-    ``backup_dir`` : path-like object
+    backup_dir : path-like object
         Directory to backup
 
     Returns
     -------
-    ``err_code`` : int
+    err_code : int
          Non-zero value indicates error code, or zero on success.
-    ``err_msg`` : str or None
+    err_msg : str or None
          Human readable error message, or None on success.
-
-    .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` so we handle return codes in a better way.
 
     """
     if os.name == "nt":

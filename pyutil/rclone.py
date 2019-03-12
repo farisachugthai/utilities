@@ -2,25 +2,19 @@
 # -*- coding: utf-8 -*-
 """Rewriting rclone.sh as a python module.
 
-.. code-block:: bash
-
-    rclone.py src dst
-
-
 .. rubric:: Requires
 
-rclone, a Golang package.
+`rclone`_, a Golang package.
 
 
 .. todo::
 
-    - ``args`` is used as a parameter to both :class:`argparse.ArgumentParser()` and :func:`subprocess.run()`
-        - Switch the name for one of them as this'll get confusing quickly.
     - Set up a simple single use case backup.
     - Add :func:`collections.ChainMap()` to set precedence of backupdir.
-    - Add in multiple invocations of rclone and create args to reflect use cases.
     - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync's file input.
+    - How do you correctly use :mod:`argparse` and ``**kwargs`` together?
 
+.. _`rclone`: https://rclone.org
 
 """
 import argparse
@@ -31,7 +25,7 @@ import subprocess
 import sys
 
 
-def _parse_arguments(cwd=None):
+def _parse_arguments(cwd=None, **kwargs):
     """Parse user-given arguments."""
     if cwd is None:
         cwd = os.getcwd()
@@ -53,9 +47,23 @@ def _parse_arguments(cwd=None):
         "defaults to the cwd.")
 
     parser.add_argument(
+        "dst",
+        help="The folder that the files should be backed up to."
+        "Can be a remote instance as well. See rclone.org for "
+        "all accepted values for this parameter")
+
+    parser.add_subparsers(
+        "config",
+        required=False,
+        help="Configure rclone. Additional options can't be specified;"
+        "however, :mod:`pyutil.rclone` will halt execution as rclone is configured."
+    )
+
+    parser.add_argument(
         '-f',
         '--follow',
-        action='store',
+        action='store_true',
+        default=False,
         dest='follow',
         help="Follow symlinks.")
 
@@ -73,6 +81,8 @@ def run(cmd):
     This function returns the return code of split ``cmd``, so any
     non-zero value will lead to a ``SystemExit`` with a passed value
     of ``returncode``.
+
+    .. should i use **kwargs as a parameter here? If so, how do i mark that up in a docstring?
 
     Parameters
     ----------
@@ -99,8 +109,8 @@ def run(cmd):
 def _dir_checker(dir_):
     """Check that necessary directories exist.
 
-    If the default ``dst`` doesn't exist, definitely create it.
-    If the user provided ``src`` doesn't exist, crash without making one.
+    If the default `dst` doesn't exist, definitely create it.
+    If the user provided `src` doesn't exist, crash without making one.
 
     It's more likely that they typed the src dir incorrectly rather than
     running the script aware of the fact that it is nonexistent.
@@ -112,7 +122,11 @@ def _dir_checker(dir_):
 
 
 def rclone_base_case(src, dst):
-    """Noop. Simply here to track the best and most general command to use.
+    """Base case that all other functions build off of.
+
+    This function shouldn't be executed directly; however, it serves as a good
+    template detailing a function and useful command with parameters that
+    rclone uses.
 
     For example, ``--follow`` is a flag that has conditionals associated it with it.
 
@@ -134,18 +148,30 @@ def rclone_base_case(src, dst):
         a dropbox directory, a google drive folder or a google cloud storage
         bucket among many other things.
 
-
-    Returns
-    -------
-    None
-
     """
     cmd = ['rclone', 'copy', '--update', '--track-renames', src, dst]
     run(cmd)
 
 
 def rclone_follow(dst, src):
-    """Follow symlinks."""
+    """Follow symlinks.
+
+    Parameters
+    ----------
+    src : str
+        directory to clone files from
+
+    dst : str
+        destination to send files to. Can be configured as a local directory,
+        a dropbox directory, a google drive folder or a google cloud storage
+        bucket among many other things.
+
+
+    .. See Also
+    .. --------
+    .. :ref:`pyutil.rclone.rclone_base_case()` for a more detailed explanation
+
+    """
     cmd = [
         'rclone', 'copy', '--update', '--track-renames'
         '--copy-links', src, dst
@@ -173,6 +199,10 @@ if __name__ == "__main__":
         src = args.src
     else:
         src = cwd
+
+    assert args.dst
+
+    dst = args.dst
 
     if args.follow:
         rclone_follow(dst, src)

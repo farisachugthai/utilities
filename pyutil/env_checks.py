@@ -73,14 +73,18 @@ import os
 def check_xdg_config_home():
     """Check to see if ``$XDG_CONFIG_HOME`` has been defined.
 
-    Parameters
-    ----------
-    None
+    Returns
+    -------
+    bool
 
     Returns
     -------
     Bool
 
+        >>> from env_checks import check_xdg_config_home
+        >>> if check_xdg_config_home():
+            >>> with open('module.conf', 'rt') as f:
+                >>> configs = f.readlines()
 
     """
     if os.environ.get('XDG_CONFIG_HOME'):
@@ -95,12 +99,13 @@ def get_script_dir():
     Returns
     -------
     Directory the file is in : str
+
     """
     return os.path.dirname(os.path.realpath(__file__))
 
 
 def env_check(env_var):
-    """Search the current namescope for variable ``env_var``.
+    """Search the current namescope for variable env_var.
 
     Parameters
     ----------

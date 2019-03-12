@@ -6,15 +6,9 @@ Assumes
 ---------
 Working conda installation.
 
-.. rubric:: example
-
-.. code-block:: shell
-
-    python3 conda-export.py
 
 Returns
 -------
-
 Separate text files. 2 for each environment.:
 
     * One with general metadata
@@ -38,11 +32,6 @@ import sys
 
 def munging():
     """Iterate through conda envs and return text files to replicate from.
-
-    Parameters
-    -----------
-    None
-
 
     Returns
     --------
@@ -78,7 +67,7 @@ def truncate(envs):
 
     Returns
     -------
-    ``short_envs`` : list of strs
+    short_envs : list of strs
         Shorter name of all envs. Printed to console.
 
 
@@ -98,6 +87,8 @@ if __name__ == "__main__":
 
     full_name_envs = munging()
 
-    envs = truncate(full_name_envs)
+    truncated_envs = []
+    for i in full_name_envs:
+        truncated_envs.append(truncate(i))
 
-    print(str(envs))
+    print(str(truncated_envs))

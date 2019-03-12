@@ -35,7 +35,9 @@ import logging
 import os
 import sys
 
-logging.basicConfig(level=logging.WARNING)
+from numpydoc import numpydoc
+
+logger = logging.getLogger(__name__)
 
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
@@ -291,7 +293,6 @@ autosummary_generate = False
 # napoleon_numpy_docstring = True
 # napoleon_include_init_with_doc = False
 napoleon_include_private_with_doc = True
-
 # napoleon_include_special_with_doc = True
 # napoleon_use_admonition_for_examples = False
 # napoleon_use_admonition_for_notes = False

@@ -1,7 +1,8 @@
-.. _readme:
+.. _root-readme:
 
-utilities
-==========
+======
+pyutil
+======
 
 .. currentmodule:: readme
 
@@ -14,24 +15,45 @@ administer multiple workstations.
 .. contents: Table of Contents
 
 
+.. _root-installation:
+
 Installation
 ------------
-One can install the package by:
+Python offers it's users a large number of ways to install new packages.
 
-* Cloning with git
-* Running the `setup.py`_ file.
-* Ensuring that the scripts in ./sh/ are in ``$PATH``
+One can install :ref:`pyutil` by:
+
+* Installing with pip
+
+Install from newest dev version in master branch
+
+.. code-block:: sh
+
+   pip install git+https://github.com/farisachugthai/utilities
+
+* Cloning with git and installing with pip
+
+.. code-block:: sh
+
+  git clone git+https://github.com/farisachugthai/utilities
+  pip install .
+
+* As an alternative to a pip install, obtain the source code and run the `setup.py`_ file.
 
 If you are on a Unix-like system, the following will ensure everything
 below pyutil/ is in your PATH.
 
 
-.. code-block:: bash
+.. code-block:: sh
 
    git clone https://github.com/farisachugthai/utilities
    cd utilities
 
-   python3 setup.py build && python3 setup.py install
+   python3 setup.py bdist_wheel && python3 -m pip install -U -e .
+
+* After which point, the only necessary step will be ensuring that the scripts in ./sh/ are in ``$PATH``.
+
+.. code-block:: sh
 
    # The script at ./pyutil/dlink.py is useful for creating symlinks for every
    # file in a directory. If the directory ~/bin is in your path...
@@ -48,24 +70,58 @@ different; however, not tremendously.
 .. code-block:: console
 
    git clone https://github.com/farisachugthai/utilities
-   # cd is aliased to Set-Location for most instances of Powershell; however in
-   # the interest of using domain specific built-ins:
+
+   # `cd` is aliased to Set-Location for most instances of Powershell;
+   # however in the interest of using domain specific built-ins:
    Set-Location utilities
-   python3 setup.py build && python3 setup.py install
+
+   python3 setup.py bdist_wheel && python3 -m pip install -U -e .
 
    # To view the environment variable path, run:
    Get-Childitem -path env:Path
+
    # Then ensure that the directory you pick is in your path, and run
    python3 pyutil\dlink.py "$PWD\sh" C:\Users\path\to\directory
 
-.. Building From Source
-.. ---------------------
 
-.. The documentation can be built as well. Commented out until the docs build more smoothly
+.. _root-docs:
 
+Building Documentation From Source
+----------------------------------
+The documentation can be read online at `GitHub pages <https://farisachugthai.github.io/utilities>`_
+
+However, the documentation can be built locally as well.
+
+After installing
+
+.. code-block:: shell
+
+   cd doc
+   make html
+
+Then, direct your browser to ``_build/html/index.html``.
+
+To do so in a more direct manner, a *htmlview* target has been created
+in the :ref:`docs/Makefile`.
+
+This target will build the documentation and open up your default web browser.
+
+Testing
+-------
+To run the tests with the interpreter available as ``python``, use
+
+.. code-block:: sh
+
+    make test
+
+If you want to explicitly define which interpreter, e.g. ``python3``, use
+
+.. code-block:: sh
+
+    PYTHON=python3 make test
 
 License
----------
+-------
 MIT
 
 Contributing

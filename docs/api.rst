@@ -46,17 +46,8 @@
     :show-inheritance:
 
 
-:mod:`dir3`
-------------------
-
-.. automodule:: pyutil.dir3
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 :mod:`dir_cleaner`
---------------------------
+------------------
 
 .. automodule:: pyutil.dir_cleaner
     :members:

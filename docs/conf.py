@@ -35,7 +35,10 @@ import logging
 import os
 import sys
 
-from numpydoc import numpydoc
+# So even though it sets off the linters this is needed to recognize numpydoc
+# as a package
+
+from numpydoc import numpydoc  # noqa
 
 logger = logging.getLogger(__name__)
 
@@ -44,15 +47,15 @@ BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 SOURCE_CODE = os.path.join('..', 'pyutil')
 
-sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('.'))
 
 sys.path.insert(0, os.path.abspath('sphinxext'))
 
-
 sys.path.insert(0, os.path.abspath(SOURCE_CODE))
 
-sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'math')))
+sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'numerical')))
+
+print('\n'.join(sys.path))
 
 logging.debug("Path is currently: " + str(sys.path))
 
@@ -92,6 +95,7 @@ extensions = [
     'IPython.sphinxext.ipython_directive',
     'matplotlib.sphinxext.plot_directive',
     'numpydoc',
+    'magics',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -153,10 +157,10 @@ pygments_style = 'sphinx'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {
-#     "github_user": "Faris A. Chugthai",
-#     "github_repo": "utilities"
-# }
+html_theme_options = {
+    "github_user": "Faris A. Chugthai",
+    "github_repo": "utilities"
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -280,7 +284,7 @@ viewcode_import = True
 # -------------------------------------------------------------------
 
 # import glob  # noqa F402
-autosummary_generate = True
+autosummary_generate = False
 
 # -------------------------------------------------------------------
 # Napoleon settings

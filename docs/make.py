@@ -44,7 +44,7 @@ This never occured to me to do this...
 .. todo::
 
     Copy the sources over to the right spot.
-    And that static dir I guess. shutil.copytree(src, dst)
+    And that static dir I guess. :func:`shutil.copytree()`
 
 .. todo:: Fix the way logging is set up here.
 
@@ -71,7 +71,7 @@ def _parse_arguments():
 
     Returns
     -------
-    `args` : str
+    args : str
         Arguments provided by the user.
 
 
@@ -136,12 +136,12 @@ def run(cmd):
 
     Parameters
     ----------
-    `cmd` : str
+    cmd : str
         The command to be called
 
     Returns
     -------
-    `process.returncode` : int
+    process.returncode : int
         The returncode from the process.
 
 

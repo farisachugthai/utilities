@@ -28,10 +28,6 @@ def backup(src):
     src : file
         File to strip trailing whitespace from. Backed up before anything.
 
-    Returns
-    -------
-    None
-
     """
     try:
         shutil.copy(str(src), str(src) + ".bak")
@@ -42,16 +38,12 @@ def backup(src):
 def strip_space(src=sys.stdin):
     """Strip all trailing whitespace out of a file.
 
-    Assumes a plaintext file. Uses :ref:`sys.stdin` if no argument provided.
+    Assumes a plaintext file. Uses sys.stdin if no argument provided.
 
     Parameters
     ----------
     src : str
         File to strip trailing whitespace from. Backed up before anything.
-
-    Returns
-    -------
-    None
 
     """
     logging.warning("Clearing whitespace...")
@@ -66,7 +58,7 @@ def strip_space(src=sys.stdin):
 
 
 def main(file_obj):
-    """Dispatch :ref:`pyutil.strip_space.strip_space()`."""
+    """Dispatch the strip_space function."""
     if not Path.is_file(file_obj):
         sys.exit("File is not readable. Exiting.")
 

@@ -9,8 +9,6 @@ defined configurations.
 
 .. rubric:: Example
 
-.. does this get doctested? hope not
-
 .. code-block:: python3
 
     >>> from env_checks import check_xdg_config_home
@@ -111,12 +109,12 @@ def env_check(env_var):
 
     Parameters
     ----------
-    `env_var` : str
+    env_var : str
         Environment variable to search for. Currently case-sensitive.
 
     Yields
     ------
-    `i` : dict_key
+    i : dict_key
         The environment variable searched for. Env vars are mapped as dicts.
 
     Example

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Module that finds jpg and jpegs files in the current dir.
 
-.. module::`find_pics.py`
+.. module:: find_pics
     :synopsis: Module that finds jpg and jpegs files in the current dir.
 
 .. todo:: Should accept command line arguments.
@@ -24,13 +24,13 @@ def find_pics(picture):
 
     Parameters
     ----------
-    `picture` : str
+    picture : str
         Path to a file that may or may not be a jpg/jpeg
 
 
     Yields
     ------
-    `matched` : :class:`re.match()` object
+    matched : :class:`re.match()` object
         Filename that matches a jpg/jpeg regex.
 
     """

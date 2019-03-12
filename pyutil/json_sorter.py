@@ -4,27 +4,16 @@
 
 This module was originally used to fix my settings.json from VSCode.
 
-Attributes
-----------
-fobj : path-like object
-    The file to fix.
-
-Example
--------
-.. code:: bash
-
-    python3 json_sorter.py /path/to/file.json
-
-
 Bug Fixes
 ---------
 Currently trying to run this module and running into errors.
 
 Currently got this.
 
-.. code-block:: python3
+.. ipython::
+    :okexcept:
 
-    [ins] In [49]: args
+    In [49]: args
     Out[49]: Namespace(WARNING=None, input=<_io.TextIOWrapper
     name='/data/data/com.termux/files/home/projects/viconf/.config/nvim/settings.json' mode='r' encoding='UTF-8'>,
     output=<_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>)
@@ -77,7 +66,7 @@ def _parse_arguments():
 
 
 def main(file_obj, output_file=sys.stdout):
-    """Read in a JSON object, sorts it and then writes it back to a new file.
+    """Read in a :mod:`json` object, sort it and write it back to a new file.
 
     By writing to a new file, the user is allowed the opportunity to inspect
     the file and ensure that the desired results have been achieved.
@@ -86,6 +75,9 @@ def main(file_obj, output_file=sys.stdout):
     ----------
     file_obj : str
         The file to read in
+    output_file : str
+        Text file to write formatted :mod:`json` to.
+        It will only write to the file if the filename currently doesn't exist.
 
     """
     with open(file_obj) as f:
@@ -102,8 +94,7 @@ if __name__ == "__main__":
 
     if args.log_level:
         log_level = args.log_level
-
-    logging.basicConfig(level=log_level)
+        logging.basicConfig(level=log_level)
 
     fobj = args.input
 
@@ -111,3 +102,5 @@ if __name__ == "__main__":
 
     if os.path.isfile(fobj):
         main(fobj, o_file)
+    else:
+        sys.exit("File not readable in current state. Exiting.")

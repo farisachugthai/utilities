@@ -24,7 +24,7 @@ def iter_source_code(paths):
 
     Parameters
     ----------
-    `paths` : list
+    paths: list
         A list of paths.  Directories will be recursed into and
         any .py files found will be yielded.
         Any non-directories will be yielded as-is.
@@ -32,7 +32,7 @@ def iter_source_code(paths):
 
     Yields
     ------
-    `full_path` : str
+    full_path : str
         Absolute path to a python file.
 
 

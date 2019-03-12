@@ -200,5 +200,9 @@ if __name__ == "__main__":
     else:
         src = cwd
 
+    assert args.dst
+
+    dst = args.dst
+
     if args.follow:
         rclone_follow(dst, src)

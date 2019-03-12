@@ -25,7 +25,7 @@ Still uses old style strings as a result.
 This would be quite an easy module to create unittests for IN ADDITION to the
 fact that you could add some fixtures in and learn that.
 
-.. _`pydocs tutorials stdlib2`: https://docs.python.org/3/tutorial/stdlib2.html#templating
+.. _`tutorials stdlib2`: https://docs.python.org/3/tutorial/stdlib2.html#templating
 
 """
 import argparse

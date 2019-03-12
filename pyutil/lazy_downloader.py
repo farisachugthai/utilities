@@ -13,9 +13,9 @@ and the script will safely exit.
 
 Parameters
 ----------
-`url` : str
+url : str
     A url to download
-`output_filename` : str
+output_filename  : str
     A path to write the downloaded content to.
 
 
@@ -69,10 +69,10 @@ def main(url, output_fname):
 
     Parameters
     ----------
-    `url` : str
+    url : str
         A url to download
 
-    `output_fname`: str
+    output_fname : str
         A path to write the downloaded content to.
 
     """

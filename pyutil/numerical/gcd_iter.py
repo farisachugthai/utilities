@@ -15,14 +15,14 @@ def gcd_iter(a, b):
 
     Parameters
     ----------
-    `a` : int
+    a : int
         User provided integer
-    `b` : int
+    b : int
         User provided integer
 
     Returns
     -------
-    `gcd` : int
+    gcd : int
 
     """
     orig_b = b

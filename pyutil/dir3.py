@@ -3,6 +3,9 @@
 """Improve the :func:`dir()` by ignoring methods hidden by ``_``.
 
 
+**This needs a rewrite. The logic is  real confusing. We need to more clearly
+define what the use case is.**
+
 Background
 -----------
 :func:`dir()` is a phenomenal function for exploring both the global
@@ -26,7 +29,7 @@ It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 
 Attributes
 -----------
-ip : :class:`IPython.core.interactiveshell.InteractiveShell()`
+`_ip` : :class:`IPython.core.interactiveshell.InteractiveShell()`
     A global object representing the active :mod:`IPython` session.
     Contains varying packages as well as the current global namespace.
     Doesn't need to be defined in advance during an interactive session.
@@ -55,6 +58,7 @@ See Also
 
     # Start building the attribute list via dir(), and then complete it
     # with a few extra special-purpose calls.
+    >>> from IPython.utils.dir2 import safe_hasattr
     >>> try:
         >>> words = set(dir(obj))
     >>> except Exception:
@@ -71,19 +75,12 @@ See Also
 """
 import sys
 
+from IPython import get_ipython
+_ip = get_ipython()
 
-def dir3():
+
+def dir3(namespace_argument=_ip.user_global_ns):
     """Filter unnecessary information from :func:`dir()` output.
-
-    Parameters
-    ------------
-    None
-
-
-    Returns
-    --------
-    output : list
-        All methods that don't begin with ``_``.
 
 
     .. todo:: More stringent filters will need to come.
@@ -95,17 +92,17 @@ def dir3():
         getting unwieldy and as is requires a lot of state.
 
 
-    """
-    # This should silence the error from flake about ip being used but not
-    # defined
-    from IPython import get_ipython
-    ip = get_ipython()
+    Returns
+    --------
+    output : list
+        All methods that don't begin with ``_``.
 
+    """
     args = sys.argv[:]
     if len(args) == 2:
         output = _interactive(args)
     elif len(args) < 2:
-        global_namespace = ip.user_global_ns.keys()
+        global_namespace = _ip.user_global_ns.keys()
         output = _interactive(global_namespace)
     else:
         for i in range(args):
@@ -146,8 +143,13 @@ def _interactive(args):
 
 
 if __name__ == "__main__":
-    from IPython import get_ipython
-    _ip = get_ipython()
-    output = dir3()
+    args = sys.argv[:]
 
-    print(output)
+    if len(args) > 2:
+        for i in args[1:]:
+            output = dir3(i)
+            print(output)
+
+    elif len(args) == 2:
+        output = dir3(args[1])
+        print(output)

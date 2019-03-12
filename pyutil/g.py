@@ -24,7 +24,7 @@ def git_touch(args):
 
     Parameters
     ----------
-    `args` : str (path-like object)
+    args : str (path-like object)
         Path to a file that's needs to be staged and added to the Git index.
 
     """

@@ -6,7 +6,7 @@
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 .. how annoying is it that toctree uses maxdepth and contents uses depth as an option
 
@@ -109,6 +109,15 @@
     :show-inheritance:
 
 
+:mod:`g`
+-----------------------
+
+.. automodule:: pyutil.g
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 :mod:`inspect_module`
 -----------------------------
 
@@ -154,19 +163,10 @@
     :show-inheritance:
 
 
-:mod:`math.gcd_iter`
+:mod:`magic_aid`
 ----------------------------
 
-.. automodule:: pyutil.math.gcd_iter
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-:mod:`math.gcd_recur`
------------------------------
-
-.. automodule:: pyutil.math.gcd_recur
+.. automodule:: pyutil.magic_aid
     :members:
     :undoc-members:
     :show-inheritance:

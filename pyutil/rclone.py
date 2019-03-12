@@ -2,11 +2,6 @@
 # -*- coding: utf-8 -*-
 """Rewriting rclone.sh as a python module.
 
-.. code-block:: bash
-
-    rclone.py src dst
-
-
 .. rubric:: Requires
 
 `rclone`_, a Golang package.
@@ -14,12 +9,10 @@
 
 .. todo::
 
-    - `args` is used as a parameter to both :class:`argparse.ArgumentParser()` and :func:`subprocess.run()`
-        - Switch the name for one of them as this'll get confusing quickly.
     - Set up a simple single use case backup.
     - Add :func:`collections.ChainMap()` to set precedence of backupdir.
-    - Add in multiple invocations of rclone and create args to reflect use cases.
     - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync's file input.
+    - How do you correctly use :mod:`argparse` and ``**kwargs`` together?
 
 .. _`rclone`: https://rclone.org
 
@@ -129,7 +122,11 @@ def _dir_checker(dir_):
 
 
 def rclone_base_case(src, dst):
-    """Noop. Simply here to track the best and most general command to use.
+    """Base case that all other functions build off of.
+
+    This function shouldn't be executed directly; however, it serves as a good
+    template detailing a function and useful command with parameters that
+    rclone uses.
 
     For example, ``--follow`` is a flag that has conditionals associated it with it.
 
@@ -151,11 +148,6 @@ def rclone_base_case(src, dst):
         a dropbox directory, a google drive folder or a google cloud storage
         bucket among many other things.
 
-
-    Returns
-    -------
-    None
-
     """
     cmd = ['rclone', 'copy', '--update', '--track-renames', src, dst]
     run(cmd)
@@ -164,9 +156,20 @@ def rclone_base_case(src, dst):
 def rclone_follow(dst, src):
     """Follow symlinks.
 
-    See Also
-    --------
-    :func:`rclone_base_case()` for a more detailed explanation
+    Parameters
+    ----------
+    src : str
+        directory to clone files from
+
+    dst : str
+        destination to send files to. Can be configured as a local directory,
+        a dropbox directory, a google drive folder or a google cloud storage
+        bucket among many other things.
+
+
+    .. See Also
+    .. --------
+    .. :ref:`pyutil.rclone.rclone_base_case()` for a more detailed explanation
 
     """
     cmd = [

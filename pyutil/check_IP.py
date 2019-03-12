@@ -17,6 +17,7 @@ Installing packages for your project:
 
 `<https://docs.python-guide.org/en/latest/dev/virtualenvs/>`_
 
+
 .. todo:: Come up with a fallback if requests isn't installed.
 
 
@@ -30,7 +31,7 @@ def get_public_ip():
 
     Returns
     -------
-    `rt` : str
+    rt : str
         A formatted message displaying the user's IP address.
 
 
@@ -45,7 +46,7 @@ def get_hostname():
 
     Returns
     -------
-    `host_return_msg` : str
+    host_return_msg : str
         A formatted message displaying the user's IP address.
 
     """

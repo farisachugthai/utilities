@@ -4,16 +4,10 @@
 
 This module was originally used to fix my settings.json from VSCode.
 
-:File: json_sorter.py
-:Author: Faris Chugthai
-
-`Github <https://github.com/farisachugthai>`_
-
 Attributes
 ----------
 fobj : path-like object
     The file to fix.
-
 
 Example
 -------
@@ -27,7 +21,6 @@ Bug Fixes
 Currently trying to run this module and running into errors.
 
 Currently got this.
-
 
 .. code-block:: python3
 
@@ -91,13 +84,8 @@ def main(file_obj, output_file=sys.stdout):
 
     Parameters
     ----------
-    ``file_obj`` : path-like object
+    file_obj : str
         The file to read in
-
-    Returns
-    -------
-    None
-
 
     """
     with open(file_obj) as f:

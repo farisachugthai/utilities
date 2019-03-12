@@ -7,50 +7,39 @@
 
 .. todo:: Should accept command line arguments.
 
-
-:File: find_pics.py
-:Author: Faris Chugthai
-
-`Github <https://github.com/farisachugthai>`_
+We'll say that another thing on the todo list is
+return a path-like object from :func:`find_pics()`.
+# print(os.path.abspath(match)
 
 """
 import re
 import os
 
 
-def find_pics(path):
+def find_pics(picture):
     """Finds jpegs and jpgs.
+
+    .. todo:: Format the match object so it's more usable
+
 
     Parameters
     ----------
-    path : str or path-like object
-        Path to a directory to check
+    `picture` : str
+        Path to a file that may or may not be a jpg/jpeg
 
 
     Yields
     ------
-    f : re.match object
-        Filename that matches a jpeg regex.
-
-
-    .. todo::
-
-        Format the match object so it's more usable
+    `matched` : :class:`re.match()` object
+        Filename that matches a jpg/jpeg regex.
 
     """
-    matched = re.match(".*jp(e)?g", f)
+    matched = re.match(".*jp(e)?g", picture)
     if matched:
-        yield f
+        yield matched
 
 
 if __name__ == "__main__":
     path = os.listdir(".")
-    # list comprehesion with a function?
-    # matches = [f if find_pics(f) for f in path]
-    for f in path:
-        if find_pics(f):
-            match = find_pics(f)
 
-            # We'll say that another thing on the todo list is
-            # return a path-like object from :func:`find_pics()`.
-            # print(os.path.abspath(match)
+    matches = [f for f in path if find_pics(f)]

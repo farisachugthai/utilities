@@ -8,12 +8,6 @@
 .. module:: make
     :synopsis: Expedite documentation builds.
 
-
-:File: make.py
-:Author: Faris Chugthai
-
-:Github: `https://github.com/farisachugthai`_
-
 We could, in addition to automatic documentation builds, attempt to automate
 installation of the package with subcommands. Uhm well argparse doesn't really
 give us that functionality so it'd be more like
@@ -42,11 +36,6 @@ This never occured to me to do this...
     to do in :ref:`conf.py`, but that file exports some constants
     so maybe we'll just scoop them up?
 
-Attributes
------------
-``builder`` : str
-    The filetype that ``make`` will invoke ``sphinx-build`` to create
-
 .. todo::
 
     Check that the f string syntax is correct.
@@ -58,6 +47,13 @@ Attributes
     And that static dir I guess. shutil.copytree(src, dst)
 
 .. todo:: Fix the way logging is set up here.
+
+
+Attributes
+-----------
+`builder` : str
+    The filetype that ``make`` will invoke ``sphinx-build`` to create
+
 
 """
 import argparse
@@ -75,7 +71,7 @@ def _parse_arguments():
 
     Returns
     -------
-    args : str
+    `args` : str
         Arguments provided by the user.
 
 
@@ -85,6 +81,8 @@ def _parse_arguments():
         Shows a few good methods on how to programatically publish docs.
 
 
+    Examples
+    --------
     .. code-block:: python3
 
         from docutils.core import *
@@ -138,12 +136,12 @@ def run(cmd):
 
     Parameters
     ----------
-    cmd : str
+    `cmd` : str
         The command to be called
 
     Returns
     -------
-    process.returncode : int
+    `process.returncode` : int
         The returncode from the process.
 
 

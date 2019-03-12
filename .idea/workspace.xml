@@ -5,8 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="209be79f-c702-4c9c-9eb0-00f62f4e581f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_sources/api.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_sources/api.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_sources/todo.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_sources/todo.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_sources/tutorial.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_sources/tutorial.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/docs/conf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/make.py" beforeDir="false" afterPath="$PROJECT_DIR$/docs/make.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinxext/docscrape.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinxext/docscrape_sphinx.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sphinxext/numpydoc.py" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sphinxext/numpydoc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/todo.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/todo.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/backup_nt_and_posix.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/backup_nt_and_posix.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/batch_renamer.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/batch_renamer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/check_IP.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/check_IP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/conda_export.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/conda_export.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/dir3.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/dir3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/dlink.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/dlink.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/dlink2.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/dlink2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/env_checks.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/env_checks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/find_pics.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/find_pics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/g.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/g.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/inspect_module.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/inspect_module.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/itersrc.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/itersrc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/json_sorter.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/json_sorter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/lazy_downloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/lazy_downloader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/numerical/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/numerical/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyutil/rclone.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/rclone.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyutil/wrap.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyutil/wrap.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_batch_renamer.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_batch_renamer.py" afterDir="false" />
     </list>
     <ignored path="node_modules/" />
     <ignored path="build/" />
@@ -28,53 +54,40 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pyutil/wrap.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pyutil/dir3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1227">
-              <caret line="65" selection-start-line="65" selection-end-line="68" selection-end-column="66" />
+            <state>
+              <caret line="146" selection-start-line="146" selection-end-line="146" />
               <folding>
-                <element signature="e#257#266#0" expanded="true" />
+                <element signature="e#2505#2515#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/conf.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6026">
-              <caret line="262" column="64" selection-start-line="262" selection-start-column="64" selection-end-line="262" selection-end-column="64" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/docs/api.rst">
+          <provider selected="true" editor-type-id="restructured-text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyutil/lazy_downloader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pyutil/dir3.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="644">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/test_batch_renamer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
-              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+            <state relative-caret-position="334">
+              <caret line="55" selection-start-line="55" selection-end-line="55" />
               <folding>
-                <element signature="e#111#126#0" expanded="true" />
+                <element signature="e#723#738#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pyutil/json_sorter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret line="99" selection-start-line="99" selection-end-line="99" />
             </state>
           </provider>
         </entry>
@@ -117,7 +130,6 @@
         <option value="$PROJECT_DIR$/pyutil/backup-nt-and-posix.py" />
         <option value="$PROJECT_DIR$/docs/pyutil.dlink.rst" />
         <option value="$PROJECT_DIR$/docs/index.rst" />
-        <option value="$PROJECT_DIR$/pyutil/batch_renamer.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.rst" />
         <option value="$USER_HOME$/python/tutorials/logging.rst" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
@@ -131,20 +143,32 @@
         <option value="$PROJECT_DIR$/pyutil/dlink.py" />
         <option value="$PROJECT_DIR$/pyutil/linktree.py" />
         <option value="$PROJECT_DIR$/setup.py" />
-        <option value="$PROJECT_DIR$/pyutil/rclone.py" />
-        <option value="$PROJECT_DIR$/pyutil/lazy_downloader.py" />
-        <option value="$PROJECT_DIR$/pyutil/backup_nt_and_posix.py" />
-        <option value="$PROJECT_DIR$/pyutil/check_IP.py" />
         <option value="$PROJECT_DIR$/pyutil/math/gcd_iter.py" />
         <option value="$PROJECT_DIR$/pyutil/math/gcd_recur.py" />
         <option value="$PROJECT_DIR$/pyutil/math/__init__.py" />
         <option value="$PROJECT_DIR$/pyutil/__init__.py" />
         <option value="$PROJECT_DIR$/pyutil/__about__.py" />
-        <option value="$PROJECT_DIR$/docs/conf.py" />
         <option value="$PROJECT_DIR$/docs/__init__.py" />
         <option value="$PROJECT_DIR$/test/__init__.py" />
-        <option value="$PROJECT_DIR$/test/test_batch_renamer.py" />
         <option value="$PROJECT_DIR$/pyutil/wrap.py" />
+        <option value="$PROJECT_DIR$/docs/tutorial.rst" />
+        <option value="$PROJECT_DIR$/pyutil/find_pics.py" />
+        <option value="$PROJECT_DIR$/docs/make.py" />
+        <option value="$PROJECT_DIR$/docs/sphinxext/numpydoc.py" />
+        <option value="$PROJECT_DIR$/docs/conf.py" />
+        <option value="$PROJECT_DIR$/test/test_batch_renamer.py" />
+        <option value="$PROJECT_DIR$/pyutil/lazy_downloader.py" />
+        <option value="$PROJECT_DIR$/pyutil/rclone.py" />
+        <option value="$PROJECT_DIR$/pyutil/backup_nt_and_posix.py" />
+        <option value="$PROJECT_DIR$/pyutil/batch_renamer.py" />
+        <option value="$PROJECT_DIR$/pyutil/check_IP.py" />
+        <option value="$PROJECT_DIR$/pyutil/conda_export.py" />
+        <option value="$PROJECT_DIR$/pyutil/dir3.py" />
+        <option value="$PROJECT_DIR$/pyutil/dlink2.py" />
+        <option value="$PROJECT_DIR$/pyutil/env_checks.py" />
+        <option value="$PROJECT_DIR$/pyutil/g.py" />
+        <option value="$PROJECT_DIR$/pyutil/inspect_module.py" />
+        <option value="$PROJECT_DIR$/pyutil/json_sorter.py" />
       </list>
     </option>
   </component>
@@ -153,7 +177,7 @@
       <scope name="filtered utilities" />
     </order>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-68" />
     <option name="y" value="70" />
     <option name="width" value="1346" />
@@ -249,7 +273,18 @@
             <path>
               <item name="utilities" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="~/projects/utilities" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="test" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="docs" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="utilities" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/projects/utilities" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="docs" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="sphinxext" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="utilities" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/projects/utilities" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="pyutil" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -358,7 +393,7 @@
     <frame x="0" y="40" width="1366" height="696" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.35946462" visible="true" weight="0.2829486" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.35946462" visible="true" weight="0.2829486" />
       <window_info id="Structure" order="1" sideWeight="0.6426513" side_tool="true" weight="0.24981357" />
       <window_info id="Favorites" order="2" sideWeight="0.64053535" side_tool="true" weight="0.023862788" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -367,11 +402,11 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info active="true" anchor="bottom" content_ui="combo" id="TODO" order="6" visible="true" weight="0.32402235" />
+      <window_info anchor="bottom" content_ui="combo" id="TODO" order="6" weight="0.32402235" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4981385" weight="0.90316576" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4973939" weight="0.44878957" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5018615" side_tool="true" weight="0.8193669" />
-      <window_info anchor="bottom" auto_hide="true" id="Python Console" order="10" sideWeight="0.49739" weight="0.08490566" />
+      <window_info anchor="bottom" auto_hide="true" id="Python Console" order="10" sideWeight="0.49739" weight="0.1433892" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32774675" />
       <window_info anchor="bottom" id="Educational.CheckDetails" order="12" />
       <window_info anchor="bottom" id="Docker" order="13" show_stripe_button="false" />
@@ -456,60 +491,10 @@
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pyutil/json_sorter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-21">
-          <folding>
-            <element signature="e#439#454#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyutil/conda_export.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="920">
-          <caret line="43" column="4" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
-          <folding>
-            <element signature="e#591#604#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-169">
           <caret line="63" column="10" selection-start-line="63" selection-start-column="10" selection-end-line="63" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyutil/backup_nt_and_posix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1932">
-          <caret line="87" column="28" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyutil/dir_cleaner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-          <folding>
-            <element signature="e#603#624#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyutil/dlink.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-212">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyutil/rclone.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1792">
-          <caret line="37" column="18" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -565,9 +550,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/tutorial.rst">
-      <provider selected="true" editor-type-id="restructured-text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
@@ -582,41 +564,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/conf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6026">
-          <caret line="262" column="64" selection-start-line="262" selection-start-column="64" selection-end-line="262" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyutil/lazy_downloader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyutil/dir3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/_static/jquery-3.2.1.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="791" column="31" selection-start-line="791" selection-start-column="31" selection-end-line="791" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_batch_renamer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-          <folding>
-            <element signature="e#111#126#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -637,13 +588,183 @@
     <entry file="file://$PROJECT_DIR$/docs/_sources/api.rst.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/find_pics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/tutorial.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/make.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="e#1542#1557#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pyutil/wrap.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1227">
-          <caret line="65" selection-start-line="65" selection-end-line="68" selection-end-column="66" />
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
           <folding>
             <element signature="e#257#266#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/sphinxext/numpydoc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/conf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="263" column="4" selection-start-line="263" selection-start-column="4" selection-end-line="263" selection-end-column="4" />
+          <folding>
+            <element signature="e#873#887#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/todo.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/lib/docs/conf.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_batch_renamer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding>
+            <element signature="e#111#126#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/api.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/check_IP.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/batch_renamer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="127" column="10" selection-start-line="127" selection-start-column="10" selection-end-line="127" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/backup_nt_and_posix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/rclone.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="14" column="72" selection-start-line="14" selection-start-column="72" selection-end-line="14" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/conda_export.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="91" column="39" selection-start-line="91" selection-start-column="39" selection-end-line="91" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/dir3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="146" selection-start-line="146" selection-end-line="146" />
+          <folding>
+            <element signature="e#2505#2515#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/inspect_module.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/g.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-735">
+          <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/env_checks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="759">
+          <caret line="102" column="5" selection-start-line="102" selection-start-column="5" selection-end-line="102" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/dot_sym.ipy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="49" column="7" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/dlink2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="38" column="4" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/dlink.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/dir_cleaner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1172">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/lazy_downloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
+          <folding>
+            <element signature="e#723#738#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyutil/json_sorter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="99" selection-start-line="99" selection-end-line="99" />
         </state>
       </provider>
     </entry>

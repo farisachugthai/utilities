@@ -77,7 +77,7 @@ def check_xdg_config_home():
 
     Returns
     -------
-    `bool`
+    bool
 
     Example
     -------

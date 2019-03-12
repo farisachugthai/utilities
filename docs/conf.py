@@ -35,6 +35,8 @@ import logging
 import os
 import sys
 
+from numpydoc import numpydoc
+
 logger = logging.getLogger(__name__)
 
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -88,7 +90,8 @@ extensions = [
     'sphinx.ext.githubpages',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
-    # 'matplotlib.sphinxext.plot_directive',
+    'matplotlib.sphinxext.plot_directive',
+    'numpydoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -259,7 +262,7 @@ intersphinx_mapping = {
     'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
     'matplotlib': ('https://matplotlib.org', None),
     'python': ('https://docs.python.org/3/', None),
-    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
     'ipython': ('https://ipython.readthedocs.io/en/stable/', None)
 }
 

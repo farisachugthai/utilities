@@ -13,23 +13,12 @@ May refactor one day. But it continues to work.
 
 Note
 ----
-This module assumes a Unix OS and a python interpreter above version 3.4.
+This module assumes a python interpreter above version 3.4.
 
 """
-import os
 from pathlib import Path
 import shutil
 import sys
-
-
-def sys_checks():
-    """Check that system requirements are met."""
-    if sys.version_info < (3, 4):
-        sys.exit("Requires Python3.4 and up")
-
-    if os.uname()[0] not in ["Darwin", "Linux"]:
-        raise OSError("This script assumes a Unix operating system.")
-        sys.exit()
 
 
 def repo_dir_check(dest):
@@ -39,6 +28,7 @@ def repo_dir_check(dest):
 
         To mimic behavior of ``mkdir -p``, use flags ``parents=True`` and
         ``exists_ok=True``
+
 
     Parameters
     ----------
@@ -52,7 +42,7 @@ def repo_dir_check(dest):
 
 
 def backup_file(src):
-    """Backs up file ``src``. Utilizes :func:`shutil.copy2`.
+    """Backs up file src. Utilizes :func:`shutil.copy2`.
 
     Parameters
     ----------
@@ -74,6 +64,7 @@ def main():
 
     Runs checks, calls func to backup file `src`, moves it to the dotfiles
     repo and symlinks it.
+
     Moves file to a hardcoded path but will be generalized to take as an
     argument.
 
@@ -82,12 +73,14 @@ def main():
     src : str
         Name of file to backup, move and symlink.
 
+
     Assumes
     -------
         User runs the script from inside the folder of the file they want to
         move.
+
+
     """
-    sys_checks()
     inputted = sys.argv[1] if len(
         sys.argv) >= 2 else sys.exit("Takes at least one filename.")
     src = Path(inputted)

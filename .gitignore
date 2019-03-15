@@ -407,6 +407,7 @@ paket-files/
 .fake/
 
 # JetBrains Rider
+.idea/workspace.xml
 *.sln.iml
 
 # CodeRush

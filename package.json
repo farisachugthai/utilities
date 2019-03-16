@@ -8,7 +8,6 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
-    "bash-language-server": "^1.5.5",
     "eslint": "^5.14.1",
     "jsonlint": "^1.6.3"
   },

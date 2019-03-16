@@ -2,8 +2,6 @@
 
 Tutorial.rst
 ==============
-
-
 .. module:: tutorial
    :synopsis: The pyutils tutorial
 
@@ -11,34 +9,8 @@ This package combines different scripts that aide in working with computers
 ranging from Windows 10 to Linux to Ubuntu to automate regular,
 repetitive and error prone tasks.
 
-.. _tutorial-installation:
-
-Installation
--------------
-.. code-block:: shell
-
-   python setup.py build
-   python setup.py install
-
-
-Alternatively, one can run the setup script in develop mode.
-
-.. code-block:: shell
-
-   python setup.py develop
-
-
-Which is similar to
-
-.. code-block:: shell
-
-   pip wheel -e .
-
-
-.. tutorial-contributing:
-
-Contributing
-------------
+Contributing Tutorial
+---------------------
 This package has recently adopted the :mod:`numpy` convention for docstrings.
 As a result, all docstrings must conform to this standard.
 
@@ -51,3 +23,9 @@ included below.
 .. jesus i don't know why i struggled with that so much. Refer to
 
 .. http://docutils.sourceforge.net/docs/ref/rst/directives.html#include
+
+In addition, full details of the numpy docstring format are given at :ref:`format`
+
+Continue to the next page:
+
+:ref:`numpydoc`

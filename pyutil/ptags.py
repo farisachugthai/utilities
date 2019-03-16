@@ -1,10 +1,13 @@
 #!/usr/bin/python3.6
 """Create a tags file for Python programs, usable with vi.
 
-Tagged are:
-    - functions (even inside other defs or classes)
-    - classes
-    - filenames
+Currently uses a regex to create a tags file.
+
+Files to tag
+------------
+- functions (even inside other defs or classes)
+- classes
+- filenames
 
 Warns about files it cannot open.
 
@@ -12,15 +15,16 @@ No warnings about duplicate tags.
 
 Snagged from the scripts dir in python3.6-examples.
 
-TODO::
-    Add docstrings.
-    Use ipdb and step through while watching the tags var.
-    Initially it was defined outside the ifmain loop.
+.. todo:: Use ipdb and step through while watching the tags var.
 
-    I moved it, but without the global keyword I don't get how any changes
-    to tags in treat_file will propogate back to main.
 
-Otherwise add in pep257 compliant params. Try different styles and see what you like.
+Otherwise add in `PEP 257`_ compliant params.
+Try different styles and see what you like.
+
+
+.. _PEP 257:
+    https://www.python.org/dev/peps/pep-0257
+
 """
 import os
 import re
@@ -40,7 +44,18 @@ def main():
 
 
 def treat_file(filename):
-    """Find usable matches for tags file."""
+    """Find usable matches for tags file.
+
+    Parameters
+    ----------
+    filename : path-like object
+        File to generate tags from.
+
+    Returns
+    -------
+    None : None
+
+    """
     try:
         fp = open(filename, 'r')
     except Exception:

@@ -1,3 +1,4 @@
+=================
 :mod:`numpydoc`
 =================
 
@@ -8,10 +9,11 @@ This code snippet is taken from the :mod:`sphinx` extension
 :mod:`sphinxcontrib.napoleon`
 
 
-.. code-block:: python
+Numpy Docstring Example
+-----------------------
 
-    Example
-    -------
+.. code-block:: python3
+
     >>> from sphinxcontrib.napoleon import Config
     >>> config = Config(napoleon_use_param=True, napoleon_use_rtype=True)
     >>> docstring = '''One line summary.

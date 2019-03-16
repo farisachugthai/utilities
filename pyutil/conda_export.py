@@ -2,29 +2,19 @@
 # -*- coding: utf-8 -*-
 """Iterate over the list of conda environments that are present.
 
-Assumes
----------
-Working conda installation.
 
-Example
---------
+.. rubric:: Returns
 
-.. code-block:: shell
+Separate text files. 2 for each environment.:
 
-    python3 conda-export.py
-
-Returns
--------
-Separate text files. 2 for each environment.
-- One with general metadata
-- One with a list of packages.
+    * One with general metadata
+    * One with a list of packages.
 
 
 .. todo::
 
     - Possibly refactor into more functions.
         - Would this warrant a class?
-    - Shell highlighting is really light. Hard to read.
     - Add logging. Return more useful info besides just printing.
 
 Work in progress.
@@ -38,11 +28,6 @@ import sys
 
 def munging():
     """Iterate through conda envs and return text files to replicate from.
-
-    Parameters
-    -----------
-    None
-
 
     Returns
     --------
@@ -68,8 +53,21 @@ def munging():
 
 
 def truncate(envs):
-    """Take the decoded environments and reduce them down to the parts we need."""
-    # I want this list comprehension to work so badly I cant tell you
+    """Take the output from :ref:`munging`and reduce and print to console.
+
+    Parameters
+    ----------
+    envs : str
+        Conda environments
+
+
+    Returns
+    -------
+    short_envs : list of strs
+        Shorter name of all envs. Printed to console.
+
+
+    """
     short_envs = []
 
     for env in envs:
@@ -85,6 +83,8 @@ if __name__ == "__main__":
 
     full_name_envs = munging()
 
-    envs = truncate(full_name_envs)
+    truncated_envs = []
+    for i in full_name_envs:
+        truncated_envs.append(truncate(i))
 
-    print(envs)
+    print(str(truncated_envs))

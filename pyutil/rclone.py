@@ -2,34 +2,30 @@
 # -*- coding: utf-8 -*-
 """Rewriting rclone.sh as a python module.
 
-.. code-block:: bash
+.. rubric:: Requires
 
-    rclone.py src dst
-
-
-Requires
----------
-rclone
+`rclone`_, a Golang package.
 
 
 .. todo::
 
-    - ``args`` is used as a parameter to both :class:`argparse.ArgumentParser()` and :func:`subprocess.run()`
-        - Switch the name for one of them as this'll get confusing quickly.
     - Set up a simple single use case backup.
     - Add :func:`collections.ChainMap()` to set precedence of backupdir.
-    - Add in multiple invocations of rclone and create args to reflect use cases.
     - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync's file input.
+    - How do you correctly use :mod:`argparse` and ``**kwargs`` together?
 
+.. _`rclone`: https://rclone.org
 
 """
 import argparse
+import logging
 import os
+import shlex
 import subprocess
 import sys
 
 
-def _parse_arguments(cwd=None):
+def _parse_arguments(cwd=None, **kwargs):
     """Parse user-given arguments."""
     if cwd is None:
         cwd = os.getcwd()
@@ -50,29 +46,71 @@ def _parse_arguments(cwd=None):
         help="the source directory. "
         "defaults to the cwd.")
 
-    # need to change all instances of dest becuase that's too confusing
-    # parser.add_argument(
-    #     action='store',
-    #     dest='src',
-    #     default=cwd,
-    #     help="The source directory. "
-    #     "Defaults to the cwd.")
+    parser.add_argument(
+        "dst",
+        help="The folder that the files should be backed up to."
+        "Can be a remote instance as well. See rclone.org for "
+        "all accepted values for this parameter")
+
+    parser.add_subparsers(
+        "config",
+        required=False,
+        help="Configure rclone. Additional options can't be specified;"
+        "however, :mod:`pyutil.rclone` will halt execution as rclone is configured."
+    )
 
     parser.add_argument(
         '-f',
         '--follow',
-        action='store',
+        action='store_true',
+        default=False,
         dest='follow',
         help="Follow symlinks.")
 
     return parser
 
 
+def run(cmd):
+    """Execute the required command in a subshell.
+
+    First the command is splited used typical shell grammer.
+
+    A new process is created, and from the resulting subprocess object,
+    the :func:`subprocess.Popen().wait()`.
+
+    This function returns the return code of split ``cmd``, so any
+    non-zero value will lead to a ``SystemExit`` with a passed value
+    of ``returncode``.
+
+    .. should i use **kwargs as a parameter here? If so, how do i mark that up in a docstring?
+
+    Parameters
+    ----------
+    cmd : str
+        The command to be called
+
+    Returns
+    -------
+    process.returncode : int
+        The returncode from the process.
+
+
+    """
+    cmd = shlex.split(cmd)
+    logging.debug("Cmd is: " + str(cmd))
+    process = subprocess.Popen(cmd)
+
+    if process.wait():
+        raise SystemExit(process.returncode)
+    else:
+        return process.returncode
+
+
 def _dir_checker(dir_):
     """Check that necessary directories exist.
 
-    If the default dst doesn't exist, definitely create it.
-    If the user provided src doesn't exist, crash without making one.
+    If the default `dst` doesn't exist, definitely create it.
+    If the user provided `src` doesn't exist, crash without making one.
 
     It's more likely that they typed the src dir incorrectly rather than
     running the script aware of the fact that it is nonexistent.
@@ -84,9 +122,13 @@ def _dir_checker(dir_):
 
 
 def rclone_base_case(src, dst):
-    """Noop. Simply here to track the best and most general command to use.
+    """Base case that all other functions build off of.
 
-    For example, --follow is a flag that has conditionals associated it with it.
+    This function shouldn't be executed directly; however, it serves as a good
+    template detailing a function and useful command with parameters that
+    rclone uses.
+
+    For example, ``--follow`` is a flag that has conditionals associated it with it.
 
     There are situations in which one wants to follow symlinks and others
     that they don't.
@@ -95,33 +137,47 @@ def rclone_base_case(src, dst):
 
     .. todo:: rclone takes an argument for user-agent
 
+
     Parameters
     ----------
-    src : path-like object
+    src : str
         directory to clone files from
 
-    dst : path-like object
+    dst : str
+        destination to send files to. Can be configured as a local directory,
+        a dropbox directory, a google drive folder or a google cloud storage
+        bucket among many other things.
+
+    """
+    cmd = ['rclone', 'copy', '--update', '--track-renames', src, dst]
+    run(cmd)
+
+
+def rclone_follow(dst, src):
+    """Follow symlinks.
+
+    Parameters
+    ----------
+    src : str
+        directory to clone files from
+
+    dst : str
         destination to send files to. Can be configured as a local directory,
         a dropbox directory, a google drive folder or a google cloud storage
         bucket among many other things.
 
 
-    Returns
-    -------
-    None
+    .. See Also
+    .. --------
+    .. :ref:`pyutil.rclone.rclone_base_case()` for a more detailed explanation
 
     """
-    cmd = ['rclone', 'copy', '--update', '--track-renames', src, dst]
-    subprocess.run(cmd)
+    cmd = [
+        'rclone', 'copy', '--update', '--track-renames'
+        '--copy-links', src, dst
+    ]
+    run(cmd)
 
-
-# def rclone_follow(dst, src=cwd):
-# """Follow symlinks."""
-# cmd = [
-# 'rclone', 'copy', '--update', '--track-renames'
-# '--copy-links', src, dst
-# ]
-# subprocess.run(cmd)
 
 if __name__ == "__main__":
     cwd = os.getcwd()
@@ -139,7 +195,14 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if args.follow:
+    if args.src:
+        src = args.src
+    else:
+        src = cwd
 
-        # rclone_follow()
-        pass
+    assert args.dst
+
+    dst = args.dst
+
+    if args.follow:
+        rclone_follow(dst, src)

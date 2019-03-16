@@ -4,27 +4,29 @@
 
 Sphinx Configuration File
 =========================
-
 This file does only contain a selection of the most common options. For a
 full list see the documentation:
 
-:URL: `http://www.sphinx-doc.org/en/master/config`_
+:URL: `<http://www.sphinx-doc.org/en/master/config>`_
 
 Path Setup
 ----------
 If extensions (or modules to document with autodoc) are in another
-directory, add these directories to sys.path here.
+directory, add these directories to `sys.path` here.
 
 If the directory is relative to the documentation root, use
-:func:`os.path.abspath` to make it absolute, like shown here.
+:func:`os.path.abspath()` to make it absolute, like shown here.
+
 
 .. code-block:: python3
 
     sys.path.insert(0, os.path.abspath('.'))
 
+
+
 As stated at:
 
-:URL: `https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix`_
+:URL: `<https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix>`_
 
 However, the filetype mapping came about in 1.8 so make sure to add that
 ``needs-sphinx=version`` bit
@@ -35,21 +37,27 @@ import logging
 import os
 import sys
 
-logger = logging.getLogger(__name__)
+# So even though it sets off the linters this is needed to recognize numpydoc
+# as a package
+
+from numpydoc import numpydoc  # noqa
+import flake8_rst
+
+
+logger = logging.basicConfig(level=logging.DEBUG)
 
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 SOURCE_CODE = os.path.join('..', 'pyutil')
 
-sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('.'))
 
 sys.path.insert(0, os.path.abspath('sphinxext'))
 
 sys.path.insert(0, os.path.abspath(SOURCE_CODE))
 
-sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'math')))
+sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'numerical')))
 
 logging.debug("Path is currently: " + str(sys.path))
 
@@ -87,8 +95,9 @@ extensions = [
     'sphinx.ext.githubpages',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
-    # 'matplotlib.sphinxext.plot_directive',
+    'matplotlib.sphinxext.plot_directive',
     'numpydoc',
+    'flake8_rst.sphinxext.custom_roles',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -150,10 +159,10 @@ pygments_style = 'sphinx'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {
-#     "github_user": "Faris A. Chugthai",
-#     "github_repo": "utilities"
-# }
+html_theme_options = {
+    "github_user": "Faris A. Chugthai",
+    "github_repo": "utilities"
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -259,7 +268,7 @@ intersphinx_mapping = {
     'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
     'matplotlib': ('https://matplotlib.org', None),
     'python': ('https://docs.python.org/3/', None),
-    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
     'ipython': ('https://ipython.readthedocs.io/en/stable/', None)
 }
 
@@ -277,7 +286,7 @@ viewcode_import = True
 # -------------------------------------------------------------------
 
 # import glob  # noqa F402
-autosummary_generate = True
+autosummary_generate = False
 
 # -------------------------------------------------------------------
 # Napoleon settings
@@ -288,7 +297,7 @@ autosummary_generate = True
 # napoleon_google_docstring = True
 # napoleon_numpy_docstring = True
 # napoleon_include_init_with_doc = False
-# napoleon_include_private_with_doc = False
+napoleon_include_private_with_doc = True
 # napoleon_include_special_with_doc = True
 # napoleon_use_admonition_for_examples = False
 # napoleon_use_admonition_for_notes = False
@@ -296,3 +305,13 @@ autosummary_generate = True
 # napoleon_use_ivar = False
 # napoleon_use_param = True
 # napoleon_use_rtype = True
+
+# ---
+# Add custom css from rtd
+# ---
+
+
+def setup(app):
+    """Add custom css styling."""
+    custom_css = os.path.abspath(os.path.join('_static', '', 'custom.css'))
+    app.add_stylesheet(custom_css)

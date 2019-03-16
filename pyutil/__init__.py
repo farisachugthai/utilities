@@ -2,10 +2,6 @@
 # -*- coding: utf-8 -*-
 """Initialize the package for all scripts used in IPython startup.
 
-:File: __init__.py
-:Author: Faris Chugthai
-`GitHub <https://github.com/farisachugthai>`_
-
 This module intends to establish a few different things.
 
     - Initialize logging in a general manner.

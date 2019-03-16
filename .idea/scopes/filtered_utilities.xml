@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="filtered utilities" pattern="!file[utilities]:build//*&amp;&amp;!file[utilities]:dist//*&amp;&amp;!file[utilities]:node_modules//*&amp;&amp;!file[utilities]:utilities.egg-info//*&amp;&amp;!file[utilities]:docs/_build//*&amp;&amp;!file[utilities]:docs/_static/*" />
+</component>

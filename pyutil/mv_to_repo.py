@@ -1,69 +1,86 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-:mod:`mv_to_repo`
-===================
+"""Move files from the home directory to the dotfiles repo.
 
 .. module:: `mv_to_repo`
     :synopsis: Move files from the home directory to the dotfiles repo.
 
 This is a script I've been using for the better part of a year, so while
-the docstring formatting isn't consistent and there are a couple odd sections,
-this script has served a very utilitiarian purpose.
+the docstring formatting isn't consistent and there are a couple odd
+sections, this script has served a very utilitiarian purpose.
 
 May refactor one day. But it continues to work.
 
+Note
+----
+This module assumes a python interpreter above version 3.4.
+
 """
-import os
 from pathlib import Path
 import shutil
 import sys
 
 
-def sys_checks():
-    """Check that system requirements are met."""
-    if sys.version_info < (3, 4):
-        sys.exit("Requires Python3.4 and up")
-
-    if os.uname()[0] not in ["Darwin", "Linux"]:
-        raise OSError("This script assumes a Unix operating system.")
-        sys.exit()
-
-
 def repo_dir_check(dest):
-    """Check that the directory is in the repository and make one otherwise."""
+    """Check that the directory is in the repository and make one otherwise.
 
+    `Useful info about mkdir <https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir>`_:
+
+        To mimic behavior of ``mkdir -p``, use flags ``parents=True`` and
+        ``exists_ok=True``
+
+
+    Parameters
+    ----------
+    dest : str
+        Checks that the file to move has a corresponding directory in the repo
+
+
+    """
     if dest.is_dir() is not True:
-        #  https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir
-        # To mimic behavior of mkdir -p, use flags parents=True and exists_ok=True
         dest.mkdir(parents=True, exist_ok=True)
 
 
 def backup_file(src):
-    """Backs up file 'src' """
-    # TODO2: Should we do anything if src.bak already exists?
-    shutil.copy(str(src), str(src) + ".bak")
+    """Backs up file src. Utilizes :func:`shutil.copy2`.
+
+    Parameters
+    ----------
+    src : str
+        File to backup
+
+    """
+    shutil.copy2(str(src), str(src) + ".bak")
 
 
 def main():
     """Dispatch the remaining implementation of the module.
 
     Determine if a file name is in the current directory or absolute path.
-    Then set up a relative path from $HOME. Use the root of the repo as the new
-    root and move the file there, all while creating directories and backups.
 
-    Runs checks, calls func to backup file 'src', moves it to the dotfiles
+    Then set up a relative path from ``$HOME``. Use the root of the repo
+    as the new root and move the file there, all while creating
+    directories and backups.
+
+    Runs checks, calls func to backup file `src`, moves it to the dotfiles
     repo and symlinks it.
-    Moves file to a hardcoded path but will be generalized to take as an argument.
 
-    Parameters:
+    Moves file to a hardcoded path but will be generalized to take as an
+    argument.
+
+    Parameters
+    ----------
+    src : str
         Name of file to backup, move and symlink.
 
-    Assumes:
+
+    Assumes
+    -------
         User runs the script from inside the folder of the file they want to
         move.
+
+
     """
-    sys_checks()
     inputted = sys.argv[1] if len(
         sys.argv) >= 2 else sys.exit("Takes at least one filename.")
     src = Path(inputted)

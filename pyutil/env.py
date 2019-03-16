@@ -11,4 +11,7 @@ or sourced.
 import os
 import pprint
 
-pprint.pprint(sorted(os.environ.items()))
+
+def current():
+    """Prints all current environment variables."""
+    pprint.pprint(sorted(os.environ.items()))

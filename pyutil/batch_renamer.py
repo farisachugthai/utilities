@@ -5,24 +5,27 @@
 .. module:: batch_renamer.py
 
 Largely argparse and doctest practice.
-From pydocs tutorials stdlib2 with some reformatting.
+From the Official Python documentation in the section Tutorials:
+`tutorials stdlib2`_ with some reformatting.
+
 Still uses old style strings as a result.
 
 .. code-block:: python3
 
     >>> os.listdir("/path/to/dir")
     ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
-    >>>  batch_renamer.py /path/to/dir
+
+.. code-block:: shell-session
+
+    batch_renamer.py /path/to/dir
     img_1074.jpg --> Ashley_0.jpg
     img_1076.jpg --> Ashley_1.jpg
     img_1077.jpg --> Ashley_2.jpg
 
-
-.. todo:: First things first ensure it works at all.
-
-
 This would be quite an easy module to create unittests for IN ADDITION to the
 fact that you could add some fixtures in and learn that.
+
+.. _`tutorials stdlib2`: https://docs.python.org/3/tutorial/stdlib2.html#templating
 
 """
 import argparse
@@ -32,6 +35,8 @@ import shutil
 from string import Template
 import time
 
+import pyutil
+
 
 class BatchRename(Template):
     """Delimiter for string substitutions."""
@@ -39,10 +44,29 @@ class BatchRename(Template):
     delimiter = '%'
 
 
+def _parse_arguments():
+    """Parse user arguments."""
+    parser = argparse.ArgumentParser(description=__doc__)
+
+    # should add in either globbing or fnmatch capabilities
+    parser.add_argument(
+        "directory",
+        nargs=1,
+        help="Directory containing only the files to be renamed.")
+
+    parser.add_argument('-V', '--version', action='version',
+                        version='%(prog)s' + pyutil.__about__['version'])
+
+    args = parser.parse_args()
+
+    return args
+
+
 def fix_extension():
     """Rename files that have have the wrong filename extension.
 
     .. todo:: Fuck I didn't consider the case where there are 2 words separated by dots that we want to keep.
+
     """
     for i in os.listdir('.'):
         parts = i.split(sep='.')
@@ -50,25 +74,20 @@ def fix_extension():
         shutil.move(i, new)
 
 
-def main(d):
-    """Rename a dir of files.
+def main(directory):
+    """Rename a user provided directory of files.
 
     Parameters
     ----------
-    d : path-like object
+    directory : str
         The directory to iterate over.
-
-
-    Returns
-    -------
-    None
 
     """
     fmt = input('Enter rename style (%d-date %n-seqnum %f-format):  ')
     # Enter rename style (%d-date %n-seqnum %f-format):  Ashley_%n%f
     t = BatchRename(fmt)
     date = time.strftime('%d%b%y')
-    for i, filename in enumerate(os.listdir(d)):
+    for i, filename in enumerate(os.listdir(directory)):
         base, ext = os.path.splitext(filename)
         newname = t.substitute(d=date, n=i, f=ext)
         print('{0} --> {1}'.format(filename, newname))
@@ -79,7 +98,7 @@ def batch_mover(pattern):
 
     Parameters
     ----------
-    pattern: str
+    pattern : str
         Pattern to check filenames for.
 
     Returns
@@ -94,20 +113,15 @@ def batch_mover(pattern):
 
 
 if __name__ == '__main__':
+    args = _parse_arguments()
 
-    logging.basicConfig()
-
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument(
-        "directory",
-        "-d",
-        "--directory",
-        help="Directory containing only the files to be renamed.")
-
-    args = parser.parse_args()
-
+    assert args.directory
     d = args.directory
+
+    # Wait until we're sure we got the args we needed before setting the log
+    # level.
+    # Now we can configure that level based on user input and default to WARNING
+    logging.basicConfig(level=logging.WARNING)
 
     logging.debug("The directory that was chosen was: " + str(d))
 

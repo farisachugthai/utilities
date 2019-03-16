@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/faris/miniconda3/envs/neovim/bin/python",
+    "python.pythonPath": "/home/faris/miniconda3/envs/utilities/bin/python",
     "files.exclude": {
         "**/.git": false,
         "**/.svn": true,

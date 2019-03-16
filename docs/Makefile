@@ -21,7 +21,7 @@ endif
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-.PHONY: help Makefile htmlview
+.PHONY: help Makefile htmlview magic
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
@@ -32,5 +32,5 @@ htmlview: html
 	 $(PYTHON) -c "import webbrowser; webbrowser.open('_build/html/index.html')"
 
 # Requires tabs. If setting values in your vimrc doesn't work type <C-v><Tab> to insert a tab literally.
-.magic:.
+magic:
 		$(PYTHON) autogen_magics.py

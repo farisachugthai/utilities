@@ -38,25 +38,19 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Rewriting rclone.sh as a python module.</span>
 
-<span class="sd">.. code-block:: bash</span>
-
-<span class="sd">    rclone.py src dst</span>
-
-
 <span class="sd">.. rubric:: Requires</span>
 
-<span class="sd">rclone, a Golang package.</span>
+<span class="sd">`rclone`_, a Golang package.</span>
 
 
 <span class="sd">.. todo::</span>
 
-<span class="sd">    - ``args`` is used as a parameter to both :class:`argparse.ArgumentParser()` and :func:`subprocess.run()`</span>
-<span class="sd">        - Switch the name for one of them as this&#39;ll get confusing quickly.</span>
 <span class="sd">    - Set up a simple single use case backup.</span>
 <span class="sd">    - Add :func:`collections.ChainMap()` to set precedence of backupdir.</span>
-<span class="sd">    - Add in multiple invocations of rclone and create args to reflect use cases.</span>
 <span class="sd">    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync&#39;s file input.</span>
+<span class="sd">    - How do you correctly use :mod:`argparse` and ``**kwargs`` together?</span>
 
+<span class="sd">.. _`rclone`: https://rclone.org</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -67,7 +61,7 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 
 
-<div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../api.html#pyutil.rclone._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../api.html#pyutil.rclone._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parse user-given arguments.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">cwd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
@@ -89,9 +83,23 @@
         <span class="s2">&quot;defaults to the cwd.&quot;</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;dst&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The folder that the files should be backed up to.&quot;</span>
+        <span class="s2">&quot;Can be a remote instance as well. See rclone.org for &quot;</span>
+        <span class="s2">&quot;all accepted values for this parameter&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
+        <span class="s2">&quot;config&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Configure rclone. Additional options can&#39;t be specified;&quot;</span>
+        <span class="s2">&quot;however, :mod:`pyutil.rclone` will halt execution as rclone is configured.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s1">&#39;-f&#39;</span><span class="p">,</span>
         <span class="s1">&#39;--follow&#39;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;follow&#39;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Follow symlinks.&quot;</span><span class="p">)</span>
 
@@ -109,6 +117,8 @@
 <span class="sd">    This function returns the return code of split ``cmd``, so any</span>
 <span class="sd">    non-zero value will lead to a ``SystemExit`` with a passed value</span>
 <span class="sd">    of ``returncode``.</span>
+
+<span class="sd">    .. should i use **kwargs as a parameter here? If so, how do i mark that up in a docstring?</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -135,8 +145,8 @@
 <div class="viewcode-block" id="_dir_checker"><a class="viewcode-back" href="../../api.html#pyutil.rclone._dir_checker">[docs]</a><span class="k">def</span> <span class="nf">_dir_checker</span><span class="p">(</span><span class="n">dir_</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Check that necessary directories exist.</span>
 
-<span class="sd">    If the default ``dst`` doesn&#39;t exist, definitely create it.</span>
-<span class="sd">    If the user provided ``src`` doesn&#39;t exist, crash without making one.</span>
+<span class="sd">    If the default `dst` doesn&#39;t exist, definitely create it.</span>
+<span class="sd">    If the user provided `src` doesn&#39;t exist, crash without making one.</span>
 
 <span class="sd">    It&#39;s more likely that they typed the src dir incorrectly rather than</span>
 <span class="sd">    running the script aware of the fact that it is nonexistent.</span>
@@ -148,7 +158,11 @@
 
 
 <div class="viewcode-block" id="rclone_base_case"><a class="viewcode-back" href="../../api.html#pyutil.rclone.rclone_base_case">[docs]</a><span class="k">def</span> <span class="nf">rclone_base_case</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Noop. Simply here to track the best and most general command to use.</span>
+    <span class="sd">&quot;&quot;&quot;Base case that all other functions build off of.</span>
+
+<span class="sd">    This function shouldn&#39;t be executed directly; however, it serves as a good</span>
+<span class="sd">    template detailing a function and useful command with parameters that</span>
+<span class="sd">    rclone uses.</span>
 
 <span class="sd">    For example, ``--follow`` is a flag that has conditionals associated it with it.</span>
 
@@ -170,18 +184,30 @@
 <span class="sd">        a dropbox directory, a google drive folder or a google cloud storage</span>
 <span class="sd">        bucket among many other things.</span>
 
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    None</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rclone&#39;</span><span class="p">,</span> <span class="s1">&#39;copy&#39;</span><span class="p">,</span> <span class="s1">&#39;--update&#39;</span><span class="p">,</span> <span class="s1">&#39;--track-renames&#39;</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">]</span>
     <span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="rclone_follow"><a class="viewcode-back" href="../../api.html#pyutil.rclone.rclone_follow">[docs]</a><span class="k">def</span> <span class="nf">rclone_follow</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Follow symlinks.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Follow symlinks.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    src : str</span>
+<span class="sd">        directory to clone files from</span>
+
+<span class="sd">    dst : str</span>
+<span class="sd">        destination to send files to. Can be configured as a local directory,</span>
+<span class="sd">        a dropbox directory, a google drive folder or a google cloud storage</span>
+<span class="sd">        bucket among many other things.</span>
+
+
+<span class="sd">    .. See Also</span>
+<span class="sd">    .. --------</span>
+<span class="sd">    .. :ref:`pyutil.rclone.rclone_base_case()` for a more detailed explanation</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;rclone&#39;</span><span class="p">,</span> <span class="s1">&#39;copy&#39;</span><span class="p">,</span> <span class="s1">&#39;--update&#39;</span><span class="p">,</span> <span class="s1">&#39;--track-renames&#39;</span>
         <span class="s1">&#39;--copy-links&#39;</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">dst</span>
@@ -210,6 +236,10 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">src</span> <span class="o">=</span> <span class="n">cwd</span>
 
+    <span class="k">assert</span> <span class="n">args</span><span class="o">.</span><span class="n">dst</span>
+
+    <span class="n">dst</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">dst</span>
+
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">follow</span><span class="p">:</span>
         <span class="n">rclone_follow</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span>
 </pre></div>
@@ -227,13 +257,21 @@
 
 
 
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
 
 
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
@@ -275,7 +313,7 @@
       &copy;2018, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

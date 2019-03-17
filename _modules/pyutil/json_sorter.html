@@ -40,34 +40,16 @@
 
 <span class="sd">This module was originally used to fix my settings.json from VSCode.</span>
 
-<span class="sd">:File: json_sorter.py</span>
-<span class="sd">:Author: Faris Chugthai</span>
-
-<span class="sd">`Github &lt;https://github.com/farisachugthai&gt;`_</span>
-
-<span class="sd">Attributes</span>
-<span class="sd">----------</span>
-<span class="sd">fobj : path-like object</span>
-<span class="sd">    The file to fix.</span>
-
-
-<span class="sd">Example</span>
-<span class="sd">-------</span>
-<span class="sd">.. code:: bash</span>
-
-<span class="sd">    python3 json_sorter.py /path/to/file.json</span>
-
-
 <span class="sd">Bug Fixes</span>
 <span class="sd">---------</span>
 <span class="sd">Currently trying to run this module and running into errors.</span>
 
 <span class="sd">Currently got this.</span>
 
+<span class="sd">.. ipython::</span>
+<span class="sd">    :okexcept:</span>
 
-<span class="sd">.. code-block:: python3</span>
-
-<span class="sd">    [ins] In [49]: args</span>
+<span class="sd">    In [49]: args</span>
 <span class="sd">    Out[49]: Namespace(WARNING=None, input=&lt;_io.TextIOWrapper</span>
 <span class="sd">    name=&#39;/data/data/com.termux/files/home/projects/viconf/.config/nvim/settings.json&#39; mode=&#39;r&#39; encoding=&#39;UTF-8&#39;&gt;,</span>
 <span class="sd">    output=&lt;_io.TextIOWrapper name=&#39;&lt;stdout&gt;&#39; mode=&#39;w&#39; encoding=&#39;utf-8&#39;&gt;)</span>
@@ -120,20 +102,18 @@
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.json_sorter.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">file_obj</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Read in a JSON object, sorts it and then writes it back to a new file.</span>
+    <span class="sd">&quot;&quot;&quot;Read in a :mod:`json` object, sort it and write it back to a new file.</span>
 
 <span class="sd">    By writing to a new file, the user is allowed the opportunity to inspect</span>
 <span class="sd">    the file and ensure that the desired results have been achieved.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    ``file_obj`` : path-like object</span>
+<span class="sd">    file_obj : str</span>
 <span class="sd">        The file to read in</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    None</span>
-
+<span class="sd">    output_file : str</span>
+<span class="sd">        Text file to write formatted :mod:`json` to.</span>
+<span class="sd">        It will only write to the file if the filename currently doesn&#39;t exist.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_obj</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -150,8 +130,7 @@
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">log_level</span><span class="p">:</span>
         <span class="n">log_level</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">log_level</span>
-
-    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">log_level</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">log_level</span><span class="p">)</span>
 
     <span class="n">fobj</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">input</span>
 
@@ -159,6 +138,8 @@
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">):</span>
         <span class="n">main</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">o_file</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;File not readable in current state. Exiting.&quot;</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -174,13 +155,21 @@
 
 
 
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
 
 
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
@@ -222,7 +211,7 @@
       &copy;2018, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

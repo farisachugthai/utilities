@@ -50,6 +50,7 @@
 <span class="sd">Needs more file checks.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -63,53 +64,57 @@
 <span class="sd">    src : file</span>
 <span class="sd">        File to strip trailing whitespace from. Backed up before anything.</span>
 
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    None</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.bak&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">SameFileError</span><span class="p">,</span> <span class="n">shutil</span><span class="o">.</span><span class="n">SpecialFileError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="strip_space"><a class="viewcode-back" href="../../api.html#pyutil.strip_space.strip_space">[docs]</a><span class="k">def</span> <span class="nf">strip_space</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Strips all trailing whitespace out of a file.</span>
+<div class="viewcode-block" id="strip_space"><a class="viewcode-back" href="../../api.html#pyutil.strip_space.strip_space">[docs]</a><span class="k">def</span> <span class="nf">strip_space</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Strip all trailing whitespace out of a file.</span>
+
+<span class="sd">    Assumes a plaintext file. Uses sys.stdin if no argument provided.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    src : file</span>
-<span class="sd">    File to strip trailing whitespace from. Backed up before anything.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    None</span>
+<span class="sd">    src : str</span>
+<span class="sd">        File to strip trailing whitespace from. Backed up before anything.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Clearing whitespace...&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Clearing whitespace...&quot;</span><span class="p">)</span>
 
-    <span class="k">with</span> <span class="n">src</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">tmp</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+    <span class="k">with</span> <span class="n">src</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">line</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
 
-    <span class="k">with</span> <span class="n">src</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">src</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;wt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span></div>
+    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.strip_space.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">file_obj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Dispatch the strip_space function.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="o">.</span><span class="n">is_file</span><span class="p">(</span><span class="n">file_obj</span><span class="p">):</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;File is not readable. Exiting.&quot;</span><span class="p">)</span>
+
+    <span class="n">backup</span><span class="p">(</span><span class="n">file_obj</span><span class="p">)</span>
+    <span class="n">strip_space</span><span class="p">(</span><span class="n">file_obj</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Usage: strip_space.py file_obj&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">file_list</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">src</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># How do I set this up right? Do I set src = None?</span>
+        <span class="k">pass</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="o">.</span><span class="n">is_file</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-
-    <span class="n">backup</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
-
-    <span class="n">strip_space</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+        <span class="n">main</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -125,13 +130,21 @@
 
 
 
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
 
 
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
@@ -173,7 +186,7 @@
       &copy;2018, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

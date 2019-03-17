@@ -39,16 +39,8 @@
 
 <span class="sd">Motivation</span>
 <span class="sd">----------</span>
-
-<span class="sd">This script aims to be platform agnostic and in the long term will be used on Windows, Linux, Mac and Android systems.</span>
-
-
-<span class="sd">.. rubric:: usage</span>
-
-<span class="sd">.. code-block:: sh</span>
-
-<span class="sd">    python3 backup_nt_and_posix.py /path/to/dir</span>
-
+<span class="sd">This script aims to be platform agnostic and in the long term will be used on</span>
+<span class="sd">Windows, Linux, Mac and Android systems.</span>
 
 <span class="sd">.. todo:: Consider rewriting using classes to hold state based on OS. Then utilize :mod:`pathlib`.</span>
 
@@ -62,19 +54,20 @@
 <div class="viewcode-block" id="timestamped_dir"><a class="viewcode-back" href="../../api.html#pyutil.backup_nt_and_posix.timestamped_dir">[docs]</a><span class="k">def</span> <span class="nf">timestamped_dir</span><span class="p">(</span><span class="n">backup_dir</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Create a backup of a directory. Append date and time to new dir name.</span>
 
+<span class="sd">    .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` so we handle return codes in a better way.</span>
+
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    ``backup_dir`` : path-like object</span>
+<span class="sd">    backup_dir : path-like object</span>
 <span class="sd">        Directory to backup</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    ``err_code`` : int</span>
+<span class="sd">    err_code : int</span>
 <span class="sd">         Non-zero value indicates error code, or zero on success.</span>
-<span class="sd">    ``err_msg`` : str or None</span>
+<span class="sd">    err_msg : str or None</span>
 <span class="sd">         Human readable error message, or None on success.</span>
-
-<span class="sd">    .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` so we handle return codes in a better way.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
@@ -128,13 +121,21 @@
 
 
 
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
 
 
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
@@ -176,7 +177,7 @@
       &copy;2018, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

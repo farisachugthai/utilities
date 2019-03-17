@@ -38,18 +38,8 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Iterate over the list of conda environments that are present.</span>
 
-<span class="sd">Assumes</span>
-<span class="sd">---------</span>
-<span class="sd">Working conda installation.</span>
 
-<span class="sd">.. rubric:: example</span>
-
-<span class="sd">.. code-block:: shell</span>
-
-<span class="sd">    python3 conda-export.py</span>
-
-<span class="sd">Returns</span>
-<span class="sd">-------</span>
+<span class="sd">.. rubric:: Returns</span>
 
 <span class="sd">Separate text files. 2 for each environment.:</span>
 
@@ -75,11 +65,6 @@
 <div class="viewcode-block" id="munging"><a class="viewcode-back" href="../../api.html#pyutil.conda_export.munging">[docs]</a><span class="k">def</span> <span class="nf">munging</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Iterate through conda envs and return text files to replicate from.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    -----------</span>
-<span class="sd">    None</span>
-
-
 <span class="sd">    Returns</span>
 <span class="sd">    --------</span>
 <span class="sd">    envs: list</span>
@@ -104,7 +89,7 @@
 
 
 <div class="viewcode-block" id="truncate"><a class="viewcode-back" href="../../api.html#pyutil.conda_export.truncate">[docs]</a><span class="k">def</span> <span class="nf">truncate</span><span class="p">(</span><span class="n">envs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Take the output from :ref:`munging`and reduce and print to console.</span>
+    <span class="sd">&quot;&quot;&quot;Take output from pyutil.conda_export.munging, reduce and print to console.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -114,7 +99,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    ``short_envs`` : list of strs</span>
+<span class="sd">    short_envs : list of strs</span>
 <span class="sd">        Shorter name of all envs. Printed to console.</span>
 
 
@@ -134,9 +119,11 @@
 
     <span class="n">full_name_envs</span> <span class="o">=</span> <span class="n">munging</span><span class="p">()</span>
 
-    <span class="n">envs</span> <span class="o">=</span> <span class="n">truncate</span><span class="p">(</span><span class="n">full_name_envs</span><span class="p">)</span>
+    <span class="n">truncated_envs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">full_name_envs</span><span class="p">:</span>
+        <span class="n">truncated_envs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">truncate</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">envs</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">truncated_envs</span><span class="p">))</span>
 </pre></div>
 
           </div>
@@ -152,13 +139,21 @@
 
 
 
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
 
 
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
@@ -200,7 +195,7 @@
       &copy;2018, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

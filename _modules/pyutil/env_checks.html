@@ -36,7 +36,7 @@
   <h1>Source code for pyutil.env_checks</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Run simple checks to ensure that a user&#39;s environment has been set up.</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Run simple checks to ensure that a user&#39;s environment has been set up.</span>
 
 <span class="sd">Easier to group similar methods in one mod then have them scattered around.</span>
 
@@ -107,16 +107,20 @@
 
 
 <div class="viewcode-block" id="check_xdg_config_home"><a class="viewcode-back" href="../../api.html#pyutil.env_checks.check_xdg_config_home">[docs]</a><span class="k">def</span> <span class="nf">check_xdg_config_home</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Check to see if ``$XDG_CONFIG_HOME`` has been defined.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    None</span>
+    <span class="sd">&quot;&quot;&quot;Check to see if `$XDG_CONFIG_HOME` has been defined.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    Bool</span>
+<span class="sd">    bool</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    .. code-block:: python3</span>
+
+<span class="sd">        &gt;&gt;&gt; from env_checks import check_xdg_config_home</span>
+<span class="sd">        &gt;&gt;&gt; if check_xdg_config_home():</span>
+<span class="sd">            &gt;&gt;&gt; with open(&#39;module.conf&#39;, &#39;rt&#39;) as f:</span>
+<span class="sd">                &gt;&gt;&gt; configs = f.readlines()</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XDG_CONFIG_HOME&#39;</span><span class="p">):</span>
@@ -131,12 +135,13 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Directory the file is in : str</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="env_check"><a class="viewcode-back" href="../../api.html#pyutil.env_checks.env_check">[docs]</a><span class="k">def</span> <span class="nf">env_check</span><span class="p">(</span><span class="n">env_var</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Search the current namescope for variable ``env_var``.</span>
+    <span class="sd">&quot;&quot;&quot;Search the current namescope for variable `env_var`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -188,13 +193,21 @@
 
 
 
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
 
 
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
@@ -236,7 +249,7 @@
       &copy;2018, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

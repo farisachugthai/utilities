@@ -49,23 +49,12 @@
 
 <span class="sd">Note</span>
 <span class="sd">----</span>
-<span class="sd">This module assumes a Unix OS and a python interpreter above version 3.4.</span>
+<span class="sd">This module assumes a python interpreter above version 3.4.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-
-
-<div class="viewcode-block" id="sys_checks"><a class="viewcode-back" href="../../api.html#pyutil.mv_to_repo.sys_checks">[docs]</a><span class="k">def</span> <span class="nf">sys_checks</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Check that system requirements are met.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;Requires Python3.4 and up&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">uname</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Darwin&quot;</span><span class="p">,</span> <span class="s2">&quot;Linux&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s2">&quot;This script assumes a Unix operating system.&quot;</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="repo_dir_check"><a class="viewcode-back" href="../../api.html#pyutil.mv_to_repo.repo_dir_check">[docs]</a><span class="k">def</span> <span class="nf">repo_dir_check</span><span class="p">(</span><span class="n">dest</span><span class="p">):</span>
@@ -75,6 +64,7 @@
 
 <span class="sd">        To mimic behavior of ``mkdir -p``, use flags ``parents=True`` and</span>
 <span class="sd">        ``exists_ok=True``</span>
+
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -88,7 +78,7 @@
 
 
 <div class="viewcode-block" id="backup_file"><a class="viewcode-back" href="../../api.html#pyutil.mv_to_repo.backup_file">[docs]</a><span class="k">def</span> <span class="nf">backup_file</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Backs up file ``src``. Utilizes :func:`shutil.copy2`.</span>
+    <span class="sd">&quot;&quot;&quot;Backs up file src. Utilizes :func:`shutil.copy2`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -110,6 +100,7 @@
 
 <span class="sd">    Runs checks, calls func to backup file `src`, moves it to the dotfiles</span>
 <span class="sd">    repo and symlinks it.</span>
+
 <span class="sd">    Moves file to a hardcoded path but will be generalized to take as an</span>
 <span class="sd">    argument.</span>
 
@@ -118,12 +109,14 @@
 <span class="sd">    src : str</span>
 <span class="sd">        Name of file to backup, move and symlink.</span>
 
+
 <span class="sd">    Assumes</span>
 <span class="sd">    -------</span>
 <span class="sd">        User runs the script from inside the folder of the file they want to</span>
 <span class="sd">        move.</span>
+
+
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">sys_checks</span><span class="p">()</span>
     <span class="n">inputted</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;Takes at least one filename.&quot;</span><span class="p">)</span>
     <span class="n">src</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">inputted</span><span class="p">)</span>
@@ -166,13 +159,21 @@
 
 
 
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
 
 
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
@@ -214,7 +215,7 @@
       &copy;2018, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

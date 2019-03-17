@@ -40,46 +40,46 @@
 
 <span class="sd">From :mod:`IPython.utils.text`.</span>
 
-<span class="sd">Parameters</span>
-<span class="sd">----------</span>
-<span class="sd">todo : path-like object</span>
-<span class="sd">    Text to modify</span>
+<span class="sd">Possibly going to convert sys.argv to `**kwargs` for the function.</span>
 
-
-<span class="sd">Returns</span>
-<span class="sd">-------</span>
-<span class="sd">todo</span>
+<span class="sd">Allow the user to input any parameters that are accepted by</span>
+<span class="sd">:class:`textwrap.TextWrapper()`</span>
 
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">textwrap</span> <span class="k">import</span> <span class="n">dedent</span><span class="p">,</span> <span class="n">fill</span>
 
 
 <div class="viewcode-block" id="wrap_paragraphs"><a class="viewcode-back" href="../../api.html#pyutil.wrap.wrap_paragraphs">[docs]</a><span class="k">def</span> <span class="nf">wrap_paragraphs</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Wrap multiple paragraphs to fit a specified width.</span>
 
-<span class="sd">    This is equivalent to textwrap.wrap, but with support for multiple</span>
+<span class="sd">    This is equivalent to :func:`textwrap.wrap()`, but with support for multiple</span>
 <span class="sd">    paragraphs, as separated by empty lines.</span>
+
+<span class="sd">    Considering initializing an instance of :class:`textwrap.TextWrapper()`</span>
+<span class="sd">    for increased configurability.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    text : str</span>
-<span class="sd">        todo</span>
+<span class="sd">        text to wrap using :mod:`re` and :func:`textwrap.dedent()`</span>
 <span class="sd">    ncols : int</span>
+<span class="sd">        column to wrap text at</span>
 
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    out_ps : list of str</span>
-<span class="sd">        list of complete paragraphs, wrapped to fill ``ncols`` columns.</span>
+<span class="sd">    wrapped_text : list of str</span>
+<span class="sd">        list of complete paragraphs, wrapped to fill `ncols` columns.</span>
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">paragraph_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n(\s*\n)+&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="n">paragraphs</span> <span class="o">=</span> <span class="n">paragraph_re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">text</span><span class="p">)[::</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># every other entry is space</span>
-    <span class="n">out_ps</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">wrapped_text</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">indent_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n\s+&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paragraphs</span><span class="p">:</span>
         <span class="c1"># presume indentation that survives dedent is meaningful formatting,</span>
@@ -87,8 +87,21 @@
         <span class="k">if</span> <span class="n">indent_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># wrap paragraph</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">fill</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">ncols</span><span class="p">)</span>
-        <span class="n">out_ps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out_ps</span></div>
+        <span class="n">wrapped_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapped_text</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">wrap_paragraphs</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[:]))</span>
+
+    <span class="c1"># it might be easier to do the above.</span>
+    <span class="c1"># can&#39;t do it like the below because then we have to hardcode the value of</span>
+    <span class="c1"># ncols # so we could force some kw args for the script but it&#39;s then easier</span>
+    <span class="c1"># for # the user to import the function and use it themselves.</span>
+
+    <span class="c1"># if len(args) &gt; 2:</span>
+        <span class="c1"># for i in args[1:]:</span>
+            <span class="c1"># wrap_paragraphs(i, 80)</span>
 </pre></div>
 
           </div>
@@ -104,13 +117,21 @@
 
 
 
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
 
 
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
@@ -152,7 +173,7 @@
       &copy;2018, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

@@ -38,9 +38,6 @@
 <span class="c1"># Maintainer: Faris Chugthai</span>
 <span class="sd">&quot;&quot;&quot;Automates downloading plain text files from the Web.</span>
 
-<span class="sd">.. module:: pyutil.lazy_downloader</span>
-
-
 <span class="sd">As implemented currently, it will only correctly handle plain text; however,</span>
 <span class="sd">there are plans to implement the :mod:`mimetype` module and properly handle</span>
 <span class="sd">a much wider range of files.</span>
@@ -54,7 +51,7 @@
 <span class="sd">----------</span>
 <span class="sd">url : str</span>
 <span class="sd">    A url to download</span>
-<span class="sd">``output_filename``: path-like object</span>
+<span class="sd">output_filename  : str</span>
 <span class="sd">    A path to write the downloaded content to.</span>
 
 
@@ -70,30 +67,8 @@
 <span class="kn">import</span> <span class="nn">requests</span>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.lazy_downloader.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">output_fname</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Download URL and write to disk.</span>
-
-<span class="sd">    .. todo:: Figure out how to check that the file is plain text and not hit constant false positives</span>
-
-<span class="sd">    .. todo::</span>
-
-<span class="sd">        .. code-block:: python3</span>
-
-<span class="sd">            if res.headers[&#39;Content-Type&#39;]:</span>
-<span class="sd">                 pass</span>
-
-
-<span class="sd">    .. todo:: Could add in a check. if the file is over a certain size use `:func:requests.res.iter_chunk()`</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="n">res</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_fname</span><span class="p">,</span> <span class="s2">&quot;xt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../api.html#pyutil.lazy_downloader._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Parse user input.&quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="n">prog</span><span class="o">=</span><span class="s1">&#39;lazy_downloader&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
 
@@ -105,8 +80,47 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;fname&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The name of the file to write to. Must not exist already.&quot;</span><span class="p">)</span>
+
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
+    <span class="k">return</span> <span class="n">args</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.lazy_downloader.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">output_fname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Download URL and write to disk.</span>
+
+
+<span class="sd">    .. todo:: Figure out how to check that the file is plain text and not hit constant false positives</span>
+
+<span class="sd">    .. todo:: Add headers.</span>
+
+<span class="sd">        .. code-block:: python3</span>
+
+<span class="sd">            if res.headers[&#39;Content-Type&#39;]:</span>
+<span class="sd">                 pass</span>
+
+
+<span class="sd">    .. todo:: Could add in a check. if the file is over a certain size use `:func:requests.res.iter_chunk()`</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    url : str</span>
+<span class="sd">        A url to download</span>
+
+<span class="sd">    output_fname : str</span>
+<span class="sd">        A path to write the downloaded content to.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_fname</span><span class="p">,</span> <span class="s2">&quot;xt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
     <span class="c1"># With xt permissions the script crashes so no point raising anything.</span>
     <span class="c1"># Just bail</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">fname</span><span class="p">):</span>
@@ -132,13 +146,21 @@
 
 
 
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
 
 
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
@@ -180,7 +202,7 @@
       &copy;2018, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

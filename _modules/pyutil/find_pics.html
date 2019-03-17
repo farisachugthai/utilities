@@ -36,60 +36,49 @@
   <h1>Source code for pyutil.find_pics</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Module that finds jpg and jpegs files in the current dir.</span>
 
-<span class="sd">.. module::`find_pics.py`</span>
+<span class="sd">.. module:: find_pics</span>
 <span class="sd">    :synopsis: Module that finds jpg and jpegs files in the current dir.</span>
 
 <span class="sd">.. todo:: Should accept command line arguments.</span>
 
-
-<span class="sd">:File: find_pics.py</span>
-<span class="sd">:Author: Faris Chugthai</span>
-
-<span class="sd">`Github &lt;https://github.com/farisachugthai&gt;`_</span>
+<span class="sd">We&#39;ll say that another thing on the todo list is</span>
+<span class="sd">return a path-like object from :func:`find_pics()`.</span>
+<span class="sd"># print(os.path.abspath(match)</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
 
-<div class="viewcode-block" id="find_pics"><a class="viewcode-back" href="../../api.html#pyutil.find_pics.find_pics">[docs]</a><span class="k">def</span> <span class="nf">find_pics</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="find_pics"><a class="viewcode-back" href="../../api.html#pyutil.find_pics.find_pics">[docs]</a><span class="k">def</span> <span class="nf">find_pics</span><span class="p">(</span><span class="n">picture</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Finds jpegs and jpgs.</span>
+
+<span class="sd">    .. todo:: Format the match object so it&#39;s more usable</span>
+
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    path : str or path-like object</span>
-<span class="sd">        Path to a directory to check</span>
+<span class="sd">    picture : str</span>
+<span class="sd">        Path to a file that may or may not be a jpg/jpeg</span>
 
 
 <span class="sd">    Yields</span>
 <span class="sd">    ------</span>
-<span class="sd">    f : re.match object</span>
-<span class="sd">        Filename that matches a jpeg regex.</span>
-
-
-<span class="sd">    .. todo::</span>
-
-<span class="sd">        Format the match object so it&#39;s more usable</span>
+<span class="sd">    matched : :class:`re.match()` object</span>
+<span class="sd">        Filename that matches a jpg/jpeg regex.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">matched</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;.*jp(e)?g&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="n">matched</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;.*jp(e)?g&quot;</span><span class="p">,</span> <span class="n">picture</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">matched</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">f</span></div>
+        <span class="k">yield</span> <span class="n">matched</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-    <span class="c1"># list comprehesion with a function?</span>
-    <span class="c1"># matches = [f if find_pics(f) for f in path]</span>
-    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">find_pics</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
-            <span class="n">match</span> <span class="o">=</span> <span class="n">find_pics</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
-            <span class="c1"># We&#39;ll say that another thing on the todo list is </span>
-            <span class="c1"># return a path-like object from :func:`find_pics()`.</span>
-            <span class="c1"># print(os.path.abspath(match)</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">path</span> <span class="k">if</span> <span class="n">find_pics</span><span class="p">(</span><span class="n">f</span><span class="p">)]</span>
 </pre></div>
 
           </div>
@@ -105,13 +94,21 @@
 
 
 
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
 
 
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../math.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
 </ul>
@@ -153,7 +150,7 @@
       &copy;2018, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

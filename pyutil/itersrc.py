@@ -18,7 +18,8 @@ import sys
 def iter_source_code(paths):
     """Iterate over all Python source files in C{paths}.
 
-    Taken with almost no modifications from pyflakes.
+    Taken with almost no modifications from :mod:`pyflakes`.
+
     This would be a great function to call with :func:`os.listdir()`
     output.
 
@@ -32,7 +33,7 @@ def iter_source_code(paths):
 
     Yields
     ------
-    ``full_path`` : str
+    full_path : str
         Absolute path to a python file.
 
 

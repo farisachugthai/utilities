@@ -29,14 +29,14 @@ Install from newest dev version in master branch
 
 .. code-block:: sh
 
-   pip install git+https://github.com/farisachugthai/utilities
+    pip install git+https://github.com/farisachugthai/utilities
 
 * Cloning with git and installing with pip
 
 .. code-block:: sh
 
-  git clone git+https://github.com/farisachugthai/utilities
-  pip install .
+    git clone git+https://github.com/farisachugthai/utilities
+    pip install .
 
 * As an alternative to a pip install, obtain the source code and run the `setup.py`_ file.
 
@@ -46,8 +46,8 @@ below pyutil/ is in your PATH.
 
 .. code-block:: sh
 
-   git clone https://github.com/farisachugthai/utilities
-   cd utilities
+    git clone https://github.com/farisachugthai/utilities
+    cd utilities
 
    python3 setup.py bdist_wheel && python3 -m pip install -U -e .
 
@@ -55,33 +55,33 @@ below pyutil/ is in your PATH.
 
 .. code-block:: sh
 
-   # The script at ./pyutil/dlink.py is useful for creating symlinks for every
-   # file in a directory. If the directory ~/bin is in your path...
+    # The script at ./pyutil/dlink.py is useful for creating symlinks for every
+    # file in a directory. If the directory ~/bin is in your path...
 
-   # Check which directories are in the $PATH env var
-   echo $PATH
+    # Check which directories are in the $PATH env var
+    echo $PATH
 
-   # Then link the scripts in ./sh to a directory in your path!
-   python3 pyutil/dlink.py "$PWD/sh" ~/bin
+    # Then link the scripts in ./sh to a directory in your path!
+    python3 pyutil/dlink.py "$PWD/sh" ~/bin
 
 For anyone using Windows 10, the Powershell installation will be slightly
 different; however, not tremendously.
 
 .. code-block:: console
 
-   git clone https://github.com/farisachugthai/utilities
+    git clone https://github.com/farisachugthai/utilities
 
-   # `cd` is aliased to Set-Location for most instances of Powershell;
-   # however in the interest of using domain specific built-ins:
-   Set-Location utilities
+    # `cd` is aliased to set-location for most instances of powershell;
+    # however in the interest of using domain specific built-ins:
+    set-location utilities
 
-   python3 setup.py bdist_wheel && python3 -m pip install -U -e .
+    python3 setup.py bdist_wheel && python3 -m pip install -u -e .
 
-   # To view the environment variable path, run:
-   Get-Childitem -path env:Path
+    # to view the environment variable path, run:
+    get-childitem -path env:path
 
-   # Then ensure that the directory you pick is in your path, and run
-   python3 pyutil\dlink.py "$PWD\sh" C:\Users\path\to\directory
+    # then ensure that the directory you pick is in your path, and run
+    python3 pyutil\dlink.py "$pwd\sh" c:\users\path\to\directory
 
 
 .. _root-docs:
@@ -92,7 +92,7 @@ The documentation can be read online at `GitHub pages <https://farisachugthai.gi
 
 However, the documentation can be built locally as well.
 
-After installing
+After following the installation instructions at `root-installation`_, one can run
 
 .. code-block:: shell
 
@@ -101,10 +101,10 @@ After installing
 
 Then, direct your browser to ``_build/html/index.html``.
 
-To do so in a more direct manner, a *htmlview* target has been created
-in the :ref:`./docs/Makefile`_.
+To do so in a more direct manner, a *htmlview* target has been created as a convenience
+in the docs/Makefile.
 
-This target will build the documentation and open up your default web browser.
+This target will build the documentation and open up your default web browser automatically.
 
 Testing
 -------
@@ -142,4 +142,3 @@ to fork or create an issue.
 .. _`Profiling nvim startup time.`: pyutil/nvim_profiling.py
 .. _`Strip trailing whitespace from a file.`: pyutil/strip_space.py
 .. _`setup.py`: setup.py
-.. _`./docs/Makefile`: ./docs/Makefile

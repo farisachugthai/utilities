@@ -8,13 +8,9 @@ script may be irrelevant.
 
 Parameters
 ----------
-``mod_name`` : module to inspect
+mod_name : module to inspect
     If no argument is provided, then use the namespace bound to the global
     :class:`IPython.core.interactiveshell.InteractiveShell()` object.
-
-Returns
--------
-TODO
 
 """
 import importlib
@@ -37,13 +33,13 @@ def main(mod_name):
 
     Parameters
     ----------
-    ``mod_name`` : module
+    mod_name : mod
         The provided module to inspect for the user.
 
 
     Returns
     --------
-    ``mod_namespace`` : methods and attributes
+    mod_namespace : methods and attributes
         The provided module's namespace.
 
 

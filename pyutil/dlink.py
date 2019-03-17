@@ -3,11 +3,26 @@
 """Symlink all of the files in one directory into another.
 
 ..module:: dlink
-    synopsis: Symlinks a directory of files from another.
+    :synopsis: Symlinks a directory of files from another.
 
 Synopsis
 --------
+This module can be used to create individual symlinks to every file in a
+directory. This is a huge convenience wen symlinking dotfiles or configuration
+files held in a different location than where the software of interest expects
+it.
+
 This is quite easily one of my most frequently used scripts.
+
+As an example, one can ``git clone dotfiles`` in a directory named `projects`
+or `src`. The location of the git repository is irrelevant, and as such, we'll
+refer to it as `src` from here, as `dest` as it's where the symlinks point to.
+
+
+For example if wants symlinks pointing to ``/home/User/dotfiles/.vim``,
+then running :ref:`dlink.py`_ in `/home/User/.vim` with $HOME/dotfiles/.vim as
+an argument will create symlinks in $HOME/.vim pointing to $HOME/dotfiles/.vim.
+
 
 If we're given 2 args, treat it with the same syntax as ``ln -s`` or
 :func:`os.symlink()`
@@ -36,11 +51,6 @@ def dlink(dest, src):
         are to be created.
         If the src argument isn't provided, it is assumed that the current
         working directory is the src dir.
-
-
-    Returns
-    -------
-    None
 
 
     """

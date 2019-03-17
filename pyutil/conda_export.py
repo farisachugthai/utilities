@@ -2,13 +2,9 @@
 # -*- coding: utf-8 -*-
 """Iterate over the list of conda environments that are present.
 
-Assumes
----------
-Working conda installation.
 
+.. rubric:: Returns
 
-Returns
--------
 Separate text files. 2 for each environment.:
 
     * One with general metadata
@@ -57,7 +53,7 @@ def munging():
 
 
 def truncate(envs):
-    """Take output from :ref:`pyutil.conda_export.munging()`, reduce and print to console.
+    """Take output from pyutil.conda_export.munging, reduce and print to console.
 
     Parameters
     ----------

@@ -66,10 +66,3 @@ logging.debug('Path is: ' + str(sys.path))
 __path__ = extend_path(sys.path, pyutil_d)
 
 logging.debug('Path is: ' + str(sys.path))
-
-print(os.path.dirname(__file__))
-
-
-logging.debug("Namespace would be: " + os.path.dirname(__file__))
-
-pkg_resources.declare_namespace(os.path.dirname(__file__))

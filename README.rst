@@ -102,7 +102,7 @@ After installing
 Then, direct your browser to ``_build/html/index.html``.
 
 To do so in a more direct manner, a *htmlview* target has been created
-in the :ref:`docs/Makefile`.
+in the :ref:`./docs/Makefile`_.
 
 This target will build the documentation and open up your default web browser.
 
@@ -142,3 +142,4 @@ to fork or create an issue.
 .. _`Profiling nvim startup time.`: pyutil/nvim_profiling.py
 .. _`Strip trailing whitespace from a file.`: pyutil/strip_space.py
 .. _`setup.py`: setup.py
+.. _`./docs/Makefile`: ./docs/Makefile

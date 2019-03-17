@@ -47,6 +47,8 @@ EXTRAS = {
         # Project uses reStructuredText, so ensure that the docutils get
         # installed or upgraded on the target machine
         'docutils>=0.3',
+        'recommonmark',
+        'numpydoc'
     ]
 }
 
@@ -57,7 +59,6 @@ with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
 
 # Load the package's __version__.py module as a dictionary.
 about = {'__version__': '0.0.1'}
-
 # if not VERSION:
 #     try:
 #         with open(os.path.join(here, NAME, '__version__.py')) as f:
@@ -120,7 +121,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=('tests', )),
+    packages=find_packages(where='.'),
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
 

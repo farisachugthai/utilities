@@ -2,8 +2,6 @@
 
 Tutorial.rst
 ==============
-
-
 .. module:: tutorial
    :synopsis: The pyutils tutorial
 
@@ -13,7 +11,6 @@ repetitive and error prone tasks.
 
 Contributing Tutorial
 ---------------------
-
 This package has recently adopted the :mod:`numpy` convention for docstrings.
 As a result, all docstrings must conform to this standard.
 
@@ -31,4 +28,4 @@ In addition, full details of the numpy docstring format are given at :ref:`forma
 
 Continue to the next page:
 
-:ref:`numpydoc`
+:doc:`numpydoc`

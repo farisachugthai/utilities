@@ -2,10 +2,6 @@
 # -*- coding: utf-8 -*-
 """Initialize the package for all scripts used in IPython startup.
 
-:File: __init__.py
-:Author: Faris Chugthai
-`GitHub <https://github.com/farisachugthai>`_
-
 This module intends to establish a few different things.
 
     - Initialize logging in a general manner.
@@ -19,6 +15,7 @@ NOQA F401
 """
 import logging
 from logging import NullHandler
+import os
 from pkgutil import extend_path
 import sys
 
@@ -29,8 +26,50 @@ from pyutil.__about__ import (  # noqa F401
     __title__, __package_name__,
 )
 
+__all__ = [
+    'backup_nt_and_posix',
+    'batch_renamer',
+    'check_IP',
+    'conda_export',
+    'dir_cleaner',
+    'dlink',
+    'dlink2',
+    'dot_sym',
+    'env',
+    'env_checks',
+    'find_pics',
+    'g',
+    'inspect_module',
+    'itersrc',
+    'json_sorter',
+    'lazy_downloader',
+    'linktree',
+    'magic_aid',
+    'mv_to_repo',
+    'nvim_profiling',
+    'ptags',
+    'rclone',
+    'strip_space',
+    'sys_checks',
+    'wrap',
+    'yes_no_question',
+]
+
 logging.getLogger(__name__).addHandler(NullHandler())
 
-pkg_resources.declare_namespace(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
-__path__ = extend_path(sys.path, __file__)
+pyutil_d = os.path.dirname(os.path.abspath('__init__.py'))
+
+logging.debug('Path is: ' + str(sys.path))
+
+__path__ = extend_path(sys.path, pyutil_d)
+
+logging.debug('Path is: ' + str(sys.path))
+
+print(os.path.dirname(__file__))
+
+
+logging.debug("Namespace would be: " + os.path.dirname(__file__))
+
+pkg_resources.declare_namespace(os.path.dirname(__file__))

@@ -4,7 +4,7 @@ r"""Wrap text similarly to :func:`textwrap.dedent()` but with multiple paragraph
 
 From :mod:`IPython.utils.text`.
 
-Possibly going to convert :ref:`sys.argv` to `**kwargs` for the function.
+Possibly going to convert sys.argv to `**kwargs` for the function.
 
 Allow the user to input any parameters that are accepted by
 :class:`textwrap.TextWrapper()`
@@ -29,7 +29,7 @@ def wrap_paragraphs(text, ncols=80):
     ----------
     text : str
         text to wrap using :mod:`re` and :func:`textwrap.dedent()`
-    ncols` : int
+    ncols : int
         column to wrap text at
 
 

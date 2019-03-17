@@ -9,7 +9,9 @@ Requires
 
 See Also
 --------
-From Kenneth Reitz, owner of httpbin.
+From Kenneth Reitz, owner of `httpbin`_.
+
+.. _`httpbin`: https://httpbin.org/ip
 
 Installing packages for your project:
 
@@ -44,7 +46,7 @@ def get_hostname():
 
     Returns
     -------
-    ``host_return_msg`` : str
+    host_return_msg : str
         A formatted message displaying the user's IP address.
 
     """

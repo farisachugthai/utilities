@@ -38,7 +38,7 @@
 
 
 :mod:`conda_export`
------------------------------------
+-------------------
 
 .. automodule:: pyutil.conda_export
     :members:
@@ -46,17 +46,9 @@
     :show-inheritance:
 
 
-:mod:`dir3`
-------------------
-
-.. automodule:: pyutil.dir3
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 :mod:`dir_cleaner`
---------------------------
+------------------
 
 .. automodule:: pyutil.dir_cleaner
     :members:
@@ -65,7 +57,7 @@
 
 
 :mod:`dlink`
--------------------
+------------
 
 .. automodule:: pyutil.dlink
     :members:
@@ -74,7 +66,7 @@
 
 
 :mod:`dlink2`
---------------------
+-------------
 
 .. automodule:: pyutil.dlink2
     :members:
@@ -83,7 +75,7 @@
 
 
 :mod:`env`
------------------
+----------
 
 .. automodule:: pyutil.env
     :members:
@@ -92,7 +84,7 @@
 
 
 :mod:`env_checks`
--------------------------
+-----------------
 
 .. automodule:: pyutil.env_checks
     :members:
@@ -101,7 +93,7 @@
 
 
 :mod:`find_pics`
-------------------------
+----------------
 
 .. automodule:: pyutil.find_pics
     :members:
@@ -110,7 +102,7 @@
 
 
 :mod:`g`
------------------------
+--------
 
 .. automodule:: pyutil.g
     :members:

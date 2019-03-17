@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 """Expedite documentation builds.
 
-:mod:`make`
-===========
-
 .. module:: make
     :synopsis: Expedite documentation builds.
 
@@ -168,3 +165,11 @@ if __name__ == "__main__":
     logging.debug(jobs)
 
     run(f'make -j{jobs}')
+# needs rewrite
+try:
+    shutil.copytree('_build/html/', '/data/data/com.termux/files/home/storage/downloads/html')
+except FileExistsError:
+    shutil.rmtree('/data/data/com.termux/files/home/storage/downloads/html')
+else:
+    shutil.rmtree('_build/html')
+    

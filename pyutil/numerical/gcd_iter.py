@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Display an iterative method for determining the greatest common denom.
+"""Display an iterative method for determining the greatest common denominator.
 
 Jan 17, 2019:
 
     Just added in :mod:`sys` so that we accept input from the user.
 
+
 """
+import logging
 import sys
 
 
@@ -23,6 +25,7 @@ def gcd_iter(a, b):
     Returns
     -------
     gcd : int
+        Greatest common denominator.
 
     """
     orig_b = b
@@ -41,7 +44,13 @@ def gcd_iter(a, b):
 
 if __name__ == "__main__":
     args = sys.argv[:]
+
+    logging.basicConfig(level=logging.warning)
+
     if len(args) > 2:
         a = args[1]
         b = args[2]
+    else:
+        logging.error("Not enough args provided.")
+
     gcd_iter(a, b)

@@ -27,6 +27,10 @@ def git_touch(args):
     args : str (path-like object)
         Path to a file that's needs to be staged and added to the Git index.
 
+    Returns
+    -------
+    None : None
+
     """
     if len(args) > 2:
         files = args.split()

@@ -28,4 +28,4 @@ In addition, full details of the numpy docstring format are given at :ref:`forma
 
 Continue to the next page:
 
-:ref:`numpydoc`
+:doc:`numpydoc`

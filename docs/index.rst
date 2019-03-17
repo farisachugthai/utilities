@@ -15,14 +15,14 @@ Table of Contents
 -----------------
 
 .. toctree::
-   :name: mastertoc
-   :maxdepth: 2
+    :name: mastertoc
+    :maxdepth: 2
 
-   tutorial
-   numpydoc
-   math
-   api
-   todo
+    tutorial
+    numpydoc
+    numerical
+    api
+    todo
 
 Continue to the next page:
 

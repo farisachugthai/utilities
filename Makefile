@@ -6,13 +6,23 @@ PYTHON ?= python3
 
 # Put it first so that "make" without argument is like "make help".
 # help:
-# 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+#	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+# Now all I need is a venv target!
+.PHONY: help
+help:
+	@echo clean
+	@echo clean-pyc
+	@echo clean-generated
+	@echo lint
+	@echo build
+	@echo test
 
 .PHONY: all
-all: clean-pyc clean-generated style-check test
+all: clean-pyc clean-generated style-check test build develop
 
 .PHONY: clean
-clean: clean-pyc clean-pycache clean-generated clean-buildfiles
+clean: clean-pyc clean-pycache clean-generated
 
 .PHONY: clean-pyc
 clean-pyc:
@@ -27,11 +37,13 @@ clean-pycache:
 clean-generated:
 	find . -name '.DS_Store' -exec rm -f {} +
 	rm -rf .egg-info/
-	rm -rf doc/_build/
+	rm -rf docs/_build/
 	rm -rf build/
+	rm -rf dist/
+	rm -rf .eggs/
 
-.PHONY: style-check
-style-check:
+.PHONY: lint
+lint:
 	@flake8
 
 .PHONY: test
@@ -41,8 +53,10 @@ test:
 
 .PHONY: build
 build:
-	@$(PYTHON) setup.py build
+	@$(PYTHON) setup.py bdist_wheel
+	@$(PYTHON) setup.py install
 
 .PHONY: develop
-build:
+develop:
 	@$(PYTHON) -m pip install -e .
+

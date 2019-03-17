@@ -35,10 +35,13 @@ CONF_PATH = os.path.dirname(os.path.abspath('docs'))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 
-REQUIRED = ['pynvim', 'IPython', 'youtube_dl']
+REQUIRED = [
+    'pynvim', 'IPython', 'youtube_dl', 'requests', 'pygments', 'numpydoc',
+    'matplotlib'
+]
 
 EXTRAS = {
-    'develop': ['requests', 'flake8', 'flake8-rst', 'yapf'],
+    'develop': ['flake8', 'flake8-rst', 'yapf'],
     'docs': [
         'sphinx',
         # Project uses reStructuredText, so ensure that the docutils get
@@ -118,7 +121,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=('tests', )),
+    packages=find_packages(where='.'),
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
 

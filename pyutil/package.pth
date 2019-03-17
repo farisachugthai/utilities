@@ -1,4 +1,11 @@
-pyutil
-pyutil/math
-../tests
+from pathlib import Path
 
+pyutild = Path('.')
+
+pyutild.parent()
+
+pyutild.parent().joinpath('test')
+
+'../docs/sphinxext'
+
+del pyutild

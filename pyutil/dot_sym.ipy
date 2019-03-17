@@ -6,11 +6,18 @@
 This module doesn't not take any command-line arguments, parameters and does
 not maintain any state outside of the symlinks it creates.
 
-It does require being interactively run in the IPython shell or invoked with
+It does require being interactively run in the :mod:`IPython` shell or invoked
+with
 
 .. code-block:: shell
 
     ipython dot_sym.ipy
+
+Or alternatively
+
+.. ipython::
+
+    %run dot_sym.ipy
 
 
 """
@@ -28,8 +35,8 @@ def get_dotfiles(proj):
     the return code left by the system call.
 
     However, there are a wide variety of reasons why a command may return
-    non-zero. Therefore, this section may need to be rewritten with subporcess
-    if this proves difficult to maintain.
+    non-zero. Therefore, this section may need to be rewritten with
+    :mod:`subprocess` if this proves difficult to maintain.
 
     """
     try:
@@ -47,9 +54,7 @@ def get_dotfiles(proj):
 def dir_checker(repo):
     """Checks that all directories needed by ``repo`` exist in ``home``.
 
-    .. todo::
-
-        Actually as it stands I don't think it looks in ``home`` to make dirs.
+    .. todo:: Actually as it stands I don't think it looks in ``home`` to make dirs.
 
 
     """
@@ -63,12 +68,12 @@ def dir_checker(repo):
                           + "exists already.")
 
 
-def backup_prompt(file):
-    """Prompts the user to determine whether we should back up ``file``.
+def backup_prompt(fobj):
+    """Prompts the user to determine whether we should back up ``fobj``.
 
     Parameters
     -----------
-    file : path-like object
+    fobj : path-like object
         The file to backup
 
     Returns
@@ -76,17 +81,16 @@ def backup_prompt(file):
     Bool
 
     """
-    res = input("Would you like to back up" + os.path.abspath(file) + "?")
+    res = input("Would you like to back up" + os.path.abspath(fobj) + "?")
     matched = re.match("(Yy)[A-Za-z]*", res)
     if matched:
         return True
     return False
 
 
-def symlink_repo(file):
+def symlink_repo(fobj):
     """Symlink the dotfiles if nothing exists in the home directory.
 
-    .. todo
     Attributes
     -----------
     home : str
@@ -101,8 +105,8 @@ def symlink_repo(file):
         home = os.environ.get("%userprofile%")
 
     repo = os.path.join(home, "projects", "dotfiles")
-    src = os.path.join(repo, file)
-    dest = os.path.join(home, file)
+    src = os.path.join(repo, fobj)
+    dest = os.path.join(home, fobj)
     try:
         os.symlink(src, dest)
     except FileExistsError:
@@ -135,8 +139,8 @@ def main():
                       + str(e.args) + str(e.stdout) + str(e.stderr))
         sys.exit()
 
-    for file in repo_files:
-        symlink_repo(file=file)
+    for f in repo_files:
+        symlink_repo(fobj=f)
 
 
 if __name__ == '__main__':
@@ -144,6 +148,6 @@ if __name__ == '__main__':
     PROJ = os.path.join(HOME, "projects")
     REPO = os.path.join(PROJ, "dotfiles")
 
-    logging.basicConfig()
+    logging.basicConfig(level=logging.WARNING)
 
     main()

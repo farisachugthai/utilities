@@ -53,7 +53,7 @@ def munging():
 
 
 def truncate(envs):
-    """Take the output from :ref:`munging`and reduce and print to console.
+    """Take output from pyutil.conda_export.munging, reduce and print to console.
 
     Parameters
     ----------

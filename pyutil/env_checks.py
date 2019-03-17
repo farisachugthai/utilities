@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Run simple checks to ensure that a user's environment has been set up.
+r"""Run simple checks to ensure that a user's environment has been set up.
 
 Easier to group similar methods in one mod then have them scattered around.
 
@@ -71,14 +71,14 @@ import os
 
 
 def check_xdg_config_home():
-    """Check to see if ``$XDG_CONFIG_HOME`` has been defined.
+    """Check to see if `$XDG_CONFIG_HOME` has been defined.
 
     Returns
     -------
     bool
 
-    Example
-    -------
+    Examples
+    --------
     .. code-block:: python3
 
         >>> from env_checks import check_xdg_config_home

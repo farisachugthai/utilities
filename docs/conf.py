@@ -72,7 +72,7 @@ author = u'Faris A Chugthai'
 # The short X.Y version
 version = '0.0.1'
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = version
 
 # -- General configuration ------------------------------------------
 
@@ -99,6 +99,14 @@ extensions = [
     'numpydoc',
     'flake8_rst.sphinxext.custom_roles',
 ]
+
+try:
+    from docs.sphinxext import magics  # noqa
+except ImportError:
+    logging.debug('Magics was not imported.')
+else:
+    logging.debug('Magics was imported.')
+    extensions.append('magics')
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

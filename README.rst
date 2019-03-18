@@ -25,7 +25,7 @@ One can install :ref:`pyutil` by:
 
 * Installing with pip
 
-Install from newest dev version in master branch
+  Install from newest dev version in master branch
 
 .. code-block:: sh
 
@@ -40,8 +40,8 @@ Install from newest dev version in master branch
 
 * As an alternative to a pip install, obtain the source code and run the `setup.py`_ file.
 
-If you are on a Unix-like system, the following will ensure everything
-below pyutil/ is in your PATH.
+  If you are on a Unix-like system, the following will ensure everything
+  below pyutil/ is in your PATH.
 
 
 .. code-block:: sh
@@ -49,19 +49,19 @@ below pyutil/ is in your PATH.
     git clone https://github.com/farisachugthai/utilities
     cd utilities
 
-   python3 setup.py bdist_wheel && python3 -m pip install -U -e .
+    python3 setup.py bdist_wheel && python3 -m pip install -U -e .
 
-* After which point, the only necessary step will be ensuring that the scripts in ./sh/ are in ``$PATH``.
+* After which point, the only necessary step will be ensuring that the scripts in sh/ are in ``$PATH``.
 
 .. code-block:: sh
 
-    # The script at ./pyutil/dlink.py is useful for creating symlinks for every
+    # The script at pyutil/dlink.py is useful for creating symlinks for every
     # file in a directory. If the directory ~/bin is in your path...
 
-    # Check which directories are in the $PATH env var
+    # Check which directories are in the ``$PATH`` env var
     echo $PATH
 
-    # Then link the scripts in ./sh to a directory in your path!
+    # Then link the scripts in sh/ to a directory in your path!
     python3 pyutil/dlink.py "$PWD/sh" ~/bin
 
 For anyone using Windows 10, the Powershell installation will be slightly
@@ -75,13 +75,13 @@ different; however, not tremendously.
     # however in the interest of using domain specific built-ins:
     set-location utilities
 
-    python3 setup.py bdist_wheel && python3 -m pip install -u -e .
+    python3 setup.py bdist_wheel && python3 -m pip install -I -e .
 
     # to view the environment variable path, run:
     get-childitem -path env:path
 
     # then ensure that the directory you pick is in your path, and run
-    python3 pyutil\dlink.py "$pwd\sh" c:\users\path\to\directory
+    python3 pyutil\dlink.py "$pwd\sh" C:\users\path\to\directory
 
 
 .. _root-docs:

@@ -6,12 +6,11 @@
 
 .. contents::
     :local:
-    :depth: 3
+    :depth: 2
 
-.. how annoying is it that toctree uses maxdepth and contents uses depth as an option
 
 :mod:`backup_nt_and_posix`
-------------------------------------
+--------------------------
 
 .. automodule:: pyutil.backup_nt_and_posix
     :members:
@@ -20,7 +19,7 @@
 
 
 :mod:`batch_renamer`
-----------------------------
+--------------------
 
 .. automodule:: pyutil.batch_renamer
     :members:
@@ -29,7 +28,7 @@
 
 
 :mod:`check_IP`
------------------------
+---------------
 
 .. automodule:: pyutil.check_IP
     :members:
@@ -111,7 +110,7 @@
 
 
 :mod:`inspect_module`
------------------------------
+---------------------
 
 .. automodule:: pyutil.inspect_module
     :members:
@@ -120,7 +119,7 @@
 
 
 :mod:`itersrc`
----------------------
+---------------
 
 .. automodule:: pyutil.itersrc
     :members:
@@ -129,7 +128,7 @@
 
 
 :mod:`json_sorter`
---------------------------
+------------------
 
 .. automodule:: pyutil.json_sorter
     :members:
@@ -138,7 +137,7 @@
 
 
 :mod:`lazy_downloader`
-------------------------------
+----------------------
 
 .. automodule:: pyutil.lazy_downloader
     :members:
@@ -147,7 +146,7 @@
 
 
 :mod:`linktree`
-----------------------
+---------------
 
 .. automodule:: pyutil.linktree
     :members:
@@ -156,7 +155,7 @@
 
 
 :mod:`magic_aid`
-----------------------------
+----------------
 
 .. automodule:: pyutil.magic_aid
     :members:
@@ -165,7 +164,7 @@
 
 
 :mod:`mv_to_repo`
-----------------------------
+-----------------
 
 .. automodule:: pyutil.mv_to_repo
     :members:
@@ -174,7 +173,7 @@
 
 
 :mod:`nvim_profiling`
--------------------------------------
+---------------------
 
 .. automodule:: pyutil.nvim_profiling
     :members:
@@ -231,6 +230,15 @@
 ----------------------
 
 .. automodule:: pyutil.yes_no_question
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+:mod:`ytdl`
+----------------------
+
+.. automodule:: pyutil.ytdl
     :members:
     :undoc-members:
     :show-inheritance:

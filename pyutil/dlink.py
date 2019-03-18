@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Symlink all of the files in one directory into another.
 
-..module:: dlink
+.. module:: dlink
     :synopsis: Symlinks a directory of files from another.
 
 Synopsis
@@ -14,25 +14,24 @@ it.
 
 This is quite easily one of my most frequently used scripts.
 
-As an example, one can ``git clone dotfiles`` in a directory named `projects`
-or `src`. The location of the git repository is irrelevant, and as such, we'll
-refer to it as `src` from here, as `dest` as it's where the symlinks point to.
-
-
-For example if wants symlinks pointing to ``/home/User/dotfiles/.vim``,
-then running :ref:`dlink.py`_ in `/home/User/.vim` with $HOME/dotfiles/.vim as
-an argument will create symlinks in $HOME/.vim pointing to $HOME/dotfiles/.vim.
-
-
-If we're given 2 args, treat it with the same syntax as ``ln -s`` or
-:func:`os.symlink()`
-
-
 Usage
 ------
 .. code-block:: shell
 
     ln -s path/to/dest/* [path/to/src]
+
+
+As an example, one can ``git clone dotfiles`` in a directory named `projects`
+or `src`. The location of the git repository is irrelevant, and as such, we'll
+refer to it as `src` from here, as `dest` as it's where the symlinks point to.
+
+For example if wants symlinks pointing to ``/home/User/dotfiles/.vim``,
+then running dlink.py in ``/home/User/.vim`` with ``$HOME/dotfiles/.vim`` as
+an argument will create symlinks in ``$HOME/.vim`` pointing to
+``$HOME/dotfiles/.vim``.
+
+If we're given 2 args, treat it with the same syntax as ``ln -s`` or
+:func:`os.symlink()`
 
 """
 import os

@@ -13,7 +13,7 @@ Below is the collected sum of all python modules in this repository.
 
 
 :mod:`backup_nt_and_posix`
-------------------------------------
+--------------------------
 
 .. automodule:: pyutil.backup_nt_and_posix
     :members:
@@ -22,7 +22,7 @@ Below is the collected sum of all python modules in this repository.
 
 
 :mod:`batch_renamer`
-----------------------------
+--------------------
 
 .. automodule:: pyutil.batch_renamer
     :members:
@@ -31,7 +31,7 @@ Below is the collected sum of all python modules in this repository.
 
 
 :mod:`check_IP`
------------------------
+---------------
 
 .. automodule:: pyutil.check_IP
     :members:
@@ -113,7 +113,7 @@ Below is the collected sum of all python modules in this repository.
 
 
 :mod:`inspect_module`
------------------------------
+---------------------
 
 .. automodule:: pyutil.inspect_module
     :members:
@@ -122,7 +122,7 @@ Below is the collected sum of all python modules in this repository.
 
 
 :mod:`itersrc`
----------------------
+---------------
 
 .. automodule:: pyutil.itersrc
     :members:
@@ -131,7 +131,7 @@ Below is the collected sum of all python modules in this repository.
 
 
 :mod:`json_sorter`
---------------------------
+------------------
 
 .. automodule:: pyutil.json_sorter
     :members:
@@ -140,7 +140,7 @@ Below is the collected sum of all python modules in this repository.
 
 
 :mod:`lazy_downloader`
-------------------------------
+----------------------
 
 .. automodule:: pyutil.lazy_downloader
     :members:
@@ -149,7 +149,7 @@ Below is the collected sum of all python modules in this repository.
 
 
 :mod:`linktree`
-----------------------
+---------------
 
 .. automodule:: pyutil.linktree
     :members:
@@ -158,7 +158,7 @@ Below is the collected sum of all python modules in this repository.
 
 
 :mod:`magic_aid`
-----------------------------
+----------------
 
 .. automodule:: pyutil.magic_aid
     :members:
@@ -167,7 +167,7 @@ Below is the collected sum of all python modules in this repository.
 
 
 :mod:`mv_to_repo`
-----------------------------
+-----------------
 
 .. automodule:: pyutil.mv_to_repo
     :members:
@@ -176,7 +176,7 @@ Below is the collected sum of all python modules in this repository.
 
 
 :mod:`nvim_profiling`
--------------------------------------
+---------------------
 
 .. automodule:: pyutil.nvim_profiling
     :members:
@@ -233,6 +233,15 @@ Below is the collected sum of all python modules in this repository.
 ----------------------
 
 .. automodule:: pyutil.yes_no_question
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+:mod:`ytdl`
+----------------------
+
+.. automodule:: pyutil.ytdl
     :members:
     :undoc-members:
     :show-inheritance:

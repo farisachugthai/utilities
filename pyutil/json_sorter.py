@@ -1,25 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Reorganizes a JSON file with the keys sorted and indentation standardized.
+"""Reorganizes a JSON file with the keys sorted and indentation standardized to 4 spaces.
 
 This module was originally used to fix my settings.json from VSCode.
-
-Bug Fixes
----------
-Currently trying to run this module and running into errors.
-
-Currently got this.
-
-.. ipython::
-    :okexcept:
-
-    In [49]: args
-    Out[49]: Namespace(WARNING=None, input=<_io.TextIOWrapper
-    name='/data/data/com.termux/files/home/projects/viconf/.config/nvim/settings.json' mode='r' encoding='UTF-8'>,
-    output=<_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>)
-
-
-Wth is this warning=None business????
 
 """
 import argparse

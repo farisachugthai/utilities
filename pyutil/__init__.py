@@ -63,6 +63,8 @@ pyutil_d = os.path.dirname(os.path.abspath('__init__.py'))
 
 logging.debug('Path is: ' + str(sys.path))
 
+logging.debug('\n__name__ is: \n' + str(__name__))
+
 __path__ = extend_path(sys.path, pyutil_d)
 
 logging.debug('Path is: ' + str(sys.path))

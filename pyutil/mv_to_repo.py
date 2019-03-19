@@ -11,9 +11,12 @@ sections, this script has served a very utilitiarian purpose.
 
 May refactor one day. But it continues to work.
 
-Note
-----
-This module assumes a python interpreter above version 3.4.
+
+Assumes
+-------
+User runs the script from inside the folder of the file they want to move.
+
+.. note:: This module assumes a python interpreter above version 3.4.
 
 """
 from pathlib import Path
@@ -72,13 +75,6 @@ def main():
     ----------
     src : str
         Name of file to backup, move and symlink.
-
-
-    Assumes
-    -------
-        User runs the script from inside the folder of the file they want to
-        move.
-
 
     """
     inputted = sys.argv[1] if len(

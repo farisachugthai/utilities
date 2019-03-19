@@ -4,11 +4,13 @@
 :mod:`API`
 ==========
 
+Below is the collected sum of all python modules in this repository.
+
+
 .. contents::
     :local:
-    :depth: 3
+    :depth: 2
 
-.. how annoying is it that toctree uses maxdepth and contents uses depth as an option
 
 :mod:`backup_nt_and_posix`
 ------------------------------------

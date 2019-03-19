@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="sphinx task in docs" type="docs" factoryName="Sphinx task" editBeforeRun="true" show_console_on_std_err="true" show_console_on_std_out="true">
+  <configuration default="false" name="sphinx task in docs" type="docs" factoryName="Sphinx task" editBeforeRun="true">
     <output_file path="$PROJECT_DIR$/sphinx.log" is_save="true" />
     <module name="utilities" />
     <option name="INTERPRETER_OPTIONS" value="" />
@@ -12,7 +12,7 @@
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
     <option name="docutils_input_file" value="C:\Users\faris\projects\utilities\docs" />
     <option name="docutils_output_file" value="C:\Users\faris\projects\utilities\docs\_build" />
-    <option name="docutils_params" value="-j 4" />
+    <option name="docutils_params" value="-j 8 -a" />
     <option name="docutils_task" value="html" />
     <option name="docutils_open_in_browser" value="false" />
     <method v="2" />

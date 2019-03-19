@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/faris/miniconda3/envs/utilities/bin/python",
+    "python.pythonPath": "C:\\Users\\faris\\Miniconda3\\envs\\utilities\\python.exe",
     "files.exclude": {
         "**/.git": false,
         "**/.svn": true,
@@ -7,5 +7,16 @@
         "**/CVS": true,
         "**/.DS_Store": true
     },
-    "restructuredtext.confPath": "${workspaceFolder}/docs"
+    "python.unitTest.unittestArgs": [
+        "-v",
+        "-s",
+        "./test",
+        "-p",
+        "test_*.py"
+    ],
+    "python.unitTest.pyTestEnabled": false,
+    "python.unitTest.nosetestsEnabled": false,
+    "python.unitTest.unittestEnabled": true,
+    "files.eol": "\n",
+    "restructuredtext.confPath": "${workspaceFolder}\\docs"
 }

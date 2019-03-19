@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Maintainer: Faris Chugthai
-r"""Download a video from YouTube using :mod;`youtube_dl`
+r"""Download a video from YouTube using :mod;`youtube_dl`.
 
 Dec 22, 2018:
 
@@ -10,13 +10,14 @@ Dec 22, 2018:
         the URL as an arg, you get to see everything you'd need to know
         about the metadata in all the varying formats you'd want use.
 
-..usage::
+This script should be called from the shell as so
 
-    This script should be called with:: shell
+.. code-block:: shell
 
         python termux-urls.py $@
 
-.. todo:
+
+.. todo::
 
     1. Assume that the :mod:`youtube_dl` script functions.
     2. Then double chsck we weren't given a file ytdl knows how to handle.
@@ -29,7 +30,7 @@ Dec 22, 2018:
 We got it!
 ----------
 So I was reading the src and realized that almost all of the execution
-happens in the __init__ file!!
+happens in the `__init__`__ file!!
 
 This is a long copy and paste but read this::
 
@@ -532,7 +533,7 @@ else:
 import youtube_dl
 from youtube_dl import parseOpts
 
-logging.basicConfig(level=logging.WARNING)
+logger = logging.basicConfig(level=logging.WARNING)
 
 
 class TermuxDL(youtube_dl.YoutubeDL):
@@ -592,11 +593,13 @@ class TermuxDL(youtube_dl.YoutubeDL):
         return parseOpts()[1]
 
 
-def ytdl(link):
+def ytdl(link, ytdl_opts):
     """Execute downloading a YouTube video.
 
     Possibly makes sense to make this a class. Playlists are a subclass,
     objects with variable sizes are others etc.
+
+    .. todo:: Should merge the built-in options I have here with user provided ones.
 
     :param link: URL to a YouTube video
     :returns: Request object or :class:`urllib.Response` if :mod:`requests` isn't downloaded.
@@ -608,7 +611,9 @@ def ytdl(link):
             'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
-        'output': 'TODO:'
+        'output': 'TODO:',
+        'logger': logger,
+        'progress_hooks': [my_hook],
     }
     ydl = youtube_dl.YoutubeDL(ydl_opts)
     ydl.download(link)
@@ -645,12 +650,18 @@ def requests_dl(link):
     logging.debug(f.closed)
 
 
+def my_hook(d):
+    """Hook to notify the user the download is completed."""
+    if d['status'] == 'finished':
+        print('Done downloading, now converting ...')
+
+
 def main():
     """Execute the program."""
-    returned = tuple()
-    returned = parseOpts()
+    dl = TermuxDL()
 
-    ytdl_opts = returned[1]
+    ytdl_opts = dl.parseOpts()
+
     logging.info("Options: ")
     logging.info(ytdl_opts)
 
@@ -664,13 +675,16 @@ def main():
         res = urllib.parse.urlparse(link)
 
         if res[2] == "/playlist":
-            logging.debug("This seems like a YouTube playlist. Downloading. Press Ctrl-C to stop")
+            logging.debug(
+                "This seems like a YouTube playlist. Downloading. Press Ctrl-C to stop"
+            )
 
         elif res[1] == "youtu.be":
             print(ytdl(link))
 
     else:
-        requests_dl(link)
+        ytdl(link, ytdl_opts)
+        # requests_dl(link)
 
 
 if __name__ == "__main__":

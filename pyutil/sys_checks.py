@@ -14,7 +14,6 @@ Utilized by importing as so.
 
     py_gt(3)
 
-
 .. code-block:: shell
 
     python3 must_be_three.py
@@ -27,10 +26,7 @@ Utilized by importing as so.
 
 If nothing else this is a lesson in how painful it becomes to maintain
 nonsense names.
-
-
 """
-from platform import system
 import sys
 
 

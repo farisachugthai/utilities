@@ -54,8 +54,11 @@ def _parse_arguments():
         nargs=1,
         help="Directory containing only the files to be renamed.")
 
-    parser.add_argument('-V', '--version', action='version',
-                        version='%(prog)s' + pyutil.__about__['version'])
+    parser.add_argument(
+        '-V',
+        '--version',
+        action='version',
+        version='%(prog)s' + pyutil.__about__['version'])
 
     args = parser.parse_args()
 

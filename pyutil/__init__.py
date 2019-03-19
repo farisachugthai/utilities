@@ -2,19 +2,11 @@
 # -*- coding: utf-8 -*-
 """Initialize the package for all scripts used in IPython startup.
 
-This module intends to establish a few different things.
-
-    - Initialize logging in a general manner.
-    - Use :mod:`pkg_resources` provided by :mod:`setuptools` in order to create the directory as a namespace package
-    - Define generic dunder methods.
-    - Extend the user's ``$PATH `` to include this directory even if it != os.cwd
-
 Mar 19, 2019
 
 So with our sys.path hack, we can now do the following successfully::
 
     from pyutil import g
-
 
 However we still have a problem.
 
@@ -30,6 +22,37 @@ Let it doctest!
 >>> import pyutil.ytdl
 >>> from pyutil import g
 
+Still having tons of problems and it seems to be related to me not understanding
+how python handles modules, paths and executable.
+
+Currently this isn't working
+
+.. code-block:: shell
+
+    python setup.py test
+
+However running ``make html`` inside of docs works, and ``python setup.py build_sphinx`` works as well.
+
+Changes to scripts only seem to create a pronounced effect when ``python setup.py bdist_egg`` is run.
+
+Not wheels. Not ``pip install -e .`` or ``setup.py develop``
+This is so strange.
+
+Holy hell. So everything I've been executing has been inside of a conda environment.
+
+So running `conda develop .` fixed everything...
+
+That's amazing and infuriating I spent WAY too much time on that.
+
+But what to do about Termux?
+
+Argparse
+--------
+On a completely different note is it a bad idea idea to subclass ArgParser, set up base options with version, a
+general help message and junk and then initialize it in __init__? That would
+let every module use it with no work.
+
+Well regardless let IPython exist globally.
 
 NOQA F401
 
@@ -41,15 +64,17 @@ import sys
 
 import pkg_resources
 
-from pyutil.__about__ import (  # noqa F401
+from .__about__ import (  # noqa F401
     __author__, __copyright__, __description__, __docformat__, __license__,
-    __title__, __package_name__,
+    __title__,
 )
 
 logging.getLogger(__name__).addHandler(NullHandler())
 
-pyutil_d = os.path.dirname('__init__.py')
+PYUTIL_DIR = os.path.dirname(os.path.abspath('__init__.py'))
 
-sys.path.insert(0, pyutil_d)
+sys.path.insert(0, PYUTIL_DIR)
 
 pkg_resources.declare_namespace('.')
+
+from IPython import embed, get_ipython

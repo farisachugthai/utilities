@@ -10,16 +10,23 @@
 #  Personal  #
 ##############
 
-fh() { # {{{
+# fzf_commits: commits in a repo: {{{1
+fzf_commits() {
+  git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
+}
+
+fh() { # {{{1
     git log --color=always --all --branches --abbrev --oneline | fzf --ansi --multi --preview "git show {+1}" --preview-window=down
 }
+
 # }}}
 
+# }}}
 ######################################################################
 #                             fzf wiki                               #
 ######################################################################
 
-git_log() { # {{{ log piped into less and displays show
+git_log() { # {{{1 log piped into less and displays show
   local show="git show --color=always \"\$(grep -m1 -o \"[a-f0-9]\{7\}\" <<< {})\""
   fzf --prompt='log' -e --no-sort --tiebreak=index \
     --bind="enter:execute:$show | less -R" \
@@ -28,14 +35,14 @@ git_log() { # {{{ log piped into less and displays show
     --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@")
 }
 # }}}
-fbr() { # checkout git branch {{{
+fbr() { # checkout git branch {{{1
   local branches branch
   branches=$(git branch -vv) &&
   branch=$(echo "$branches" | fzf +m) &&
   git checkout "$(echo "$branch" | awk '{print $1}' | sed "s/.* //")"
 }
 # }}}
-fbr() { # {{{ checkout git branch (including remote branches). Uses fzf-tmux
+fbr() { # {{{1 checkout git branch (including remote branches). Uses fzf-tmux
   local branches branch
   branches=$(git branch --all | grep -v HEAD) &&
   branch=$(echo "$branches" |
@@ -43,7 +50,7 @@ fbr() { # {{{ checkout git branch (including remote branches). Uses fzf-tmux
   git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
 }
 # }}}
-fbr() { # {{{ checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
+fbr() { # {{{1 checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
   local branches branch
   branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
   branch=$(echo "$branches" |
@@ -51,7 +58,7 @@ fbr() { # {{{ checkout git branch (including remote branches), sorted by most re
   git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
 }
 # }}}
-fco() { # {{{ checkout git branch/tag
+fco() { # {{{1 checkout git branch/tag
   local tags branches target
   tags=$(
     git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
@@ -65,7 +72,7 @@ fco() { # {{{ checkout git branch/tag
   git checkout "$(echo "$target" | awk '{print $2}')"
 }
 # }}}
-fco_preview() { # {{{ checkout git branch/tag, with a preview showing the commits between the tag/branch and HEAD
+fco_preview() { # {{{1 checkout git branch/tag, with a preview showing the commits between the tag/branch and HEAD
   local tags branches target
   tags=$(
 git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
@@ -80,14 +87,14 @@ sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
   git checkout "$(echo "$target" | awk '{print $2}')"
 }
 # }}}
-fcoc() { # {{{ checkout git commit
+fcoc() { # {{{1 checkout git commit
   local commits commit
   commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
   commit=$(echo "$commits" | fzf --tac +s +m -e) &&
   git checkout "$(echo "$commit" | sed "s/ .*//")"
 }
 # }}}
-fshow() { # {{{ git commit browser
+fshow() { # {{{1 git commit browser
   git log --graph --color=always \
       --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
   fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \

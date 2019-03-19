@@ -35,7 +35,22 @@ def _parse_arguments():
         prog='lazy_downloader', description=__doc__)
 
     parser.add_argument(
-        "URL", required=True, help="The URL to download. Must be plaintext.")
+        "-ha",
+        "--headers",
+        nargs='*',
+        help="Headers to send to the web server.")
+
+    parser.add_argument(
+        '-V',
+        '--version',
+        action='version',
+        version='%(prog)s' + pyutil.__about__.__version__)
+
+    parser.add_argument(
+        "URL",
+        nargs=1,
+        type=str,
+        help="The URL to download. Must be plaintext.")
 
     # Will need to learn how to parse and tokenize the URL to get a reasonable
     # guess for the filename though
@@ -60,7 +75,25 @@ def _parse_arguments():
     return args
 
 
-def _parse_site(URL):
+def find_links(text):
+    """Search body of text for URLs.
+
+    Parameters
+    ----------
+    text : str
+        Body of formatted text to search for URLs.
+
+    Returns
+    -------
+    links : todo
+        URLs found on site.
+
+    """
+    links = re.findall('"((http|ftp)s?://.*?)"', text)
+    return links
+
+
+def _parse_site(URL, *args, **kwargs):
     """Parse the given `URL`, remove tags and return plaintext.
 
     This should probably be modified to take the user agent and header args.
@@ -80,24 +113,6 @@ def _parse_site(URL):
 
     txt = res.text()
     return txt
-
-
-def find_links(text):
-    """Search body of text for URLs.
-
-    Parameters
-    ----------
-    text : str
-        Body of formatted text to search for URLs.
-
-    Returns
-    -------
-    links : todo
-        URLs found on site.
-
-    """
-    links = re.findall('"((http|ftp)s?://.*?)"', text)
-    return links
 
 
 def main(url, output_fname):

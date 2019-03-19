@@ -15,6 +15,7 @@ This module intends to establish a few different things.
 """
 import logging
 from logging import NullHandler
+import os
 from pkgutil import extend_path
 import sys
 
@@ -26,8 +27,6 @@ from pyutil.__about__ import (
     __description__,
     __docformat__,
     __license__,
-    __title__,
-    __package_name__,
 )
 
 logging.getLogger(__name__).addHandler(NullHandler())
@@ -35,3 +34,5 @@ logging.getLogger(__name__).addHandler(NullHandler())
 pkg_resources.declare_namespace(__name__)
 
 __path__ = extend_path(sys.path, __file__)
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__name__)))

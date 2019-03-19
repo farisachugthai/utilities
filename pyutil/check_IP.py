@@ -22,8 +22,12 @@ Installing packages for your project:
 
 
 """
+import logging
 import socket
-import sys
+
+import requests
+
+logger = logging.getLogger(__name__)
 
 
 def get_public_ip():
@@ -56,11 +60,6 @@ def get_hostname():
 
 
 if '__name__' == '__main__':
-    try:
-        import requests
-    except ImportError:
-        sys.exit("Error importing requests.")
-
     response = get_public_ip()
     print(response)
     print(get_hostname())

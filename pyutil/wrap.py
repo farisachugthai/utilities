@@ -56,7 +56,11 @@ def wrap_paragraphs(text, ncols=80):
 
 
 if __name__ == '__main__':
-    sys.exit(wrap_paragraphs(sys.argv[:]))
+    args = sys.argv[:]
+    if len(args) < 2:
+        sys.exit('Requires a file to re-format.')
+    else:
+        sys.exit(wrap_paragraphs(args[1:]))
 
     # it might be easier to do the above.
     # can't do it like the below because then we have to hardcode the value of

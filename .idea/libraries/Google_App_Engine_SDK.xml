@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <component name="libraryTable">
   <library name="Google App Engine SDK" type="python">
     <CLASSES>
@@ -6,3 +7,20 @@
     <SOURCES />
   </library>
 </component>
+||||||| merged common ancestors
+=======
+<component name="libraryTable">
+  <library name="Google App Engine SDK" type="python">
+    <CLASSES>
+      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk" />
+      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/lib/gcloud.py" />
+      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/lib/gcloud.pyc" />
+      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/lib/googlecloudsdk" />
+      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/lib/surface" />
+      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/lib/third_party" />
+      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/lib/tools" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
+>>>>>>> master

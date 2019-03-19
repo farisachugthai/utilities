@@ -30,8 +30,16 @@ then running dlink.py in ``/home/User/.vim`` with ``$HOME/dotfiles/.vim`` as
 an argument will create symlinks in ``$HOME/.vim`` pointing to
 ``$HOME/dotfiles/.vim``.
 
-If we're given 2 args, treat it with the same syntax as ``ln -s`` or
-:func:`os.symlink()`
+
+Inspiration
+------------
+If the module is given 2 args, the intended response is for it to behave  similarly to the classic Unix idiom:
+
+.. code-block:: shell
+
+    ln -s path/to/dest/* [path/to/src]
+
+or treat it similarly to :func:`os.symlink()`.
 
 """
 import os
@@ -48,8 +56,8 @@ def dlink(dest, src):
     src : str
         Optional argument indicating the directory where the symlinks
         are to be created.
-        If the src argument isn't provided, it is assumed that the current
-        working directory is the src dir.
+        If the `src` argument isn't provided, it is assumed that the current
+        working directory is the `src` dir.
 
 
     """

@@ -4,13 +4,6 @@ r"""Take a :mod:`json` file and sort the keys and insert 4 spaces for indents.
 
 This module was originally used to fix my settings.json from VSCode.
 
-
-Bug Fixes
----------
-
-Currently trying to run this module and running into errors.
-
-
 """
 import argparse
 import json
@@ -55,11 +48,6 @@ def _parse_arguments():
         help='Set the logging level')
 
     args = parser.parse_args()
-
-    # Actually can't do this
-    # if len(args) == 1:
-    #     parser.print_help()
-    #     sys.exit()
 
     return args
 
@@ -107,7 +95,7 @@ def text_writer(plaintext, output_file=sys.stdout):
 
     Parameters
     ----------
-    file_obj : str
+    plaintext : str
         The file to read in
     output_file : str
         Text file to write formatted :mod:`json` to.

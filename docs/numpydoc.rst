@@ -16,21 +16,21 @@ Numpy Docstring Example
 
     >>> from sphinxcontrib.napoleon import Config
     >>> config = Config(napoleon_use_param=True, napoleon_use_rtype=True)
-    >>> docstring = '''One line summary.
+    >>> docstring = """One line summary.
     ...
     ... Extended description.
     ...
     ... Parameters
     ... ----------
     ... arg1 : int
-    ...     Description of `arg1`
+    ...     Description of \`arg1\`
     ... arg2 : str
     ...     Description of `arg2`
     ... Returns
     ... -------
     ... str
     ...     Description of return value.
-    ... '''
+    ... """
     >>> print(NumpyDocstring(docstring, config))
     One line summary.
 
@@ -55,7 +55,6 @@ Had to redo the URL to my GitHub in a few spots.
 
 .. _format:
 
-========================
 numpydoc docstring guide
 ========================
 
@@ -67,6 +66,8 @@ the numpydoc extension for `Sphinx <http://sphinx-doc.org/>`__.
 .. Note::
 
    For an accompanying example, see :ref:`example.py <example>`.
+
+.. todo:: Enter the URL for the numpydoc example file
 
    Some features described in this document require a recent version of
    ``numpydoc``. For example, the **Yields** section was added in

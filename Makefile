@@ -60,3 +60,6 @@ build:
 develop:
 	@$(PYTHON) -m pip install -e .
 
+.PHONY: whoa
+whoa:
+	@$(PYTHON) -m pip wheel -w wheel --pre -e .

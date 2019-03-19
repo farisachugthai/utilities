@@ -20,6 +20,7 @@ from pkgutil import extend_path
 import sys
 
 import pkg_resources
+
 logging.getLogger(__name__).addHandler(NullHandler())
 
 pkg_resources.declare_namespace(__name__)

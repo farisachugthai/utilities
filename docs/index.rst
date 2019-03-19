@@ -16,7 +16,7 @@ Table of Contents
 
 .. toctree::
     :name: mastertoc
-    :maxdepth: 2
+    :maxdepth: 1
 
     tutorial
     numpydoc

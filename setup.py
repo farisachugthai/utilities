@@ -29,7 +29,7 @@ import os
 import sys
 from shutil import rmtree
 
-from setuptools import setup, find_packages, Command
+from setuptools import setup, find_namespace_packages, Command
 
 if sys.version_info[:2] < (3, 6):
     raise RuntimeError("Python version >= 3.6 required.")
@@ -137,7 +137,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(where='.'),
+    packages=find_namespace_packages(where='.'),
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
 

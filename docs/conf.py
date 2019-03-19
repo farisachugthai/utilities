@@ -84,13 +84,22 @@ needs_sphinx = '1.7'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc', 'sphinx.ext.autosectionlabel',
-    'sphinx.ext.autosummary', 'sphinx.ext.doctest', 'sphinx.ext.intersphinx',
-    'sphinx.ext.napoleon', 'sphinx.ext.todo', 'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages', 'IPython.sphinxext.ipython_console_highlighting',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.autosectionlabel',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.todo',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages',
+    'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
-    'matplotlib.sphinxext.plot_directive', 'matplotlib.sphinxext.mathmpl',
-    'numpydoc', 'flake8_rst.sphinxext.custom_roles', 'pygmentsdoc'
+    'matplotlib.sphinxext.plot_directive',
+    'matplotlib.sphinxext.mathmpl',
+    'numpydoc',
+    'flake8_rst.sphinxext.custom_roles',
+    'pygmentsdoc'
 ]
 
 try:
@@ -299,7 +308,6 @@ autosummary_generate = False
 # napoleon_numpy_docstring = True
 # napoleon_include_init_with_doc = False
 napoleon_include_private_with_doc = True
-
 # napoleon_include_special_with_doc = True
 # napoleon_use_admonition_for_examples = False
 # napoleon_use_admonition_for_notes = False

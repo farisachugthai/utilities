@@ -11,9 +11,7 @@ sections, this script has served a very utilitiarian purpose.
 
 May refactor one day. But it continues to work.
 
-Note
-----
-This module assumes a python interpreter above version 3.4.
+.. note:: This module assumes a python interpreter above version 3.4.
 
 """
 from pathlib import Path
@@ -68,17 +66,15 @@ def main():
     Moves file to a hardcoded path but will be generalized to take as an
     argument.
 
-    Parameters
-    ----------
-    src : str
-        Name of file to backup, move and symlink.
-
-
     Assumes
     -------
         User runs the script from inside the folder of the file they want to
         move.
 
+    Parameters
+    ----------
+    src : str
+        Name of file to backup, move and symlink.
 
     """
     inputted = sys.argv[1] if len(
@@ -88,8 +84,6 @@ def main():
     if src.is_file() is not True:
         sys.exit("This is not a file. Aborting.")
 
-    # cwd: Path = Path.cwd()
-    # Type annotation kills yapf.
     cwd = Path.cwd()
     rel_path = Path.relative_to(cwd, home)
     # Setup the file we're moving to

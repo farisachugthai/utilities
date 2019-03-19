@@ -18,19 +18,15 @@ Utilized by importing as so.
 
     python3 must_be_three.py
 
-.. todo::
 
-    Uh actually execute the above because now I'm interested...
+.. todo:: Uh actually execute the above because now I'm interested...
 
-Assumes:
 
-    All functions are imported as the module will immediately exit if
-    directly executed.
+.. rubric:: Assumes: All functions are imported as the module will immediately exit if directly executed.
 
 If nothing else this is a lesson in how painful it becomes to maintain
 nonsense names.
 """
-from platform import system
 import sys
 
 
@@ -49,14 +45,12 @@ def py_gt_exit(min_py_version):
 
     For example, the :mod:`argparse` was only introduced in python3.2.
 
-    .. todo::
-
-        Possibly change API so funcs return a value on success.
+    .. todo:: Possibly change API so funcs return a value on success.
 
     Parameters
     ------------
-    ``min_py_version`` :
-    The lowest version of python that can be used. TODO: What type is that?
+    min_py_version : int or float or tuple
+        Value that represents the lowest version of python that can be used.
 
     """
     if sys.version_info < min_py_version:
@@ -75,7 +69,7 @@ def py_lt_exit(max_py_version):
 
     Parameters
     ------------
-    ``max_py_version`` : int or float or tuple
+    max_py_version : int or float or tuple
         The highest version of python that can be used
 
     """
@@ -89,10 +83,6 @@ def py_lt_exit(max_py_version):
         sys.exit("The following version of python and newer are required: " +
                  str(max_py_version))
 
-
-def test_linux():
-    """Not a unit test but checks that the user is on Linux OS."""
-    assert system() == 'Linux'
 
 
 if __name__ == '__main__':

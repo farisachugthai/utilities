@@ -9,6 +9,27 @@ This module intends to establish a few different things.
     - Define generic dunder methods.
     - Extend the user's ``$PATH `` to include this directory even if it != os.cwd
 
+Mar 19, 2019
+
+So with our sys.path hack, we can now do the following successfully::
+
+    from pyutil import g
+
+
+However we still have a problem.
+
+Scratch that!::
+
+    import pyutil.env
+
+Now successfully works!!!
+
+Let it doctest!
+
+>>> import pyutil
+>>> import pyutil.ytdl
+>>> from pyutil import g
+
 
 NOQA F401
 
@@ -16,7 +37,6 @@ NOQA F401
 import logging
 from logging import NullHandler
 import os
-from pkgutil import extend_path
 import sys
 
 import pkg_resources
@@ -26,43 +46,10 @@ from pyutil.__about__ import (  # noqa F401
     __title__, __package_name__,
 )
 
-__all__ = [
-    'backup_nt_and_posix',
-    'batch_renamer',
-    'check_IP',
-    'conda_export',
-    'dir_cleaner',
-    'dlink',
-    'dlink2',
-    'dot_sym',
-    'env',
-    'env_checks',
-    'find_pics',
-    'g',
-    'inspect_module',
-    'itersrc',
-    'json_sorter',
-    'lazy_downloader',
-    'linktree',
-    'magic_aid',
-    'mv_to_repo',
-    'nvim_profiling',
-    'ptags',
-    'rclone',
-    'strip_space',
-    'sys_checks',
-    'wrap',
-    'yes_no_question',
-]
-
 logging.getLogger(__name__).addHandler(NullHandler())
 
-logging.basicConfig(level=logging.DEBUG)
+pyutil_d = os.path.dirname('__init__.py')
 
-pyutil_d = os.path.dirname(os.path.abspath('__init__.py'))
+sys.path.insert(0, pyutil_d)
 
-logging.debug('Path is: ' + str(sys.path))
-
-__path__ = extend_path(sys.path, pyutil_d)
-
-logging.debug('Path is: ' + str(sys.path))
+pkg_resources.declare_namespace('.')

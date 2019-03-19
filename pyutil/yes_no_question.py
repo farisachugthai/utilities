@@ -19,5 +19,6 @@ def yes_no_question(question):
 
 
 if __name__ == "__main__":
-    sys.exit("Well I've got to admit this is embarassing. I thought you'd import"
-             "me!")
+    sys.exit(
+        "Well I've got to admit this is embarassing. I thought you'd import"
+        "me!")

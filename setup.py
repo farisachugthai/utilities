@@ -2,10 +2,26 @@
 # -*- coding: utf-8 -*-
 """Create an installable package for the utilities repository.
 
-Largely based off of the work done by @kennethreitz in his setup.py_
+Largely based off of the work done by @kennethreitz in his `setup.py`_
 repository.
 
 _`Kenneth Reitz setup.py template <https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py>`
+
+Still needs a handful of things panned out.
+
+Need to read the following.::
+
+    import setuptools
+    from setuptools import Distribution
+    help(Distribution)
+
+Has some useful things and also
+
+.. see also::
+
+    numpy.distutils.core
+    numpt.distutils.misc_utils
+
 
 """
 import codecs

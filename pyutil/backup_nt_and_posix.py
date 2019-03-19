@@ -23,7 +23,7 @@ def timestamped_dir(backup_dir):
 
     Parameters
     ----------
-    backup_dir : path-like object
+    backup_dir : str
         Directory to backup
 
     Returns

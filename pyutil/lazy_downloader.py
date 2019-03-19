@@ -47,11 +47,13 @@ def _parse_arguments():
         "-h",
         "--headers",
         nargs='*',
-        help="Headers to send to the web server."
-    )
+        help="Headers to send to the web server.")
 
-    parser.add_argument('-V', '--version', action='version',
-                        version='%(prog)s' + pyutil.__about__['version'])
+    parser.add_argument(
+        '-V',
+        '--version',
+        action='version',
+        version='%(prog)s' + pyutil.__about__['version'])
 
     args = parser.parse_args()
 
@@ -164,9 +166,11 @@ if __name__ == "__main__":
         url = args.URL
 
     std_headers = {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0',
+        'User-Agent':
+        'Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0',
         'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept':
+        'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Encoding': 'gzip, deflate',
         'Accept-Language': 'en-us,en;q=0.5',
     }

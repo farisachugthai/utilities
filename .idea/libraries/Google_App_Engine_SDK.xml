@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+<component name="libraryTable">
+  <library name="Google App Engine SDK" type="python">
+    <CLASSES>
+      <root url="file://$APPLICATION_HOME_DIR$/bin" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
+||||||| merged common ancestors
+=======
 <component name="libraryTable">
   <library name="Google App Engine SDK" type="python">
     <CLASSES>
@@ -12,3 +23,4 @@
     <SOURCES />
   </library>
 </component>
+>>>>>>> master

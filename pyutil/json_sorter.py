@@ -64,7 +64,8 @@ def convert_to_yaml(file_obj):
     json_data = json.loads(open(file_obj))
     converted_json_data = json.dumps(json_data, sort_keys=True)
     # output yaml
-    yaml_text = yaml.dump(yaml.load(converted_json_data), default_flow_style=False)
+    yaml_text = yaml.dump(
+        yaml.load(converted_json_data), default_flow_style=False)
     return yaml_text
 
 

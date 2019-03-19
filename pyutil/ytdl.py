@@ -524,7 +524,8 @@ import sys
 try:
     import requests
 except ImportError:
-    logging.warning("This script xepends on the requests module. Falling back to urllib.")
+    logging.warning(
+        "This script xepends on the requests module. Falling back to urllib.")
     import urllib
 else:
     REQUESTS = 1
@@ -605,7 +606,8 @@ def ytdl(link, ytdl_opts):
     :returns: Request object or :class:`urllib.Response` if :mod:`requests` isn't downloaded.
     """
     ydl_opts = {
-        'format': 'bestaudio/best',
+        'format':
+        'bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',

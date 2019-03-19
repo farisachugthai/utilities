@@ -16,7 +16,7 @@ import sys
 
 from docutils import nodes
 from docutils.statemachine import ViewList
-from sphinx.util.compat import Directive
+from pygments import sphinxext, lexers, formatters, filters
 from sphinx.util.nodes import nested_parse_with_titles
 
 MODULEDOC = '''
@@ -57,7 +57,7 @@ FILTERDOC = '''
 '''
 
 
-class PygmentsDoc(Directive):
+class PygmentsDoc(sphinxext.Directive):
     """
     A directive to collect all lexers/formatters/filters and generate
     autoclass directives for them.
@@ -86,7 +86,7 @@ class PygmentsDoc(Directive):
         return node.children
 
     def document_lexers(self):
-        from pygments.lexers._mapping import LEXERS
+        from lexers._mapping import LEXERS
         out = []
         modules = {}
         moduledocstrings = {}
@@ -122,7 +122,7 @@ class PygmentsDoc(Directive):
         return ''.join(out)
 
     def document_formatters(self):
-        from pygments.formatters import FORMATTERS
+        from formatters import FORMATTERS
 
         out = []
         for classname, data in sorted(FORMATTERS.items(), key=lambda x: x[0]):
@@ -140,7 +140,7 @@ class PygmentsDoc(Directive):
         return ''.join(out)
 
     def document_filters(self):
-        from pygments.filters import FILTERS
+        from filters import FILTERS
 
         out = []
         for name, cls in FILTERS.items():

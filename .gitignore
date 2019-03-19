@@ -18,6 +18,8 @@ objects.inv
 ##################
 .mypy_cache/
 *.eggs/*
+*wheel/*
+*.whl
 
 # spyder projects
 ###################
@@ -25,7 +27,7 @@ objects.inv
 
 # Jupyter Notebooks / JupyterLab
 ###################################
-.ipynb_checkpoints/
+*.ipynb_checkpoints/*
 
 # Rope
 ##########

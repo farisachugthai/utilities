@@ -9,10 +9,11 @@
     :copyright: Copyright 2007-2014 by the Sphinx team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
+import logging
+from logging import NullHandler
+import os
 import sys
 
-from pkgutil import extend_path
+logging.getLogger(__name__).addHandler(NullHandler())
 
-__import__('pkg_resources').declare_namespace(__name__)
-
-__path__ = extend_path(sys.path, __name__)
+sys.path.insert(0, os.path.dirname(os.path.abspath('.')))

@@ -4,16 +4,23 @@
 
 .. module:: batch_renamer.py
 
-Largely argparse and doctest practice.
-From the Official Python documentation in the section Tutorials:
-`tutorials stdlib2`_ with some reformatting.
+Initially inspired f rom the Official Python documentation in the section
+Tutorials: `tutorials stdlib2`_ with some reformatting.
 
 Still uses old style strings as a result.
+
+First we'll examine the contents of a directory and ensure it only contains
+files with names we want to rename.
+
 
 .. code-block:: python3
 
     >>> os.listdir("/path/to/dir")
     ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
+
+
+As we can see it does we'll then invoke the script like so.
+
 
 .. code-block:: shell-session
 
@@ -21,9 +28,6 @@ Still uses old style strings as a result.
     img_1074.jpg --> Ashley_0.jpg
     img_1076.jpg --> Ashley_1.jpg
     img_1077.jpg --> Ashley_2.jpg
-
-This would be quite an easy module to create unittests for IN ADDITION to the
-fact that you could add some fixtures in and learn that.
 
 .. _`tutorials stdlib2`: https://docs.python.org/3/tutorial/stdlib2.html#templating
 
@@ -55,6 +59,12 @@ def _parse_arguments():
         help="Directory containing only the files to be renamed.")
 
     parser.add_argument(
+        'rename_format',
+        nargs=1,
+        help=r'Enter rename style (%d-date %n-seqnum %f-format I.E.  Ashley_%n%f)'
+    )
+
+    parser.add_argument(
         '-V',
         '--version',
         action='version',
@@ -66,18 +76,14 @@ def _parse_arguments():
 
 
 def fix_extension():
-    """Rename files that have have the wrong filename extension.
-
-    .. todo:: Fuck I didn't consider the case where there are 2 words separated by dots that we want to keep.
-
-    """
+    """Rename files that have have the wrong filename extension."""
     for i in os.listdir('.'):
         parts = i.split(sep='.')
         new = parts[0] + '.' + parts[1]
         shutil.move(i, new)
 
 
-def main(directory):
+def main(directory, fmt):
     """Rename a user provided directory of files.
 
     Parameters
@@ -86,14 +92,13 @@ def main(directory):
         The directory to iterate over.
 
     """
-    fmt = input('Enter rename style (%d-date %n-seqnum %f-format):  ')
-    # Enter rename style (%d-date %n-seqnum %f-format):  Ashley_%n%f
+    # Enter rename style (%d-date %n-seqnum %f-format): 
     t = BatchRename(fmt)
     date = time.strftime('%d%b%y')
     for i, filename in enumerate(os.listdir(directory)):
         base, ext = os.path.splitext(filename)
         newname = t.substitute(d=date, n=i, f=ext)
-        print('{0} --> {1}'.format(filename, newname))
+        logging.info('{0} --> {1}'.format(filename, newname))
 
 
 def batch_mover(pattern):
@@ -121,6 +126,7 @@ if __name__ == '__main__':
     assert args.directory
     d = args.directory
 
+    fmt = args.rename_format
     # Wait until we're sure we got the args we needed before setting the log
     # level.
     # Now we can configure that level based on user input and default to WARNING
@@ -128,4 +134,5 @@ if __name__ == '__main__':
 
     logging.debug("The directory that was chosen was: " + str(d))
 
-    main(d)
+    if batch_mover(fmt):
+        main(d, fmt)

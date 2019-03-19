@@ -42,7 +42,7 @@ import sys
 
 from numpydoc import numpydoc  # noqa
 import flake8_rst
-
+from docs.sphinxext import pygmentsdoc
 
 logger = logging.basicConfig(level=logging.DEBUG)
 
@@ -96,8 +96,10 @@ extensions = [
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
     'matplotlib.sphinxext.plot_directive',
+    'matplotlib.sphinxext.mathmpl',
     'numpydoc',
     'flake8_rst.sphinxext.custom_roles',
+    'pygmentsdoc'
 ]
 
 try:

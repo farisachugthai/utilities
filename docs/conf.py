@@ -44,7 +44,7 @@ from numpydoc import numpydoc  # noqa
 import flake8_rst
 from docs.sphinxext import pygmentsdoc
 
-logger = logging.basicConfig(level=logging.DEBUG)
+logger = logging.basicConfig(level=logging.WARNING)
 
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')

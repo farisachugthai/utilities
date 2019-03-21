@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "coc.nvim": "^0.0.58",
-    "neovim": "^4.2.1"
+    "neovim": "^4.2.1",
+    "prettier": "^1.16.4"
   }
 }

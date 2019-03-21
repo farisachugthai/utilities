@@ -75,24 +75,6 @@ def _parse_arguments():
     return args
 
 
-def find_links(text):
-    """Search body of text for URLs.
-
-    Parameters
-    ----------
-    text : str
-        Body of formatted text to search for URLs.
-
-    Returns
-    -------
-    links : todo
-        URLs found on site.
-
-    """
-    links = re.findall('"((http|ftp)s?://.*?)"', text)
-    return links
-
-
 def _parse_site(URL, *args, **kwargs):
     """Parse the given `URL`, remove tags and return plaintext.
 
@@ -113,6 +95,24 @@ def _parse_site(URL, *args, **kwargs):
 
     txt = res.text()
     return txt
+
+
+def find_links(text):
+    """Search body of text for URLs.
+
+    Parameters
+    ----------
+    text : str
+        Body of formatted text to search for URLs.
+
+    Returns
+    -------
+    links : todo
+        URLs found on site.
+
+    """
+    links = re.findall('"((http|ftp)s?://.*?)"', text)
+    return links
 
 
 def main(url, output_fname):
@@ -162,7 +162,6 @@ def main(url, output_fname):
         A path to write the downloaded content to.
 
     """
-
     txt = _parse_site(url)
 
     with open(output_fname, "xt") as f:
@@ -174,7 +173,7 @@ if __name__ == "__main__":
     # With xt permissions the script crashes so no point raising anything.
     # Just bail
     if os.path.isfile(args.fname):
-        sys.exit('File already exists. Cannot overwrite. Exiting.')
+        raise FileExistsError
     # And if we're good, then bind the properties from the parser
     else:
         output_fname = args.fname

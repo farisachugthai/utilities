@@ -16,10 +16,7 @@ NOQA F401
 import logging
 from logging import NullHandler
 import os
-from pkgutil import extend_path
 import sys
-
-import pkg_resources
 
 from pyutil.__about__ import (
     __author__,
@@ -30,9 +27,5 @@ from pyutil.__about__ import (
 )
 
 logging.getLogger(__name__).addHandler(NullHandler())
-
-pkg_resources.declare_namespace(__name__)
-
-__path__ = extend_path(sys.path, __file__)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath('.')))

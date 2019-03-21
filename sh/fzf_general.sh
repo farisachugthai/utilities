@@ -3,11 +3,23 @@
 
 # set -euo pipefail
 
-# Feb 26, 2019: Idea on how to decide to use fzf or fzf-tmux
+# Feb 26, 2019: Idea on how to decide to use fzf or fzf-tmux: {{{1
 
 # [[ -n $TMUX ]] means not in tmux
 [[ -z $TMUX ]] && comm=fzf-tmux || comm=fzf
 # or something to that effect
+# Then you could easily go $comm in the place of fzf in different commands
+
+# rg --> fzf --> bat preview with snazyy colors and maximum readability: {{{1
+# Mar 17, 2019: Here's a new pipline that I'm pretty proud of! Works actually quite well IMO
+
+# I used \ before fzf to ignore anything i've set with FZF_DEFAULT's
+# Realistically I need to start making the options set by the defaults as minimal as possible and then
+# just make good pipelines like this and name them something else.
+
+fzfr() {
+    rg --no-heading --no-column --no-filename --hidden --files --no-messages | \fzf --ansi --filepath-word --preview='\bat --theme="Sublime Snazzy" --color always --wrap auto --style=plain --pager="less -RF" {}'
+}
 
 # fzf_down: split down: {{{1
 fzf_down() {

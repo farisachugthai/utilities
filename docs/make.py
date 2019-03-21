@@ -57,6 +57,7 @@ import argparse
 import logging
 import os
 import shlex
+import shutil
 import subprocess
 import sys
 
@@ -109,7 +110,7 @@ def _parse_arguments():
     parser.add_argument(
         '-ll',
         '--log-level',
-        dest=log_level,
+        dest='log_level',
         default='INFO',
         help='Log level. Defaults to INFO. Implies logging.')
 
@@ -153,23 +154,49 @@ def run(cmd):
         return process.returncode
 
 
+def _termux_hack(arg1):
+    """TODO: Docstring for _termux_hack.
+
+    Parameters
+    ----------
+    arg1 : TODO
+
+
+    Parameters
+    ----------
+    arg1 : TODO
+
+    Returns
+    -------
+    TODO
+
+    """
+    try:
+        shutil.copytree('_build/html/', '/data/data/com.termux/files/home/storage/downloads/html')
+    except FileExistsError:
+        shutil.rmtree('/data/data/com.termux/files/home/storage/downloads/html')
+    except FileNotFoundError:
+        logging.error("The build directory currently doesn't exist. Exiting.")
+    else:
+        shutil.rmtree('_build/html')
+
+
 if __name__ == "__main__":
     args = _parse_arguments()
 
-    if args.log_level:
+    try:
+        log_level = args.log_level
+    except Exception:
+        logging.basicConfig(level=logging.WARNING)
+    else:
         log_level = args.log_level.upper()
-        logging.basicConfig(level=logging.log_level)
+        logging.basicConfig(level=log_level)
 
     jobs = f'{os.cpu_count()}'
 
     logging.debug(jobs)
 
     run(f'make -j{jobs}')
-# needs rewrite
-try:
-    shutil.copytree('_build/html/', '/data/data/com.termux/files/home/storage/downloads/html')
-except FileExistsError:
-    shutil.rmtree('/data/data/com.termux/files/home/storage/downloads/html')
-else:
-    shutil.rmtree('_build/html')
-    
+
+    if os.environ.get('ANDROID_ROOT'):
+        _termux_hack()

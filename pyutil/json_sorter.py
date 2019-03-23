@@ -60,6 +60,11 @@ def convert_to_yaml(file_obj):
     file_obj : str
         The file to read in
 
+    Returns
+    -------
+    yaml_object : str
+        Converted :mod:`PyYAML` text.
+
     """
     json_data = json.loads(open(file_obj))
     converted_json_data = json.dumps(json_data, sort_keys=True)
@@ -79,6 +84,11 @@ def sort_json(file_obj):
     ----------
     file_obj : str
         The file to read in
+
+    Returns
+    -------
+    json_text : str
+        Correctly formmated :mod:`json` text.
 
     """
     with open(file_obj) as f:
@@ -109,12 +119,12 @@ def text_writer(plaintext, output_file=sys.stdout):
 
 
 def main():
-    """foo."""
+    """Handles user args, sets up logging and calls other functions."""
     args = _parse_arguments()
 
     try:
         log_level = args.log_level
-    except Exception:
+    except Exception:  # IndexError?
         logging.basicConfig(level=LOG_LEVEL)
     else:
         logging.basicConfig(level=log_level)

@@ -28,4 +28,4 @@ from pyutil.__about__ import (
 
 logging.getLogger(__name__).addHandler(NullHandler())
 
-sys.path.insert(0, os.path.dirname(os.path.abspath('.')))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__name__)))

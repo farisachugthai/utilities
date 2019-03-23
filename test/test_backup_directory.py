@@ -1,3 +1,31 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""Well this isn't set up yet but if you want something that may help.
+
+See Also
+--------
+:mod:`IPython.utils.tempdir`
+
+
+Gives you::
+
+
+    class NamedFileInTemporaryDirectory(object):
+
+        def __init__(self, filename, mode='w+b', bufsize=-1, **kwds):
+            Open a file named `filename` in a temporary directory.
+
+            This context manager is preferred over `NamedTemporaryFile` in
+            stdlib `tempfile` when one needs to reopen the file.
+
+            Arguments `mode` and `bufsize` are passed to `open`.
+            Rest of the arguments are passed to `TemporaryDirectory`.
+
+
+And also gives you a new TemporaryDirectory class.
+
+
+"""
 import logging
 import os
 from pathlib import Path

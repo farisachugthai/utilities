@@ -39,8 +39,7 @@ import shutil
 from string import Template
 import time
 
-import pyutil
-
+from .__about__ import __version__
 
 class BatchRename(Template):
     """Delimiter for string substitutions."""
@@ -68,7 +67,7 @@ def _parse_arguments():
         '-V',
         '--version',
         action='version',
-        version='%(prog)s' + pyutil.__about__['version'])
+        version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 
@@ -92,7 +91,7 @@ def main(directory, fmt):
         The directory to iterate over.
 
     """
-    # Enter rename style (%d-date %n-seqnum %f-format): 
+    # Enter rename style (%d-date %n-seqnum %f-format):
     t = BatchRename(fmt)
     date = time.strftime('%d%b%y')
     for i, filename in enumerate(os.listdir(directory)):

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
     sphinxcontrib
@@ -14,6 +15,14 @@ from logging import NullHandler
 import os
 import sys
 
+from pyutil.__about__ import (
+    __author__,
+    __copyright__,
+    __description__,
+    __docformat__,
+    __license__,
+)
+
 logging.getLogger(__name__).addHandler(NullHandler())
 
-sys.path.insert(0, os.path.dirname(os.path.abspath('.')))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__name__)))

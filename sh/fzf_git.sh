@@ -10,16 +10,23 @@
 #  Personal  #
 ##############
 
-fh() { # {{{
+# fzf_commits: commits in a repo: {{{1
+fzf_commits() {
+  git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
+}
+
+fh() { # {{{1
     git log --color=always --all --branches --abbrev --oneline | fzf --ansi --multi --preview "git show {+1}" --preview-window=down
 }
+
 # }}}
 
+# }}}
 ######################################################################
 #                             fzf wiki                               #
 ######################################################################
 
-git_log() { # {{{ log piped into less and displays show
+git_log() { # {{{1 log piped into less and displays show
   local show="git show --color=always \"\$(grep -m1 -o \"[a-f0-9]\{7\}\" <<< {})\""
   fzf --prompt='log' -e --no-sort --tiebreak=index \
     --bind="enter:execute:$show | less -R" \
@@ -28,14 +35,14 @@ git_log() { # {{{ log piped into less and displays show
     --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@")
 }
 # }}}
-fbr() { # checkout git branch {{{
+fbr() { # checkout git branch {{{1
   local branches branch
   branches=$(git branch -vv) &&
   branch=$(echo "$branches" | fzf +m) &&
   git checkout "$(echo "$branch" | awk '{print $1}' | sed "s/.* //")"
 }
 # }}}
-fbr() { # {{{ checkout git branch (including remote branches). Uses fzf-tmux
+fbr() { # {{{1 checkout git branch (including remote branches). Uses fzf-tmux
   local branches branch
   branches=$(git branch --all | grep -v HEAD) &&
   branch=$(echo "$branches" |
@@ -43,7 +50,7 @@ fbr() { # {{{ checkout git branch (including remote branches). Uses fzf-tmux
   git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
 }
 # }}}
-fbr() { # {{{ checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
+fbr() { # {{{1 checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
   local branches branch
   branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
   branch=$(echo "$branches" |
@@ -51,7 +58,7 @@ fbr() { # {{{ checkout git branch (including remote branches), sorted by most re
   git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
 }
 # }}}
-fco() { # {{{ checkout git branch/tag
+fco() { # {{{1 checkout git branch/tag
   local tags branches target
   tags=$(
     git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
@@ -65,7 +72,7 @@ fco() { # {{{ checkout git branch/tag
   git checkout "$(echo "$target" | awk '{print $2}')"
 }
 # }}}
-fco_preview() { # {{{ checkout git branch/tag, with a preview showing the commits between the tag/branch and HEAD
+fco_preview() { # {{{1 checkout git branch/tag, with a preview showing the commits between the tag/branch and HEAD
   local tags branches target
   tags=$(
 git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
@@ -80,14 +87,14 @@ sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
   git checkout "$(echo "$target" | awk '{print $2}')"
 }
 # }}}
-fcoc() { # {{{ checkout git commit
+fcoc() { # {{{1 checkout git commit
   local commits commit
   commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
   commit=$(echo "$commits" | fzf --tac +s +m -e) &&
   git checkout "$(echo "$commit" | sed "s/ .*//")"
 }
 # }}}
-fshow() { # {{{ git commit browser
+fshow() { # {{{1 git commit browser
   git log --graph --color=always \
       --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
   fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
@@ -226,7 +233,7 @@ gstash() { # {{{1 preview window for git stashes
 
 # Updated versions of the above. From Choi's bashrc.
 
-gf() {
+fs() {
   is_in_git_repo || return
   git -c color.status=always status --short |
   fzf-down -m --ansi --nth 2..,.. \
@@ -234,7 +241,7 @@ gf() {
   cut -c4- | sed 's/.* -> //'
 }
 
-gb() {
+fb() {
   is_in_git_repo || return
   git branch -a --color=always | grep -v '/HEAD\s' | sort |
   fzf-down --ansi --multi --tac --preview-window right:70% \
@@ -243,14 +250,14 @@ gb() {
   sed 's#^remotes/##'
 }
 
-gt() {
+ft() {
   is_in_git_repo || return
   git tag --sort -version:refname |
   fzf-down --multi --preview-window right:70% \
     --preview 'git show --color=always {} | head -200'
 }
 
-gh() {
+fh() {
   is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
   fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
@@ -259,7 +266,7 @@ gh() {
   grep -o "[a-f0-9]\{7,\}"
 }
 
-gr() {
+rr() {
   is_in_git_repo || return
   git remote -v | awk '{print $1 "\t" $2}' | uniq |
   fzf-down --tac \
@@ -267,7 +274,7 @@ gr() {
   cut -d$'\t' -f1
 }
 
-gs() {
+rs() {
   is_in_git_repo || return
   git stash list | fzf-down --reverse -d: --preview 'git show --color=always {1}' |
   cut -d: -f1

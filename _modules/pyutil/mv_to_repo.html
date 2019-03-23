@@ -9,7 +9,7 @@
     <title>pyutil.mv_to_repo &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -47,9 +47,7 @@
 
 <span class="sd">May refactor one day. But it continues to work.</span>
 
-<span class="sd">Note</span>
-<span class="sd">----</span>
-<span class="sd">This module assumes a python interpreter above version 3.4.</span>
+<span class="sd">.. note:: This module assumes a python interpreter above version 3.4.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
@@ -104,17 +102,15 @@
 <span class="sd">    Moves file to a hardcoded path but will be generalized to take as an</span>
 <span class="sd">    argument.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    src : str</span>
-<span class="sd">        Name of file to backup, move and symlink.</span>
-
-
 <span class="sd">    Assumes</span>
 <span class="sd">    -------</span>
 <span class="sd">        User runs the script from inside the folder of the file they want to</span>
 <span class="sd">        move.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    src : str</span>
+<span class="sd">        Name of file to backup, move and symlink.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">inputted</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
@@ -124,8 +120,6 @@
     <span class="k">if</span> <span class="n">src</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;This is not a file. Aborting.&quot;</span><span class="p">)</span>
 
-    <span class="c1"># cwd: Path = Path.cwd()</span>
-    <span class="c1"># Type annotation kills yapf.</span>
     <span class="n">cwd</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
     <span class="n">rel_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="n">home</span><span class="p">)</span>
     <span class="c1"># Setup the file we&#39;re moving to</span>
@@ -172,10 +166,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
 </ul>
 
 <div class="relations">

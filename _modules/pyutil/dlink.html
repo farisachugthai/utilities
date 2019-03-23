@@ -9,7 +9,7 @@
     <title>pyutil.dlink &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -38,7 +38,7 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Symlink all of the files in one directory into another.</span>
 
-<span class="sd">..module:: dlink</span>
+<span class="sd">.. module:: dlink</span>
 <span class="sd">    :synopsis: Symlinks a directory of files from another.</span>
 
 <span class="sd">Synopsis</span>
@@ -50,25 +50,32 @@
 
 <span class="sd">This is quite easily one of my most frequently used scripts.</span>
 
-<span class="sd">As an example, one can ``git clone dotfiles`` in a directory named `projects`</span>
-<span class="sd">or `src`. The location of the git repository is irrelevant, and as such, we&#39;ll</span>
-<span class="sd">refer to it as `src` from here, as `dest` as it&#39;s where the symlinks point to.</span>
-
-
-<span class="sd">For example if wants symlinks pointing to ``/home/User/dotfiles/.vim``,</span>
-<span class="sd">then running :ref:`dlink.py`_ in `/home/User/.vim` with $HOME/dotfiles/.vim as</span>
-<span class="sd">an argument will create symlinks in $HOME/.vim pointing to $HOME/dotfiles/.vim.</span>
-
-
-<span class="sd">If we&#39;re given 2 args, treat it with the same syntax as ``ln -s`` or</span>
-<span class="sd">:func:`os.symlink()`</span>
-
-
 <span class="sd">Usage</span>
 <span class="sd">------</span>
 <span class="sd">.. code-block:: shell</span>
 
 <span class="sd">    ln -s path/to/dest/* [path/to/src]</span>
+
+
+<span class="sd">As an example, one can ``git clone dotfiles`` in a directory named `projects`</span>
+<span class="sd">or `src`. The location of the git repository is irrelevant, and as such, we&#39;ll</span>
+<span class="sd">refer to it as `src` from here, as `dest` as it&#39;s where the symlinks point to.</span>
+
+<span class="sd">For example if wants symlinks pointing to ``/home/User/dotfiles/.vim``,</span>
+<span class="sd">then running dlink.py in ``/home/User/.vim`` with ``$HOME/dotfiles/.vim`` as</span>
+<span class="sd">an argument will create symlinks in ``$HOME/.vim`` pointing to</span>
+<span class="sd">``$HOME/dotfiles/.vim``.</span>
+
+
+<span class="sd">Inspiration</span>
+<span class="sd">------------</span>
+<span class="sd">If the module is given 2 args, the intended response is for it to behave  similarly to the classic Unix idiom:</span>
+
+<span class="sd">.. code-block:: shell</span>
+
+<span class="sd">    ln -s path/to/dest/* [path/to/src]</span>
+
+<span class="sd">or treat it similarly to :func:`os.symlink()`.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -85,8 +92,8 @@
 <span class="sd">    src : str</span>
 <span class="sd">        Optional argument indicating the directory where the symlinks</span>
 <span class="sd">        are to be created.</span>
-<span class="sd">        If the src argument isn&#39;t provided, it is assumed that the current</span>
-<span class="sd">        working directory is the src dir.</span>
+<span class="sd">        If the `src` argument isn&#39;t provided, it is assumed that the current</span>
+<span class="sd">        working directory is the `src` dir.</span>
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -156,10 +163,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
 </ul>
 
 <div class="relations">

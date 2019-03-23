@@ -9,7 +9,7 @@
     <title>pyutil.sys_checks &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -54,19 +54,15 @@
 
 <span class="sd">    python3 must_be_three.py</span>
 
-<span class="sd">.. todo::</span>
 
-<span class="sd">    Uh actually execute the above because now I&#39;m interested...</span>
+<span class="sd">.. todo:: Uh actually execute the above because now I&#39;m interested...</span>
 
-<span class="sd">Assumes:</span>
 
-<span class="sd">    All functions are imported as the module will immediately exit if</span>
-<span class="sd">    directly executed.</span>
+<span class="sd">.. rubric:: Assumes: All functions are imported as the module will immediately exit if directly executed.</span>
 
 <span class="sd">If nothing else this is a lesson in how painful it becomes to maintain</span>
 <span class="sd">nonsense names.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">platform</span> <span class="k">import</span> <span class="n">system</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 
@@ -85,14 +81,12 @@
 
 <span class="sd">    For example, the :mod:`argparse` was only introduced in python3.2.</span>
 
-<span class="sd">    .. todo::</span>
-
-<span class="sd">        Possibly change API so funcs return a value on success.</span>
+<span class="sd">    .. todo:: Possibly change API so funcs return a value on success.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ------------</span>
-<span class="sd">    ``min_py_version`` :</span>
-<span class="sd">    The lowest version of python that can be used. TODO: What type is that?</span>
+<span class="sd">    min_py_version : int or float or tuple</span>
+<span class="sd">        Value that represents the lowest version of python that can be used.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="n">min_py_version</span><span class="p">:</span>
@@ -111,7 +105,7 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ------------</span>
-<span class="sd">    ``max_py_version`` : int or float or tuple</span>
+<span class="sd">    max_py_version : int or float or tuple</span>
 <span class="sd">        The highest version of python that can be used</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -125,10 +119,6 @@
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;The following version of python and newer are required: &quot;</span> <span class="o">+</span>
                  <span class="nb">str</span><span class="p">(</span><span class="n">max_py_version</span><span class="p">))</span></div>
 
-
-<div class="viewcode-block" id="test_linux"><a class="viewcode-back" href="../../api.html#pyutil.sys_checks.test_linux">[docs]</a><span class="k">def</span> <span class="nf">test_linux</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Not a unit test but checks that the user is on Linux OS.&quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Linux&#39;</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
@@ -161,10 +151,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
 </ul>
 
 <div class="relations">

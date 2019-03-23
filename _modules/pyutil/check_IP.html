@@ -9,7 +9,7 @@
     <title>pyutil.check_IP &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -38,8 +38,9 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Print a user&#39;s public IP address and hostname.</span>
 
-<span class="sd">Requires</span>
-<span class="sd">--------</span>
+<span class="sd">.. rubric:: Requires</span>
+
+
 <span class="sd">:mod:`requests`</span>
 
 
@@ -53,26 +54,32 @@
 
 <span class="sd">`&lt;https://docs.python-guide.org/en/latest/dev/virtualenvs/&gt;`_</span>
 
-
-<span class="sd">.. todo:: Come up with a fallback if requests isn&#39;t installed.</span>
-
-
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="get_public_ip"><a class="viewcode-back" href="../../api.html#pyutil.check_IP.get_public_ip">[docs]</a><span class="k">def</span> <span class="nf">get_public_ip</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Fetch the user&#39;s public IP address by querying `&lt;httpbin.org&gt;`__.</span>
+    <span class="sd">&quot;&quot;&quot;Fetch the user&#39;s public IP address by querying `&lt;httpbin.org&gt;`_.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    rt : str</span>
-<span class="sd">        A formatted message displaying the user&#39;s IP address.</span>
+<span class="sd">        A :mod:`json` formatted message displaying the user&#39;s IP address.</span>
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://httpbin.org/ip&#39;</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Response object was:&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;response.json()[&#39;origin&#39;] was:&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;origin&#39;</span><span class="p">])</span>
     <span class="n">rt</span> <span class="o">=</span> <span class="s1">&#39;Your IP is </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;origin&#39;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">rt</span></div>
 
@@ -92,14 +99,11 @@
 
 
 <span class="k">if</span> <span class="s1">&#39;__name__&#39;</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">requests</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;Error importing requests.&quot;</span><span class="p">)</span>
+    <span class="n">ip_ret_val</span> <span class="o">=</span> <span class="n">get_public_ip</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ip_ret_val</span><span class="p">)</span>
 
-    <span class="n">response</span> <span class="o">=</span> <span class="n">get_public_ip</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">get_hostname</span><span class="p">())</span>
+    <span class="n">user_hostname</span> <span class="o">=</span> <span class="n">get_hostname</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">user_hostname</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -128,10 +132,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
 </ul>
 
 <div class="relations">

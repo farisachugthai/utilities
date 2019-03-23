@@ -9,7 +9,7 @@
     <title>API &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
@@ -17,8 +17,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="TODO" href="todo.html" />
-    <link rel="prev" title="math" href="numerical.html" />
+    <link rel="prev" title="numerical" href="numerical.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -37,6 +36,7 @@
             
   <div class="section" id="api">
 <span id="id1"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code><a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<p>Below is the collected sum of all python modules in this repository.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#module-pyutil.backup_nt_and_posix" id="id5"><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code></a><ul>
@@ -44,15 +44,13 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#module-pyutil.batch_renamer" id="id7"><code class="xref py py-mod docutils literal notranslate"><span class="pre">batch_renamer</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.check_IP" id="id8"><code class="xref py py-mod docutils literal notranslate"><span class="pre">check_IP</span></code></a><ul>
-<li><a class="reference internal" href="#requires" id="id9">Requires</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-pyutil.conda_export" id="id10"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.dir_cleaner" id="id11"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir_cleaner</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.dlink" id="id12"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink</span></code></a><ul>
-<li><a class="reference internal" href="#synopsis" id="id13">Synopsis</a></li>
-<li><a class="reference internal" href="#usage" id="id14">Usage</a></li>
+<li><a class="reference internal" href="#module-pyutil.check_IP" id="id8"><code class="xref py py-mod docutils literal notranslate"><span class="pre">check_IP</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.conda_export" id="id9"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.dir_cleaner" id="id10"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir_cleaner</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.dlink" id="id11"><a class="reference internal" href="#module-dlink" title="dlink: Symlinks a directory of files from another."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink</span></code></a></a><ul>
+<li><a class="reference internal" href="#synopsis" id="id12">Synopsis</a></li>
+<li><a class="reference internal" href="#usage" id="id13">Usage</a></li>
+<li><a class="reference internal" href="#inspiration" id="id14">Inspiration</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-pyutil.dlink2" id="id15"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink2</span></code></a></li>
@@ -65,31 +63,36 @@
 <li><a class="reference internal" href="#module-pyutil.g" id="id20"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a></li>
 <li><a class="reference internal" href="#module-pyutil.inspect_module" id="id21"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect_module</span></code></a></li>
 <li><a class="reference internal" href="#module-pyutil.itersrc" id="id22"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itersrc</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.json_sorter" id="id23"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><ul>
-<li><a class="reference internal" href="#bug-fixes" id="id24">Bug Fixes</a></li>
+<li><a class="reference internal" href="#module-pyutil.json_sorter" id="id23"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.lazy_downloader" id="id24"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a><ul>
+<li><a class="reference internal" href="#safety-features" id="id25">Safety Features</a></li>
+<li><a class="reference internal" href="#collections-chainmap" id="id26"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.ChainMap()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.lazy_downloader" id="id25"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.linktree" id="id26"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linktree</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.magic_aid" id="id27"><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code></a><ul>
-<li><a class="reference internal" href="#ipython-aliases" id="id28">IPython Aliases</a></li>
+<li><a class="reference internal" href="#module-pyutil.linktree" id="id27"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linktree</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.magic_aid" id="id28"><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code></a><ul>
+<li><a class="reference internal" href="#ipython-aliases" id="id29">IPython Aliases</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.mv_to_repo" id="id29"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.nvim_profiling" id="id30"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.ptags" id="id31"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code></a><ul>
-<li><a class="reference internal" href="#files-to-tag" id="id32">Files to tag</a></li>
+<li><a class="reference internal" href="#module-pyutil.mv_to_repo" id="id30"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.nvim_profiling" id="id31"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.ptags" id="id32"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code></a><ul>
+<li><a class="reference internal" href="#files-to-tag" id="id33">Files to tag</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.rclone" id="id33"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.strip_space" id="id34"><code class="xref py py-mod docutils literal notranslate"><span class="pre">strip_space</span></code></a><ul>
-<li><a class="reference internal" href="#python-requirement" id="id35">Python Requirement</a></li>
-<li><a class="reference internal" href="#still-need-to-implement" id="id36">Still need to implement</a></li>
+<li><a class="reference internal" href="#module-pyutil.rclone" id="id34"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.strip_space" id="id35"><code class="xref py py-mod docutils literal notranslate"><span class="pre">strip_space</span></code></a><ul>
+<li><a class="reference internal" href="#python-requirement" id="id36">Python Requirement</a></li>
+<li><a class="reference internal" href="#still-need-to-implement" id="id37">Still need to implement</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.sys_checks" id="id37"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.wrap" id="id38"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.yes_no_question" id="id39"><code class="xref py py-mod docutils literal notranslate"><span class="pre">yes_no_question</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.sys_checks" id="id38"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.wrap" id="id39"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.yes_no_question" id="id40"><code class="xref py py-mod docutils literal notranslate"><span class="pre">yes_no_question</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.ytdl" id="id41"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ytdl</span></code></a><ul>
+<li><a class="reference internal" href="#we-got-it" id="id42">We got it!</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="module-pyutil.backup_nt_and_posix">
@@ -115,7 +118,7 @@ Windows, Linux, Mac and Android systems.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>backup_dir</strong> (<em>path-like object</em>) – Directory to backup</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>backup_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Directory to backup</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
 <li><strong>err_code</strong> (<em>int</em>) – Non-zero value indicates error code, or zero on success.</li>
@@ -132,22 +135,22 @@ Windows, Linux, Mac and Android systems.</p>
 <div class="section" id="module-pyutil.batch_renamer">
 <span id="batch-renamer"></span><h2><a class="toc-backref" href="#id7"><code class="xref py py-mod docutils literal notranslate"><span class="pre">batch_renamer</span></code></a><a class="headerlink" href="#module-pyutil.batch_renamer" title="Permalink to this headline">¶</a></h2>
 <p>Renames a directory of files based on a template.</p>
-<span class="target" id="module-batch_renamer.py"></span><p>Largely argparse and doctest practice.
-From the Official Python documentation in the section Tutorials:
-<a class="reference external" href="https://docs.python.org/3/tutorial/stdlib2.html#templating">tutorials stdlib2</a> with some reformatting.</p>
+<span class="target" id="module-batch_renamer.py"></span><p>Initially inspired f rom the Official Python documentation in the section
+Tutorials: <a class="reference external" href="https://docs.python.org/3/tutorial/stdlib2.html#templating">tutorials stdlib2</a> with some reformatting.</p>
 <p>Still uses old style strings as a result.</p>
+<p>First we’ll examine the contents of a directory and ensure it only contains
+files with names we want to rename.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;/path/to/dir&quot;</span><span class="p">)</span>
 <span class="go">[&#39;img_1074.jpg&#39;, &#39;img_1076.jpg&#39;, &#39;img_1077.jpg&#39;]</span>
 </pre></div>
 </div>
+<p>As we can see it does we’ll then invoke the script like so.</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">batch_renamer.py /path/to/dir</span>
 <span class="go">img_1074.jpg --&gt; Ashley_0.jpg</span>
 <span class="go">img_1076.jpg --&gt; Ashley_1.jpg</span>
 <span class="go">img_1077.jpg --&gt; Ashley_2.jpg</span>
 </pre></div>
 </div>
-<p>This would be quite an easy module to create unittests for IN ADDITION to the
-fact that you could add some fixtures in and learn that.</p>
 <dl class="class">
 <dt id="pyutil.batch_renamer.BatchRename">
 <em class="property">class </em><code class="descclassname">pyutil.batch_renamer.</code><code class="descname">BatchRename</code><span class="sig-paren">(</span><em>template</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#BatchRename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.BatchRename" title="Permalink to this definition">¶</a></dt>
@@ -220,15 +223,11 @@ fact that you could add some fixtures in and learn that.</p>
 <dt id="pyutil.batch_renamer.fix_extension">
 <code class="descclassname">pyutil.batch_renamer.</code><code class="descname">fix_extension</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#fix_extension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.fix_extension" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rename files that have have the wrong filename extension.</p>
-<div class="admonition-todo admonition" id="index-2">
-<p class="first admonition-title">Todo</p>
-<p class="last">Fuck I didn’t consider the case where there are 2 words separated by dots that we want to keep.</p>
-</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.batch_renamer.main">
-<code class="descclassname">pyutil.batch_renamer.</code><code class="descname">main</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.main" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyutil.batch_renamer.</code><code class="descname">main</code><span class="sig-paren">(</span><em>directory</em>, <em>fmt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rename a user provided directory of files.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -244,18 +243,13 @@ fact that you could add some fixtures in and learn that.</p>
 <div class="section" id="module-pyutil.check_IP">
 <span id="check-ip"></span><h2><a class="toc-backref" href="#id8"><code class="xref py py-mod docutils literal notranslate"><span class="pre">check_IP</span></code></a><a class="headerlink" href="#module-pyutil.check_IP" title="Permalink to this headline">¶</a></h2>
 <p>Print a user’s public IP address and hostname.</p>
-<div class="section" id="requires">
-<h3><a class="toc-backref" href="#id9">Requires</a><a class="headerlink" href="#requires" title="Permalink to this headline">¶</a></h3>
+<p class="rubric">Requires</p>
 <p><code class="xref py py-mod docutils literal notranslate"><span class="pre">requests</span></code></p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p>From Kenneth Reitz, owner of <a class="reference external" href="https://httpbin.org/ip">httpbin</a>.</p>
 <p>Installing packages for your project:</p>
 <p class="last"><a class="reference external" href="https://docs.python-guide.org/en/latest/dev/virtualenvs/">https://docs.python-guide.org/en/latest/dev/virtualenvs/</a></p>
-</div>
-<div class="admonition-todo admonition" id="index-3">
-<p class="first admonition-title">Todo</p>
-<p class="last">Come up with a fallback if requests isn’t installed.</p>
 </div>
 <dl class="function">
 <dt id="pyutil.check_IP.get_hostname">
@@ -281,7 +275,7 @@ fact that you could add some fixtures in and learn that.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>rt</strong> – A formatted message displaying the user’s IP address.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>rt</strong> – A <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> formatted message displaying the user’s IP address.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
 </tr>
@@ -290,9 +284,8 @@ fact that you could add some fixtures in and learn that.</p>
 </dd></dl>
 
 </div>
-</div>
 <div class="section" id="module-pyutil.conda_export">
-<span id="conda-export"></span><h2><a class="toc-backref" href="#id10"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code></a><a class="headerlink" href="#module-pyutil.conda_export" title="Permalink to this headline">¶</a></h2>
+<span id="conda-export"></span><h2><a class="toc-backref" href="#id9"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code></a><a class="headerlink" href="#module-pyutil.conda_export" title="Permalink to this headline">¶</a></h2>
 <p>Iterate over the list of conda environments that are present.</p>
 <p class="rubric">Returns</p>
 <p>Separate text files. 2 for each environment.:</p>
@@ -302,7 +295,7 @@ fact that you could add some fixtures in and learn that.</p>
 <li>One with a list of packages.</li>
 </ul>
 </div></blockquote>
-<div class="admonition-todo admonition" id="index-4">
+<div class="admonition-todo admonition" id="index-2">
 <p class="first admonition-title">Todo</p>
 <ul class="last simple">
 <li><dl class="first docutils">
@@ -353,12 +346,12 @@ fact that you could add some fixtures in and learn that.</p>
 
 </div>
 <div class="section" id="module-pyutil.dir_cleaner">
-<span id="dir-cleaner"></span><h2><a class="toc-backref" href="#id11"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir_cleaner</span></code></a><a class="headerlink" href="#module-pyutil.dir_cleaner" title="Permalink to this headline">¶</a></h2>
+<span id="dir-cleaner"></span><h2><a class="toc-backref" href="#id10"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir_cleaner</span></code></a><a class="headerlink" href="#module-pyutil.dir_cleaner" title="Permalink to this headline">¶</a></h2>
 <p>Deletes extraneous files.</p>
 <p>Run in <code class="docutils literal notranslate"><span class="pre">$PREFIX/tmp.</span></code></p>
 <p>Can modify to accept user input and fall back to that dir.
 Implement once all the logic has panned out.</p>
-<div class="admonition-todo admonition" id="index-5">
+<div class="admonition-todo admonition" id="index-3">
 <p class="first admonition-title">Todo</p>
 <p class="last">Write a second function that implemenents <code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">-r</span></code> if <code class="docutils literal notranslate"><span class="pre">du</span> <span class="pre">dir==0</span></code></p>
 </div>
@@ -401,7 +394,7 @@ Implement once all the logic has panned out.</p>
 <dt id="pyutil.dir_cleaner.extract_dir">
 <code class="descclassname">pyutil.dir_cleaner.</code><code class="descname">extract_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#extract_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.extract_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Could be used in dir_cleaner. Yeah let’s do that.</p>
-<div class="admonition-todo admonition" id="index-6">
+<div class="admonition-todo admonition" id="index-4">
 <p class="first admonition-title">Todo</p>
 <p class="last"><em>sigh</em> alright so we need to add a check that the zip has a child dir in it. Extracted 3 zips rn and its all mixed together :(</p>
 </div>
@@ -409,41 +402,36 @@ Implement once all the logic has panned out.</p>
 
 </div>
 <div class="section" id="module-pyutil.dlink">
-<span id="dlink"></span><h2><a class="toc-backref" href="#id12"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink</span></code></a><a class="headerlink" href="#module-pyutil.dlink" title="Permalink to this headline">¶</a></h2>
+<span id="dlink"></span><h2><a class="toc-backref" href="#id11"><a class="reference internal" href="#module-dlink" title="dlink: Symlinks a directory of files from another."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink</span></code></a></a><a class="headerlink" href="#module-pyutil.dlink" title="Permalink to this headline">¶</a></h2>
 <p>Symlink all of the files in one directory into another.</p>
-<dl class="docutils">
-<dt>..module:: dlink</dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">synopsis:</th><td class="field-body">Symlinks a directory of files from another.</td>
-</tr>
-</tbody>
-</table>
-</dd>
-</dl>
-<div class="section" id="synopsis">
-<h3><a class="toc-backref" href="#id13">Synopsis</a><a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-dlink"></span><div class="section" id="synopsis">
+<h3><a class="toc-backref" href="#id12">Synopsis</a><a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h3>
 <p>This module can be used to create individual symlinks to every file in a
 directory. This is a huge convenience wen symlinking dotfiles or configuration
 files held in a different location than where the software of interest expects
 it.</p>
 <p>This is quite easily one of my most frequently used scripts.</p>
+</div>
+<div class="section" id="usage">
+<h3><a class="toc-backref" href="#id13">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ln -s path/to/dest/* <span class="o">[</span>path/to/src<span class="o">]</span>
+</pre></div>
+</div>
 <p>As an example, one can <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">dotfiles</span></code> in a directory named <code class="xref py py-obj docutils literal notranslate"><span class="pre">projects</span></code>
 or <code class="xref py py-obj docutils literal notranslate"><span class="pre">src</span></code>. The location of the git repository is irrelevant, and as such, we’ll
 refer to it as <code class="xref py py-obj docutils literal notranslate"><span class="pre">src</span></code> from here, as <code class="xref py py-obj docutils literal notranslate"><span class="pre">dest</span></code> as it’s where the symlinks point to.</p>
 <p>For example if wants symlinks pointing to <code class="docutils literal notranslate"><span class="pre">/home/User/dotfiles/.vim</span></code>,
-then running <a href="#id2"><span class="problematic" id="id3">:ref:`dlink.py`_</span></a> in <code class="xref py py-obj docutils literal notranslate"><span class="pre">/home/User/.vim</span></code> with $HOME/dotfiles/.vim as
-an argument will create symlinks in $HOME/.vim pointing to $HOME/dotfiles/.vim.</p>
-<p>If we’re given 2 args, treat it with the same syntax as <code class="docutils literal notranslate"><span class="pre">ln</span> <span class="pre">-s</span></code> or
-<a class="reference external" href="https://docs.python.org/3/library/os.html#os.symlink" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.symlink()</span></code></a></p>
+then running dlink.py in <code class="docutils literal notranslate"><span class="pre">/home/User/.vim</span></code> with <code class="docutils literal notranslate"><span class="pre">$HOME/dotfiles/.vim</span></code> as
+an argument will create symlinks in <code class="docutils literal notranslate"><span class="pre">$HOME/.vim</span></code> pointing to
+<code class="docutils literal notranslate"><span class="pre">$HOME/dotfiles/.vim</span></code>.</p>
 </div>
-<div class="section" id="usage">
-<h3><a class="toc-backref" href="#id14">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="inspiration">
+<h3><a class="toc-backref" href="#id14">Inspiration</a><a class="headerlink" href="#inspiration" title="Permalink to this headline">¶</a></h3>
+<p>If the module is given 2 args, the intended response is for it to behave  similarly to the classic Unix idiom:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ln -s path/to/dest/* <span class="o">[</span>path/to/src<span class="o">]</span>
 </pre></div>
 </div>
+<p>or treat it similarly to <a class="reference external" href="https://docs.python.org/3/library/os.html#os.symlink" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.symlink()</span></code></a>.</p>
 <dl class="function">
 <dt id="pyutil.dlink.dlink">
 <code class="descclassname">pyutil.dlink.</code><code class="descname">dlink</code><span class="sig-paren">(</span><em>dest</em>, <em>src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink.html#dlink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink.dlink" title="Permalink to this definition">¶</a></dt>
@@ -456,8 +444,8 @@ an argument will create symlinks in $HOME/.vim pointing to $HOME/dotfiles/.vim.<
 <li><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The directory where the original files are located.</li>
 <li><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Optional argument indicating the directory where the symlinks
 are to be created.
-If the src argument isn’t provided, it is assumed that the current
-working directory is the src dir.</li>
+If the <code class="xref py py-obj docutils literal notranslate"><span class="pre">src</span></code> argument isn’t provided, it is assumed that the current
+working directory is the <code class="xref py py-obj docutils literal notranslate"><span class="pre">src</span></code> dir.</li>
 </ul>
 </td>
 </tr>
@@ -471,7 +459,7 @@ working directory is the src dir.</li>
 <span id="dlink2"></span><h2><a class="toc-backref" href="#id15"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink2</span></code></a><a class="headerlink" href="#module-pyutil.dlink2" title="Permalink to this headline">¶</a></h2>
 <p>Possibly rewrote the entire module in half as many lines.</p>
 <p>Now utilizes necessary libraries like glob.</p>
-<div class="admonition-todo admonition" id="index-7">
+<div class="admonition-todo admonition" id="index-5">
 <p class="first admonition-title">Todo</p>
 <p class="last">Argparse?</p>
 </div>
@@ -634,7 +622,7 @@ defined configurations.</p>
 <div class="section" id="module-pyutil.find_pics">
 <span id="find-pics"></span><h2><a class="toc-backref" href="#id19"><a class="reference internal" href="#module-find_pics" title="find_pics: Module that finds jpg and jpegs files in the current dir."><code class="xref py py-mod docutils literal notranslate"><span class="pre">find_pics</span></code></a></a><a class="headerlink" href="#module-pyutil.find_pics" title="Permalink to this headline">¶</a></h2>
 <p>Module that finds jpg and jpegs files in the current dir.</p>
-<span class="target" id="module-find_pics"></span><div class="admonition-todo admonition" id="index-8">
+<span class="target" id="module-find_pics"></span><div class="admonition-todo admonition" id="index-6">
 <p class="first admonition-title">Todo</p>
 <p class="last">Should accept command line arguments.</p>
 </div>
@@ -645,7 +633,7 @@ return a path-like object from <a class="reference internal" href="#module-find_
 <dt id="pyutil.find_pics.find_pics">
 <code class="descclassname">pyutil.find_pics.</code><code class="descname">find_pics</code><span class="sig-paren">(</span><em>picture</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/find_pics.html#find_pics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.find_pics.find_pics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds jpegs and jpgs.</p>
-<div class="admonition-todo admonition" id="index-9">
+<div class="admonition-todo admonition" id="index-7">
 <p class="first admonition-title">Todo</p>
 <p class="last">Format the match object so it’s more usable</p>
 </div>
@@ -665,7 +653,7 @@ return a path-like object from <a class="reference internal" href="#module-find_
 <div class="section" id="module-pyutil.g">
 <span id="g"></span><h2><a class="toc-backref" href="#id20"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><a class="headerlink" href="#module-pyutil.g" title="Permalink to this headline">¶</a></h2>
 <p>Export functions to ease IPython/Git interactions.</p>
-<div class="admonition-todo admonition" id="index-10">
+<div class="admonition-todo admonition" id="index-8">
 <p class="first admonition-title">Todo</p>
 <p class="last">What version of python was <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.check_output" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_output()</span></code></a> introduced in?</p>
 </div>
@@ -777,22 +765,8 @@ Any non-directories will be yielded as-is.</td>
 </div>
 <div class="section" id="module-pyutil.json_sorter">
 <span id="json-sorter"></span><h2><a class="toc-backref" href="#id23"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><a class="headerlink" href="#module-pyutil.json_sorter" title="Permalink to this headline">¶</a></h2>
-<p>Reorganizes a JSON file with the keys sorted and indentation standardized.</p>
+<p>Take a <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> file and sort the keys and insert 4 spaces for indents.</p>
 <p>This module was originally used to fix my settings.json from VSCode.</p>
-<div class="section" id="bug-fixes">
-<h3><a class="toc-backref" href="#id24">Bug Fixes</a><a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h3>
-<p>Currently trying to run this module and running into errors.</p>
-<p>Currently got this.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="n">args</span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">66</span><span class="n">dcfad41c76</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">args</span>
-
-<span class="ne">NameError</span>: name &#39;args&#39; is not defined
-</pre></div>
-</div>
-<p>Wth is this warning=None business????</p>
 <dl class="function">
 <dt id="pyutil.json_sorter._parse_arguments">
 <code class="descclassname">pyutil.json_sorter.</code><code class="descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter._parse_arguments" title="Permalink to this definition">¶</a></dt>
@@ -800,8 +774,32 @@ Any non-directories will be yielded as-is.</td>
 </dd></dl>
 
 <dl class="function">
+<dt id="pyutil.json_sorter.convert_to_yaml">
+<code class="descclassname">pyutil.json_sorter.</code><code class="descname">convert_to_yaml</code><span class="sig-paren">(</span><em>file_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#convert_to_yaml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.convert_to_yaml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> to YAML.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The file to read in</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>yaml_object</strong> – Converted <code class="xref py py-mod docutils literal notranslate"><span class="pre">PyYAML</span></code> text.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyutil.json_sorter.main">
-<code class="descclassname">pyutil.json_sorter.</code><code class="descname">main</code><span class="sig-paren">(</span><em>file_obj</em>, <em>output_file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='utf-8'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.main" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyutil.json_sorter.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles user args, sets up logging and calls other functions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.json_sorter.sort_json">
+<code class="descclassname">pyutil.json_sorter.</code><code class="descname">sort_json</code><span class="sig-paren">(</span><em>file_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#sort_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.sort_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read in a <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> object, sort it and write it back to a new file.</p>
 <p>By writing to a new file, the user is allowed the opportunity to inspect
 the file and ensure that the desired results have been achieved.</p>
@@ -809,8 +807,26 @@ the file and ensure that the desired results have been achieved.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The file to read in</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>json_text</strong> – Correctly formmated <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> text.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.json_sorter.text_writer">
+<code class="descclassname">pyutil.json_sorter.</code><code class="descname">text_writer</code><span class="sig-paren">(</span><em>plaintext</em>, <em>output_file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='utf-8'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#text_writer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.text_writer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the previously inputted text to a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>file_obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The file to read in</li>
+<li><strong>plaintext</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The file to read in</li>
 <li><strong>output_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Text file to write formatted <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> to.
 It will only write to the file if the filename currently doesn’t exist.</li>
 </ul>
@@ -821,36 +837,22 @@ It will only write to the file if the filename currently doesn’t exist.</li>
 </dd></dl>
 
 </div>
-</div>
 <div class="section" id="module-pyutil.lazy_downloader">
-<span id="lazy-downloader"></span><h2><a class="toc-backref" href="#id25"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a><a class="headerlink" href="#module-pyutil.lazy_downloader" title="Permalink to this headline">¶</a></h2>
+<span id="lazy-downloader"></span><h2><a class="toc-backref" href="#id24"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a><a class="headerlink" href="#module-pyutil.lazy_downloader" title="Permalink to this headline">¶</a></h2>
 <p>Automates downloading plain text files from the Web.</p>
-<p>As implemented currently, it will only correctly handle plain text; however,
-there are plans to implement the <code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetype</span></code> module and properly handle
-a much wider range of files.</p>
-<p>Both parameters are required parameters.</p>
+<p>As implemented currently, it will only correctly handle plain text;
+however, there are plans to implement the <code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetype</span></code> module and
+properly handle a much wider range of files.</p>
+<p>Both parameters, <code class="xref py py-obj docutils literal notranslate"><span class="pre">url</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">output_fname</span></code> are required parameters.</p>
+<div class="section" id="safety-features">
+<h3><a class="toc-backref" href="#id25">Safety Features</a><a class="headerlink" href="#safety-features" title="Permalink to this headline">¶</a></h3>
 <p>If the filename already exists on the system it will NOT be overwritten,
 and the script will safely exit.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param url:</th><td class="field-body">A url to download</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type url:</th><td class="field-body">str</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">param output_filename:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body">A path to write the downloaded content to.</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">type output_filename:</th></tr>
-<tr class="field-even field"><td>&#160;</td><td class="field-body">str</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition-todo admonition" id="index-11">
-<p class="first admonition-title">Todo</p>
-<p class="last">Can we check the MIME type and only import <code class="xref py py-mod docutils literal notranslate"><span class="pre">requests</span></code> if we know we’ll need to?</p>
 </div>
+<div class="section" id="collections-chainmap">
+<h3><a class="toc-backref" href="#id26"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.ChainMap()</span></code></a><a class="headerlink" href="#collections-chainmap" title="Permalink to this headline">¶</a></h3>
+<p>This module is as a perfect candidate as exists for chainmap. Check env vars,
+config files, commnand line args and user provided parameters.</p>
 <dl class="function">
 <dt id="pyutil.lazy_downloader._parse_arguments">
 <code class="descclassname">pyutil.lazy_downloader.</code><code class="descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader._parse_arguments" title="Permalink to this definition">¶</a></dt>
@@ -858,14 +860,51 @@ and the script will safely exit.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="pyutil.lazy_downloader._parse_site">
+<code class="descclassname">pyutil.lazy_downloader.</code><code class="descname">_parse_site</code><span class="sig-paren">(</span><em>URL</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#_parse_site"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader._parse_site" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the given <code class="xref py py-obj docutils literal notranslate"><span class="pre">URL</span></code>, remove tags and return plaintext.</p>
+<p>This should probably be modified to take the user agent and header args.
+:param URL: Site to download.
+:type URL: str</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>txt</strong> – Plaintext view of the website.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.lazy_downloader.find_links">
+<code class="descclassname">pyutil.lazy_downloader.</code><code class="descname">find_links</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#find_links"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader.find_links" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search body of text for URLs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Body of formatted text to search for URLs.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>links</strong> – URLs found on site.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">todo</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyutil.lazy_downloader.main">
 <code class="descclassname">pyutil.lazy_downloader.</code><code class="descname">main</code><span class="sig-paren">(</span><em>url</em>, <em>output_fname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download URL and write to disk.</p>
-<div class="admonition-todo admonition" id="index-12">
+<div class="admonition-todo admonition" id="index-9">
 <p class="first admonition-title">Todo</p>
-<p class="last">Figure out how to check that the file is plain text and not hit constant false positives</p>
+<p class="last">Check that the file is plain text and not hit constant false positives</p>
 </div>
-<div class="admonition-todo admonition" id="index-13">
+<div class="admonition-todo admonition" id="index-10">
 <p class="first admonition-title">Todo</p>
 <p>Add headers.</p>
 <div class="last highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">]:</span>
@@ -873,9 +912,24 @@ and the script will safely exit.</p>
 </pre></div>
 </div>
 </div>
-<div class="admonition-todo admonition" id="index-14">
+<p>Well here’s part of one of your todos. <code class="xref py py-mod docutils literal notranslate"><span class="pre">youtube_dl</span></code> has these
+defined in their utils</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">std_headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s1">&#39;Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Accept-Charset&#39;</span><span class="p">:</span> <span class="s1">&#39;ISO-8859-1,utf-8;q=0.7,*;q=0.7&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Accept-Encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;gzip, deflate&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Accept-Language&#39;</span><span class="p">:</span> <span class="s1">&#39;en-us,en;q=0.5&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">USER_AGENTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Safari&#39;</span><span class="p">:</span> <span class="s1">&#39;Mozilla/5.0 (X11; Linux x86_64; rv:10.0) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="index-11">
 <p class="first admonition-title">Todo</p>
-<p class="last">Could add in a check. if the file is over a certain size use <code class="xref py py-obj docutils literal notranslate"><span class="pre">:func:requests.res.iter_chunk()</span></code></p>
+<p class="last">Could add in a check. if the file is over a certain size use <code class="xref py py-func docutils literal notranslate"><span class="pre">requests.res.iter_chunk()</span></code></p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -892,8 +946,9 @@ and the script will safely exit.</p>
 </dd></dl>
 
 </div>
+</div>
 <div class="section" id="module-pyutil.linktree">
-<span id="linktree"></span><h2><a class="toc-backref" href="#id26"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linktree</span></code></a><a class="headerlink" href="#module-pyutil.linktree" title="Permalink to this headline">¶</a></h2>
+<span id="linktree"></span><h2><a class="toc-backref" href="#id27"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linktree</span></code></a><a class="headerlink" href="#module-pyutil.linktree" title="Permalink to this headline">¶</a></h2>
 <p>From the package “python3.6-examples” in the Ubuntu repositories.</p>
 <p>Minor modifications for <code class="xref py py-mod docutils literal notranslate"><span class="pre">flake8</span></code>, <code class="xref py py-mod docutils literal notranslate"><span class="pre">pydocstyle</span></code> etc.</p>
 <p>Mar 10, 2019:</p>
@@ -921,10 +976,10 @@ can easily fix things if the original source tree moves.</p>
 
 </div>
 <div class="section" id="module-pyutil.magic_aid">
-<span id="magic-aid"></span><h2><a class="toc-backref" href="#id27"><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code></a><a class="headerlink" href="#module-pyutil.magic_aid" title="Permalink to this headline">¶</a></h2>
+<span id="magic-aid"></span><h2><a class="toc-backref" href="#id28"><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code></a><a class="headerlink" href="#module-pyutil.magic_aid" title="Permalink to this headline">¶</a></h2>
 <p>Create a script for searching through aliases.</p>
 <div class="section" id="ipython-aliases">
-<h3><a class="toc-backref" href="#id28">IPython Aliases</a><a class="headerlink" href="#ipython-aliases" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id29">IPython Aliases</a><a class="headerlink" href="#ipython-aliases" title="Permalink to this headline">¶</a></h3>
 <p>By invoking <code class="docutils literal notranslate"><span class="pre">%rehashx</span></code> on <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>’s startup, there are
 regularly more than 1000 aliases in the namespace.</p>
 <p>This makes basic lookups slightly more involved.</p>
@@ -952,7 +1007,7 @@ easily imported and run.</p>
 </div>
 </div>
 <div class="section" id="module-pyutil.mv_to_repo">
-<span id="mv-to-repo"></span><h2><a class="toc-backref" href="#id29"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a><a class="headerlink" href="#module-pyutil.mv_to_repo" title="Permalink to this headline">¶</a></h2>
+<span id="mv-to-repo"></span><h2><a class="toc-backref" href="#id30"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a><a class="headerlink" href="#module-pyutil.mv_to_repo" title="Permalink to this headline">¶</a></h2>
 <p>Move files from the home directory to the dotfiles repo.</p>
 <span class="target" id="module-`mv_to_repo`"></span><p>This is a script I’ve been using for the better part of a year, so while
 the docstring formatting isn’t consistent and there are a couple odd
@@ -988,14 +1043,6 @@ directories and backups.</p>
 repo and symlinks it.</p>
 <p>Moves file to a hardcoded path but will be generalized to take as an
 argument.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of file to backup, move and symlink.</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="function">
@@ -1018,7 +1065,7 @@ argument.</p>
 
 </div>
 <div class="section" id="module-pyutil.nvim_profiling">
-<span id="nvim-profiling"></span><h2><a class="toc-backref" href="#id30"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a><a class="headerlink" href="#module-pyutil.nvim_profiling" title="Permalink to this headline">¶</a></h2>
+<span id="nvim-profiling"></span><h2><a class="toc-backref" href="#id31"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a><a class="headerlink" href="#module-pyutil.nvim_profiling" title="Permalink to this headline">¶</a></h2>
 <p>Automate profiling nvim.</p>
 <p>This module currently assumes a lot but there could and should be a lot of
 ways to do this.</p>
@@ -1093,7 +1140,7 @@ to check ~/.config/nvim and check whether we’re on windows or not</li>
 </tr>
 </tbody>
 </table>
-<div class="admonition-todo admonition" id="index-15">
+<div class="admonition-todo admonition" id="index-12">
 <p class="first admonition-title">Todo</p>
 <p class="last">Allow the <code class="docutils literal notranslate"><span class="pre">test.py</span></code> file that we use for startup to be configured.</p>
 </div>
@@ -1107,11 +1154,11 @@ to check ~/.config/nvim and check whether we’re on windows or not</li>
 
 </div>
 <div class="section" id="module-pyutil.ptags">
-<span id="ptags"></span><h2><a class="toc-backref" href="#id31"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code></a><a class="headerlink" href="#module-pyutil.ptags" title="Permalink to this headline">¶</a></h2>
+<span id="ptags"></span><h2><a class="toc-backref" href="#id32"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code></a><a class="headerlink" href="#module-pyutil.ptags" title="Permalink to this headline">¶</a></h2>
 <p>Create a tags file for Python programs, usable with vi.</p>
 <p>Currently uses a regex to create a tags file.</p>
 <div class="section" id="files-to-tag">
-<h3><a class="toc-backref" href="#id32">Files to tag</a><a class="headerlink" href="#files-to-tag" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id33">Files to tag</a><a class="headerlink" href="#files-to-tag" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>functions (even inside other defs or classes)</li>
 <li>classes</li>
@@ -1120,7 +1167,7 @@ to check ~/.config/nvim and check whether we’re on windows or not</li>
 <p>Warns about files it cannot open.</p>
 <p>No warnings about duplicate tags.</p>
 <p>Snagged from the scripts dir in python3.6-examples.</p>
-<div class="admonition-todo admonition" id="index-16">
+<div class="admonition-todo admonition" id="index-13">
 <p class="first admonition-title">Todo</p>
 <p class="last">Use ipdb and step through while watching the tags var.</p>
 </div>
@@ -1153,11 +1200,11 @@ Try different styles and see what you like.</p>
 </div>
 </div>
 <div class="section" id="module-pyutil.rclone">
-<span id="rclone"></span><h2><a class="toc-backref" href="#id33"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code></a><a class="headerlink" href="#module-pyutil.rclone" title="Permalink to this headline">¶</a></h2>
+<span id="rclone"></span><h2><a class="toc-backref" href="#id34"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code></a><a class="headerlink" href="#module-pyutil.rclone" title="Permalink to this headline">¶</a></h2>
 <p>Rewriting rclone.sh as a python module.</p>
 <p class="rubric">Requires</p>
 <p><a class="reference external" href="https://rclone.org">rclone</a>, a Golang package.</p>
-<div class="admonition-todo admonition" id="index-17">
+<div class="admonition-todo admonition" id="index-14">
 <p class="first admonition-title">Todo</p>
 <ul class="last simple">
 <li>Set up a simple single use case backup.</li>
@@ -1193,7 +1240,7 @@ rclone uses.</p>
 <p>There are situations in which one wants to follow symlinks and others
 that they don’t.</p>
 <p>This command assumes a use case and configures it rclone for it properly.</p>
-<div class="admonition-todo admonition" id="index-18">
+<div class="admonition-todo admonition" id="index-15">
 <p class="first admonition-title">Todo</p>
 <p class="last">rclone takes an argument for user-agent</p>
 </div>
@@ -1259,15 +1306,15 @@ of <code class="docutils literal notranslate"><span class="pre">returncode</span
 
 </div>
 <div class="section" id="module-pyutil.strip_space">
-<span id="strip-space"></span><h2><a class="toc-backref" href="#id34"><code class="xref py py-mod docutils literal notranslate"><span class="pre">strip_space</span></code></a><a class="headerlink" href="#module-pyutil.strip_space" title="Permalink to this headline">¶</a></h2>
+<span id="strip-space"></span><h2><a class="toc-backref" href="#id35"><code class="xref py py-mod docutils literal notranslate"><span class="pre">strip_space</span></code></a><a class="headerlink" href="#module-pyutil.strip_space" title="Permalink to this headline">¶</a></h2>
 <p>Strip only trailing whitespace from a file.</p>
 <p>Leading whitespace is significant in Python so don’t touch it.</p>
 <div class="section" id="python-requirement">
-<h3><a class="toc-backref" href="#id35">Python Requirement</a><a class="headerlink" href="#python-requirement" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id36">Python Requirement</a><a class="headerlink" href="#python-requirement" title="Permalink to this headline">¶</a></h3>
 <p>&lt;Python 3.4</p>
 </div>
 <div class="section" id="still-need-to-implement">
-<h3><a class="toc-backref" href="#id36">Still need to implement</a><a class="headerlink" href="#still-need-to-implement" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id37">Still need to implement</a><a class="headerlink" href="#still-need-to-implement" title="Permalink to this headline">¶</a></h3>
 <p>Give some kind of undo option.
 Needs more file checks.</p>
 <dl class="function">
@@ -1308,7 +1355,7 @@ Needs more file checks.</p>
 </div>
 </div>
 <div class="section" id="module-pyutil.sys_checks">
-<span id="sys-checks"></span><h2><a class="toc-backref" href="#id37"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code></a><a class="headerlink" href="#module-pyutil.sys_checks" title="Permalink to this headline">¶</a></h2>
+<span id="sys-checks"></span><h2><a class="toc-backref" href="#id38"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code></a><a class="headerlink" href="#module-pyutil.sys_checks" title="Permalink to this headline">¶</a></h2>
 <p>Module to check a user is utilizing the proper version of python.</p>
 <p>Even outside of the 2 to 3 incompatibilities, the standard library
 introduces new modules often enough that it’s useful to check.</p>
@@ -1322,14 +1369,11 @@ introduces new modules often enough that it’s useful to check.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 must_be_three.py
 </pre></div>
 </div>
-<div class="admonition-todo admonition" id="index-19">
+<div class="admonition-todo admonition" id="index-16">
 <p class="first admonition-title">Todo</p>
 <p class="last">Uh actually execute the above because now I’m interested…</p>
 </div>
-<p>Assumes:</p>
-<blockquote>
-<div>All functions are imported as the module will immediately exit if
-directly executed.</div></blockquote>
+<p class="rubric">Assumes: All functions are imported as the module will immediately exit if directly executed.</p>
 <p>If nothing else this is a lesson in how painful it becomes to maintain
 nonsense names.</p>
 <dl class="function">
@@ -1337,7 +1381,7 @@ nonsense names.</p>
 <code class="descclassname">pyutil.sys_checks.</code><code class="descname">py_gt_exit</code><span class="sig-paren">(</span><em>min_py_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt_exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt_exit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check a user’s python version is higher than some floor value.</p>
 <p>For example, the <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> was only introduced in python3.2.</p>
-<div class="admonition-todo admonition" id="index-20">
+<div class="admonition-todo admonition" id="index-17">
 <p class="first admonition-title">Todo</p>
 <p class="last">Possibly change API so funcs return a value on success.</p>
 </div>
@@ -1345,11 +1389,7 @@ nonsense names.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min_py_version</strong> – </li>
-<li><strong>lowest version of python that can be used. TODO</strong> (<em>The</em>) – </li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>min_py_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – Value that represents the lowest version of python that can be used.</td>
 </tr>
 </tbody>
 </table>
@@ -1376,18 +1416,12 @@ nonsense names.</p>
 </table>
 </dd></dl>
 
-<dl class="function">
-<dt id="pyutil.sys_checks.test_linux">
-<code class="descclassname">pyutil.sys_checks.</code><code class="descname">test_linux</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#test_linux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.test_linux" title="Permalink to this definition">¶</a></dt>
-<dd><p>Not a unit test but checks that the user is on Linux OS.</p>
-</dd></dl>
-
 </div>
 <div class="section" id="module-pyutil.wrap">
-<span id="wrap"></span><h2><a class="toc-backref" href="#id38"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code></a><a class="headerlink" href="#module-pyutil.wrap" title="Permalink to this headline">¶</a></h2>
+<span id="wrap"></span><h2><a class="toc-backref" href="#id39"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code></a><a class="headerlink" href="#module-pyutil.wrap" title="Permalink to this headline">¶</a></h2>
 <p>Wrap text similarly to <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.dedent" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">textwrap.dedent()</span></code></a> but with multiple paragraphs.</p>
 <p>From <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.text.html#module-IPython.utils.text" title="(in IPython v7.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython.utils.text</span></code></a>.</p>
-<p>Possibly going to convert sys.argv to <code class="xref py py-obj docutils literal notranslate"><span class="pre">**kwargs</span></code> for the function.</p>
+<p>Possibly going to convert <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.argv" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sys.argv</span></code></a> to <code class="xref py py-obj docutils literal notranslate"><span class="pre">**kwargs</span></code> for the function.</p>
 <p>Allow the user to input any parameters that are accepted by
 <code class="xref py py-class docutils literal notranslate"><span class="pre">textwrap.TextWrapper()</span></code></p>
 <dl class="function">
@@ -1420,7 +1454,7 @@ for increased configurability.</p>
 
 </div>
 <div class="section" id="module-pyutil.yes_no_question">
-<span id="yes-no-question"></span><h2><a class="toc-backref" href="#id39"><code class="xref py py-mod docutils literal notranslate"><span class="pre">yes_no_question</span></code></a><a class="headerlink" href="#module-pyutil.yes_no_question" title="Permalink to this headline">¶</a></h2>
+<span id="yes-no-question"></span><h2><a class="toc-backref" href="#id40"><code class="xref py py-mod docutils literal notranslate"><span class="pre">yes_no_question</span></code></a><a class="headerlink" href="#module-pyutil.yes_no_question" title="Permalink to this headline">¶</a></h2>
 <p>Mod that shows an easy, consistent way to handle user input.</p>
 <dl class="function">
 <dt id="pyutil.yes_no_question.yes_no_question">
@@ -1428,6 +1462,783 @@ for increased configurability.</p>
 <dd><p>Continuing prompt the user until valid input is provided.</p>
 </dd></dl>
 
+</div>
+<div class="section" id="module-pyutil.ytdl">
+<span id="ytdl"></span><h2><a class="toc-backref" href="#id41"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ytdl</span></code></a><a class="headerlink" href="#module-pyutil.ytdl" title="Permalink to this headline">¶</a></h2>
+<p>Download a video from YouTube using :mod;`youtube_dl`.</p>
+<p>Dec 22, 2018:</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you initialize with no args, then use <code class="xref py py-meth docutils literal notranslate"><span class="pre">extract_info()</span></code> with
+the URL as an arg, you get to see everything you’d need to know
+about the metadata in all the varying formats you’d want use.</p>
+</div>
+</div></blockquote>
+<p>This script should be called from the shell as so</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python termux-urls.py <span class="nv">$@</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="index-18">
+<p class="first admonition-title">Todo</p>
+<ol class="last arabic simple">
+<li>Assume that the <code class="xref py py-mod docutils literal notranslate"><span class="pre">youtube_dl</span></code> script functions.</li>
+<li>Then double chsck we weren’t given a file ytdl knows how to handle.</li>
+<li><dl class="first docutils">
+<dt>If we were, then scrape with bs4.</dt>
+<dd><ul class="first last">
+<li>Possibly extend to writing prettified json (as in json.dumps(“”,tab=4)) to a file.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Need to add support with argparse because this is gonna get out of hand quickly.</li>
+<li>Handle playlists.</li>
+</ol>
+</div>
+<div class="section" id="we-got-it">
+<h3><a class="toc-backref" href="#id42">We got it!</a><a class="headerlink" href="#we-got-it" title="Permalink to this headline">¶</a></h3>
+<p>So I was reading the src and realized that almost all of the execution
+happens in the <a href="#id3"><span class="problematic" id="id4">`__init__`__</span></a> file!!</p>
+<p>This is a long copy and paste but read this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf-8</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+
+<span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;Public Domain&#39;</span>
+
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="kn">from</span> <span class="nn">youtube_dl.options</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">parseOpts</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">youtube_dl.compat</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">compat_getpass</span><span class="p">,</span>
+    <span class="n">compat_shlex_split</span><span class="p">,</span>
+    <span class="n">workaround_optparse_bug9161</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">youtube_dl.utils</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">DateRange</span><span class="p">,</span>
+    <span class="n">decodeOption</span><span class="p">,</span>
+    <span class="n">DEFAULT_OUTTMPL</span><span class="p">,</span>
+    <span class="n">DownloadError</span><span class="p">,</span>
+    <span class="n">expand_path</span><span class="p">,</span>
+    <span class="n">match_filter_func</span><span class="p">,</span>
+    <span class="n">MaxDownloadsReached</span><span class="p">,</span>
+    <span class="n">preferredencoding</span><span class="p">,</span>
+    <span class="n">read_batch_urls</span><span class="p">,</span>
+    <span class="n">SameFileError</span><span class="p">,</span>
+    <span class="n">setproctitle</span><span class="p">,</span>
+    <span class="n">std_headers</span><span class="p">,</span>
+    <span class="n">write_string</span><span class="p">,</span>
+    <span class="n">render_table</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">youtube_dl.update</span> <span class="k">import</span> <span class="n">update_self</span>
+<span class="kn">from</span> <span class="nn">youtube_dl.downloader</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">FileDownloader</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">youtube_dl.extractor</span> <span class="k">import</span> <span class="n">gen_extractors</span><span class="p">,</span> <span class="n">list_extractors</span>
+<span class="kn">from</span> <span class="nn">youtube_dl.extractor.adobepass</span> <span class="k">import</span> <span class="n">MSO_INFO</span>
+<span class="kn">from</span> <span class="nn">youtube_dl.YoutubeDL</span> <span class="k">import</span> <span class="n">YoutubeDL</span>
+
+
+<span class="k">def</span> <span class="nf">_real_main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Compatibility fixes for Windows</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win32&#39;</span><span class="p">:</span>
+        <span class="c1"># https://github.com/rg3/youtube-dl/issues/820</span>
+        <span class="n">codecs</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="k">lambda</span> <span class="n">name</span><span class="p">:</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;cp65001&#39;</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">workaround_optparse_bug9161</span><span class="p">()</span>
+
+    <span class="n">setproctitle</span><span class="p">(</span><span class="s1">&#39;youtube-dl&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parseOpts</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+
+    <span class="c1"># Set user agent</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">user_agent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">std_headers</span><span class="p">[</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">user_agent</span>
+
+    <span class="c1"># Set referer</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">referer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">std_headers</span><span class="p">[</span><span class="s1">&#39;Referer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">referer</span>
+
+    <span class="c1"># Custom HTTP headers</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">headers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">opts</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;:&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">h</span><span class="p">:</span>
+                <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;wrong header formatting, it should be key:value, not &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">h</span><span class="p">)</span>
+            <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                <span class="n">write_string</span><span class="p">(</span><span class="s1">&#39;[debug] Adding header from command line option </span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+            <span class="n">std_headers</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="c1"># Dump user agent</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">dump_user_agent</span><span class="p">:</span>
+        <span class="n">write_string</span><span class="p">(</span><span class="n">std_headers</span><span class="p">[</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Batch file verification</span>
+    <span class="n">batch_urls</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">batchfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">batchfile</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                <span class="n">batchfd</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">batchfd</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+                    <span class="n">expand_path</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">batchfile</span><span class="p">),</span>
+                    <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+            <span class="n">batch_urls</span> <span class="o">=</span> <span class="n">read_batch_urls</span><span class="p">(</span><span class="n">batchfd</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                <span class="n">write_string</span><span class="p">(</span><span class="s1">&#39;[debug] Batch file urls: &#39;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">batch_urls</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s1">&#39;ERROR: batch file could not be read&#39;</span><span class="p">)</span>
+    <span class="n">all_urls</span> <span class="o">=</span> <span class="n">batch_urls</span> <span class="o">+</span> <span class="p">[</span><span class="n">url</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span>  <span class="c1"># batch_urls are already striped in read_batch_urls</span>
+    <span class="n">_enc</span> <span class="o">=</span> <span class="n">preferredencoding</span><span class="p">()</span>
+    <span class="n">all_urls</span> <span class="o">=</span> <span class="p">[</span><span class="n">url</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">_enc</span><span class="p">,</span> <span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="k">else</span> <span class="n">url</span> <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">all_urls</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">list_extractors</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">list_extractors</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">age_limit</span><span class="p">):</span>
+            <span class="n">write_string</span><span class="p">(</span><span class="n">ie</span><span class="o">.</span><span class="n">IE_NAME</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39; (CURRENTLY BROKEN)&#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">ie</span><span class="o">.</span><span class="n">_WORKING</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+            <span class="n">matchedUrls</span> <span class="o">=</span> <span class="p">[</span><span class="n">url</span> <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">all_urls</span> <span class="k">if</span> <span class="n">ie</span><span class="o">.</span><span class="n">suitable</span><span class="p">(</span><span class="n">url</span><span class="p">)]</span>
+            <span class="k">for</span> <span class="n">mu</span> <span class="ow">in</span> <span class="n">matchedUrls</span><span class="p">:</span>
+                <span class="n">write_string</span><span class="p">(</span><span class="s1">&#39;  &#39;</span> <span class="o">+</span> <span class="n">mu</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">list_extractor_descriptions</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">list_extractors</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">age_limit</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ie</span><span class="o">.</span><span class="n">_WORKING</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">desc</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ie</span><span class="p">,</span> <span class="s1">&#39;IE_DESC&#39;</span><span class="p">,</span> <span class="n">ie</span><span class="o">.</span><span class="n">IE_NAME</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">desc</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ie</span><span class="p">,</span> <span class="s1">&#39;SEARCH_KEY&#39;</span><span class="p">):</span>
+                <span class="n">_SEARCHES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;cute kittens&#39;</span><span class="p">,</span> <span class="s1">&#39;slithering pythons&#39;</span><span class="p">,</span> <span class="s1">&#39;falling cat&#39;</span><span class="p">,</span> <span class="s1">&#39;angry poodle&#39;</span><span class="p">,</span> <span class="s1">&#39;purple fish&#39;</span><span class="p">,</span> <span class="s1">&#39;running tortoise&#39;</span><span class="p">,</span> <span class="s1">&#39;sleeping bunny&#39;</span><span class="p">,</span> <span class="s1">&#39;burping cow&#39;</span><span class="p">)</span>
+                <span class="n">_COUNTS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span>
+                <span class="n">desc</span> <span class="o">+=</span> <span class="s1">&#39; (Example: &quot;</span><span class="si">%s%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&quot; )&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ie</span><span class="o">.</span><span class="n">SEARCH_KEY</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">_COUNTS</span><span class="p">),</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">_SEARCHES</span><span class="p">))</span>
+            <span class="n">write_string</span><span class="p">(</span><span class="n">desc</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">ap_list_mso</span><span class="p">:</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="p">[[</span><span class="n">mso_id</span><span class="p">,</span> <span class="n">mso_info</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="k">for</span> <span class="n">mso_id</span><span class="p">,</span> <span class="n">mso_info</span> <span class="ow">in</span> <span class="n">MSO_INFO</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="n">write_string</span><span class="p">(</span><span class="s1">&#39;Supported TV Providers:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">render_table</span><span class="p">([</span><span class="s1">&#39;mso&#39;</span><span class="p">,</span> <span class="s1">&#39;mso name&#39;</span><span class="p">],</span> <span class="n">table</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Conflicting, missing and erroneous options</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">usenetrc</span> <span class="ow">and</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">username</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">password</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;using .netrc conflicts with giving username/password&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">password</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">username</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;account username missing</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">ap_password</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">ap_username</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;TV Provider account username missing</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">outtmpl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">usetitle</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">autonumber</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">useid</span><span class="p">):</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;using output template conflicts with using title, video ID or auto number&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">autonumber_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">autonumber_size</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;auto number size must be positive&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">autonumber_start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">autonumber_start</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;auto number start must be positive or 0&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">usetitle</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">useid</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;using title conflicts with using video ID&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">username</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">password</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">compat_getpass</span><span class="p">(</span><span class="s1">&#39;Type account password and press [Return]: &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">ap_username</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">ap_password</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">ap_password</span> <span class="o">=</span> <span class="n">compat_getpass</span><span class="p">(</span><span class="s1">&#39;Type TV provider account password and press [Return]: &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">ratelimit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">numeric_limit</span> <span class="o">=</span> <span class="n">FileDownloader</span><span class="o">.</span><span class="n">parse_bytes</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">ratelimit</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">numeric_limit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid rate limit specified&#39;</span><span class="p">)</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">ratelimit</span> <span class="o">=</span> <span class="n">numeric_limit</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">min_filesize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">numeric_limit</span> <span class="o">=</span> <span class="n">FileDownloader</span><span class="o">.</span><span class="n">parse_bytes</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">min_filesize</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">numeric_limit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid min_filesize specified&#39;</span><span class="p">)</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">min_filesize</span> <span class="o">=</span> <span class="n">numeric_limit</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">max_filesize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">numeric_limit</span> <span class="o">=</span> <span class="n">FileDownloader</span><span class="o">.</span><span class="n">parse_bytes</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">max_filesize</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">numeric_limit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid max_filesize specified&#39;</span><span class="p">)</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">max_filesize</span> <span class="o">=</span> <span class="n">numeric_limit</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">sleep_interval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">sleep_interval</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;sleep interval must be positive or 0&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">max_sleep_interval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">max_sleep_interval</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;max sleep interval must be positive or 0&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">max_sleep_interval</span> <span class="o">&lt;</span> <span class="n">opts</span><span class="o">.</span><span class="n">sleep_interval</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;max sleep interval must be greater than or equal to min sleep interval&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">max_sleep_interval</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">sleep_interval</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">ap_mso</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">ap_mso</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">MSO_INFO</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unsupported TV Provider, use --ap-list-mso to get a list of supported TV Providers&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_retries</span><span class="p">(</span><span class="n">retries</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">retries</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">,</span> <span class="s1">&#39;infinite&#39;</span><span class="p">):</span>
+            <span class="n">parsed_retries</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">parsed_retries</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">retries</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+                <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid retry count specified&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">parsed_retries</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">retries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">retries</span> <span class="o">=</span> <span class="n">parse_retries</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">retries</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">fragment_retries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">fragment_retries</span> <span class="o">=</span> <span class="n">parse_retries</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">fragment_retries</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">buffersize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">numeric_buffersize</span> <span class="o">=</span> <span class="n">FileDownloader</span><span class="o">.</span><span class="n">parse_bytes</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">buffersize</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">numeric_buffersize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid buffer size specified&#39;</span><span class="p">)</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">buffersize</span> <span class="o">=</span> <span class="n">numeric_buffersize</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">http_chunk_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">numeric_chunksize</span> <span class="o">=</span> <span class="n">FileDownloader</span><span class="o">.</span><span class="n">parse_bytes</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">http_chunk_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">numeric_chunksize</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid http chunk size specified&#39;</span><span class="p">)</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">http_chunk_size</span> <span class="o">=</span> <span class="n">numeric_chunksize</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">playliststart</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Playlist start must be positive&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">playlistend</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">playlistend</span> <span class="o">&lt;</span> <span class="n">opts</span><span class="o">.</span><span class="n">playliststart</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Playlist end must be greater than playlist start&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">extractaudio</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">audioformat</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="s1">&#39;aac&#39;</span><span class="p">,</span> <span class="s1">&#39;flac&#39;</span><span class="p">,</span> <span class="s1">&#39;mp3&#39;</span><span class="p">,</span> <span class="s1">&#39;m4a&#39;</span><span class="p">,</span> <span class="s1">&#39;opus&#39;</span><span class="p">,</span> <span class="s1">&#39;vorbis&#39;</span><span class="p">,</span> <span class="s1">&#39;wav&#39;</span><span class="p">]:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid audio format specified&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">audioquality</span><span class="p">:</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">audioquality</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">audioquality</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">audioquality</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid audio quality specified&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">recodevideo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">recodevideo</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;flv&#39;</span><span class="p">,</span> <span class="s1">&#39;webm&#39;</span><span class="p">,</span> <span class="s1">&#39;ogg&#39;</span><span class="p">,</span> <span class="s1">&#39;mkv&#39;</span><span class="p">,</span> <span class="s1">&#39;avi&#39;</span><span class="p">]:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid video recode format specified&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">convertsubtitles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">convertsubtitles</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;srt&#39;</span><span class="p">,</span> <span class="s1">&#39;vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;ass&#39;</span><span class="p">,</span> <span class="s1">&#39;lrc&#39;</span><span class="p">]:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid subtitle format specified&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">DateRange</span><span class="o">.</span><span class="n">day</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">DateRange</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">dateafter</span><span class="p">,</span> <span class="n">opts</span><span class="o">.</span><span class="n">datebefore</span><span class="p">)</span>
+
+    <span class="c1"># Do not download videos when there are audio-only formats</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">extractaudio</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">keepvideo</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s1">&#39;bestaudio/best&#39;</span>
+
+    <span class="c1"># --all-sub automatically sets --write-sub if --write-auto-sub is not given</span>
+    <span class="c1"># this was the old behaviour if only --all-sub was given.</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">allsubtitles</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">writeautomaticsub</span><span class="p">:</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">writesubtitles</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">outtmpl</span> <span class="o">=</span> <span class="p">((</span><span class="n">opts</span><span class="o">.</span><span class="n">outtmpl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">outtmpl</span><span class="p">)</span> <span class="ow">or</span>
+               <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;-1&#39;</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">usetitle</span> <span class="ow">and</span> <span class="s1">&#39;</span><span class="si">%(title)s</span><span class="s1">-</span><span class="si">%(id)s</span><span class="s1">-</span><span class="si">%(format)s</span><span class="s1">.</span><span class="si">%(ext)s</span><span class="s1">&#39;</span><span class="p">)</span> <span class="ow">or</span>
+               <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;-1&#39;</span> <span class="ow">and</span> <span class="s1">&#39;</span><span class="si">%(id)s</span><span class="s1">-</span><span class="si">%(format)s</span><span class="s1">.</span><span class="si">%(ext)s</span><span class="s1">&#39;</span><span class="p">)</span> <span class="ow">or</span>
+               <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">usetitle</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">autonumber</span> <span class="ow">and</span> <span class="s1">&#39;</span><span class="si">%(autonumber)s</span><span class="s1">-</span><span class="si">%(title)s</span><span class="s1">-</span><span class="si">%(id)s</span><span class="s1">.</span><span class="si">%(ext)s</span><span class="s1">&#39;</span><span class="p">)</span> <span class="ow">or</span>
+               <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">usetitle</span> <span class="ow">and</span> <span class="s1">&#39;</span><span class="si">%(title)s</span><span class="s1">-</span><span class="si">%(id)s</span><span class="s1">.</span><span class="si">%(ext)s</span><span class="s1">&#39;</span><span class="p">)</span> <span class="ow">or</span>
+               <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">useid</span> <span class="ow">and</span> <span class="s1">&#39;</span><span class="si">%(id)s</span><span class="s1">.</span><span class="si">%(ext)s</span><span class="s1">&#39;</span><span class="p">)</span> <span class="ow">or</span>
+               <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">autonumber</span> <span class="ow">and</span> <span class="s1">&#39;</span><span class="si">%(autonumber)s</span><span class="s1">-</span><span class="si">%(id)s</span><span class="s1">.</span><span class="si">%(ext)s</span><span class="s1">&#39;</span><span class="p">)</span> <span class="ow">or</span>
+               <span class="n">DEFAULT_OUTTMPL</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">outtmpl</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">extractaudio</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Cannot download a video and extract audio into the same&#39;</span>
+                     <span class="s1">&#39; file! Use &quot;</span><span class="si">{0}</span><span class="s1">.</span><span class="si">%(ext)s</span><span class="s1">&quot; instead of &quot;</span><span class="si">{0}</span><span class="s1">&quot; as the output&#39;</span>
+                     <span class="s1">&#39; template&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">outtmpl</span><span class="p">))</span>
+
+    <span class="n">any_getting</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">geturl</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">gettitle</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">getid</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">getthumbnail</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">getdescription</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">getfilename</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">getformat</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">getduration</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">dumpjson</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">dump_single_json</span>
+    <span class="n">any_printing</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">print_json</span>
+    <span class="n">download_archive_fn</span> <span class="o">=</span> <span class="n">expand_path</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">download_archive</span><span class="p">)</span> <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">download_archive</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">opts</span><span class="o">.</span><span class="n">download_archive</span>
+
+    <span class="c1"># PostProcessors</span>
+    <span class="n">postprocessors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">metafromtitle</span><span class="p">:</span>
+        <span class="n">postprocessors</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;MetadataFromTitle&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;titleformat&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">metafromtitle</span>
+        <span class="p">})</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">extractaudio</span><span class="p">:</span>
+        <span class="n">postprocessors</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;FFmpegExtractAudio&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;preferredcodec&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">audioformat</span><span class="p">,</span>
+            <span class="s1">&#39;preferredquality&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">audioquality</span><span class="p">,</span>
+            <span class="s1">&#39;nopostoverwrites&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">nopostoverwrites</span><span class="p">,</span>
+        <span class="p">})</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">recodevideo</span><span class="p">:</span>
+        <span class="n">postprocessors</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;FFmpegVideoConvertor&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;preferedformat&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">recodevideo</span><span class="p">,</span>
+        <span class="p">})</span>
+    <span class="c1"># FFmpegMetadataPP should be run after FFmpegVideoConvertorPP and</span>
+    <span class="c1"># FFmpegExtractAudioPP as containers before conversion may not support</span>
+    <span class="c1"># metadata (3gp, webm, etc.)</span>
+    <span class="c1"># And this post-processor should be placed before other metadata</span>
+    <span class="c1"># manipulating post-processors (FFmpegEmbedSubtitle) to prevent loss of</span>
+    <span class="c1"># extra metadata. By default ffmpeg preserves metadata applicable for both</span>
+    <span class="c1"># source and target containers. From this point the container won&#39;t change,</span>
+    <span class="c1"># so metadata can be added here.</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">addmetadata</span><span class="p">:</span>
+        <span class="n">postprocessors</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;FFmpegMetadata&#39;</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">convertsubtitles</span><span class="p">:</span>
+        <span class="n">postprocessors</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;FFmpegSubtitlesConvertor&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">convertsubtitles</span><span class="p">,</span>
+        <span class="p">})</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">embedsubtitles</span><span class="p">:</span>
+        <span class="n">postprocessors</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;FFmpegEmbedSubtitle&#39;</span><span class="p">,</span>
+        <span class="p">})</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">embedthumbnail</span><span class="p">:</span>
+        <span class="n">already_have_thumbnail</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">writethumbnail</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">write_all_thumbnails</span>
+        <span class="n">postprocessors</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;EmbedThumbnail&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;already_have_thumbnail&#39;</span><span class="p">:</span> <span class="n">already_have_thumbnail</span>
+        <span class="p">})</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">already_have_thumbnail</span><span class="p">:</span>
+            <span class="n">opts</span><span class="o">.</span><span class="n">writethumbnail</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># XAttrMetadataPP should be run after post-processors that may change file</span>
+    <span class="c1"># contents</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">xattrs</span><span class="p">:</span>
+        <span class="n">postprocessors</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;XAttrMetadata&#39;</span><span class="p">})</span>
+    <span class="c1"># Please keep ExecAfterDownload towards the bottom as it allows the user to modify the final file in any way.</span>
+    <span class="c1"># So if the user is able to remove the file before your postprocessor runs it might cause a few problems.</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">exec_cmd</span><span class="p">:</span>
+        <span class="n">postprocessors</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;ExecAfterDownload&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;exec_cmd&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">exec_cmd</span><span class="p">,</span>
+        <span class="p">})</span>
+    <span class="n">external_downloader_args</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">external_downloader_args</span><span class="p">:</span>
+        <span class="n">external_downloader_args</span> <span class="o">=</span> <span class="n">compat_shlex_split</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">external_downloader_args</span><span class="p">)</span>
+    <span class="n">postprocessor_args</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">postprocessor_args</span><span class="p">:</span>
+        <span class="n">postprocessor_args</span> <span class="o">=</span> <span class="n">compat_shlex_split</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">postprocessor_args</span><span class="p">)</span>
+    <span class="n">match_filter</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="kc">None</span> <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">match_filter</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="k">else</span> <span class="n">match_filter_func</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">match_filter</span><span class="p">))</span>
+
+    <span class="n">ydl_opts</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;usenetrc&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">usenetrc</span><span class="p">,</span>
+        <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+        <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+        <span class="s1">&#39;twofactor&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">twofactor</span><span class="p">,</span>
+        <span class="s1">&#39;videopassword&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">videopassword</span><span class="p">,</span>
+        <span class="s1">&#39;ap_mso&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">ap_mso</span><span class="p">,</span>
+        <span class="s1">&#39;ap_username&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">ap_username</span><span class="p">,</span>
+        <span class="s1">&#39;ap_password&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">ap_password</span><span class="p">,</span>
+        <span class="s1">&#39;quiet&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">quiet</span> <span class="ow">or</span> <span class="n">any_getting</span> <span class="ow">or</span> <span class="n">any_printing</span><span class="p">),</span>
+        <span class="s1">&#39;no_warnings&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">no_warnings</span><span class="p">,</span>
+        <span class="s1">&#39;forceurl&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">geturl</span><span class="p">,</span>
+        <span class="s1">&#39;forcetitle&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">gettitle</span><span class="p">,</span>
+        <span class="s1">&#39;forceid&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">getid</span><span class="p">,</span>
+        <span class="s1">&#39;forcethumbnail&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">getthumbnail</span><span class="p">,</span>
+        <span class="s1">&#39;forcedescription&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">getdescription</span><span class="p">,</span>
+        <span class="s1">&#39;forceduration&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">getduration</span><span class="p">,</span>
+        <span class="s1">&#39;forcefilename&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">getfilename</span><span class="p">,</span>
+        <span class="s1">&#39;forceformat&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">getformat</span><span class="p">,</span>
+        <span class="s1">&#39;forcejson&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">dumpjson</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">print_json</span><span class="p">,</span>
+        <span class="s1">&#39;dump_single_json&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">dump_single_json</span><span class="p">,</span>
+        <span class="s1">&#39;simulate&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">simulate</span> <span class="ow">or</span> <span class="n">any_getting</span><span class="p">,</span>
+        <span class="s1">&#39;skip_download&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">skip_download</span><span class="p">,</span>
+        <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">format</span><span class="p">,</span>
+        <span class="s1">&#39;listformats&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">listformats</span><span class="p">,</span>
+        <span class="s1">&#39;outtmpl&#39;</span><span class="p">:</span> <span class="n">outtmpl</span><span class="p">,</span>
+        <span class="s1">&#39;autonumber_size&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">autonumber_size</span><span class="p">,</span>
+        <span class="s1">&#39;autonumber_start&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">autonumber_start</span><span class="p">,</span>
+        <span class="s1">&#39;restrictfilenames&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">restrictfilenames</span><span class="p">,</span>
+        <span class="s1">&#39;ignoreerrors&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">ignoreerrors</span><span class="p">,</span>
+        <span class="s1">&#39;force_generic_extractor&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">force_generic_extractor</span><span class="p">,</span>
+        <span class="s1">&#39;ratelimit&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">ratelimit</span><span class="p">,</span>
+        <span class="s1">&#39;nooverwrites&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">nooverwrites</span><span class="p">,</span>
+        <span class="s1">&#39;retries&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">retries</span><span class="p">,</span>
+        <span class="s1">&#39;fragment_retries&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">fragment_retries</span><span class="p">,</span>
+        <span class="s1">&#39;skip_unavailable_fragments&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">skip_unavailable_fragments</span><span class="p">,</span>
+        <span class="s1">&#39;keep_fragments&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">keep_fragments</span><span class="p">,</span>
+        <span class="s1">&#39;buffersize&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">buffersize</span><span class="p">,</span>
+        <span class="s1">&#39;noresizebuffer&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">noresizebuffer</span><span class="p">,</span>
+        <span class="s1">&#39;http_chunk_size&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">http_chunk_size</span><span class="p">,</span>
+        <span class="s1">&#39;continuedl&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">continue_dl</span><span class="p">,</span>
+        <span class="s1">&#39;noprogress&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">noprogress</span><span class="p">,</span>
+        <span class="s1">&#39;progress_with_newline&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">progress_with_newline</span><span class="p">,</span>
+        <span class="s1">&#39;playliststart&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">playliststart</span><span class="p">,</span>
+        <span class="s1">&#39;playlistend&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">playlistend</span><span class="p">,</span>
+        <span class="s1">&#39;playlistreverse&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">playlist_reverse</span><span class="p">,</span>
+        <span class="s1">&#39;playlistrandom&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">playlist_random</span><span class="p">,</span>
+        <span class="s1">&#39;noplaylist&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">noplaylist</span><span class="p">,</span>
+        <span class="s1">&#39;logtostderr&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">outtmpl</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;consoletitle&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">consoletitle</span><span class="p">,</span>
+        <span class="s1">&#39;nopart&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">nopart</span><span class="p">,</span>
+        <span class="s1">&#39;updatetime&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">updatetime</span><span class="p">,</span>
+        <span class="s1">&#39;writedescription&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">writedescription</span><span class="p">,</span>
+        <span class="s1">&#39;writeannotations&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">writeannotations</span><span class="p">,</span>
+        <span class="s1">&#39;writeinfojson&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">writeinfojson</span><span class="p">,</span>
+        <span class="s1">&#39;writethumbnail&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">writethumbnail</span><span class="p">,</span>
+        <span class="s1">&#39;write_all_thumbnails&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">write_all_thumbnails</span><span class="p">,</span>
+        <span class="s1">&#39;writesubtitles&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">writesubtitles</span><span class="p">,</span>
+        <span class="s1">&#39;writeautomaticsub&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">writeautomaticsub</span><span class="p">,</span>
+        <span class="s1">&#39;allsubtitles&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">allsubtitles</span><span class="p">,</span>
+        <span class="s1">&#39;listsubtitles&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">listsubtitles</span><span class="p">,</span>
+        <span class="s1">&#39;subtitlesformat&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">subtitlesformat</span><span class="p">,</span>
+        <span class="s1">&#39;subtitleslangs&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">subtitleslangs</span><span class="p">,</span>
+        <span class="s1">&#39;matchtitle&#39;</span><span class="p">:</span> <span class="n">decodeOption</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">matchtitle</span><span class="p">),</span>
+        <span class="s1">&#39;rejecttitle&#39;</span><span class="p">:</span> <span class="n">decodeOption</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">rejecttitle</span><span class="p">),</span>
+        <span class="s1">&#39;max_downloads&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">max_downloads</span><span class="p">,</span>
+        <span class="s1">&#39;prefer_free_formats&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">prefer_free_formats</span><span class="p">,</span>
+        <span class="s1">&#39;verbose&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+        <span class="s1">&#39;dump_intermediate_pages&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">dump_intermediate_pages</span><span class="p">,</span>
+        <span class="s1">&#39;write_pages&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">write_pages</span><span class="p">,</span>
+        <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">test</span><span class="p">,</span>
+        <span class="s1">&#39;keepvideo&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">keepvideo</span><span class="p">,</span>
+        <span class="s1">&#39;min_filesize&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">min_filesize</span><span class="p">,</span>
+        <span class="s1">&#39;max_filesize&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">max_filesize</span><span class="p">,</span>
+        <span class="s1">&#39;min_views&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">min_views</span><span class="p">,</span>
+        <span class="s1">&#39;max_views&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">max_views</span><span class="p">,</span>
+        <span class="s1">&#39;daterange&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
+        <span class="s1">&#39;cachedir&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">cachedir</span><span class="p">,</span>
+        <span class="s1">&#39;youtube_print_sig_code&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">youtube_print_sig_code</span><span class="p">,</span>
+        <span class="s1">&#39;age_limit&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">age_limit</span><span class="p">,</span>
+        <span class="s1">&#39;download_archive&#39;</span><span class="p">:</span> <span class="n">download_archive_fn</span><span class="p">,</span>
+        <span class="s1">&#39;cookiefile&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">cookiefile</span><span class="p">,</span>
+        <span class="s1">&#39;nocheckcertificate&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">no_check_certificate</span><span class="p">,</span>
+        <span class="s1">&#39;prefer_insecure&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">prefer_insecure</span><span class="p">,</span>
+        <span class="s1">&#39;proxy&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">proxy</span><span class="p">,</span>
+        <span class="s1">&#39;socket_timeout&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">socket_timeout</span><span class="p">,</span>
+        <span class="s1">&#39;bidi_workaround&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">bidi_workaround</span><span class="p">,</span>
+        <span class="s1">&#39;debug_printtraffic&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">debug_printtraffic</span><span class="p">,</span>
+        <span class="s1">&#39;prefer_ffmpeg&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">prefer_ffmpeg</span><span class="p">,</span>
+        <span class="s1">&#39;include_ads&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">include_ads</span><span class="p">,</span>
+        <span class="s1">&#39;default_search&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">default_search</span><span class="p">,</span>
+        <span class="s1">&#39;youtube_include_dash_manifest&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">youtube_include_dash_manifest</span><span class="p">,</span>
+        <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span>
+        <span class="s1">&#39;extract_flat&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">extract_flat</span><span class="p">,</span>
+        <span class="s1">&#39;mark_watched&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">mark_watched</span><span class="p">,</span>
+        <span class="s1">&#39;merge_output_format&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">merge_output_format</span><span class="p">,</span>
+        <span class="s1">&#39;postprocessors&#39;</span><span class="p">:</span> <span class="n">postprocessors</span><span class="p">,</span>
+        <span class="s1">&#39;fixup&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">fixup</span><span class="p">,</span>
+        <span class="s1">&#39;source_address&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">source_address</span><span class="p">,</span>
+        <span class="s1">&#39;call_home&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">call_home</span><span class="p">,</span>
+        <span class="s1">&#39;sleep_interval&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">sleep_interval</span><span class="p">,</span>
+        <span class="s1">&#39;max_sleep_interval&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">max_sleep_interval</span><span class="p">,</span>
+        <span class="s1">&#39;external_downloader&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">external_downloader</span><span class="p">,</span>
+        <span class="s1">&#39;list_thumbnails&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">list_thumbnails</span><span class="p">,</span>
+        <span class="s1">&#39;playlist_items&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">playlist_items</span><span class="p">,</span>
+        <span class="s1">&#39;xattr_set_filesize&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">xattr_set_filesize</span><span class="p">,</span>
+        <span class="s1">&#39;match_filter&#39;</span><span class="p">:</span> <span class="n">match_filter</span><span class="p">,</span>
+        <span class="s1">&#39;no_color&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">no_color</span><span class="p">,</span>
+        <span class="s1">&#39;ffmpeg_location&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">ffmpeg_location</span><span class="p">,</span>
+        <span class="s1">&#39;hls_prefer_native&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">hls_prefer_native</span><span class="p">,</span>
+        <span class="s1">&#39;hls_use_mpegts&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">hls_use_mpegts</span><span class="p">,</span>
+        <span class="s1">&#39;external_downloader_args&#39;</span><span class="p">:</span> <span class="n">external_downloader_args</span><span class="p">,</span>
+        <span class="s1">&#39;postprocessor_args&#39;</span><span class="p">:</span> <span class="n">postprocessor_args</span><span class="p">,</span>
+        <span class="s1">&#39;cn_verification_proxy&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">cn_verification_proxy</span><span class="p">,</span>
+        <span class="s1">&#39;geo_verification_proxy&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">geo_verification_proxy</span><span class="p">,</span>
+        <span class="s1">&#39;config_location&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">config_location</span><span class="p">,</span>
+        <span class="s1">&#39;geo_bypass&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">geo_bypass</span><span class="p">,</span>
+        <span class="s1">&#39;geo_bypass_country&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">geo_bypass_country</span><span class="p">,</span>
+        <span class="s1">&#39;geo_bypass_ip_block&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">geo_bypass_ip_block</span><span class="p">,</span>
+        <span class="c1"># just for deprecation check</span>
+        <span class="s1">&#39;autonumber&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">autonumber</span> <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">autonumber</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;usetitle&#39;</span><span class="p">:</span> <span class="n">opts</span><span class="o">.</span><span class="n">usetitle</span> <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">usetitle</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">with</span> <span class="n">YoutubeDL</span><span class="p">(</span><span class="n">ydl_opts</span><span class="p">)</span> <span class="k">as</span> <span class="n">ydl</span><span class="p">:</span>
+        <span class="c1"># Update version</span>
+        <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">update_self</span><span class="p">:</span>
+            <span class="n">update_self</span><span class="p">(</span><span class="n">ydl</span><span class="o">.</span><span class="n">to_screen</span><span class="p">,</span> <span class="n">opts</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span> <span class="n">ydl</span><span class="o">.</span><span class="n">_opener</span><span class="p">)</span>
+
+        <span class="c1"># Remove cache dir</span>
+        <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">rm_cachedir</span><span class="p">:</span>
+            <span class="n">ydl</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+
+        <span class="c1"># Maybe do nothing</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_urls</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">load_info_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">update_self</span> <span class="ow">or</span> <span class="n">opts</span><span class="o">.</span><span class="n">rm_cachedir</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+            <span class="n">ydl</span><span class="o">.</span><span class="n">warn_if_short_id</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">argv</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">argv</span><span class="p">)</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s1">&#39;You must provide at least one URL.</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;Type youtube-dl --help to see a list of all options.&#39;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">load_info_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">retcode</span> <span class="o">=</span> <span class="n">ydl</span><span class="o">.</span><span class="n">download_with_info_file</span><span class="p">(</span><span class="n">expand_path</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">load_info_filename</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">retcode</span> <span class="o">=</span> <span class="n">ydl</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">all_urls</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">MaxDownloadsReached</span><span class="p">:</span>
+            <span class="n">ydl</span><span class="o">.</span><span class="n">to_screen</span><span class="p">(</span><span class="s1">&#39;--max-download limit reached, aborting.&#39;</span><span class="p">)</span>
+            <span class="n">retcode</span> <span class="o">=</span> <span class="mi">101</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">retcode</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">_real_main</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">DownloadError</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">SameFileError</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s1">&#39;ERROR: fixed output name but more than one file to download&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">ERROR: Interrupted by user&#39;</span><span class="p">)</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;YoutubeDL&#39;</span><span class="p">,</span> <span class="s1">&#39;gen_extractors&#39;</span><span class="p">,</span> <span class="s1">&#39;list_extractors&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="pyutil.ytdl.TermuxDL">
+<em class="property">class </em><code class="descclassname">pyutil.ytdl.</code><code class="descname">TermuxDL</code><a class="reference internal" href="_modules/pyutil/ytdl.html#TermuxDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ytdl.TermuxDL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">youtube_dl.YoutubeDL.YoutubeDL</span></code></p>
+<p>Try subclassing youtube_dl and see if that makes it easier.</p>
+<p>Also heres all the source code in case you think you need it.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">_NUMERIC_FIELDS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">((</span>
+    <span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="s1">&#39;tbr&#39;</span><span class="p">,</span> <span class="s1">&#39;abr&#39;</span><span class="p">,</span> <span class="s1">&#39;asr&#39;</span><span class="p">,</span> <span class="s1">&#39;vbr&#39;</span><span class="p">,</span> <span class="s1">&#39;fps&#39;</span><span class="p">,</span> <span class="s1">&#39;filesize&#39;</span><span class="p">,</span> <span class="s1">&#39;filesize_approx&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;upload_year&#39;</span><span class="p">,</span> <span class="s1">&#39;upload_month&#39;</span><span class="p">,</span> <span class="s1">&#39;upload_day&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="s1">&#39;view_count&#39;</span><span class="p">,</span> <span class="s1">&#39;like_count&#39;</span><span class="p">,</span> <span class="s1">&#39;dislike_count&#39;</span><span class="p">,</span> <span class="s1">&#39;repost_count&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;average_rating&#39;</span><span class="p">,</span> <span class="s1">&#39;comment_count&#39;</span><span class="p">,</span> <span class="s1">&#39;age_limit&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="s1">&#39;end_time&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;chapter_number&#39;</span><span class="p">,</span> <span class="s1">&#39;season_number&#39;</span><span class="p">,</span> <span class="s1">&#39;episode_number&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;track_number&#39;</span><span class="p">,</span> <span class="s1">&#39;disc_number&#39;</span><span class="p">,</span> <span class="s1">&#39;release_year&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;playlist_index&#39;</span><span class="p">,</span>
+<span class="p">))</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">_ies</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">_pps</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">_download_retcode</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">_num_downloads</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">_screen_file</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auto_init</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    \<span class="s2">&quot;</span><span class="se">\&quot;\&quot;</span><span class="s2">Create a FileDownloader object with the given options.</span><span class="se">\&quot;\&quot;\&quot;</span>
+    <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_ies</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_ies_instances</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_pps</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_progress_hooks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_download_retcode</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_num_downloads</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_screen_file</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">][</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;logtostderr&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_err_file</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># Default parameters</span>
+        <span class="s1">&#39;nocheckcertificate&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>So there it is!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>params</strong></dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_default_info_extractors</span></code>()</td>
+<td>Add the InfoExtractors returned by gen_extractors to the end of the list</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_extra_info</span></code>(info_dict,&nbsp;extra_info)</td>
+<td>Set the keys from extra_info in info dict if they are missing</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_info_extractor</span></code>(ie)</td>
+<td>Add an InfoExtractor object to the end of the list.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_post_processor</span></code>(pp)</td>
+<td>Add a PostProcessor object to the end of the chain.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_progress_hook</span></code>(ph)</td>
+<td>Add the progress hook (currently only for the file downloader)</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">download</span></code>(url_list)</td>
+<td>Download a given list of URLs.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_info</span></code>(url[,&nbsp;download,&nbsp;ie_key,&nbsp;…])</td>
+<td>Returns a list with a dictionary for each video we find.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_info_extractor</span></code>(ie_key)</td>
+<td>Get an instance of an IE with name ie_key, it will try to get one from the _ies list, if there’s no instance it will create a new one and add it to the extractor list.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyutil.ytdl.TermuxDL.parseOpts" title="pyutil.ytdl.TermuxDL.parseOpts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parseOpts</span></code></a>()</td>
+<td>Returns a dict of user-provided args.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">post_process</span></code>(filename,&nbsp;ie_info)</td>
+<td>Run all the postprocessors on the given file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_filename</span></code>(info_dict)</td>
+<td>Generate the output filename.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_ie_result</span></code>(ie_result[,&nbsp;download,&nbsp;…])</td>
+<td>Take the result of the ie(may be modified) and resolve all unresolved references (URLs, playlist items).</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_info</span></code>(info_dict)</td>
+<td>Process a single resolved IE result.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_subtitles</span></code>(video_id,&nbsp;…)</td>
+<td>Select the requested subtitles and their format</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">report_error</span></code>(message[,&nbsp;tb])</td>
+<td>Do the same as trouble, but prefixes the message with ‘ERROR:’, colored in red if stderr is a tty file.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">report_file_already_downloaded</span></code>(file_name)</td>
+<td>Report file has already been fully downloaded.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">report_warning</span></code>(message)</td>
+<td>Print the message to stderr, it will be prefixed with ‘WARNING:’ If stderr is a tty file the ‘WARNING:’ will be colored</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_screen</span></code>(message[,&nbsp;skip_eol])</td>
+<td>Print message to stdout if not in quiet mode.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_stderr</span></code>(message)</td>
+<td>Print message to stderr.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_stdout</span></code>(message[,&nbsp;skip_eol,&nbsp;check_quiet])</td>
+<td>Print message to stdout if not in quiet mode.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">trouble</span></code>([message,&nbsp;tb])</td>
+<td>Determine action to take when a download problem appears.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">urlopen</span></code>(req)</td>
+<td>Start an HTTP download</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="73%" />
+<col width="27%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>add_default_extra_info</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>build_format_selector</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>download_with_info_file</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>encode</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>filter_requested_info</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>format_resolution</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>get_encoding</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>in_download_archive</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>list_formats</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>list_subtitles</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>list_thumbnails</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>print_debug_header</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>process_video_result</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>record_download_archive</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>restore_console_title</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>save_console_title</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>to_console_title</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>warn_if_short_id</strong></td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyutil.ytdl.TermuxDL.parseOpts">
+<code class="descname">parseOpts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/ytdl.html#TermuxDL.parseOpts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ytdl.TermuxDL.parseOpts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dict of user-provided args.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.ytdl.main">
+<code class="descclassname">pyutil.ytdl.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/ytdl.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ytdl.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the program.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.ytdl.my_hook">
+<code class="descclassname">pyutil.ytdl.</code><code class="descname">my_hook</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/ytdl.html#my_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ytdl.my_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook to notify the user the download is completed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.ytdl.requests_dl">
+<code class="descclassname">pyutil.ytdl.</code><code class="descname">requests_dl</code><span class="sig-paren">(</span><em>link</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/ytdl.html#requests_dl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ytdl.requests_dl" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO: Docstring for requests_dl.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>link</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Download a URL using <code class="xref py py-mod docutils literal notranslate"><span class="pre">requests</span></code>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">TODO</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.ytdl.ytdl">
+<code class="descclassname">pyutil.ytdl.</code><code class="descname">ytdl</code><span class="sig-paren">(</span><em>link</em>, <em>ytdl_opts</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/ytdl.html#ytdl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ytdl.ytdl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute downloading a YouTube video.</p>
+<p>Possibly makes sense to make this a class. Playlists are a subclass,
+objects with variable sizes are others etc.</p>
+<div class="admonition-todo admonition" id="index-19">
+<p class="first admonition-title">Todo</p>
+<p class="last">Should merge the built-in options I have here with user provided ones.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>link</strong> – URL to a YouTube video</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Request object or <code class="xref py py-class docutils literal notranslate"><span class="pre">urllib.Response</span></code> if <code class="xref py py-mod docutils literal notranslate"><span class="pre">requests</span></code> isn’t downloaded.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 </div>
 </div>
 
@@ -1458,45 +2269,16 @@ for increased configurability.</p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="numerical.html">math</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">API</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.backup_nt_and_posix"><code class="docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.batch_renamer"><code class="docutils literal notranslate"><span class="pre">batch_renamer</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.check_IP"><code class="docutils literal notranslate"><span class="pre">check_IP</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.conda_export"><code class="docutils literal notranslate"><span class="pre">conda_export</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dir_cleaner"><code class="docutils literal notranslate"><span class="pre">dir_cleaner</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dlink"><code class="docutils literal notranslate"><span class="pre">dlink</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dlink2"><code class="docutils literal notranslate"><span class="pre">dlink2</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.env_checks"><code class="docutils literal notranslate"><span class="pre">env_checks</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.find_pics"><code class="docutils literal notranslate"><span class="pre">find_pics</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.g"><code class="docutils literal notranslate"><span class="pre">g</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.inspect_module"><code class="docutils literal notranslate"><span class="pre">inspect_module</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.itersrc"><code class="docutils literal notranslate"><span class="pre">itersrc</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.json_sorter"><code class="docutils literal notranslate"><span class="pre">json_sorter</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.lazy_downloader"><code class="docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.linktree"><code class="docutils literal notranslate"><span class="pre">linktree</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.magic_aid"><code class="docutils literal notranslate"><span class="pre">magic_aid</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.mv_to_repo"><code class="docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.nvim_profiling"><code class="docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.ptags"><code class="docutils literal notranslate"><span class="pre">ptags</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.rclone"><code class="docutils literal notranslate"><span class="pre">rclone</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.strip_space"><code class="docutils literal notranslate"><span class="pre">strip_space</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.sys_checks"><code class="docutils literal notranslate"><span class="pre">sys_checks</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.wrap"><code class="docutils literal notranslate"><span class="pre">wrap</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.yes_no_question"><code class="docutils literal notranslate"><span class="pre">yes_no_question</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="todo.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">numerical</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">todo</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="numerical.html" title="previous chapter">math</a></li>
-      <li>Next: <a href="todo.html" title="next chapter">TODO</a></li>
+      <li>Previous: <a href="numerical.html" title="previous chapter">numerical</a></li>
   </ul></li>
 </ul>
 </div>

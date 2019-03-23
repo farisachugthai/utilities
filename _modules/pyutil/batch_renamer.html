@@ -9,7 +9,7 @@
     <title>pyutil.batch_renamer &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -40,16 +40,23 @@
 
 <span class="sd">.. module:: batch_renamer.py</span>
 
-<span class="sd">Largely argparse and doctest practice.</span>
-<span class="sd">From the Official Python documentation in the section Tutorials:</span>
-<span class="sd">`tutorials stdlib2`_ with some reformatting.</span>
+<span class="sd">Initially inspired f rom the Official Python documentation in the section</span>
+<span class="sd">Tutorials: `tutorials stdlib2`_ with some reformatting.</span>
 
 <span class="sd">Still uses old style strings as a result.</span>
+
+<span class="sd">First we&#39;ll examine the contents of a directory and ensure it only contains</span>
+<span class="sd">files with names we want to rename.</span>
+
 
 <span class="sd">.. code-block:: python3</span>
 
 <span class="sd">    &gt;&gt;&gt; os.listdir(&quot;/path/to/dir&quot;)</span>
 <span class="sd">    [&#39;img_1074.jpg&#39;, &#39;img_1076.jpg&#39;, &#39;img_1077.jpg&#39;]</span>
+
+
+<span class="sd">As we can see it does we&#39;ll then invoke the script like so.</span>
+
 
 <span class="sd">.. code-block:: shell-session</span>
 
@@ -57,9 +64,6 @@
 <span class="sd">    img_1074.jpg --&gt; Ashley_0.jpg</span>
 <span class="sd">    img_1076.jpg --&gt; Ashley_1.jpg</span>
 <span class="sd">    img_1077.jpg --&gt; Ashley_2.jpg</span>
-
-<span class="sd">This would be quite an easy module to create unittests for IN ADDITION to the</span>
-<span class="sd">fact that you could add some fixtures in and learn that.</span>
 
 <span class="sd">.. _`tutorials stdlib2`: https://docs.python.org/3/tutorial/stdlib2.html#templating</span>
 
@@ -71,8 +75,7 @@
 <span class="kn">from</span> <span class="nn">string</span> <span class="k">import</span> <span class="n">Template</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="kn">import</span> <span class="nn">pyutil</span>
-
+<span class="kn">from</span> <span class="nn">.__about__</span> <span class="k">import</span> <span class="n">__version__</span>
 
 <div class="viewcode-block" id="BatchRename"><a class="viewcode-back" href="../../api.html#pyutil.batch_renamer.BatchRename">[docs]</a><span class="k">class</span> <span class="nc">BatchRename</span><span class="p">(</span><span class="n">Template</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Delimiter for string substitutions.&quot;&quot;&quot;</span>
@@ -90,8 +93,17 @@
         <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Directory containing only the files to be renamed.&quot;</span><span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-V&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
-                        <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">pyutil</span><span class="o">.</span><span class="n">__about__</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;rename_format&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Enter rename style (</span><span class="si">%d</span><span class="s1">-date %n-seqnum </span><span class="si">%f</span><span class="s1">-format I.E.  Ashley_%n</span><span class="si">%f</span><span class="s1">)&#39;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-V&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--version&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
@@ -99,18 +111,14 @@
 
 
 <div class="viewcode-block" id="fix_extension"><a class="viewcode-back" href="../../api.html#pyutil.batch_renamer.fix_extension">[docs]</a><span class="k">def</span> <span class="nf">fix_extension</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Rename files that have have the wrong filename extension.</span>
-
-<span class="sd">    .. todo:: Fuck I didn&#39;t consider the case where there are 2 words separated by dots that we want to keep.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Rename files that have have the wrong filename extension.&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
         <span class="n">parts</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
         <span class="n">new</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.batch_renamer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.batch_renamer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Rename a user provided directory of files.</span>
 
 <span class="sd">    Parameters</span>
@@ -119,14 +127,13 @@
 <span class="sd">        The directory to iterate over.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fmt</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Enter rename style (</span><span class="si">%d</span><span class="s1">-date %n-seqnum </span><span class="si">%f</span><span class="s1">-format):  &#39;</span><span class="p">)</span>
-    <span class="c1"># Enter rename style (%d-date %n-seqnum %f-format):  Ashley_%n%f</span>
+    <span class="c1"># Enter rename style (%d-date %n-seqnum %f-format):</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">BatchRename</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
     <span class="n">date</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">%b%y&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">filename</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)):</span>
         <span class="n">base</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">newname</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="n">date</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> --&gt; </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">newname</span><span class="p">))</span></div>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> --&gt; </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">newname</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="batch_mover"><a class="viewcode-back" href="../../api.html#pyutil.batch_renamer.batch_mover">[docs]</a><span class="k">def</span> <span class="nf">batch_mover</span><span class="p">(</span><span class="n">pattern</span><span class="p">):</span>
@@ -154,6 +161,7 @@
     <span class="k">assert</span> <span class="n">args</span><span class="o">.</span><span class="n">directory</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">directory</span>
 
+    <span class="n">fmt</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">rename_format</span>
     <span class="c1"># Wait until we&#39;re sure we got the args we needed before setting the log</span>
     <span class="c1"># level.</span>
     <span class="c1"># Now we can configure that level based on user input and default to WARNING</span>
@@ -161,7 +169,8 @@
 
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The directory that was chosen was: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
 
-    <span class="n">main</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">batch_mover</span><span class="p">(</span><span class="n">fmt</span><span class="p">):</span>
+        <span class="n">main</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -190,10 +199,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
 </ul>
 
 <div class="relations">

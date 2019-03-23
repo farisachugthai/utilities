@@ -9,7 +9,7 @@
     <title>utilities &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
@@ -45,10 +45,11 @@ administer multiple workstations.</p>
 <span id="root-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Python offers it’s users a large number of ways to install new packages.</p>
 <p>One can install <a class="reference internal" href="#pyutil"><span class="std std-ref">pyutil</span></a> by:</p>
-<ul class="simple">
-<li>Installing with pip</li>
-</ul>
+<ul>
+<li><p class="first">Installing with pip</p>
 <p>Install from newest dev version in master branch</p>
+</li>
+</ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip install git+https://github.com/farisachugthai/utilities
 </pre></div>
 </div>
@@ -59,27 +60,28 @@ administer multiple workstations.</p>
 pip install .
 </pre></div>
 </div>
-<ul class="simple">
-<li>As an alternative to a pip install, obtain the source code and run the <a class="reference external" href="setup.py">setup.py</a> file.</li>
-</ul>
+<ul>
+<li><p class="first">As an alternative to a pip install, obtain the source code and run the <a class="reference external" href="setup.py">setup.py</a> file.</p>
 <p>If you are on a Unix-like system, the following will ensure everything
 below pyutil/ is in your PATH.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span> git clone https://github.com/farisachugthai/utilities
- <span class="nb">cd</span> utilities
+</li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/farisachugthai/utilities
+<span class="nb">cd</span> utilities
 
 python3 setup.py bdist_wheel <span class="o">&amp;&amp;</span> python3 -m pip install -U -e .
 </pre></div>
 </div>
 <ul class="simple">
-<li>After which point, the only necessary step will be ensuring that the scripts in ./sh/ are in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>.</li>
+<li>After which point, the only necessary step will be ensuring that the scripts in sh/ are in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>.</li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># The script at ./pyutil/dlink.py is useful for creating symlinks for every</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># The script at pyutil/dlink.py is useful for creating symlinks for every</span>
 <span class="c1"># file in a directory. If the directory ~/bin is in your path...</span>
 
-<span class="c1"># Check which directories are in the $PATH env var</span>
+<span class="c1"># Check which directories are in the ``$PATH`` env var</span>
 <span class="nb">echo</span> <span class="nv">$PATH</span>
 
-<span class="c1"># Then link the scripts in ./sh to a directory in your path!</span>
+<span class="c1"># Then link the scripts in sh/ to a directory in your path!</span>
 python3 pyutil/dlink.py <span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/sh&quot;</span> ~/bin
 </pre></div>
 </div>
@@ -91,13 +93,13 @@ different; however, not tremendously.</p>
 <span class="gp">#</span> however in the interest of using domain specific built-ins:
 <span class="go">set-location utilities</span>
 
-<span class="go">python3 setup.py bdist_wheel &amp;&amp; python3 -m pip install -u -e .</span>
+<span class="go">python3 setup.py bdist_wheel &amp;&amp; python3 -m pip install -I -e .</span>
 
 <span class="gp">#</span> to view the environment variable path, run:
 <span class="go">get-childitem -path env:path</span>
 
 <span class="gp">#</span> <span class="k">then</span> ensure that the directory you pick is in your path, and run
-<span class="go">python3 pyutil\dlink.py &quot;$pwd\sh&quot; c:\users\path\to\directory</span>
+<span class="go">python3 pyutil\dlink.py &quot;$pwd\sh&quot; C:\users\path\to\directory</span>
 </pre></div>
 </div>
 </div>
@@ -142,68 +144,11 @@ to fork or create an issue.</p>
 <h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound" id="mastertoc">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#contributing-tutorial">Contributing Tutorial</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#numpy-docstring-example">Numpy Docstring Example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#import-conventions">Import conventions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#docstring-standard">Docstring Standard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#sections">Sections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#documenting-classes">Documenting classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#documenting-class-instances">Documenting class instances</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#documenting-generators">Documenting generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#documenting-constants">Documenting constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#documenting-modules">Documenting modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#other-points-to-keep-in-mind">Other points to keep in mind</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#common-rest-concepts">Common reST concepts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpydoc.html#conclusion">Conclusion</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="numerical.html">math</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="numerical.html#module-pyutil.numerical.gcd_iter"><code class="docutils literal notranslate"><span class="pre">gcd_iter</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="numerical.html#module-pyutil.numerical.gcd_recur"><code class="docutils literal notranslate"><span class="pre">gcd_recur</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.backup_nt_and_posix"><code class="docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.batch_renamer"><code class="docutils literal notranslate"><span class="pre">batch_renamer</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.check_IP"><code class="docutils literal notranslate"><span class="pre">check_IP</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.conda_export"><code class="docutils literal notranslate"><span class="pre">conda_export</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.dir_cleaner"><code class="docutils literal notranslate"><span class="pre">dir_cleaner</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.dlink"><code class="docutils literal notranslate"><span class="pre">dlink</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.dlink2"><code class="docutils literal notranslate"><span class="pre">dlink2</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.env_checks"><code class="docutils literal notranslate"><span class="pre">env_checks</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.find_pics"><code class="docutils literal notranslate"><span class="pre">find_pics</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.g"><code class="docutils literal notranslate"><span class="pre">g</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.inspect_module"><code class="docutils literal notranslate"><span class="pre">inspect_module</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.itersrc"><code class="docutils literal notranslate"><span class="pre">itersrc</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.json_sorter"><code class="docutils literal notranslate"><span class="pre">json_sorter</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.lazy_downloader"><code class="docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.linktree"><code class="docutils literal notranslate"><span class="pre">linktree</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.magic_aid"><code class="docutils literal notranslate"><span class="pre">magic_aid</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.mv_to_repo"><code class="docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.nvim_profiling"><code class="docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.ptags"><code class="docutils literal notranslate"><span class="pre">ptags</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.rclone"><code class="docutils literal notranslate"><span class="pre">rclone</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.strip_space"><code class="docutils literal notranslate"><span class="pre">strip_space</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.sys_checks"><code class="docutils literal notranslate"><span class="pre">sys_checks</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.wrap"><code class="docutils literal notranslate"><span class="pre">wrap</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-pyutil.yes_no_question"><code class="docutils literal notranslate"><span class="pre">yes_no_question</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="todo.html">TODO</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="todo.html#docs">docs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="todo.html#scripts">scripts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="todo.html#linting">Linting</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">numerical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">todo</a></li>
 </ul>
 </div>
 <p>Continue to the next page:</p>
@@ -246,10 +191,9 @@ to fork or create an issue.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="numerical.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">numerical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="todo.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">todo</a></li>
 </ul>
 
 <div class="relations">

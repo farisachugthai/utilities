@@ -9,7 +9,7 @@
     <title>pyutil.lazy_downloader &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -38,42 +38,44 @@
 <span class="c1"># Maintainer: Faris Chugthai</span>
 <span class="sd">&quot;&quot;&quot;Automates downloading plain text files from the Web.</span>
 
-<span class="sd">As implemented currently, it will only correctly handle plain text; however,</span>
-<span class="sd">there are plans to implement the :mod:`mimetype` module and properly handle</span>
-<span class="sd">a much wider range of files.</span>
+<span class="sd">As implemented currently, it will only correctly handle plain text;</span>
+<span class="sd">however, there are plans to implement the :mod:`mimetype` module and</span>
+<span class="sd">properly handle a much wider range of files.</span>
 
-<span class="sd">Both parameters are required parameters.</span>
+<span class="sd">Both parameters, `url` and `output_fname` are required parameters.</span>
 
+<span class="sd">Safety Features</span>
+<span class="sd">---------------</span>
 <span class="sd">If the filename already exists on the system it will NOT be overwritten,</span>
 <span class="sd">and the script will safely exit.</span>
 
-<span class="sd">Parameters</span>
-<span class="sd">----------</span>
-<span class="sd">url : str</span>
-<span class="sd">    A url to download</span>
-<span class="sd">output_filename  : str</span>
-<span class="sd">    A path to write the downloaded content to.</span>
-
-
-<span class="sd">.. todo::</span>
-
-<span class="sd">    Can we check the MIME type and only import :mod:`requests` if we know we&#39;ll need to?</span>
+<span class="sd">:class:`collections.ChainMap()`</span>
+<span class="sd">-------------------------------</span>
+<span class="sd">This module is as a perfect candidate as exists for chainmap. Check env vars,</span>
+<span class="sd">config files, commnand line args and user provided parameters.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">import</span> <span class="nn">pyutil</span>
 
 
 <div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../api.html#pyutil.lazy_downloader._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Parse user input.&quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
-        <span class="n">prog</span><span class="o">=</span><span class="s1">&#39;lazy_downloader&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
+        <span class="n">prog</span><span class="o">=</span><span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
+
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;URL&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The URL to download. Must be plaintext.&quot;</span><span class="p">)</span>
+        <span class="s2">&quot;URL&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The URL to download. Must be plaintext.&quot;</span><span class="p">)</span>
 
     <span class="c1"># Will need to learn how to parse and tokenize the URL to get a reasonable</span>
     <span class="c1"># guess for the filename though</span>
@@ -81,16 +83,69 @@
         <span class="s2">&quot;fname&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The name of the file to write to. Must not exist already.&quot;</span><span class="p">)</span>
 
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-ha&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--headers&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Headers to send to the web server.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-V&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--version&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">pyutil</span><span class="o">.</span><span class="n">__about__</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">args</span></div>
 
 
+<div class="viewcode-block" id="_parse_site"><a class="viewcode-back" href="../../api.html#pyutil.lazy_downloader._parse_site">[docs]</a><span class="k">def</span> <span class="nf">_parse_site</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse the given `URL`, remove tags and return plaintext.</span>
+
+<span class="sd">    This should probably be modified to take the user agent and header args.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    URL : str</span>
+<span class="sd">        Site to download.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    txt : str</span>
+<span class="sd">        Plaintext view of the website.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="n">txt</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">txt</span></div>
+
+
+<div class="viewcode-block" id="find_links"><a class="viewcode-back" href="../../api.html#pyutil.lazy_downloader.find_links">[docs]</a><span class="k">def</span> <span class="nf">find_links</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Search body of text for URLs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    text : str</span>
+<span class="sd">        Body of formatted text to search for URLs.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    links : todo</span>
+<span class="sd">        URLs found on site.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;&quot;((http|ftp)s?://.*?)&quot;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">links</span></div>
+
+
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.lazy_downloader.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">output_fname</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Download URL and write to disk.</span>
 
+<span class="sd">    .. todo::</span>
 
-<span class="sd">    .. todo:: Figure out how to check that the file is plain text and not hit constant false positives</span>
+<span class="sd">        Check that the file is plain text and not hit constant false positives</span>
 
 <span class="sd">    .. todo:: Add headers.</span>
 
@@ -99,8 +154,28 @@
 <span class="sd">            if res.headers[&#39;Content-Type&#39;]:</span>
 <span class="sd">                 pass</span>
 
+<span class="sd">    Well here&#39;s part of one of your todos. :mod:`youtube_dl` has these</span>
+<span class="sd">    defined in their utils</span>
 
-<span class="sd">    .. todo:: Could add in a check. if the file is over a certain size use `:func:requests.res.iter_chunk()`</span>
+<span class="sd">    .. code-block:: python3</span>
+
+<span class="sd">        std_headers = {</span>
+<span class="sd">            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0&#39;,</span>
+<span class="sd">            &#39;Accept-Charset&#39;: &#39;ISO-8859-1,utf-8;q=0.7,*;q=0.7&#39;,</span>
+<span class="sd">            &#39;Accept&#39;: &#39;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#39;,</span>
+<span class="sd">            &#39;Accept-Encoding&#39;: &#39;gzip, deflate&#39;,</span>
+<span class="sd">            &#39;Accept-Language&#39;: &#39;en-us,en;q=0.5&#39;,</span>
+<span class="sd">        }</span>
+
+
+<span class="sd">        USER_AGENTS = {</span>
+<span class="sd">            &#39;Safari&#39;: &#39;Mozilla/5.0 (X11; Linux x86_64; rv:10.0) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27&#39;,</span>
+<span class="sd">        }</span>
+
+
+<span class="sd">    .. todo::</span>
+
+<span class="sd">        Could add in a check. if the file is over a certain size use :func:`requests.res.iter_chunk()`</span>
 
 
 <span class="sd">    Parameters</span>
@@ -112,11 +187,10 @@
 <span class="sd">        A path to write the downloaded content to.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="n">res</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="n">txt</span> <span class="o">=</span> <span class="n">_parse_site</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_fname</span><span class="p">,</span> <span class="s2">&quot;xt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -124,11 +198,36 @@
     <span class="c1"># With xt permissions the script crashes so no point raising anything.</span>
     <span class="c1"># Just bail</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">fname</span><span class="p">):</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s1">&#39;File already exists. Cannot overwrite. Exiting.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">FileExistsError</span>
     <span class="c1"># And if we&#39;re good, then bind the properties from the parser</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">output_fname</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">fname</span>
         <span class="n">url</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">URL</span>
+
+    <span class="n">std_headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span>
+        <span class="s1">&#39;Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Accept-Charset&#39;</span><span class="p">:</span> <span class="s1">&#39;ISO-8859-1,utf-8;q=0.7,*;q=0.7&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Accept&#39;</span><span class="p">:</span>
+        <span class="s1">&#39;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Accept-Encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;gzip, deflate&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Accept-Language&#39;</span><span class="p">:</span> <span class="s1">&#39;en-us,en;q=0.5&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">USER_AGENTS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Safari&#39;</span><span class="p">:</span>
+        <span class="s1">&#39;Mozilla/5.0 (X11; Linux x86_64; rv:10.0) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">headers</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">std_headers</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">user_agent</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">user_agent</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">user_agent</span> <span class="o">=</span> <span class="n">USER_AGENTS</span>
 
     <span class="n">main</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">output_fname</span><span class="p">)</span>
 </pre></div>
@@ -159,10 +258,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
 </ul>
 
 <div class="relations">

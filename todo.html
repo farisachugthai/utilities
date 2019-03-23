@@ -6,10 +6,10 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>TODO &#8212; pyutil 0.0.1 documentation</title>
+    <title>todo &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/data/data/com.termux/files/home/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
@@ -17,7 +17,6 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="API" href="api.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -35,7 +34,7 @@
           <div class="body" role="main">
             
   <div class="section" id="todo">
-<span id="id1"></span><h1>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h1>
+<h1>todo<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h1>
 <p>Not too dissimilar to the world’s worst kanban board, this file is going
 to be a manually created index for every <strong>TODO</strong> I write in this repo.</p>
 <div class="section" id="docs">
@@ -46,7 +45,8 @@ it.</p>
 <p><strong>02-06-19</strong></p>
 <div class="section" id="syntax-highlighting">
 <h3>syntax highlighting<a class="headerlink" href="#syntax-highlighting" title="Permalink to this headline">¶</a></h3>
-<p>Just like that they don’t. As a mental note when the build works again try this</p>
+<p>Give the snippet below a shot and see if you can’t instantiate a <code class="xref py py-mod docutils literal notranslate"><span class="pre">Sphinx</span></code>
+instance and build the docs that way.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphinx.pygments_style</span> <span class="k">import</span> <span class="n">SphinxStyle</span>
 
 <span class="k">global</span> <span class="n">sph</span>
@@ -54,19 +54,16 @@ it.</p>
 <span class="n">sph</span><span class="o">.</span><span class="n">styles</span>
 </pre></div>
 </div>
-<p>Will print off all the token configs. Figure out how to return the global
-instance and then we have a gruvbox pygments file on termux. Override to
+<p>Will print off all the <code class="xref py py-class docutils literal notranslate"><span class="pre">traitlets.Token()</span></code> configs. Figure out how to
+return the global instance and then we have a gruvbox <code class="xref py py-mod docutils literal notranslate"><span class="pre">pygments</span></code> file on Termux. Override to
 your hearts content.</p>
-<p>Feb 12, 2019:</p>
-<p>Docs are building better. Modules are building well; however the index is still
-incredibly wrong. Doesn’t list anything at all though it should.1</p>
 </div>
 </div>
 <div class="section" id="scripts">
 <h2>scripts<a class="headerlink" href="#scripts" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Either add doctests, logging or unittests to <a class="reference external" href="https://github.com/farisachugthai/utilities/python/dlink.py">dlink</a> that you feel confident enough to begin basing <a class="reference external" href="https://github.com/farisachugthai/utilities/python/dot_sym.ipy">dot_sym.ipy</a> off of it and then begin basing <a class="reference external" href="https://github.com/farisachugthai/newbuntu">newbuntu</a> off of that.</li>
-<li>Make a script that deletes empty dirs in <code class="docutils literal notranslate"><span class="pre">$PREFIX/tmp</span></code> Termux has 100s now.</li>
+<li>Make a script that deletes empty dirs in <code class="docutils literal notranslate"><span class="pre">$PREFIX/tmp</span></code>. Termux has 100s now.</li>
 <li>A script that utilizes <a class="reference external" href="https://github.com/farisachugthai/utilities/python/dlink.py">dlink</a> to update the scripts in <a class="reference external" href="~/bin">~/bin</a>. Quite annoying to do this manually.</li>
 <li>Rsync and rclone scripts aren’t close to done. Part of that will be encrypting/archiving your notebooks and pulling them down on different devices.</li>
 </ul>
@@ -74,7 +71,7 @@ incredibly wrong. Doesn’t list anything at all though it should.1</p>
 <div class="section" id="linting">
 <h2>Linting<a class="headerlink" href="#linting" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Run <code class="docutils literal notranslate"><span class="pre">rstcheck</span></code> on all of the rst files in ./docs. If you want to do it from termux you’ll need to specify <code class="docutils literal notranslate"><span class="pre">rstcheck</span> <span class="pre">-j</span> <span class="pre">1</span></code> because <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code></a> doesn’t work.</li>
+<li>Run <code class="xref py py-mod docutils literal notranslate"><span class="pre">rstcheck</span></code> on all of the rst files in <a class="reference external" href="./docs">./docs</a>. If you want to do it from Termux you’ll need to specify <code class="docutils literal notranslate"><span class="pre">rstcheck</span> <span class="pre">-j</span> <span class="pre">1</span></code> because <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code></a> doesn’t work.</li>
 <li>Also this needs to be able to pass a standard <code class="xref py py-mod docutils literal notranslate"><span class="pre">flake8</span></code> lint.</li>
 <li>Then I want a simple unit test suite created for all publicly exported functions.
 - Not a high bar, but a necessary one.</li>
@@ -109,22 +106,15 @@ incredibly wrong. Doesn’t list anything at all though it should.1</p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="numpydoc.html#numpydoc-docstring-guide">numpydoc docstring guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="numerical.html">math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">numerical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TODO</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#docs">docs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#scripts">scripts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#linting">Linting</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">todo</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="api.html" title="previous chapter"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
   </ul></li>
 </ul>
 </div>

@@ -1,0 +1,809 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pyutil.ytdl &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyutil.ytdl</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># Maintainer: Faris Chugthai</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Download a video from YouTube using :mod;`youtube_dl`.</span>
+
+<span class="sd">Dec 22, 2018:</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        If you initialize with no args, then use :meth:`extract_info` with</span>
+<span class="sd">        the URL as an arg, you get to see everything you&#39;d need to know</span>
+<span class="sd">        about the metadata in all the varying formats you&#39;d want use.</span>
+
+<span class="sd">This script should be called from the shell as so</span>
+
+<span class="sd">.. code-block:: shell</span>
+
+<span class="sd">        python termux-urls.py $@</span>
+
+
+<span class="sd">.. todo::</span>
+
+<span class="sd">    1. Assume that the :mod:`youtube_dl` script functions.</span>
+<span class="sd">    2. Then double chsck we weren&#39;t given a file ytdl knows how to handle.</span>
+<span class="sd">    3. If we were, then scrape with bs4.</span>
+<span class="sd">        - Possibly extend to writing prettified json (as in json.dumps(&quot;&quot;,tab=4)) to a file.</span>
+<span class="sd">    4. Need to add support with argparse because this is gonna get out of hand quickly.</span>
+<span class="sd">    5. Handle playlists.</span>
+
+
+<span class="sd">We got it!</span>
+<span class="sd">----------</span>
+<span class="sd">So I was reading the src and realized that almost all of the execution</span>
+<span class="sd">happens in the `__init__`__ file!!</span>
+
+<span class="sd">This is a long copy and paste but read this::</span>
+
+<span class="sd">        #!/usr/bin/env python</span>
+<span class="sd">        # coding: utf-8</span>
+
+<span class="sd">        from __future__ import unicode_literals</span>
+
+<span class="sd">        __license__ = &#39;Public Domain&#39;</span>
+
+<span class="sd">        import codecs</span>
+<span class="sd">        import io</span>
+<span class="sd">        import os</span>
+<span class="sd">        import random</span>
+<span class="sd">        import sys</span>
+
+
+<span class="sd">        from youtube_dl.options import (</span>
+<span class="sd">            parseOpts,</span>
+<span class="sd">        )</span>
+<span class="sd">        from youtube_dl.compat import (</span>
+<span class="sd">            compat_getpass,</span>
+<span class="sd">            compat_shlex_split,</span>
+<span class="sd">            workaround_optparse_bug9161,</span>
+<span class="sd">        )</span>
+<span class="sd">        from youtube_dl.utils import (</span>
+<span class="sd">            DateRange,</span>
+<span class="sd">            decodeOption,</span>
+<span class="sd">            DEFAULT_OUTTMPL,</span>
+<span class="sd">            DownloadError,</span>
+<span class="sd">            expand_path,</span>
+<span class="sd">            match_filter_func,</span>
+<span class="sd">            MaxDownloadsReached,</span>
+<span class="sd">            preferredencoding,</span>
+<span class="sd">            read_batch_urls,</span>
+<span class="sd">            SameFileError,</span>
+<span class="sd">            setproctitle,</span>
+<span class="sd">            std_headers,</span>
+<span class="sd">            write_string,</span>
+<span class="sd">            render_table,</span>
+<span class="sd">        )</span>
+<span class="sd">        from youtube_dl.update import update_self</span>
+<span class="sd">        from youtube_dl.downloader import (</span>
+<span class="sd">            FileDownloader,</span>
+<span class="sd">        )</span>
+<span class="sd">        from youtube_dl.extractor import gen_extractors, list_extractors</span>
+<span class="sd">        from youtube_dl.extractor.adobepass import MSO_INFO</span>
+<span class="sd">        from youtube_dl.YoutubeDL import YoutubeDL</span>
+
+
+<span class="sd">        def _real_main(argv=None):</span>
+<span class="sd">            # Compatibility fixes for Windows</span>
+<span class="sd">            if sys.platform == &#39;win32&#39;:</span>
+<span class="sd">                # https://github.com/rg3/youtube-dl/issues/820</span>
+<span class="sd">                codecs.register(lambda name: codecs.lookup(&#39;utf-8&#39;) if name == &#39;cp65001&#39; else None)</span>
+
+<span class="sd">            workaround_optparse_bug9161()</span>
+
+<span class="sd">            setproctitle(&#39;youtube-dl&#39;)</span>
+
+<span class="sd">            parser, opts, args = parseOpts(argv)</span>
+
+<span class="sd">            # Set user agent</span>
+<span class="sd">            if opts.user_agent is not None:</span>
+<span class="sd">                std_headers[&#39;User-Agent&#39;] = opts.user_agent</span>
+
+<span class="sd">            # Set referer</span>
+<span class="sd">            if opts.referer is not None:</span>
+<span class="sd">                std_headers[&#39;Referer&#39;] = opts.referer</span>
+
+<span class="sd">            # Custom HTTP headers</span>
+<span class="sd">            if opts.headers is not None:</span>
+<span class="sd">                for h in opts.headers:</span>
+<span class="sd">                    if &#39;:&#39; not in h:</span>
+<span class="sd">                        parser.error(&#39;wrong header formatting, it should be key:value, not &quot;%s&quot;&#39; % h)</span>
+<span class="sd">                    key, value = h.split(&#39;:&#39;, 1)</span>
+<span class="sd">                    if opts.verbose:</span>
+<span class="sd">                        write_string(&#39;[debug] Adding header from command line option %s:%s\n&#39; % (key, value))</span>
+<span class="sd">                    std_headers[key] = value</span>
+
+<span class="sd">            # Dump user agent</span>
+<span class="sd">            if opts.dump_user_agent:</span>
+<span class="sd">                write_string(std_headers[&#39;User-Agent&#39;] + &#39;\n&#39;, out=sys.stdout)</span>
+<span class="sd">                sys.exit(0)</span>
+
+<span class="sd">            # Batch file verification</span>
+<span class="sd">            batch_urls = []</span>
+<span class="sd">            if opts.batchfile is not None:</span>
+<span class="sd">                try:</span>
+<span class="sd">                    if opts.batchfile == &#39;-&#39;:</span>
+<span class="sd">                        batchfd = sys.stdin</span>
+<span class="sd">                    else:</span>
+<span class="sd">                        batchfd = io.open(</span>
+<span class="sd">                            expand_path(opts.batchfile),</span>
+<span class="sd">                            &#39;r&#39;, encoding=&#39;utf-8&#39;, errors=&#39;ignore&#39;)</span>
+<span class="sd">                    batch_urls = read_batch_urls(batchfd)</span>
+<span class="sd">                    if opts.verbose:</span>
+<span class="sd">                        write_string(&#39;[debug] Batch file urls: &#39; + repr(batch_urls) + &#39;\n&#39;)</span>
+<span class="sd">                except IOError:</span>
+<span class="sd">                    sys.exit(&#39;ERROR: batch file could not be read&#39;)</span>
+<span class="sd">            all_urls = batch_urls + [url.strip() for url in args]  # batch_urls are already striped in read_batch_urls</span>
+<span class="sd">            _enc = preferredencoding()</span>
+<span class="sd">            all_urls = [url.decode(_enc, &#39;ignore&#39;) if isinstance(url, bytes) else url for url in all_urls]</span>
+
+<span class="sd">            if opts.list_extractors:</span>
+<span class="sd">                for ie in list_extractors(opts.age_limit):</span>
+<span class="sd">                    write_string(ie.IE_NAME + (&#39; (CURRENTLY BROKEN)&#39; if not ie._WORKING else &#39;&#39;) + &#39;\n&#39;, out=sys.stdout)</span>
+<span class="sd">                    matchedUrls = [url for url in all_urls if ie.suitable(url)]</span>
+<span class="sd">                    for mu in matchedUrls:</span>
+<span class="sd">                        write_string(&#39;  &#39; + mu + &#39;\n&#39;, out=sys.stdout)</span>
+<span class="sd">                sys.exit(0)</span>
+<span class="sd">            if opts.list_extractor_descriptions:</span>
+<span class="sd">                for ie in list_extractors(opts.age_limit):</span>
+<span class="sd">                    if not ie._WORKING:</span>
+<span class="sd">                        continue</span>
+<span class="sd">                    desc = getattr(ie, &#39;IE_DESC&#39;, ie.IE_NAME)</span>
+<span class="sd">                    if desc is False:</span>
+<span class="sd">                        continue</span>
+<span class="sd">                    if hasattr(ie, &#39;SEARCH_KEY&#39;):</span>
+<span class="sd">                        _SEARCHES = (&#39;cute kittens&#39;, &#39;slithering pythons&#39;, &#39;falling cat&#39;, &#39;angry poodle&#39;, &#39;purple fish&#39;, &#39;running tortoise&#39;, &#39;sleeping bunny&#39;, &#39;burping cow&#39;)</span>
+<span class="sd">                        _COUNTS = (&#39;&#39;, &#39;5&#39;, &#39;10&#39;, &#39;all&#39;)</span>
+<span class="sd">                        desc += &#39; (Example: &quot;%s%s:%s&quot; )&#39; % (ie.SEARCH_KEY, random.choice(_COUNTS), random.choice(_SEARCHES))</span>
+<span class="sd">                    write_string(desc + &#39;\n&#39;, out=sys.stdout)</span>
+<span class="sd">                sys.exit(0)</span>
+<span class="sd">            if opts.ap_list_mso:</span>
+<span class="sd">                table = [[mso_id, mso_info[&#39;name&#39;]] for mso_id, mso_info in MSO_INFO.items()]</span>
+<span class="sd">                write_string(&#39;Supported TV Providers:\n&#39; + render_table([&#39;mso&#39;, &#39;mso name&#39;], table) + &#39;\n&#39;, out=sys.stdout)</span>
+<span class="sd">                sys.exit(0)</span>
+
+<span class="sd">            # Conflicting, missing and erroneous options</span>
+<span class="sd">            if opts.usenetrc and (opts.username is not None or opts.password is not None):</span>
+<span class="sd">                parser.error(&#39;using .netrc conflicts with giving username/password&#39;)</span>
+<span class="sd">            if opts.password is not None and opts.username is None:</span>
+<span class="sd">                parser.error(&#39;account username missing\n&#39;)</span>
+<span class="sd">            if opts.ap_password is not None and opts.ap_username is None:</span>
+<span class="sd">                parser.error(&#39;TV Provider account username missing\n&#39;)</span>
+<span class="sd">            if opts.outtmpl is not None and (opts.usetitle or opts.autonumber or opts.useid):</span>
+<span class="sd">                parser.error(&#39;using output template conflicts with using title, video ID or auto number&#39;)</span>
+<span class="sd">            if opts.autonumber_size is not None:</span>
+<span class="sd">                if opts.autonumber_size &lt;= 0:</span>
+<span class="sd">                    parser.error(&#39;auto number size must be positive&#39;)</span>
+<span class="sd">            if opts.autonumber_start is not None:</span>
+<span class="sd">                if opts.autonumber_start &lt; 0:</span>
+<span class="sd">                    parser.error(&#39;auto number start must be positive or 0&#39;)</span>
+<span class="sd">            if opts.usetitle and opts.useid:</span>
+<span class="sd">                parser.error(&#39;using title conflicts with using video ID&#39;)</span>
+<span class="sd">            if opts.username is not None and opts.password is None:</span>
+<span class="sd">                opts.password = compat_getpass(&#39;Type account password and press [Return]: &#39;)</span>
+<span class="sd">            if opts.ap_username is not None and opts.ap_password is None:</span>
+<span class="sd">                opts.ap_password = compat_getpass(&#39;Type TV provider account password and press [Return]: &#39;)</span>
+<span class="sd">            if opts.ratelimit is not None:</span>
+<span class="sd">                numeric_limit = FileDownloader.parse_bytes(opts.ratelimit)</span>
+<span class="sd">                if numeric_limit is None:</span>
+<span class="sd">                    parser.error(&#39;invalid rate limit specified&#39;)</span>
+<span class="sd">                opts.ratelimit = numeric_limit</span>
+<span class="sd">            if opts.min_filesize is not None:</span>
+<span class="sd">                numeric_limit = FileDownloader.parse_bytes(opts.min_filesize)</span>
+<span class="sd">                if numeric_limit is None:</span>
+<span class="sd">                    parser.error(&#39;invalid min_filesize specified&#39;)</span>
+<span class="sd">                opts.min_filesize = numeric_limit</span>
+<span class="sd">            if opts.max_filesize is not None:</span>
+<span class="sd">                numeric_limit = FileDownloader.parse_bytes(opts.max_filesize)</span>
+<span class="sd">                if numeric_limit is None:</span>
+<span class="sd">                    parser.error(&#39;invalid max_filesize specified&#39;)</span>
+<span class="sd">                opts.max_filesize = numeric_limit</span>
+<span class="sd">            if opts.sleep_interval is not None:</span>
+<span class="sd">                if opts.sleep_interval &lt; 0:</span>
+<span class="sd">                    parser.error(&#39;sleep interval must be positive or 0&#39;)</span>
+<span class="sd">            if opts.max_sleep_interval is not None:</span>
+<span class="sd">                if opts.max_sleep_interval &lt; 0:</span>
+<span class="sd">                    parser.error(&#39;max sleep interval must be positive or 0&#39;)</span>
+<span class="sd">                if opts.max_sleep_interval &lt; opts.sleep_interval:</span>
+<span class="sd">                    parser.error(&#39;max sleep interval must be greater than or equal to min sleep interval&#39;)</span>
+<span class="sd">            else:</span>
+<span class="sd">                opts.max_sleep_interval = opts.sleep_interval</span>
+<span class="sd">            if opts.ap_mso and opts.ap_mso not in MSO_INFO:</span>
+<span class="sd">                parser.error(&#39;Unsupported TV Provider, use --ap-list-mso to get a list of supported TV Providers&#39;)</span>
+
+<span class="sd">            def parse_retries(retries):</span>
+<span class="sd">                if retries in (&#39;inf&#39;, &#39;infinite&#39;):</span>
+<span class="sd">                    parsed_retries = float(&#39;inf&#39;)</span>
+<span class="sd">                else:</span>
+<span class="sd">                    try:</span>
+<span class="sd">                        parsed_retries = int(retries)</span>
+<span class="sd">                    except (TypeError, ValueError):</span>
+<span class="sd">                        parser.error(&#39;invalid retry count specified&#39;)</span>
+<span class="sd">                return parsed_retries</span>
+<span class="sd">            if opts.retries is not None:</span>
+<span class="sd">                opts.retries = parse_retries(opts.retries)</span>
+<span class="sd">            if opts.fragment_retries is not None:</span>
+<span class="sd">                opts.fragment_retries = parse_retries(opts.fragment_retries)</span>
+<span class="sd">            if opts.buffersize is not None:</span>
+<span class="sd">                numeric_buffersize = FileDownloader.parse_bytes(opts.buffersize)</span>
+<span class="sd">                if numeric_buffersize is None:</span>
+<span class="sd">                    parser.error(&#39;invalid buffer size specified&#39;)</span>
+<span class="sd">                opts.buffersize = numeric_buffersize</span>
+<span class="sd">            if opts.http_chunk_size is not None:</span>
+<span class="sd">                numeric_chunksize = FileDownloader.parse_bytes(opts.http_chunk_size)</span>
+<span class="sd">                if not numeric_chunksize:</span>
+<span class="sd">                    parser.error(&#39;invalid http chunk size specified&#39;)</span>
+<span class="sd">                opts.http_chunk_size = numeric_chunksize</span>
+<span class="sd">            if opts.playliststart &lt;= 0:</span>
+<span class="sd">                raise ValueError(&#39;Playlist start must be positive&#39;)</span>
+<span class="sd">            if opts.playlistend not in (-1, None) and opts.playlistend &lt; opts.playliststart:</span>
+<span class="sd">                raise ValueError(&#39;Playlist end must be greater than playlist start&#39;)</span>
+<span class="sd">            if opts.extractaudio:</span>
+<span class="sd">                if opts.audioformat not in [&#39;best&#39;, &#39;aac&#39;, &#39;flac&#39;, &#39;mp3&#39;, &#39;m4a&#39;, &#39;opus&#39;, &#39;vorbis&#39;, &#39;wav&#39;]:</span>
+<span class="sd">                    parser.error(&#39;invalid audio format specified&#39;)</span>
+<span class="sd">            if opts.audioquality:</span>
+<span class="sd">                opts.audioquality = opts.audioquality.strip(&#39;k&#39;).strip(&#39;K&#39;)</span>
+<span class="sd">                if not opts.audioquality.isdigit():</span>
+<span class="sd">                    parser.error(&#39;invalid audio quality specified&#39;)</span>
+<span class="sd">            if opts.recodevideo is not None:</span>
+<span class="sd">                if opts.recodevideo not in [&#39;mp4&#39;, &#39;flv&#39;, &#39;webm&#39;, &#39;ogg&#39;, &#39;mkv&#39;, &#39;avi&#39;]:</span>
+<span class="sd">                    parser.error(&#39;invalid video recode format specified&#39;)</span>
+<span class="sd">            if opts.convertsubtitles is not None:</span>
+<span class="sd">                if opts.convertsubtitles not in [&#39;srt&#39;, &#39;vtt&#39;, &#39;ass&#39;, &#39;lrc&#39;]:</span>
+<span class="sd">                    parser.error(&#39;invalid subtitle format specified&#39;)</span>
+
+<span class="sd">            if opts.date is not None:</span>
+<span class="sd">                date = DateRange.day(opts.date)</span>
+<span class="sd">            else:</span>
+<span class="sd">                date = DateRange(opts.dateafter, opts.datebefore)</span>
+
+<span class="sd">            # Do not download videos when there are audio-only formats</span>
+<span class="sd">            if opts.extractaudio and not opts.keepvideo and opts.format is None:</span>
+<span class="sd">                opts.format = &#39;bestaudio/best&#39;</span>
+
+<span class="sd">            # --all-sub automatically sets --write-sub if --write-auto-sub is not given</span>
+<span class="sd">            # this was the old behaviour if only --all-sub was given.</span>
+<span class="sd">            if opts.allsubtitles and not opts.writeautomaticsub:</span>
+<span class="sd">                opts.writesubtitles = True</span>
+
+<span class="sd">            outtmpl = ((opts.outtmpl is not None and opts.outtmpl) or</span>
+<span class="sd">                       (opts.format == &#39;-1&#39; and opts.usetitle and &#39;%(title)s-%(id)s-%(format)s.%(ext)s&#39;) or</span>
+<span class="sd">                       (opts.format == &#39;-1&#39; and &#39;%(id)s-%(format)s.%(ext)s&#39;) or</span>
+<span class="sd">                       (opts.usetitle and opts.autonumber and &#39;%(autonumber)s-%(title)s-%(id)s.%(ext)s&#39;) or</span>
+<span class="sd">                       (opts.usetitle and &#39;%(title)s-%(id)s.%(ext)s&#39;) or</span>
+<span class="sd">                       (opts.useid and &#39;%(id)s.%(ext)s&#39;) or</span>
+<span class="sd">                       (opts.autonumber and &#39;%(autonumber)s-%(id)s.%(ext)s&#39;) or</span>
+<span class="sd">                       DEFAULT_OUTTMPL)</span>
+<span class="sd">            if not os.path.splitext(outtmpl)[1] and opts.extractaudio:</span>
+<span class="sd">                parser.error(&#39;Cannot download a video and extract audio into the same&#39;</span>
+<span class="sd">                             &#39; file! Use &quot;{0}.%(ext)s&quot; instead of &quot;{0}&quot; as the output&#39;</span>
+<span class="sd">                             &#39; template&#39;.format(outtmpl))</span>
+
+<span class="sd">            any_getting = opts.geturl or opts.gettitle or opts.getid or opts.getthumbnail or opts.getdescription or opts.getfilename or opts.getformat or opts.getduration or opts.dumpjson or opts.dump_single_json</span>
+<span class="sd">            any_printing = opts.print_json</span>
+<span class="sd">            download_archive_fn = expand_path(opts.download_archive) if opts.download_archive is not None else opts.download_archive</span>
+
+<span class="sd">            # PostProcessors</span>
+<span class="sd">            postprocessors = []</span>
+<span class="sd">            if opts.metafromtitle:</span>
+<span class="sd">                postprocessors.append({</span>
+<span class="sd">                    &#39;key&#39;: &#39;MetadataFromTitle&#39;,</span>
+<span class="sd">                    &#39;titleformat&#39;: opts.metafromtitle</span>
+<span class="sd">                })</span>
+<span class="sd">            if opts.extractaudio:</span>
+<span class="sd">                postprocessors.append({</span>
+<span class="sd">                    &#39;key&#39;: &#39;FFmpegExtractAudio&#39;,</span>
+<span class="sd">                    &#39;preferredcodec&#39;: opts.audioformat,</span>
+<span class="sd">                    &#39;preferredquality&#39;: opts.audioquality,</span>
+<span class="sd">                    &#39;nopostoverwrites&#39;: opts.nopostoverwrites,</span>
+<span class="sd">                })</span>
+<span class="sd">            if opts.recodevideo:</span>
+<span class="sd">                postprocessors.append({</span>
+<span class="sd">                    &#39;key&#39;: &#39;FFmpegVideoConvertor&#39;,</span>
+<span class="sd">                    &#39;preferedformat&#39;: opts.recodevideo,</span>
+<span class="sd">                })</span>
+<span class="sd">            # FFmpegMetadataPP should be run after FFmpegVideoConvertorPP and</span>
+<span class="sd">            # FFmpegExtractAudioPP as containers before conversion may not support</span>
+<span class="sd">            # metadata (3gp, webm, etc.)</span>
+<span class="sd">            # And this post-processor should be placed before other metadata</span>
+<span class="sd">            # manipulating post-processors (FFmpegEmbedSubtitle) to prevent loss of</span>
+<span class="sd">            # extra metadata. By default ffmpeg preserves metadata applicable for both</span>
+<span class="sd">            # source and target containers. From this point the container won&#39;t change,</span>
+<span class="sd">            # so metadata can be added here.</span>
+<span class="sd">            if opts.addmetadata:</span>
+<span class="sd">                postprocessors.append({&#39;key&#39;: &#39;FFmpegMetadata&#39;})</span>
+<span class="sd">            if opts.convertsubtitles:</span>
+<span class="sd">                postprocessors.append({</span>
+<span class="sd">                    &#39;key&#39;: &#39;FFmpegSubtitlesConvertor&#39;,</span>
+<span class="sd">                    &#39;format&#39;: opts.convertsubtitles,</span>
+<span class="sd">                })</span>
+<span class="sd">            if opts.embedsubtitles:</span>
+<span class="sd">                postprocessors.append({</span>
+<span class="sd">                    &#39;key&#39;: &#39;FFmpegEmbedSubtitle&#39;,</span>
+<span class="sd">                })</span>
+<span class="sd">            if opts.embedthumbnail:</span>
+<span class="sd">                already_have_thumbnail = opts.writethumbnail or opts.write_all_thumbnails</span>
+<span class="sd">                postprocessors.append({</span>
+<span class="sd">                    &#39;key&#39;: &#39;EmbedThumbnail&#39;,</span>
+<span class="sd">                    &#39;already_have_thumbnail&#39;: already_have_thumbnail</span>
+<span class="sd">                })</span>
+<span class="sd">                if not already_have_thumbnail:</span>
+<span class="sd">                    opts.writethumbnail = True</span>
+<span class="sd">            # XAttrMetadataPP should be run after post-processors that may change file</span>
+<span class="sd">            # contents</span>
+<span class="sd">            if opts.xattrs:</span>
+<span class="sd">                postprocessors.append({&#39;key&#39;: &#39;XAttrMetadata&#39;})</span>
+<span class="sd">            # Please keep ExecAfterDownload towards the bottom as it allows the user to modify the final file in any way.</span>
+<span class="sd">            # So if the user is able to remove the file before your postprocessor runs it might cause a few problems.</span>
+<span class="sd">            if opts.exec_cmd:</span>
+<span class="sd">                postprocessors.append({</span>
+<span class="sd">                    &#39;key&#39;: &#39;ExecAfterDownload&#39;,</span>
+<span class="sd">                    &#39;exec_cmd&#39;: opts.exec_cmd,</span>
+<span class="sd">                })</span>
+<span class="sd">            external_downloader_args = None</span>
+<span class="sd">            if opts.external_downloader_args:</span>
+<span class="sd">                external_downloader_args = compat_shlex_split(opts.external_downloader_args)</span>
+<span class="sd">            postprocessor_args = None</span>
+<span class="sd">            if opts.postprocessor_args:</span>
+<span class="sd">                postprocessor_args = compat_shlex_split(opts.postprocessor_args)</span>
+<span class="sd">            match_filter = (</span>
+<span class="sd">                None if opts.match_filter is None</span>
+<span class="sd">                else match_filter_func(opts.match_filter))</span>
+
+<span class="sd">            ydl_opts = {</span>
+<span class="sd">                &#39;usenetrc&#39;: opts.usenetrc,</span>
+<span class="sd">                &#39;username&#39;: opts.username,</span>
+<span class="sd">                &#39;password&#39;: opts.password,</span>
+<span class="sd">                &#39;twofactor&#39;: opts.twofactor,</span>
+<span class="sd">                &#39;videopassword&#39;: opts.videopassword,</span>
+<span class="sd">                &#39;ap_mso&#39;: opts.ap_mso,</span>
+<span class="sd">                &#39;ap_username&#39;: opts.ap_username,</span>
+<span class="sd">                &#39;ap_password&#39;: opts.ap_password,</span>
+<span class="sd">                &#39;quiet&#39;: (opts.quiet or any_getting or any_printing),</span>
+<span class="sd">                &#39;no_warnings&#39;: opts.no_warnings,</span>
+<span class="sd">                &#39;forceurl&#39;: opts.geturl,</span>
+<span class="sd">                &#39;forcetitle&#39;: opts.gettitle,</span>
+<span class="sd">                &#39;forceid&#39;: opts.getid,</span>
+<span class="sd">                &#39;forcethumbnail&#39;: opts.getthumbnail,</span>
+<span class="sd">                &#39;forcedescription&#39;: opts.getdescription,</span>
+<span class="sd">                &#39;forceduration&#39;: opts.getduration,</span>
+<span class="sd">                &#39;forcefilename&#39;: opts.getfilename,</span>
+<span class="sd">                &#39;forceformat&#39;: opts.getformat,</span>
+<span class="sd">                &#39;forcejson&#39;: opts.dumpjson or opts.print_json,</span>
+<span class="sd">                &#39;dump_single_json&#39;: opts.dump_single_json,</span>
+<span class="sd">                &#39;simulate&#39;: opts.simulate or any_getting,</span>
+<span class="sd">                &#39;skip_download&#39;: opts.skip_download,</span>
+<span class="sd">                &#39;format&#39;: opts.format,</span>
+<span class="sd">                &#39;listformats&#39;: opts.listformats,</span>
+<span class="sd">                &#39;outtmpl&#39;: outtmpl,</span>
+<span class="sd">                &#39;autonumber_size&#39;: opts.autonumber_size,</span>
+<span class="sd">                &#39;autonumber_start&#39;: opts.autonumber_start,</span>
+<span class="sd">                &#39;restrictfilenames&#39;: opts.restrictfilenames,</span>
+<span class="sd">                &#39;ignoreerrors&#39;: opts.ignoreerrors,</span>
+<span class="sd">                &#39;force_generic_extractor&#39;: opts.force_generic_extractor,</span>
+<span class="sd">                &#39;ratelimit&#39;: opts.ratelimit,</span>
+<span class="sd">                &#39;nooverwrites&#39;: opts.nooverwrites,</span>
+<span class="sd">                &#39;retries&#39;: opts.retries,</span>
+<span class="sd">                &#39;fragment_retries&#39;: opts.fragment_retries,</span>
+<span class="sd">                &#39;skip_unavailable_fragments&#39;: opts.skip_unavailable_fragments,</span>
+<span class="sd">                &#39;keep_fragments&#39;: opts.keep_fragments,</span>
+<span class="sd">                &#39;buffersize&#39;: opts.buffersize,</span>
+<span class="sd">                &#39;noresizebuffer&#39;: opts.noresizebuffer,</span>
+<span class="sd">                &#39;http_chunk_size&#39;: opts.http_chunk_size,</span>
+<span class="sd">                &#39;continuedl&#39;: opts.continue_dl,</span>
+<span class="sd">                &#39;noprogress&#39;: opts.noprogress,</span>
+<span class="sd">                &#39;progress_with_newline&#39;: opts.progress_with_newline,</span>
+<span class="sd">                &#39;playliststart&#39;: opts.playliststart,</span>
+<span class="sd">                &#39;playlistend&#39;: opts.playlistend,</span>
+<span class="sd">                &#39;playlistreverse&#39;: opts.playlist_reverse,</span>
+<span class="sd">                &#39;playlistrandom&#39;: opts.playlist_random,</span>
+<span class="sd">                &#39;noplaylist&#39;: opts.noplaylist,</span>
+<span class="sd">                &#39;logtostderr&#39;: opts.outtmpl == &#39;-&#39;,</span>
+<span class="sd">                &#39;consoletitle&#39;: opts.consoletitle,</span>
+<span class="sd">                &#39;nopart&#39;: opts.nopart,</span>
+<span class="sd">                &#39;updatetime&#39;: opts.updatetime,</span>
+<span class="sd">                &#39;writedescription&#39;: opts.writedescription,</span>
+<span class="sd">                &#39;writeannotations&#39;: opts.writeannotations,</span>
+<span class="sd">                &#39;writeinfojson&#39;: opts.writeinfojson,</span>
+<span class="sd">                &#39;writethumbnail&#39;: opts.writethumbnail,</span>
+<span class="sd">                &#39;write_all_thumbnails&#39;: opts.write_all_thumbnails,</span>
+<span class="sd">                &#39;writesubtitles&#39;: opts.writesubtitles,</span>
+<span class="sd">                &#39;writeautomaticsub&#39;: opts.writeautomaticsub,</span>
+<span class="sd">                &#39;allsubtitles&#39;: opts.allsubtitles,</span>
+<span class="sd">                &#39;listsubtitles&#39;: opts.listsubtitles,</span>
+<span class="sd">                &#39;subtitlesformat&#39;: opts.subtitlesformat,</span>
+<span class="sd">                &#39;subtitleslangs&#39;: opts.subtitleslangs,</span>
+<span class="sd">                &#39;matchtitle&#39;: decodeOption(opts.matchtitle),</span>
+<span class="sd">                &#39;rejecttitle&#39;: decodeOption(opts.rejecttitle),</span>
+<span class="sd">                &#39;max_downloads&#39;: opts.max_downloads,</span>
+<span class="sd">                &#39;prefer_free_formats&#39;: opts.prefer_free_formats,</span>
+<span class="sd">                &#39;verbose&#39;: opts.verbose,</span>
+<span class="sd">                &#39;dump_intermediate_pages&#39;: opts.dump_intermediate_pages,</span>
+<span class="sd">                &#39;write_pages&#39;: opts.write_pages,</span>
+<span class="sd">                &#39;test&#39;: opts.test,</span>
+<span class="sd">                &#39;keepvideo&#39;: opts.keepvideo,</span>
+<span class="sd">                &#39;min_filesize&#39;: opts.min_filesize,</span>
+<span class="sd">                &#39;max_filesize&#39;: opts.max_filesize,</span>
+<span class="sd">                &#39;min_views&#39;: opts.min_views,</span>
+<span class="sd">                &#39;max_views&#39;: opts.max_views,</span>
+<span class="sd">                &#39;daterange&#39;: date,</span>
+<span class="sd">                &#39;cachedir&#39;: opts.cachedir,</span>
+<span class="sd">                &#39;youtube_print_sig_code&#39;: opts.youtube_print_sig_code,</span>
+<span class="sd">                &#39;age_limit&#39;: opts.age_limit,</span>
+<span class="sd">                &#39;download_archive&#39;: download_archive_fn,</span>
+<span class="sd">                &#39;cookiefile&#39;: opts.cookiefile,</span>
+<span class="sd">                &#39;nocheckcertificate&#39;: opts.no_check_certificate,</span>
+<span class="sd">                &#39;prefer_insecure&#39;: opts.prefer_insecure,</span>
+<span class="sd">                &#39;proxy&#39;: opts.proxy,</span>
+<span class="sd">                &#39;socket_timeout&#39;: opts.socket_timeout,</span>
+<span class="sd">                &#39;bidi_workaround&#39;: opts.bidi_workaround,</span>
+<span class="sd">                &#39;debug_printtraffic&#39;: opts.debug_printtraffic,</span>
+<span class="sd">                &#39;prefer_ffmpeg&#39;: opts.prefer_ffmpeg,</span>
+<span class="sd">                &#39;include_ads&#39;: opts.include_ads,</span>
+<span class="sd">                &#39;default_search&#39;: opts.default_search,</span>
+<span class="sd">                &#39;youtube_include_dash_manifest&#39;: opts.youtube_include_dash_manifest,</span>
+<span class="sd">                &#39;encoding&#39;: opts.encoding,</span>
+<span class="sd">                &#39;extract_flat&#39;: opts.extract_flat,</span>
+<span class="sd">                &#39;mark_watched&#39;: opts.mark_watched,</span>
+<span class="sd">                &#39;merge_output_format&#39;: opts.merge_output_format,</span>
+<span class="sd">                &#39;postprocessors&#39;: postprocessors,</span>
+<span class="sd">                &#39;fixup&#39;: opts.fixup,</span>
+<span class="sd">                &#39;source_address&#39;: opts.source_address,</span>
+<span class="sd">                &#39;call_home&#39;: opts.call_home,</span>
+<span class="sd">                &#39;sleep_interval&#39;: opts.sleep_interval,</span>
+<span class="sd">                &#39;max_sleep_interval&#39;: opts.max_sleep_interval,</span>
+<span class="sd">                &#39;external_downloader&#39;: opts.external_downloader,</span>
+<span class="sd">                &#39;list_thumbnails&#39;: opts.list_thumbnails,</span>
+<span class="sd">                &#39;playlist_items&#39;: opts.playlist_items,</span>
+<span class="sd">                &#39;xattr_set_filesize&#39;: opts.xattr_set_filesize,</span>
+<span class="sd">                &#39;match_filter&#39;: match_filter,</span>
+<span class="sd">                &#39;no_color&#39;: opts.no_color,</span>
+<span class="sd">                &#39;ffmpeg_location&#39;: opts.ffmpeg_location,</span>
+<span class="sd">                &#39;hls_prefer_native&#39;: opts.hls_prefer_native,</span>
+<span class="sd">                &#39;hls_use_mpegts&#39;: opts.hls_use_mpegts,</span>
+<span class="sd">                &#39;external_downloader_args&#39;: external_downloader_args,</span>
+<span class="sd">                &#39;postprocessor_args&#39;: postprocessor_args,</span>
+<span class="sd">                &#39;cn_verification_proxy&#39;: opts.cn_verification_proxy,</span>
+<span class="sd">                &#39;geo_verification_proxy&#39;: opts.geo_verification_proxy,</span>
+<span class="sd">                &#39;config_location&#39;: opts.config_location,</span>
+<span class="sd">                &#39;geo_bypass&#39;: opts.geo_bypass,</span>
+<span class="sd">                &#39;geo_bypass_country&#39;: opts.geo_bypass_country,</span>
+<span class="sd">                &#39;geo_bypass_ip_block&#39;: opts.geo_bypass_ip_block,</span>
+<span class="sd">                # just for deprecation check</span>
+<span class="sd">                &#39;autonumber&#39;: opts.autonumber if opts.autonumber is True else None,</span>
+<span class="sd">                &#39;usetitle&#39;: opts.usetitle if opts.usetitle is True else None,</span>
+<span class="sd">            }</span>
+
+<span class="sd">            with YoutubeDL(ydl_opts) as ydl:</span>
+<span class="sd">                # Update version</span>
+<span class="sd">                if opts.update_self:</span>
+<span class="sd">                    update_self(ydl.to_screen, opts.verbose, ydl._opener)</span>
+
+<span class="sd">                # Remove cache dir</span>
+<span class="sd">                if opts.rm_cachedir:</span>
+<span class="sd">                    ydl.cache.remove()</span>
+
+<span class="sd">                # Maybe do nothing</span>
+<span class="sd">                if (len(all_urls) &lt; 1) and (opts.load_info_filename is None):</span>
+<span class="sd">                    if opts.update_self or opts.rm_cachedir:</span>
+<span class="sd">                        sys.exit()</span>
+
+<span class="sd">                    ydl.warn_if_short_id(sys.argv[1:] if argv is None else argv)</span>
+<span class="sd">                    parser.error(</span>
+<span class="sd">                        &#39;You must provide at least one URL.\n&#39;</span>
+<span class="sd">                        &#39;Type youtube-dl --help to see a list of all options.&#39;)</span>
+
+<span class="sd">                try:</span>
+<span class="sd">                    if opts.load_info_filename is not None:</span>
+<span class="sd">                        retcode = ydl.download_with_info_file(expand_path(opts.load_info_filename))</span>
+<span class="sd">                    else:</span>
+<span class="sd">                        retcode = ydl.download(all_urls)</span>
+<span class="sd">                except MaxDownloadsReached:</span>
+<span class="sd">                    ydl.to_screen(&#39;--max-download limit reached, aborting.&#39;)</span>
+<span class="sd">                    retcode = 101</span>
+
+<span class="sd">            sys.exit(retcode)</span>
+
+
+<span class="sd">        def main(argv=None):</span>
+<span class="sd">            try:</span>
+<span class="sd">                _real_main(argv)</span>
+<span class="sd">            except DownloadError:</span>
+<span class="sd">                sys.exit(1)</span>
+<span class="sd">            except SameFileError:</span>
+<span class="sd">                sys.exit(&#39;ERROR: fixed output name but more than one file to download&#39;)</span>
+<span class="sd">            except KeyboardInterrupt:</span>
+<span class="sd">                sys.exit(&#39;\nERROR: Interrupted by user&#39;)</span>
+
+
+<span class="sd">        __all__ = [&#39;main&#39;, &#39;YoutubeDL&#39;, &#39;gen_extractors&#39;, &#39;list_extractors&#39;]</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">requests</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+        <span class="s2">&quot;This script xepends on the requests module. Falling back to urllib.&quot;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">urllib</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">REQUESTS</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Requests was imported.&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">youtube_dl</span>
+<span class="kn">from</span> <span class="nn">youtube_dl</span> <span class="k">import</span> <span class="n">parseOpts</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TermuxDL"><a class="viewcode-back" href="../../api.html#pyutil.ytdl.TermuxDL">[docs]</a><span class="k">class</span> <span class="nc">TermuxDL</span><span class="p">(</span><span class="n">youtube_dl</span><span class="o">.</span><span class="n">YoutubeDL</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Try subclassing youtube_dl and see if that makes it easier.</span>
+
+<span class="sd">    Also heres all the source code in case you think you need it.</span>
+
+
+<span class="sd">    .. code-block:: python3</span>
+
+<span class="sd">        _NUMERIC_FIELDS = set((</span>
+<span class="sd">            &#39;width&#39;, &#39;height&#39;, &#39;tbr&#39;, &#39;abr&#39;, &#39;asr&#39;, &#39;vbr&#39;, &#39;fps&#39;, &#39;filesize&#39;, &#39;filesize_approx&#39;,</span>
+<span class="sd">            &#39;timestamp&#39;, &#39;upload_year&#39;, &#39;upload_month&#39;, &#39;upload_day&#39;,</span>
+<span class="sd">            &#39;duration&#39;, &#39;view_count&#39;, &#39;like_count&#39;, &#39;dislike_count&#39;, &#39;repost_count&#39;,</span>
+<span class="sd">            &#39;average_rating&#39;, &#39;comment_count&#39;, &#39;age_limit&#39;,</span>
+<span class="sd">            &#39;start_time&#39;, &#39;end_time&#39;,</span>
+<span class="sd">            &#39;chapter_number&#39;, &#39;season_number&#39;, &#39;episode_number&#39;,</span>
+<span class="sd">            &#39;track_number&#39;, &#39;disc_number&#39;, &#39;release_year&#39;,</span>
+<span class="sd">            &#39;playlist_index&#39;,</span>
+<span class="sd">        ))</span>
+
+<span class="sd">        params = None</span>
+<span class="sd">        _ies = []</span>
+<span class="sd">        _pps = []</span>
+<span class="sd">        _download_retcode = None</span>
+<span class="sd">        _num_downloads = None</span>
+<span class="sd">        _screen_file = None</span>
+
+<span class="sd">        def __init__(self, params=None, auto_init=True):</span>
+<span class="sd">            \&quot;\&quot;\&quot;Create a FileDownloader object with the given options.\&quot;\&quot;\&quot;</span>
+<span class="sd">            if params is None:</span>
+<span class="sd">                params = {}</span>
+<span class="sd">            self._ies = []</span>
+<span class="sd">            self._ies_instances = {}</span>
+<span class="sd">            self._pps = []</span>
+<span class="sd">            self._progress_hooks = []</span>
+<span class="sd">            self._download_retcode = 0</span>
+<span class="sd">            self._num_downloads = 0</span>
+<span class="sd">            self._screen_file = [sys.stdout, sys.stderr][params.get(&#39;logtostderr&#39;, False)]</span>
+<span class="sd">            self._err_file = sys.stderr</span>
+<span class="sd">            self.params = {</span>
+<span class="sd">                # Default parameters</span>
+<span class="sd">                &#39;nocheckcertificate&#39;: False,</span>
+<span class="sd">            }</span>
+<span class="sd">            self.params.update(params)</span>
+<span class="sd">            self.cache = Cache(self)</span>
+
+<span class="sd">    So there it is!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize with the ytdl state.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TermuxDL.parseOpts"><a class="viewcode-back" href="../../api.html#pyutil.ytdl.TermuxDL.parseOpts">[docs]</a>    <span class="k">def</span> <span class="nf">parseOpts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a dict of user-provided args.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">parseOpts</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="ytdl"><a class="viewcode-back" href="../../api.html#pyutil.ytdl.ytdl">[docs]</a><span class="k">def</span> <span class="nf">ytdl</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">ytdl_opts</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Execute downloading a YouTube video.</span>
+
+<span class="sd">    Possibly makes sense to make this a class. Playlists are a subclass,</span>
+<span class="sd">    objects with variable sizes are others etc.</span>
+
+<span class="sd">    .. todo:: Should merge the built-in options I have here with user provided ones.</span>
+
+<span class="sd">    :param link: URL to a YouTube video</span>
+<span class="sd">    :returns: Request object or :class:`urllib.Response` if :mod:`requests` isn&#39;t downloaded.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ydl_opts</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;format&#39;</span><span class="p">:</span>
+        <span class="s1">&#39;bestaudio/best&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;postprocessors&#39;</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;FFmpegExtractAudio&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;preferredcodec&#39;</span><span class="p">:</span> <span class="s1">&#39;mp3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;preferredquality&#39;</span><span class="p">:</span> <span class="s1">&#39;192&#39;</span><span class="p">,</span>
+        <span class="p">}],</span>
+        <span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="s1">&#39;TODO:&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;logger&#39;</span><span class="p">:</span> <span class="n">logger</span><span class="p">,</span>
+        <span class="s1">&#39;progress_hooks&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">my_hook</span><span class="p">],</span>
+    <span class="p">}</span>
+    <span class="n">ydl</span> <span class="o">=</span> <span class="n">youtube_dl</span><span class="o">.</span><span class="n">YoutubeDL</span><span class="p">(</span><span class="n">ydl_opts</span><span class="p">)</span>
+    <span class="n">ydl</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">link</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="requests_dl"><a class="viewcode-back" href="../../api.html#pyutil.ytdl.requests_dl">[docs]</a><span class="k">def</span> <span class="nf">requests_dl</span><span class="p">(</span><span class="n">link</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;TODO: Docstring for requests_dl.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    link : str</span>
+<span class="sd">        Download a URL using :mod:`requests`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TODO</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="c1"># might not need bs4 if all im doing is downloading.</span>
+    <span class="c1"># could analyze at a later point</span>
+    <span class="c1"># soup = BeautifulSoup(source, &quot;html.parser&quot;)</span>
+
+    <span class="c1"># should figure out how to parse the title of the page and save it</span>
+    <span class="c1"># as the filename</span>
+    <span class="c1"># should also choose a different file path then &#39;wherever we run this&#39;</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;web_page.txt&quot;</span>  <span class="c1"># fix hard coded nonsense</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;ab&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="mi">100000</span><span class="p">):</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">closed</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="my_hook"><a class="viewcode-back" href="../../api.html#pyutil.ytdl.my_hook">[docs]</a><span class="k">def</span> <span class="nf">my_hook</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Hook to notify the user the download is completed.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;finished&#39;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done downloading, now converting ...&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.ytdl.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Execute the program.&quot;&quot;&quot;</span>
+    <span class="n">dl</span> <span class="o">=</span> <span class="n">TermuxDL</span><span class="p">()</span>
+
+    <span class="n">ytdl_opts</span> <span class="o">=</span> <span class="n">dl</span><span class="o">.</span><span class="n">parseOpts</span><span class="p">()</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Options: &quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">ytdl_opts</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>  <span class="c1"># honestly might not be the right method</span>
+        <span class="n">link</span> <span class="o">=</span> <span class="n">ytdl_opts</span><span class="o">.</span><span class="n">geturl</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">REQUESTS</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">res</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;/playlist&quot;</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;This seems like a YouTube playlist. Downloading. Press Ctrl-C to stop&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;youtu.be&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ytdl</span><span class="p">(</span><span class="n">link</span><span class="p">))</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ytdl</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">ytdl_opts</span><span class="p">)</span></div>
+        <span class="c1"># requests_dl(link)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

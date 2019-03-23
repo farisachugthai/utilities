@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 """Print a user's public IP address and hostname.
 
-Requires
---------
+.. rubric:: Requires
+
+
 :mod:`requests`
 
 
@@ -17,10 +18,6 @@ Installing packages for your project:
 
 `<https://docs.python-guide.org/en/latest/dev/virtualenvs/>`_
 
-
-.. todo:: Come up with a fallback if requests isn't installed.
-
-
 """
 import logging
 import socket
@@ -31,16 +28,22 @@ logger = logging.getLogger(__name__)
 
 
 def get_public_ip():
-    """Fetch the user's public IP address by querying `<httpbin.org>`__.
+    """Fetch the user's public IP address by querying `<httpbin.org>`_.
 
     Returns
     -------
     rt : str
-        A formatted message displaying the user's IP address.
+        A :mod:`json` formatted message displaying the user's IP address.
 
 
     """
     response = requests.get('https://httpbin.org/ip')
+    response.raise_for_status()
+
+    logging.debug("Response object was:")
+    logging.debug(response.json())
+    logging.debug("response.json()['origin'] was:")
+    logging.debug(response.json()['origin'])
     rt = 'Your IP is {0}'.format(response.json()['origin'])
     return rt
 
@@ -60,6 +63,8 @@ def get_hostname():
 
 
 if '__name__' == '__main__':
-    response = get_public_ip()
-    print(response)
-    print(get_hostname())
+    ip_ret_val = get_public_ip()
+    print(ip_ret_val)
+
+    user_hostname = get_hostname()
+    print(user_hostname)

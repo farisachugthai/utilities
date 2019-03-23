@@ -32,19 +32,8 @@ import pyutil
 def _parse_arguments():
     """Parse user input."""
     parser = argparse.ArgumentParser(
-        prog='lazy_downloader', description=__doc__)
+        prog='__name__', description=__doc__)
 
-    parser.add_argument(
-        "-ha",
-        "--headers",
-        nargs='*',
-        help="Headers to send to the web server.")
-
-    parser.add_argument(
-        '-V',
-        '--version',
-        action='version',
-        version='%(prog)s' + pyutil.__about__.__version__)
 
     parser.add_argument(
         "URL",
@@ -59,7 +48,7 @@ def _parse_arguments():
         help="The name of the file to write to. Must not exist already.")
 
     parser.add_argument(
-        "-h",
+        "-ha",
         "--headers",
         nargs='*',
         help="Headers to send to the web server.")
@@ -68,7 +57,7 @@ def _parse_arguments():
         '-V',
         '--version',
         action='version',
-        version='%(prog)s' + pyutil.__about__['version'])
+        version='%(prog)s' + pyutil.__about__.__version__)
 
     args = parser.parse_args()
 

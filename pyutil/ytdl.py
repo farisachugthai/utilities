@@ -14,15 +14,18 @@ This script should be called from the shell as so
 
 .. code-block:: shell
 
-        python termux-urls.py $@
+        python ytdl.py $*
+
+where the ``$*`` idiom can be replaced with either URLs of individual videos,
+a link to a playlist, or a file containing URLs.
 
 
 .. todo::
 
     1. Assume that the :mod:`youtube_dl` script functions.
-    2. Then double chsck we weren't given a file ytdl knows how to handle.
+    2. Then double check we weren't given a file ytdl knows how to handle.
     3. If we were, then scrape with bs4.
-        - Possibly extend to writing prettified json (as in json.dumps("",tab=4)) to a file.
+        - Possibly extend to writing prettified json (as in json.dumps("",tab=2)) to a file.
     4. Need to add support with argparse because this is gonna get out of hand quickly.
     5. Handle playlists.
 
@@ -277,7 +280,8 @@ This is a long copy and paste but read this::
                              ' file! Use "{0}.%(ext)s" instead of "{0}" as the output'
                              ' template'.format(outtmpl))
 
-            any_getting = opts.geturl or opts.gettitle or opts.getid or opts.getthumbnail or opts.getdescription or opts.getfilename or opts.getformat or opts.getduration or opts.dumpjson or opts.dump_single_json
+            any_getting = opts.geturl or opts.gettitle or opts.getid or
+                          opts.getthumbnail or opts.getdescription or opts.getfilename or opts.getformat or opts.getduration or opts.dumpjson or opts.dump_single_json
             any_printing = opts.print_json
             download_archive_fn = expand_path(opts.download_archive) if opts.download_archive is not None else opts.download_archive
 

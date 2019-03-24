@@ -1,7 +1,7 @@
 .. _numerical.rst:
 
 ===========
-numerical
+Numerical
 ===========
 
 These are a few modules created in order to practice using computational

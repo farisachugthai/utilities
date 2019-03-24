@@ -33,6 +33,7 @@ However, the filetype mapping came about in 1.8 so make sure to add that
 
 
 """
+from datetime import datetime
 import logging
 import os
 import sys
@@ -41,8 +42,8 @@ import sys
 # as a package
 
 from numpydoc import numpydoc  # noqa
-import flake8_rst
-from docs.sphinxext import pygmentsdoc
+import flake8_rst  # noqa
+from docs.sphinxext import pygmentsdoc  # noqa
 
 logger = logging.basicConfig(level=logging.WARNING)
 
@@ -66,7 +67,7 @@ logging.debug("Path is currently: " + str(sys.path))
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
 project = u'pyutil'
-copyright = u'2018, Faris A Chugthai'
+copyright = u'2018-{}, Faris A Chugthai'.format(datetime.now().year)
 author = u'Faris A Chugthai'
 
 # The short X.Y version
@@ -171,7 +172,8 @@ pygments_style = 'sphinx'
 #
 html_theme_options = {
     "github_user": "Faris A. Chugthai",
-    "github_repo": "utilities"
+    "github_repo": "utilities",
+    "github_banner": True,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -202,6 +204,9 @@ html_sidebars = {
         'donate.html',
     ]
 }
+
+# If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
+html_show_sphinx = False
 
 # -- Options for HTMLHelp output ------------------------------------
 

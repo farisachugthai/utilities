@@ -84,6 +84,5 @@ def py_lt_exit(max_py_version):
                  str(max_py_version))
 
 
-
 if __name__ == '__main__':
     sys.exit("Source this file don't run it directly!")

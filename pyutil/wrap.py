@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 r"""Wrap text similarly to :func:`textwrap.dedent()` but with multiple paragraphs.
 
-From :mod:`IPython.utils.text`.
-
-Possibly going to convert `sys.argv` to `**kwargs` for the function.
-
 Allow the user to input any parameters that are accepted by
 :class:`textwrap.TextWrapper()`
+
+.. seealso:: :mod:`IPython.utils.text`
+
+
 
 TextWrapper
 -----------
@@ -15,7 +15,7 @@ TextWrapper
 Help on class TextWrapper in textwrap:
 
 textwrap.TextWrapper = class TextWrapper(builtins.object)
- |  textwrap.TextWrapper(width=70, initial_indent='', subsequent_indent='',
+ | textwrap.TextWrapper(width=70, initial_indent='', subsequent_indent='',
  | expand_tabs=True, replace_whitespace=True, fix_sentence_endings=False,
  | break_long_words=True, drop_whitespace=True, break_on_hyphens=True,
  | tabsize=8, *, max_lines=None, placeholder=' [...]')
@@ -90,30 +90,6 @@ textwrap.TextWrapper = class TextWrapper(builtins.object)
  |      and all other whitespace characters (including newline) are
  |      converted to space.
  |
- |  ----------------------------------------------------------------------
- |  Data descriptors defined here:
- |
- |  __dict__
- |      dictionary for instance variables (if defined)
- |
- |  __weakref__
- |      list of weak references to the object (if defined)
- |
- |  ----------------------------------------------------------------------
- |  Data and other attributes defined here:
- |
- |  sentence_end_re = re.compile('[a-z][\\.\\!\\?][\\"\\\']?\\Z')
- |
- |  unicode_whitespace_trans = {9: 32, 10: 32, 11: 32, 12: 32, 13: 32, 32:...
- |
- |  uspace = 32
- |
- |  wordsep_re = re.compile('\n        ( # any whitespace\n      ...# word...
- |
- |  wordsep_simple_re = re.compile('([\\\t\\\n\\\x0b\\\x0c\\\r\\ ]+)')
- |
- |  x = ' '
-
 
 """
 import re
@@ -193,8 +169,8 @@ if __name__ == '__main__':
 
     # it might be easier to do the above.
     # can't do it like the below because then we have to hardcode the value of
-    # ncols # so we could force some kw args for the script but it's then easier
-    # for # the user to import the function and use it themselves.
+    # ncols so we could force some kw args for the script but it's then easier
+    # for the user to import the function and use it themselves.
 
     # if len(args) > 2:
     # for i in args[1:]:

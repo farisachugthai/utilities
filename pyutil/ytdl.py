@@ -606,8 +606,19 @@ def ytdl(link, ytdl_opts):
 
     .. todo:: Should merge the built-in options I have here with user provided ones.
 
-    :param link: URL to a YouTube video
-    :returns: Request object or :class:`urllib.Response` if :mod:`requests` isn't downloaded.
+    Parameters
+    ----------
+    link : str
+        URL to a Youtube video
+
+    Returns
+    -------
+    todo
+
+    .. :returns: Request object or :class:`urllib.Response` if :mod:`requests` isn't downloaded.
+
+    .. currently it does not.
+
     """
     ydl_opts = {
         'format':
@@ -617,8 +628,10 @@ def ytdl(link, ytdl_opts):
             'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
-        'output': 'TODO:',
-        'logger': logger,
+        'output':
+        'TODO:',
+        'logger':
+        logger,
         'progress_hooks': [my_hook],
     }
     ydl = youtube_dl.YoutubeDL(ydl_opts)
@@ -668,8 +681,8 @@ def main():
 
     ytdl_opts = dl.parseOpts()
 
-    logging.info("Options: ")
-    logging.info(ytdl_opts)
+    logging.debug("Options: ")
+    logging.debug(ytdl_opts)
 
     try:  # honestly might not be the right method
         link = ytdl_opts.geturl

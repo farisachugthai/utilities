@@ -31,9 +31,7 @@ import pyutil
 
 def _parse_arguments():
     """Parse user input."""
-    parser = argparse.ArgumentParser(
-        prog='__name__', description=__doc__)
-
+    parser = argparse.ArgumentParser(prog='__name__', description=__doc__)
 
     parser.add_argument(
         "URL",
@@ -68,6 +66,7 @@ def _parse_site(URL, *args, **kwargs):
     """Parse the given `URL`, remove tags and return plaintext.
 
     This should probably be modified to take the user agent and header args.
+
     Parameters
     ----------
     URL : str
@@ -106,10 +105,6 @@ def find_links(text):
 
 def main(url, output_fname):
     """Download URL and write to disk.
-
-    .. todo::
-
-        Check that the file is plain text and not hit constant false positives
 
     .. todo:: Add headers.
 
@@ -178,10 +173,11 @@ if __name__ == "__main__":
         'Accept-Language': 'en-us,en;q=0.5',
     }
 
-    USER_AGENTS = {
-        'Safari':
-        'Mozilla/5.0 (X11; Linux x86_64; rv:10.0) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27',
-    }
+    # ...??
+    # USER_AGENTS = {
+    #     'Safari':
+    #     'Mozilla/5.0 (X11; Linux x86_64; rv:10.0) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27',
+    # }
 
     try:
         headers = args.headers

@@ -41,6 +41,7 @@ import time
 
 from .__about__ import __version__
 
+
 class BatchRename(Template):
     """Delimiter for string substitutions."""
 
@@ -60,14 +61,11 @@ def _parse_arguments():
     parser.add_argument(
         'rename_format',
         nargs=1,
-        help=r'Enter rename style (%d-date %n-seqnum %f-format I.E.  Ashley_%n%f)'
-    )
+        help=
+        r'Enter rename style (%d-date %n-seqnum %f-format I.E.  Ashley_%n%f)')
 
     parser.add_argument(
-        '-V',
-        '--version',
-        action='version',
-        version='%(prog)s' + __version__)
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

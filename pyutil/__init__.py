@@ -28,8 +28,7 @@ import pkg_resources
 
 from .__about__ import (  # noqa F401
     __author__, __copyright__, __description__, __docformat__, __license__,
-    __title__, __version__, __version_info__
-)
+    __title__, __version__, __version_info__)
 
 logging.getLogger(__name__).addHandler(NullHandler())
 
@@ -58,10 +57,7 @@ def __parse_arguments():
     parser = argparse.ArgumentParser(description=__doc__)
 
     parser.add_argument(
-        '-V',
-        '--version',
-        action='version',
-        version='%(prog)s' + __version__)
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     parser.add_argument(
         '-l',

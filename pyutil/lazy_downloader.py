@@ -60,7 +60,7 @@ def _parse_arguments():
         '-V',
         '--version',
         action='version',
-        version='%(prog)s' + __version__)
+        version='%(prog)s' + pyutil.__about__.__version__)
 
     args = parser.parse_args()
 
@@ -215,9 +215,9 @@ if __name__ == "__main__":
     except Exception:
         headers = std_headers
 
-    try:
-        user_agent = args.user_agent
-    except Exception:
-        user_agent = USER_AGENTS
+    # try:
+    #     user_agent = args.user_agent
+    # except Exception:
+    #     user_agent = USER_AGENTS
 
     main(url, output_fname)

@@ -67,3 +67,5 @@ def __parse_arguments():
         help='Set the logging level')
 
     args = parser.parse_args()
+
+    return args

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Maintainer: Faris Chugthai
-r"""Download a video from YouTube using :mod;`youtube_dl`.
+r"""Download a video from YouTube using :mod:`youtube_dl`.
 
 Dec 22, 2018:
 
@@ -14,23 +14,26 @@ This script should be called from the shell as so
 
 .. code-block:: shell
 
-        python termux-urls.py $@
+        python ytdl.py $*
+
+where the ``$*`` idiom can be replaced with either URLs of individual videos,
+a link to a playlist, or a file containing URLs.
 
 
 .. todo::
 
     1. Assume that the :mod:`youtube_dl` script functions.
-    2. Then double chsck we weren't given a file ytdl knows how to handle.
+    2. Then double check we weren't given a file ytdl knows how to handle.
     3. If we were, then scrape with bs4.
-        - Possibly extend to writing prettified json (as in json.dumps("",tab=4)) to a file.
-    4. Need to add support with argparse because this is gonna get out of hand quickly.
+        - Possibly extend to writing prettified json (as in json.dumps("",tab=2)) to a file.
+    4. Need to add support using :mod:`argparse` because this is gonna get out of hand quickly.
     5. Handle playlists.
 
 
 We got it!
 ----------
 So I was reading the src and realized that almost all of the execution
-happens in the `__init__`__ file!!
+happens in the :mod:`youtube_dl.__init__`_ file!!
 
 This is a long copy and paste but read this::
 
@@ -150,14 +153,24 @@ This is a long copy and paste but read this::
                     if desc is False:
                         continue
                     if hasattr(ie, 'SEARCH_KEY'):
-                        _SEARCHES = ('cute kittens', 'slithering pythons', 'falling cat', 'angry poodle', 'purple fish', 'running tortoise', 'sleeping bunny', 'burping cow')
+                        _SEARCHES = ('cute kittens', 'slithering pythons',
+                        'falling cat', 'angry poodle', 'purple fish',
+                        'running tortoise', 'sleeping bunny', 'burping cow')
+
                         _COUNTS = ('', '5', '10', 'all')
-                        desc += ' (Example: "%s%s:%s" )' % (ie.SEARCH_KEY, random.choice(_COUNTS), random.choice(_SEARCHES))
+                        desc += ' (Example: "%s%s:%s" )'
+                        % (ie.SEARCH_KEY, random.choice(_COUNTS), random.choice(_SEARCHES))
+
                     write_string(desc + '\n', out=sys.stdout)
+
                 sys.exit(0)
+
             if opts.ap_list_mso:
                 table = [[mso_id, mso_info['name']] for mso_id, mso_info in MSO_INFO.items()]
-                write_string('Supported TV Providers:\n' + render_table(['mso', 'mso name'], table) + '\n', out=sys.stdout)
+                write_string('Supported TV Providers:\n'
+                + render_table(['mso', 'mso name'], table)
+                + '\n', out=sys.stdout)
+
                 sys.exit(0)
 
             # Conflicting, missing and erroneous options
@@ -277,9 +290,14 @@ This is a long copy and paste but read this::
                              ' file! Use "{0}.%(ext)s" instead of "{0}" as the output'
                              ' template'.format(outtmpl))
 
-            any_getting = opts.geturl or opts.gettitle or opts.getid or opts.getthumbnail or opts.getdescription or opts.getfilename or opts.getformat or opts.getduration or opts.dumpjson or opts.dump_single_json
+            any_getting = opts.geturl or opts.gettitle or opts.getid or
+                          opts.getthumbnail or opts.getdescription or
+                          opts.getfilename or opts.getformat or
+                          opts.getduration or opts.dumpjson or opts.dump_single_json
             any_printing = opts.print_json
-            download_archive_fn = expand_path(opts.download_archive) if opts.download_archive is not None else opts.download_archive
+            download_archive_fn =
+                expand_path(opts.download_archive)
+                if opts.download_archive is not None else opts.download_archive
 
             # PostProcessors
             postprocessors = []
@@ -327,12 +345,18 @@ This is a long copy and paste but read this::
                 })
                 if not already_have_thumbnail:
                     opts.writethumbnail = True
+
             # XAttrMetadataPP should be run after post-processors that may change file
             # contents
+
             if opts.xattrs:
                 postprocessors.append({'key': 'XAttrMetadata'})
-            # Please keep ExecAfterDownload towards the bottom as it allows the user to modify the final file in any way.
-            # So if the user is able to remove the file before your postprocessor runs it might cause a few problems.
+
+            # Please keep ExecAfterDownload towards the bottom as it allows
+            # the user to modify the final file in any way.
+            # So if the user is able to remove the file before your
+            # postprocessor runs it might cause a few problems.
+
             if opts.exec_cmd:
                 postprocessors.append({
                     'key': 'ExecAfterDownload',
@@ -525,7 +549,7 @@ try:
     import requests
 except ImportError:
     logging.warning(
-        "This script xepends on the requests module. Falling back to urllib.")
+        "This script depends on the requests module. Falling back to urllib.")
     import urllib
 else:
     REQUESTS = 1
@@ -538,9 +562,9 @@ logger = logging.basicConfig(level=logging.WARNING)
 
 
 class TermuxDL(youtube_dl.YoutubeDL):
-    r"""Try subclassing youtube_dl and see if that makes it easier.
+    r"""Try subclassing :class:`youtube_dl.YoutubeDL` and see if it's easier.
 
-    Also heres all the source code in case you think you need it.
+    Also here's all the source code in case you think you need it.
 
 
     .. code-block:: python3
@@ -564,7 +588,7 @@ class TermuxDL(youtube_dl.YoutubeDL):
         _screen_file = None
 
         def __init__(self, params=None, auto_init=True):
-            \"\"\"Create a FileDownloader object with the given options.\"\"\"
+            # Create a FileDownloader object with the given options.
             if params is None:
                 params = {}
             self._ies = []

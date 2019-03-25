@@ -18,15 +18,11 @@ Table of Contents
     :name: mastertoc
     :maxdepth: 1
 
-    tutorial
-    numpydoc
+    Usage and Contributing <tutorial>
+    Documentation and Examples <numpydoc>
     numerical
-    api
     todo
-
-Continue to the next page:
-
-:ref:`tutorial`
+    api
 
 Indices and tables
 ==================

@@ -13,20 +13,25 @@ Safety Features
 If the filename already exists on the system it will NOT be overwritten,
 and the script will safely exit.
 
-:class:`collections.ChainMap()`
+:class:`collections.ChainMap`
 -------------------------------
-This module is as a perfect candidate as exists for chainmap. Check env vars,
-config files, commnand line args and user provided parameters.
+This module a perfect candidate for :ref:`collections.Chainmap`. Check env vars,
+config files, command line args and user provided parameters.
 
 """
 import argparse
+from contextlib import closing
+import logging
 import os
 import re
 import sys
 
 import requests
 
-import pyutil
+from pyutil.__about__ import __version__
+
+# logger = logging.getlogger(__name__)
+# handler =
 
 
 def _parse_arguments():
@@ -52,14 +57,37 @@ def _parse_arguments():
         help="Headers to send to the web server.")
 
     parser.add_argument(
-        '-V',
-        '--version',
-        action='version',
-        version='%(prog)s' + pyutil.__about__.__version__)
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 
     return args
+
+
+def _get_page(URL):
+    """Get the content at `URL`.
+
+    Returns content if it is recognized HTML/XML. If not, return `None`.
+    """
+    try:
+        with closing(requests.get(url, stream=True)) as res:
+            if check_response(res):
+                return res.content
+            else:
+                return None
+
+    except requests.RequestException as e:
+        # logger.something
+        return None
+
+
+def check_response(server_response):
+    content = server_response.headers['Content-Type'].lower()
+    if server_response.status_code == 200 and content is not None:
+        return True
+    else:
+        # logger
+        return server_response.status_code
 
 
 def _parse_site(URL, *args, **kwargs):
@@ -70,7 +98,7 @@ def _parse_site(URL, *args, **kwargs):
     Parameters
     ----------
     URL : str
-        Site to download.
+        Page to download.
 
     Returns
     -------

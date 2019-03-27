@@ -105,14 +105,14 @@ except ImportError:
 class ZimText(TextWrapper):
     """Subclass :class:`textwrap.TextWrapper()`."""
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         """Initialize the class."""
         self.width = 80
         self.break_long_words = False
         self.break_long_words_hyphens = False
         # kwargs = {}
         # kwargs = **kwargs
-        super().__init__()
+        super().__init__(**kwargs)
 
     @property
     def body(self, text):

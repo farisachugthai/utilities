@@ -89,6 +89,7 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
+    'sphinx.ext.inheritance_diagram',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
@@ -328,5 +329,5 @@ napoleon_include_private_with_doc = True
 
 def setup(app):
     """Add custom css styling."""
-    custom_css = os.path.abspath(os.path.join('_static', '', 'custom.css'))
+    custom_css = os.path.abspath(os.path.join('_static', '', 'custom.css_t'))
     app.add_stylesheet(custom_css)

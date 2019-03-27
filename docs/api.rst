@@ -17,6 +17,5 @@ Below is the collected sum of all python modules in this repository.
 
 .. toctree::
    :maxdepth: 1
-   :noindex:
 
    Other

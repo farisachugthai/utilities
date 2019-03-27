@@ -57,7 +57,10 @@ def _parse_arguments():
         help="Headers to send to the web server.")
 
     parser.add_argument(
-        '-V', '--version', action='version', version='%(prog)s' + __version__)
+        '-V',
+        '--version',
+        action='version',
+        version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

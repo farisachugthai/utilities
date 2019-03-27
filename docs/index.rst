@@ -11,18 +11,16 @@ Welcome to utilities's documentation!
 
 .. include:: ../README.rst
 
-Table of Contents
------------------
-
 .. toctree::
     :name: mastertoc
     :maxdepth: 1
+    :hidden:
 
     Usage and Contributing <tutorial>
     Documentation and Examples <numpydoc>
-    numerical
-    todo
-    api
+    Numerical Analysis <numerical>
+    Todo <todo>
+    API <api>
 
 Indices and tables
 ==================

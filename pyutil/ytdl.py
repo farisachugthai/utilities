@@ -556,12 +556,11 @@ else:
     logging.debug("Requests was imported.")
 
 import youtube_dl
-from youtube_dl import parseOpts
 
-logger = logging.basicConfig(level=logging.WARNING)
+LOGGER = logging.basicConfig(level=logging.WARNING)
 
 
-class TermuxDL(youtube_dl.YoutubeDL):
+class TermuxDL(youtube_dl.YoutubeDL, *args, **kwargs):
     r"""Try subclassing :class:`youtube_dl.YoutubeDL` and see if it's easier.
 
     Also here's all the source code in case you think you need it.
@@ -609,13 +608,13 @@ class TermuxDL(youtube_dl.YoutubeDL):
     So there it is!
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initialize with the ytdl state."""
-        super().__init__(self)
+        super().__init__(self, *args, **kwargs)
 
     def parseOpts(self):
-        """Returns a dict of user-provided args."""
-        return parseOpts()[1]
+        """Return a dict of user-provided args."""
+        return self.parseOpts()[1]
 
 
 def ytdl(link, ytdl_opts):
@@ -697,7 +696,7 @@ def my_hook(d):
 
 def main():
     """Execute the program."""
-    dl = TermuxDL()
+    dl = TermuxDL(*args, **kwargs)
 
     ytdl_opts = dl.parseOpts()
 

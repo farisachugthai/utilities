@@ -23,7 +23,7 @@ def _parse_arguments():
         'input',
         type=argparse.FileType('r'),
         default=sys.stdin,
-        help="File to parse.")
+        help="File to parse. Defaults to stdin.")
 
     parser.add_argument(
         '-o',
@@ -44,6 +44,7 @@ def _parse_arguments():
         '-l',
         '--log_level',
         dest='log_level',
+        metavar='Log Level.',
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         help='Set the logging level')
 

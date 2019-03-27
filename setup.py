@@ -146,13 +146,14 @@ setup(
     # },
     install_requires=REQUIRED,
     extras_require=EXTRAS,
+    test_suite='test',
     setup_requires=['nose>=1.0'],
     include_package_data=True,
     package_data={
         # If any package contains *.txt or *.rst files, include them:
         '': ['*.txt', '*.rst'],
     },
-    license='MIT',
+    license=LICENSE,
 
     #  https://www.python.org/dev/peps/pep-0345/#platform-multiple-use
     # A Platform specification describing an operating system supported by the

@@ -1,4 +1,3 @@
-
 .. code-block:: html+jinja
 
    {{index}}

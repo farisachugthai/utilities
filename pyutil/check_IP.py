@@ -56,6 +56,18 @@ def get_hostname():
     host_return_msg : str
         A formatted message displaying the user's IP address.
 
+    Examples
+    --------
+    .. ipython::
+
+        In [13]: from check_IP import get_hostname
+        In [14]: h = get_hostname()
+        Out[14]: 'Your hostname is: localhost'
+        In [15]: h
+        Out[15]: 'Your hostname is: localhost'
+
+    Cross your fingers!
+
     """
     sock = socket.gethostname()
     host_return_msg = 'Your hostname is: ' + sock

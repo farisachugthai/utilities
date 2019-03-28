@@ -1,24 +1,8 @@
-.. _api:
-
-==========
-:mod:`API`
-==========
-
-Below is the collected sum of all python modules in this repository.
-
 
 .. contents::
     :local:
     :depth: 2
 
-
-.. toctree::
-   :maxdepth: 2
-
-   Backups
-   Internet
-   Text
-   YouTube
 
 
 

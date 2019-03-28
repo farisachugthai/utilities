@@ -61,6 +61,8 @@ import shutil
 import subprocess
 import sys
 
+from pyutil.__about__ import __version__
+
 
 def _parse_arguments():
     """Parse user arguments.
@@ -98,7 +100,7 @@ def _parse_arguments():
     parser = argparse.ArgumentParser(description=__doc__)
 
     parser.add_argument(
-        '-b', '--builder', help='Builder to invoke sphinx-build to use')
+        'builder', help='Builder to invoke sphinx-build to use')
 
     parser.add_argument(
         '-l',
@@ -114,7 +116,7 @@ def _parse_arguments():
         default='INFO',
         help='Log level. Defaults to INFO. Implies logging.')
 
-    parser.add_argument('--version', action='version', version='0.0.1')
+    parser.add_argument('--version', action='version', version=__version__)
 
     args = parser.parse_args()
 
@@ -154,49 +156,33 @@ def run(cmd):
         return process.returncode
 
 
-def _termux_hack(arg1):
-    """TODO: Docstring for _termux_hack.
-
-    Parameters
-    ----------
-    arg1 : TODO
-
-
-    Parameters
-    ----------
-    arg1 : TODO
-
-    Returns
-    -------
-    TODO
-
-    """
+def _termux_hack():
+    """Android permissions don't allow viewing files in app specific files."""
     try:
         shutil.copytree('_build/html/', '/data/data/com.termux/files/home/storage/downloads/html')
     except FileExistsError:
         shutil.rmtree('/data/data/com.termux/files/home/storage/downloads/html')
+        shutil.copytree('_build/html/', '/data/data/com.termux/files/home/storage/downloads/html')
     except FileNotFoundError:
         logging.error("The build directory currently doesn't exist. Exiting.")
-    else:
-        shutil.rmtree('_build/html')
 
 
 if __name__ == "__main__":
     args = _parse_arguments()
 
     try:
-        log_level = args.log_level
+        log_level = args.log_level.upper()
     except Exception:
         logging.basicConfig(level=logging.WARNING)
     else:
-        log_level = args.log_level.upper()
         logging.basicConfig(level=log_level)
 
     jobs = f'{os.cpu_count()}'
 
     logging.debug(jobs)
+    builder = args.builder
 
-    run(f'make -j{jobs}')
+    run(f'make -j{jobs} {builder}')
 
     if os.environ.get('ANDROID_ROOT'):
         _termux_hack()

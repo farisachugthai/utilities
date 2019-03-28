@@ -21,12 +21,13 @@ Table of Contents
     tutorial
     numpydoc
     numerical
-    api
     todo
+    api
 
 Continue to the next page:
 
 :ref:`tutorial`
+
 
 Indices and tables
 ==================

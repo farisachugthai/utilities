@@ -4,5 +4,9 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"restructuredtext.languageServer.disabled": false,
+		"restructuredtext.languageServer.trace.server": "messages",
+		"restructuredtext.experimental": true
+	}
 }

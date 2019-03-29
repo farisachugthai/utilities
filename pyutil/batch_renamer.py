@@ -4,11 +4,6 @@
 
 .. module:: batch_renamer.py
 
-Initially inspired f rom the Official Python documentation in the section
-Tutorials: `tutorials stdlib2`_ with some reformatting.
-
-Still uses old style strings as a result.
-
 First we'll examine the contents of a directory and ensure it only contains
 files with names we want to rename.
 
@@ -21,25 +16,24 @@ files with names we want to rename.
 
 As we can see it does we'll then invoke the script like so.
 
-
 .. code-block:: shell-session
 
-    batch_renamer.py /path/to/dir
+    python3 batch_renamer.py /path/to/dir
     img_1074.jpg --> Ashley_0.jpg
     img_1076.jpg --> Ashley_1.jpg
     img_1077.jpg --> Ashley_2.jpg
-
-.. _`tutorials stdlib2`: https://docs.python.org/3/tutorial/stdlib2.html#templating
 
 """
 import argparse
 import os
 import logging
-import shutil
+from pathlib import Path
+# import shutil
 from string import Template
-import time
 
 from .__about__ import __version__
+
+LOG_LEVEL = "logging.warning"
 
 
 class BatchRename(Template):
@@ -54,15 +48,32 @@ def _parse_arguments():
 
     # should add in either globbing or fnmatch capabilities
     parser.add_argument(
-        "directory",
+        "-d",
+        "--directory",
         nargs=1,
+        default=Path.cwd(),
         help="Directory containing only the files to be renamed.")
+
+    parser.add_argument(
+        'old_format',
+        nargs=1,
+        metavar='old_format',
+        help=r'Enter old format to replace.')
 
     parser.add_argument(
         'rename_format',
         nargs=1,
+        metavar='rename_format',
         help=
         r'Enter rename style (%d-date %n-seqnum %f-format I.E.  Ashley_%n%f)')
+
+    parser.add_argument(
+        '-l',
+        '--log_level',
+        dest='log_level',
+        metavar='log level',
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        help='Set the logging level')
 
     parser.add_argument(
         '-V', '--version', action='version', version='%(prog)s' + __version__)
@@ -72,64 +83,62 @@ def _parse_arguments():
     return args
 
 
-def fix_extension():
-    """Rename files that have have the wrong filename extension."""
-    for i in os.listdir('.'):
-        parts = i.split(sep='.')
-        new = parts[0] + '.' + parts[1]
-        shutil.move(i, new)
-
-
-def main(directory, fmt):
-    """Rename a user provided directory of files.
-
-    Parameters
-    ----------
-    directory : str
-        The directory to iterate over.
-
-    """
-    # Enter rename style (%d-date %n-seqnum %f-format):
-    t = BatchRename(fmt)
-    date = time.strftime('%d%b%y')
-    for i, filename in enumerate(os.listdir(directory)):
-        base, ext = os.path.splitext(filename)
-        newname = t.substitute(d=date, n=i, f=ext)
-        logging.info('{0} --> {1}'.format(filename, newname))
-
-
-def batch_mover(pattern):
+def batch_mover(pattern, new_pattern, directory=Path.cwd()):
     """Move files in the current working directory that match a pattern.
 
     Parameters
     ----------
     pattern : str
-        Pattern to check filenames for.
+        Pattern to check filenames for. Functionally would be the old extension.
+    new_pattern : str
+        What to replace the old pattern with.
+    directory : str, optional
+        Directory where files that need to be renamed can be found.
 
     Returns
     -------
-    bool
+    Bool
 
     """
-    cwd = os.cwd()
-    for i in os.scandir(cwd):
-        if i.name.__contains__(pattern):
-            yield True
+    # Now let's check the file matches the desired pattern
+    for i in os.scandir(directory):
+        if file_check(pattern, i):
+            # TODO
+            pass
 
 
-if __name__ == '__main__':
+def file_check(pattern, file_to_check):
+    """Check that the file exists and matched the desired pattern."""
+    if file_to_check.name.__contains__(pattern):
+        yield True
+
+
+def main():
+    """Execute module."""
     args = _parse_arguments()
 
-    assert args.directory
     d = args.directory
 
     fmt = args.rename_format
+
+    old = args.old_pattern
+
+    try:
+        log_level = args.log_level
+    except Exception:  # IndexError?
+        logging.basicConfig(level=LOG_LEVEL)
+    else:
+        logging.basicConfig(level=log_level)
+
     # Wait until we're sure we got the args we needed before setting the log
     # level.
     # Now we can configure that level based on user input and default to WARNING
-    logging.basicConfig(level=logging.WARNING)
+    logging.basicConfig(level=log_level)
 
     logging.debug("The directory that was chosen was: " + str(d))
 
-    if batch_mover(fmt):
-        main(d, fmt)
+    batch_mover(pattern=fmt, new_pattern=old, directory=d)
+
+
+if __name__ == '__main__':
+    main()

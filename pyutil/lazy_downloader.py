@@ -59,8 +59,9 @@ def _parse_arguments():
     parser.add_argument(
         '-V',
         '--version',
+        metavar='version',
         action='version',
-        version='%(prog)s' + pyutil.__about__.__version__)
+        version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

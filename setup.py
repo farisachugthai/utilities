@@ -153,7 +153,7 @@ setup(
         # If any package contains *.txt or *.rst files, include them:
         '': ['*.txt', '*.rst'],
     },
-    license='MIT',
+    license=LICENSE,
 
     #  https://www.python.org/dev/peps/pep-0345/#platform-multiple-use
     # A Platform specification describing an operating system supported by the

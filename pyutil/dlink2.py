@@ -4,18 +4,58 @@
 
 Now utilizes necessary libraries like glob.
 
-.. todo:: Argparse?
-
 .. note:
 
-    I was just in ~/.config/nvim trying to symlink my dots from ~/projects/viconf/.config/nvim and running::
+    I was just in ``~/.config/nvim`` trying to symlink my dots from
+    ``~/projects/viconf/.config/nvim`` and running::
 
-        dlink2.py ~/projects/viconf/.config/nvim while in ~/.config/nvim did nothing at all.
+        dlink2.py ~/projects/viconf/.config/nvim
+
+    while in ~/.config/nvim did nothing at all.
+
+.. version-changed:: Added argparse
 
 """
+import argparse
 import glob
 import os
 import sys
+
+from pyutil.__about__ import __version__
+
+
+def _parse_arguments():
+    parser = argparse.ArgumentParser(description=__doc__)
+
+    parser.add_argument(
+        "destination",
+        type=str,
+        metavar="destination",
+        nargs=1,
+        help="Files to symlink to."
+    )
+
+    parser.add_argument(
+        "-s",
+        "--source",
+        default=os.getcwd,
+        type=str,
+        metavar="source",
+        nargs=1,
+        help="Files to symlink to."
+    )
+
+    parser.add_argument(
+        '-V',
+        '--version',
+        metavar='version',
+        action='version',
+        version='%(prog)s' + __version__)
+
+
+    args = parser.parse_args()
+
+    return args
 
 
 def main(i, j=os.getcwd):
@@ -31,14 +71,11 @@ def main(i, j=os.getcwd):
 
 
 if __name__ == "__main__":
-    args = sys.argv[:]
-    if len(args) == 3:
-        j = args[1]
-        i = args[2]
-        main(i, j)
-    elif len(args) == 2:
-        i = args[1]
-        main(i)
-    else:
-        # TODO:
-        print("Usage: ")
+    args = _parse_arguments()
+    dest = args.destination
+    try:
+        src = args.source
+    except Exception:
+        src = None
+
+    main(i=dest, j=src)

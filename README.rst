@@ -40,8 +40,9 @@ One can install :ref:`pyutil` by:
 
 * As an alternative to a pip install, obtain the source code and run the `setup.py`_ file.
 
-  If you are on a Unix-like system, the following will ensure everything
-  below pyutil/ is in your PATH.
+If you are on a Unix-like system, the following will ensure everything
+below pyutil/ is in your PATH and give you the ability to modify the source
+code in place.
 
 
 .. code-block:: sh
@@ -49,7 +50,7 @@ One can install :ref:`pyutil` by:
     git clone https://github.com/farisachugthai/utilities
     cd utilities
 
-    python3 setup.py bdist_wheel && python3 -m pip install -U -e .
+    python3 setup.py build && python3 -m pip install -U -e .
 
 * After which point, the only necessary step will be ensuring that the scripts in sh/ are in ``$PATH``.
 
@@ -88,7 +89,7 @@ different; however, not tremendously.
 
 Building Documentation From Source
 ----------------------------------
-The documentation can be read online at `GitHub pages <https://farisachugthai.github.io/utilities>`_
+The documentation can be read online at `GitHub Pages <https://farisachugthai.github.io/utilities>`_
 
 However, the documentation can be built locally as well.
 
@@ -101,10 +102,11 @@ After following the installation instructions at `root-installation`_, one can r
 
 Then, direct your browser to ``_build/html/index.html``.
 
-To do so in a more direct manner, a *htmlview* target has been created as a convenience
-in the docs/Makefile.
+To do so in a more direct manner, a *htmlview* target has been created as a
+convenience in the docs/Makefile.
 
-This target will build the documentation and open up your default web browser automatically.
+This target will build the documentation and open up your default web browser
+automatically.
 
 Testing
 -------

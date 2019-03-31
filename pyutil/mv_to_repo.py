@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Move files from the home directory to the dotfiles repo.
 
-.. module:: `mv_to_repo`
+.. module:: mv_to_repo
     :synopsis: Move files from the home directory to the dotfiles repo.
 
 This is a script I've been using for the better part of a year, so while
@@ -66,10 +66,9 @@ def main():
     Moves file to a hardcoded path but will be generalized to take as an
     argument.
 
-    Assumes
-    -------
-        User runs the script from inside the folder of the file they want to
-        move.
+    .. rubric:: Assumes
+
+    User runs the script from inside the folder of the file they want to move.
 
     Parameters
     ----------

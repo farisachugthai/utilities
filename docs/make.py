@@ -57,8 +57,11 @@ import argparse
 import logging
 import os
 import shlex
+import shutil
 import subprocess
 import sys
+
+from pyutil.__about__ import __version__
 
 
 def _parse_arguments():
@@ -97,7 +100,7 @@ def _parse_arguments():
     parser = argparse.ArgumentParser(description=__doc__)
 
     parser.add_argument(
-        '-b', '--builder', help='Builder to invoke sphinx-build to use')
+        'builder', help='Builder to invoke sphinx-build to use')
 
     parser.add_argument(
         '-l',
@@ -109,11 +112,11 @@ def _parse_arguments():
     parser.add_argument(
         '-ll',
         '--log-level',
-        dest=log_level,
+        dest='log_level',
         default='INFO',
         help='Log level. Defaults to INFO. Implies logging.')
 
-    parser.add_argument('--version', action='version', version='0.0.1')
+    parser.add_argument('--version', action='version', version=__version__)
 
     args = parser.parse_args()
 
@@ -153,23 +156,33 @@ def run(cmd):
         return process.returncode
 
 
+def _termux_hack():
+    """Android permissions don't allow viewing files in app specific files."""
+    try:
+        shutil.copytree('_build/html/', '/data/data/com.termux/files/home/storage/downloads/html')
+    except FileExistsError:
+        shutil.rmtree('/data/data/com.termux/files/home/storage/downloads/html')
+        shutil.copytree('_build/html/', '/data/data/com.termux/files/home/storage/downloads/html')
+    except FileNotFoundError:
+        logging.error("The build directory currently doesn't exist. Exiting.")
+
+
 if __name__ == "__main__":
     args = _parse_arguments()
 
-    if args.log_level:
+    try:
         log_level = args.log_level.upper()
-        logging.basicConfig(level=logging.log_level)
+    except Exception:
+        logging.basicConfig(level=logging.WARNING)
+    else:
+        logging.basicConfig(level=log_level)
 
     jobs = f'{os.cpu_count()}'
 
     logging.debug(jobs)
+    builder = args.builder
 
-    run(f'make -j{jobs}')
-# needs rewrite
-try:
-    shutil.copytree('_build/html/', '/data/data/com.termux/files/home/storage/downloads/html')
-except FileExistsError:
-    shutil.rmtree('/data/data/com.termux/files/home/storage/downloads/html')
-else:
-    shutil.rmtree('_build/html')
-    
+    run(f'make -j{jobs} {builder}')
+
+    if os.environ.get('ANDROID_ROOT'):
+        _termux_hack()

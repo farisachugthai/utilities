@@ -22,7 +22,7 @@ help:
 all: clean-pyc clean-generated style-check test build develop
 
 .PHONY: clean
-clean: clean-pyc clean-pycache clean-generated
+clean: clean-pyc clean-pycache clean-generated clean-ghpages
 
 .PHONY: clean-pyc
 clean-pyc:
@@ -36,11 +36,20 @@ clean-pycache:
 .PHONY: clean-generated
 clean-generated:
 	find . -name '.DS_Store' -exec rm -f {} +
-	rm -rf .egg-info/
+	rm -rf *.egg-info/
 	rm -rf docs/_build/
 	rm -rf build/
 	rm -rf dist/
+	rm -rf _sources
 	rm -rf .eggs/
+	rm -rf html/
+
+
+.PHONY: clean-ghpages
+clean-ghpages:
+	rm searchindex.js
+	rm yarn-error.log
+	rm objects.inv
 
 .PHONY: lint
 lint:
@@ -60,3 +69,6 @@ build:
 develop:
 	@$(PYTHON) -m pip install -e .
 
+.PHONY: whoa
+whoa:
+	@$(PYTHON) -m pip wheel -w wheel --pre -e .

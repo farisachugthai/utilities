@@ -15,23 +15,39 @@ NOQA F401
 """
 import logging
 from logging import NullHandler
-from pkgutil import extend_path
+import os
 import sys
 
-import pkg_resources
+from alabaster import _version as alabaster_version
 
-from pyutil.__about__ import (
+from pyutil.__about__ import (  # noqa F401
     __author__,
     __copyright__,
     __description__,
     __docformat__,
     __license__,
-    __title__,
-    __package_name__,
 )
 
 logging.getLogger(__name__).addHandler(NullHandler())
 
-pkg_resources.declare_namespace(__name__)
 
-__path__ = extend_path(sys.path, __file__)
+def get_path():
+    """Shortcut for users whose theme is next to their conf.py."""
+    # Theme directory is defined as our parent directory
+    return os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+
+
+def update_context(app, pagename, templatename, context, doctree):
+    context["alabaster_version"] = alabaster_version.__version__
+
+
+def setup(app):
+    # add_html_theme is new in Sphinx 1.6+
+    if hasattr(app, "add_html_theme"):
+        theme_path = os.path.abspath(os.path.dirname(__file__))
+        app.add_html_theme("alabaster", theme_path)
+    app.connect("html-page-context", update_context)
+    return {"version": alabaster_version.__version__, "parallel_read_safe": True}
+
+
+sys.path.insert(0, get_path())

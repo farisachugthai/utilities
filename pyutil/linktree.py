@@ -14,7 +14,7 @@ original tree.
 All symbolic links go to a special symbolic link at the top, so you
 can easily fix things if the original source tree moves.
 
-
+This would probably get a huge improvement in readability from pathlib.
 
 See Also
 --------
@@ -22,9 +22,35 @@ mkreal
 
 
 """
+import argparse
 import logging
 import os
+from pathlib import Path
 import sys
+
+
+def _parse_arguments():
+    """Handle user inputs."""
+    parser = argparse.ArgumentParser(description=__doc__)
+
+    parser.add_argument('oldtree', metavar='oldtree',
+                        type=Path, help='Starting directory tree to symlink'
+                        'from.')
+
+    parser.add_argument('newtree', metavar='newtree',
+                        type=Path, help='Directory tree to symlink to ')
+
+    parser.add_argument('-l', dest='linkto', metavar='linkto',
+                        help='Linkto')
+
+    args = parser.parse_args()
+
+    return args
+
+
+def _check_existence(directory):
+    """Check that a directory exists."""
+    pass
 
 
 def main():
@@ -33,15 +59,18 @@ def main():
         print('usage:', sys.argv[0], 'oldtree newtree [linkto]')
         return 2
     oldtree, newtree = sys.argv[1], sys.argv[2]
+
     if len(sys.argv) > 3:
         link = sys.argv[3]
         link_may_fail = 1
     else:
         link = LINK
         link_may_fail = 0
+
     if not os.path.isdir(oldtree):
         print(oldtree + ': not a directory')
         return 1
+
     try:
         os.mkdir(newtree, 0o777)
     except OSError as msg:

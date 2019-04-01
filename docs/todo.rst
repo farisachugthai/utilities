@@ -1,5 +1,3 @@
-.. _todo:
-
 ========
 todo
 ========
@@ -44,8 +42,7 @@ scripts
 
 Linting
 -------
-- Run :mod:`rstcheck` on all of the rst files in `<./docs>`_. If you want to do it from Termux you'll need to specify
-``rstcheck -j 1`` because :mod:`multiprocessing` doesn't work.
+- Run :mod:`rstcheck` on all of the rst files in `<./docs>`_. If you want to do it from Termux you'll need to specify ``rstcheck -j 1`` because :mod:`multiprocessing` doesn't work.
 - Also this needs to be able to pass a standard :mod:`flake8` lint.
 - Then I want a simple unit test suite created for all publicly exported functions.
   - Not a high bar, but a necessary one.

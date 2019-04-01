@@ -1,5 +1,7 @@
+.. _numpydoc:
+
 =================
-:mod:`numpydoc`
+:mod:`Numpydoc`
 =================
 
 .. module:: numpydoc

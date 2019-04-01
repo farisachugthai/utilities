@@ -59,10 +59,6 @@ def strip_space(src=sys.stdin):
 
 def main(file_obj):
     """Dispatch the strip_space function."""
-    if not Path.is_file(file_obj):
-        sys.exit("File is not readable. Exiting.")
-
-    backup(file_obj)
     strip_space(file_obj)
 
 
@@ -71,11 +67,15 @@ if __name__ == '__main__':
 
     if len(sys.argv) >= 2:
         file_list = sys.argv[1:]
+        for i in file_list:
+            backup(i)
+            strip_space(i)
+
     elif len(sys.argv) == 2:
         src = Path(sys.argv[1])
-    else:
-        # How do I set this up right? Do I set src = None?
-        pass
+        backup(i)
+        strip_space(src)
 
-    for i in file_list:
-        main(i)
+    else:
+        src = sys.stdin
+        strip_space(src)

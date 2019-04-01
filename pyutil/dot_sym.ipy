@@ -61,11 +61,11 @@ def dir_checker(repo):
     for directory in os.scandir(repo):
         if not directory.name.startswith('.') and not directory.is_dir():
             os.makedirs(repo, exist_ok=False)
-            logging.info("Directory " + os.path.abspath(directory.name)
-                         + "being created.")
+            logging.info("Directory " + os.path.abspath(directory.name) +
+                         "being created.")
         elif not directory.name.startswith('.') and directory.is_dir():
-            logging.debug("Directory: " + os.path.abspath(directory.name)
-                          + "exists already.")
+            logging.debug("Directory: " + os.path.abspath(directory.name) +
+                          "exists already.")
 
 
 def backup_prompt(fobj):
@@ -135,8 +135,8 @@ def main():
     try:
         repo_files = subprocess.check_output(['git', 'ls-files'])
     except subprocess.CalledProcessError as e:
-        logging.debug("CalledProcessError was: " + str(e.returncode)
-                      + str(e.args) + str(e.stdout) + str(e.stderr))
+        logging.debug("CalledProcessError was: " + str(e.returncode) +
+                      str(e.args) + str(e.stdout) + str(e.stderr))
         sys.exit()
 
     for f in repo_files:

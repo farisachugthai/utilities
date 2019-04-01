@@ -13,29 +13,36 @@ Safety Features
 If the filename already exists on the system it will NOT be overwritten,
 and the script will safely exit.
 
-:class:`collections.ChainMap()`
+:class:`collections.ChainMap`
 -------------------------------
-This module is as a perfect candidate as exists for chainmap. Check env vars,
-config files, commnand line args and user provided parameters.
+This module a perfect candidate for :ref:`collections.Chainmap`. Check env vars,
+config files, command line args and user provided parameters.
 
 """
 import argparse
+from contextlib import closing
+import logging
 import os
 import re
 import sys
 
 import requests
 
-import pyutil
+from pyutil.__about__ import __version__
+
+# logger = logging.getlogger(__name__)
+# handler =
 
 
 def _parse_arguments():
     """Parse user input."""
-    parser = argparse.ArgumentParser(
-        prog='lazy_downloader', description=__doc__)
+    parser = argparse.ArgumentParser(prog='__name__', description=__doc__)
 
     parser.add_argument(
-        "URL", required=True, help="The URL to download. Must be plaintext.")
+        "URL",
+        nargs=1,
+        type=str,
+        help="The URL to download. Must be plaintext.")
 
     # Will need to learn how to parse and tokenize the URL to get a reasonable
     # guess for the filename though
@@ -44,7 +51,7 @@ def _parse_arguments():
         help="The name of the file to write to. Must not exist already.")
 
     parser.add_argument(
-        "-h",
+        "-ha",
         "--headers",
         nargs='*',
         help="Headers to send to the web server.")
@@ -52,22 +59,50 @@ def _parse_arguments():
     parser.add_argument(
         '-V',
         '--version',
+        metavar='version',
         action='version',
-        version='%(prog)s' + pyutil.__about__['version'])
+        version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 
     return args
 
 
-def _parse_site(URL):
+def _get_page(URL):
+    """Get the content at `URL`.
+
+    Returns content if it is recognized HTML/XML. If not, return `None`.
+    """
+    try:
+        with closing(requests.get(url, stream=True)) as res:
+            if check_response(res):
+                return res.content
+            else:
+                return None
+
+    except requests.RequestException as e:
+        # logger.something
+        return None
+
+
+def check_response(server_response):
+    content = server_response.headers['Content-Type'].lower()
+    if server_response.status_code == 200 and content is not None:
+        return True
+    else:
+        # logger
+        return server_response.status_code
+
+
+def _parse_site(URL, *args, **kwargs):
     """Parse the given `URL`, remove tags and return plaintext.
 
     This should probably be modified to take the user agent and header args.
+
     Parameters
     ----------
     URL : str
-        Site to download.
+        Page to download.
 
     Returns
     -------
@@ -102,10 +137,6 @@ def find_links(text):
 
 def main(url, output_fname):
     """Download URL and write to disk.
-
-    .. todo::
-
-        Check that the file is plain text and not hit constant false positives
 
     .. todo:: Add headers.
 
@@ -147,7 +178,6 @@ def main(url, output_fname):
         A path to write the downloaded content to.
 
     """
-
     txt = _parse_site(url)
 
     with open(output_fname, "xt") as f:
@@ -159,7 +189,7 @@ if __name__ == "__main__":
     # With xt permissions the script crashes so no point raising anything.
     # Just bail
     if os.path.isfile(args.fname):
-        sys.exit('File already exists. Cannot overwrite. Exiting.')
+        raise FileExistsError
     # And if we're good, then bind the properties from the parser
     else:
         output_fname = args.fname
@@ -175,19 +205,20 @@ if __name__ == "__main__":
         'Accept-Language': 'en-us,en;q=0.5',
     }
 
-    USER_AGENTS = {
-        'Safari':
-        'Mozilla/5.0 (X11; Linux x86_64; rv:10.0) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27',
-    }
+    # ...??
+    # USER_AGENTS = {
+    #     'Safari':
+    #     'Mozilla/5.0 (X11; Linux x86_64; rv:10.0) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27',
+    # }
 
     try:
         headers = args.headers
     except Exception:
         headers = std_headers
 
-    try:
-        user_agent = args.user_agent
-    except Exception:
-        user_agent = USER_AGENTS
+    # try:
+    #     user_agent = args.user_agent
+    # except Exception:
+    #     user_agent = USER_AGENTS
 
     main(url, output_fname)

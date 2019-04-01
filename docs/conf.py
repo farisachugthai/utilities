@@ -33,6 +33,7 @@ However, the filetype mapping came about in 1.8 so make sure to add that
 
 
 """
+from datetime import datetime
 import logging
 import os
 import sys
@@ -41,10 +42,10 @@ import sys
 # as a package
 
 from numpydoc import numpydoc  # noqa
-import flake8_rst
-from docs.sphinxext import pygmentsdoc
+import flake8_rst  # noqa
+from docs.sphinxext import pygmentsdoc  # noqa
 
-logger = logging.basicConfig(level=logging.DEBUG)
+logger = logging.basicConfig(level=logging.WARNING)
 
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
@@ -66,7 +67,7 @@ logging.debug("Path is currently: " + str(sys.path))
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
 project = u'pyutil'
-copyright = u'2018, Faris A Chugthai'
+copyright = u'2018-{}, Faris A Chugthai'.format(datetime.now().year)
 author = u'Faris A Chugthai'
 
 # The short X.Y version
@@ -88,6 +89,7 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
+    'sphinx.ext.inheritance_diagram',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
@@ -171,7 +173,8 @@ pygments_style = 'sphinx'
 #
 html_theme_options = {
     "github_user": "Faris A. Chugthai",
-    "github_repo": "utilities"
+    "github_repo": "utilities",
+    "github_banner": True,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -195,13 +198,15 @@ html_static_path = ['_static']
 html_sidebars = {
     '**': [
         'about.html',
-        'navigation.html',
         'relations.html',
+        'localtoc.html',
         'searchbox.html',
         'sourcelink.html',
-        'donate.html',
     ]
 }
+
+# If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
+html_show_sphinx = False
 
 # -- Options for HTMLHelp output ------------------------------------
 
@@ -323,5 +328,5 @@ napoleon_include_private_with_doc = True
 
 def setup(app):
     """Add custom css styling."""
-    custom_css = os.path.abspath(os.path.join('_static', '', 'custom.css'))
+    custom_css = os.path.abspath(os.path.join('_static', '', 'custom.css_t'))
     app.add_stylesheet(custom_css)

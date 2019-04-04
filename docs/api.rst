@@ -15,8 +15,10 @@ Below is the collected sum of all python modules in this repository.
 
    Backups
    Internet
+   Numerical Analysis <numerical>
    Text
    YouTube
+   External Commands <External_Commands>
 
 .. toctree::
    :maxdepth: 1

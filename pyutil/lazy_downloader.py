@@ -8,13 +8,16 @@ properly handle a much wider range of files.
 
 Both parameters, `url` and `output_fname` are required parameters.
 
+
 Safety Features
 ---------------
 If the filename already exists on the system it will NOT be overwritten,
 and the script will safely exit.
 
-:class:`collections.ChainMap`
--------------------------------
+
+Setting User Options
+--------------------
+
 This module a perfect candidate for :ref:`collections.Chainmap`. Check env vars,
 config files, command line args and user provided parameters.
 

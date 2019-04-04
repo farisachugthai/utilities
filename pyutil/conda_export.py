@@ -1,25 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Iterate over the list of conda environments that are present.
-
-
-.. rubric:: Returns
-
-Separate text files. 2 for each environment.:
-
-    * One with general metadata
-    * One with a list of packages.
-
-
-.. todo::
-
-    - Possibly refactor into more functions.
-        - Would this warrant a class?
-    - Add logging. Return more useful info besides just printing.
-
-Work in progress.
-
-"""
+"""Iterate over the list of conda environments that are present."""
 import codecs
 import shutil
 from subprocess import run, PIPE
@@ -76,7 +57,13 @@ def truncate(envs):
     return short_envs
 
 
-if __name__ == "__main__":
+def main():
+    """TODO: Docstring for main.
+    Returns
+    -------
+    TODO
+
+    """
     # First things first
     if not shutil.which('conda'):
         sys.exit("It looks like conda isn't installed. Exiting...")
@@ -88,3 +75,7 @@ if __name__ == "__main__":
         truncated_envs.append(truncate(i))
 
     print(str(truncated_envs))
+
+
+if __name__ == "__main__":
+    sys.exit(main())

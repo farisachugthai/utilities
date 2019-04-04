@@ -54,13 +54,14 @@ else:
 
 import youtube_dl
 
-from env_checks import check_xdg_config_home
+# parseOpts should actually return this!
+# from env_checks import check_xdg_config_home
 
 LOGGER = logging.basicConfig(level=logging.WARNING)
 
 
-class TermuxDL(youtube_dl.YoutubeDL, *args, **kwargs):
-    r"""Try subclassing :class:`youtube_dl.YoutubeDL` and see if it's easier.
+class TermuxDL(youtube_dl.YoutubeDL, **kwargs):
+    r"""Subclass :class:`youtube_dl.YoutubeDL` and see if it's easier.
 
     Also here's all the source code in case you think you need it.
 
@@ -139,17 +140,14 @@ def ytdl(link, ytdl_opts):
 
     """
     ydl_opts = {
-        'format':
-        'bestaudio/best',
+        'format': 'bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
-        'output':
-        'TODO:',
-        'logger':
-        logger,
+        'output': 'TODO:',
+        'logger': LOGGER,
         'progress_hooks': [my_hook],
     }
     ydl = youtube_dl.YoutubeDL(ydl_opts)
@@ -202,7 +200,7 @@ def main():
     options set.
 
     """
-    dl = TermuxDL(*args, **kwargs)
+    dl = TermuxDL(**kwargs)
 
     ytdl_opts = dl.parseOpts()
 

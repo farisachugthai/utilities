@@ -36,7 +36,7 @@ Just noticed today the following functions::
 Here's an interesting way to memoize return values.::
 
     def _logged_cached(fmt, func=None):
-        \"\"\"
+        '''
         Decorator that logs a function's return value, and memoizes that value.
 
         After ::
@@ -47,7 +47,7 @@ Here's an interesting way to memoize return values.::
         the first call to *func* will log its return value at the DEBUG level using
         %-format string *fmt*, and memoize it; later calls to *func* will directly
         return that value.
-        \"\"\"
+        '''
         if func is None:  # Return the actual decorator.
             return functools.partial(_logged_cached, fmt)
 
@@ -68,14 +68,15 @@ Here's an interesting way to memoize return values.::
 
 """
 import os
+from pathlib import Path
 
 
 def check_xdg_config_home():
-    """Check to see if `$XDG_CONFIG_HOME` has been defined.
+    """Check to see if ``$XDG_CONFIG_HOME`` has been defined.
 
     Returns
     -------
-    bool
+    Bool
 
     Examples
     --------
@@ -142,3 +143,47 @@ def env_check(env_var):
     for i in sorted(dict(os.environ)):
         if i.find(env_var) > 0:
             yield i
+
+def get_home_3():
+    """Return the user's home directory. Python3 only!
+
+    Returns
+    -------
+    home : :class:`pathlib.Path`
+        The user's home directory. Utilizes pathlib so requires Python 3.
+        Returns `None` if the home directory isn't found.
+
+    """
+    try:
+        return Path.home()
+    except Exception:
+        return None
+
+
+def check_xdg_config_home_2(conf_file=None):
+    """An implementation of check_xdg_config_home that works with Python2!
+    
+    .. admonition::
+
+        Has not been tested on Python2.
+
+    Parameters
+    ----------
+    conf_file : str, optional
+        Path to a configuration file needed by another module.
+
+    Returns
+    -------
+    user_conf_file : str
+        Path to desired user configuration file. Returns None if the file can't
+        be found.
+
+    """
+    xdg_config_home = os.getenv('XDG_CONFIG_HOME')
+    if xdg_config_home:
+        if conf_file:
+            user_conf_file = os.path.join(xdg_config_home, conf_file)
+            if not os.path.isfile(user_conf_file):
+                return None
+            else:
+                return user_conf_file

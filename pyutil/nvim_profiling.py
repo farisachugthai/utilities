@@ -57,12 +57,10 @@ import os
 from platform import system
 import subprocess
 
-# Does this need to get moved back so we can initialize a logger or are we
-# cool because we have one in the init file?
 try:
-    import pynvim
-except ImportError as e:
-    logging.debug(e)
+    from matplotlib import get_home
+except ModuleNotFoundError:  # what?
+    get_home = None
 
 from pyutil.env_checks import env_check, check_xdg_config_home
 
@@ -104,12 +102,12 @@ def main(nvim_root):
 
     Parameters
     -----------
-    nvim_root : path-like object
+    nvim_root : str
         The directory where nvim's configuration files are found.
 
     Returns
     --------
-    profiling_log_file : file
+    profiling_log_file : str
         Creates file based on the current time in ISO format profiling nvim.
 
 
@@ -151,7 +149,39 @@ def find_init_files():
         else:
             return nvim_root
     else:
-        pass
+        userConfFile = os.path.join(
+            os.path.expanduser('~'), '.config', 'nvim', 'init.vim')
+        if not os.path.isfile(userConfFile):
+            userConfFile = os.path.join(
+                os.path.expanduser('~'), '.config', 'nvim', 'init.vim')
+
+        if not os.path.isfile(userConfFile):
+            appdata_dir = os.getenv('appdata')
+            if appdata_dir:
+                userConf = _readOptions(
+                    os.path.join(appdata_dir, 'youtube-dl', 'config'),
+                    default=None)
+                if userConf is None:
+                    userConf = _readOptions(
+                        os.path.join(appdata_dir, 'youtube-dl', 'config.txt'),
+                        default=None)
+
+                if userConf is None:
+                    userConf = _readOptions(
+                        os.path.join(
+                            os.path.expanduser('~'), 'youtube-dl.conf'),
+                        default=None)
+                    if userConf is None:
+                        userConf = _readOptions(
+                            os.path.join(
+                                os.path.expanduser('~'),
+                                'youtube-dl.conf.txt'),
+                            default=None)
+
+        if userConf is None:
+            userConf = []
+
+        return userConf
 
 
 if __name__ == "__main__":

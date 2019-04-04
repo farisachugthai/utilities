@@ -25,7 +25,7 @@ Numpy Docstring Example
     ... Parameters
     ... ----------
     ... arg1 : int
-    ...     Description of \`arg1\`
+    ...     Description of `arg1`
     ... arg2 : str
     ...     Description of `arg2`
     ... Returns

@@ -1,24 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Possibly rewrote the entire module in half as many lines.
+"""Temporary module holding rewrites to dlink.
 
-Now utilizes necessary libraries like glob.
+This module will be renamed in the future. For the time being it's a testing ground for rewriting the dlink module.
 
-.. note:
-
-    I was just in ``~/.config/nvim`` trying to symlink my dots from
-    ``~/projects/viconf/.config/nvim`` and running::
-
-        dlink2.py ~/projects/viconf/.config/nvim
-
-    while in ~/.config/nvim did nothing at all.
-
-.. version-changed:: Added argparse
+For this script, I'm attempting to try exclusively using :mod:`pathlib`.
 
 """
 import argparse
-import glob
-import os
+from pathlib import Path
 import sys
 
 from pyutil.__about__ import __version__
@@ -38,10 +28,9 @@ def _parse_arguments():
     parser.add_argument(
         "-s",
         "--source",
-        default=os.getcwd,
-        type=str,
+        default=Path.cwd(),
         metavar="source",
-        nargs=1,
+        nargs='?',
         help="Files to symlink to."
     )
 
@@ -58,8 +47,15 @@ def _parse_arguments():
     return args
 
 
-def main(i, j=os.getcwd):
+def main():
     """Symlink user provided files."""
+    args = _parse_arguments()
+    dest = args.destination
+    try:
+        src = args.source
+    except IndexError:
+        src = None
+    cwd = Path()
     for i in glob.glob("./**", recursive=True):
         if os.path.isfile(i):
             try:
@@ -71,11 +67,4 @@ def main(i, j=os.getcwd):
 
 
 if __name__ == "__main__":
-    args = _parse_arguments()
-    dest = args.destination
-    try:
-        src = args.source
-    except Exception:
-        src = None
-
-    main(i=dest, j=src)
+    sys.exit(main())

@@ -8,7 +8,7 @@
 Synopsis
 --------
 This module can be used to create individual symlinks to every file in a
-directory. This is a huge convenience wen symlinking dotfiles or configuration
+directory. This is a huge convenience when symlinking dotfiles or configuration
 files held in a different location than where the software of interest expects
 it.
 
@@ -20,6 +20,7 @@ Usage
 
     ln -s path/to/dest/* [path/to/src]
 
+or treat it similarly to :func:`os.symlink()`.
 
 As an example, one can ``git clone dotfiles`` in a directory named `projects`
 or `src`. The location of the git repository is irrelevant, and as such, we'll
@@ -30,16 +31,6 @@ then running dlink.py in ``/home/User/.vim`` with ``$HOME/dotfiles/.vim`` as
 an argument will create symlinks in ``$HOME/.vim`` pointing to
 ``$HOME/dotfiles/.vim``.
 
-
-Inspiration
-------------
-If the module is given 2 args, the intended response is for it to behave  similarly to the classic Unix idiom:
-
-.. code-block:: shell
-
-    ln -s path/to/dest/* [path/to/src]
-
-or treat it similarly to :func:`os.symlink()`.
 
 """
 import os

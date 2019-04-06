@@ -16,7 +16,6 @@ Below is the collected sum of all python modules in this repository.
    Backups
    Internet
    Text
-   YouTube
 
 .. toctree::
    :maxdepth: 1

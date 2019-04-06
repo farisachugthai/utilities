@@ -25,7 +25,7 @@ def iter_source_code(paths):
 
     Parameters
     ----------
-    paths: list
+    paths : list
         A list of paths.  Directories will be recursed into and
         any .py files found will be yielded.
         Any non-directories will be yielded as-is.
@@ -50,5 +50,5 @@ def iter_source_code(paths):
 
 
 if __name__ == "__main__":
-    paths = sys.argv[1:]
-    iter_source_code(paths)
+    for i in sys.argv[1:]:
+        iter_source_code(i)

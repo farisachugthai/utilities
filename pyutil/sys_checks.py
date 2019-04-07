@@ -7,20 +7,6 @@ introduces new modules often enough that it's useful to check.
 
 Utilized by importing as so.
 
-.. code-block:: python3
-
-    # filename: must_be_three.py
-    from syschecks import py_gt
-
-    py_gt(3)
-
-.. code-block:: shell
-
-    python3 must_be_three.py
-
-
-.. todo:: Uh actually execute the above because now I'm interested...
-
 
 .. rubric:: Assumes: All functions are imported as the module will immediately exit if directly executed.
 
@@ -59,7 +45,6 @@ def py_gt_exit(min_py_version):
         raise RuntimeError(
             "The following version of python and newer are required: " +
             str(min_py_version))
-    ("Python 3.4 or later is required")
 
 
 def py_lt_exit(max_py_version):

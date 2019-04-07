@@ -12,7 +12,6 @@
     "jsonlint": "^1.6.3"
   },
   "dependencies": {
-    "coc.nvim": "^0.0.58",
     "neovim": "^4.2.1",
     "prettier": "^1.16.4"
   }

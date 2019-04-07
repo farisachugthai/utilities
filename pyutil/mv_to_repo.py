@@ -70,11 +70,6 @@ def main():
 
     User runs the script from inside the folder of the file they want to move.
 
-    Parameters
-    ----------
-    src : str
-        Name of file to backup, move and symlink.
-
     """
     inputted = sys.argv[1] if len(
         sys.argv) >= 2 else sys.exit("Takes at least one filename.")

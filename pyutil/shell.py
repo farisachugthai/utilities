@@ -6,7 +6,7 @@ import sys
 import subprocess
 
 
-class Command(*args=None, **kwargs=None):
+class Command:
     """Run a shell command."""
 
     def __init__(self, shell=None, *args, **kwargs):
@@ -16,11 +16,13 @@ class Command(*args=None, **kwargs=None):
         kwargs = self.kwargs
 
     def _vers(self):
-        VERS = sys.version_info[0:2]
-        if VERS > (3, 6, ):
-            HAS37 = True
+        vers = sys.version_info[0:2]
+        if vers > (3, 6, ):
+            has37 = True
         else:
-            HAS37 = False
+            has37 = False
+
+        return has37
 
     def get_shell(self):
         """Determine the user's shell. May be able to decorate with property."""
@@ -33,6 +35,6 @@ class Command(*args=None, **kwargs=None):
 
     def run(self, args, kwargs):
         """Run a command."""
-        if _vers(self):
+        if Command._vers(self):
             # subprocess.run([cmd], capture_output=True)
             subprocess.run([args], kwargs)

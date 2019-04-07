@@ -185,10 +185,12 @@ def check_xdg_config_home_2(conf_file=None):
     if xdg_config_home:
         if conf_file:
             user_conf_file = os.path.join(xdg_config_home, conf_file)
-            if not os.path.isfile(user_conf_file):
-                return None
-            else:
+            if os.path.isfile(user_conf_file):
                 return user_conf_file
+    else:
+        xdg_config = os.path.isdir(os.path.join(os.path.expanduser('~'),'.config'):
+        if xdg_config:
+            return xdg_config
 
 
 def get_username(arg1):
@@ -203,4 +205,4 @@ def get_username(arg1):
     TODO
 
     """
-    pwd.getpwuid(os.getuid()).pw_name
+    return pwd.getpwuid(os.getuid()).pw_name

@@ -78,10 +78,11 @@ def find_init_files():
 
     Returns
     --------
-    nvim_root : path-like object
+    nvim_root : str
         The directory where nvim's configuration files are found
 
-    .. todo:: Alright so if ``XDG_CONFIG_HOME`` isn't set we need to check ~/.config/nvim and check whether we're on windows or not
+    .. todo:: Alright so if :envvar:`XDG_CONFIG_HOME` isn't set we need to
+        check `<~/.config/nvim>`_ and check whether we're on Windows or not
 
     """
     global OS

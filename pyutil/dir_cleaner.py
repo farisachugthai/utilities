@@ -15,7 +15,8 @@ directories with only month old sockets.
     - :envvar:`$PREFIX`/tmp/nvim
     - :envvar:`$PREFIX`/tmp/ssh
 
-.. note that on Ubuntu the big one is /var/log/journal so we might need to remind the user for credentials. getpass.getpass()?
+.. note:: On Ubuntu the big one is /var/log/journal so we might need to
+          remind the user for credentials. :func:`getpass.getpass`?
 
 In addition, it felt like a good way to get more familiar with the new
 :mod:`pathlib` module.
@@ -37,12 +38,12 @@ def dir_cleaner(i):
                 pass  # more than likely dir not empty.
 
 
-
 def clean(ftype='*.pyc', recursive=False):
     """Remove all pyc files. Add input for filetype later.
 
     Parameters
     ----------
+    recursive : Bool
     ftype : filetype
         File to iterately remove.
 

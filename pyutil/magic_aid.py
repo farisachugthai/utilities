@@ -16,7 +16,7 @@ import sys
 
 from IPython import get_ipython
 from IPython.core.magic import register_line_magic, line_magic
-from IPython.core.interactiveshell.
+# from IPython.core.interactiveshell.
 
 
 @line_magic

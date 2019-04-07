@@ -8,19 +8,19 @@ import shutil
 from subprocess import run, PIPE
 import sys
 
-from .__about__ import __version__
+from pyutil.__about__ import __version__
 
 
 def _parse_arguments():
     """Parse user arguments."""
-    parser = argparse.ArgumentParser(name='%(prog)s', description=__doc__)
+    parser = argparse.ArgumentParser(prog='%(prog)s', description=__doc__)
 
     parser.add_argument('-c', '--command', dest='comm', metavar='Command',
                         nargs='?', help='Optional. Command to pass to Conda.')
 
-    parser.add_argument('-u', '--update', dest='update', metavar='Update all',
+    parser.add_argument('-u', '--update', dest='update',
                         action='store_true', help='Iterate through all Conda '
-                                                + 'environments and update all.')
+                                                  + 'environments and update all.')
     parser.add_argument(
         '-V', '--version', action='version', version='%(prog)s' + __version__)
 

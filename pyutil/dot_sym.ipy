@@ -27,6 +27,10 @@ import re
 import sys
 import subprocess
 
+HOME = os.path.join(os.path.expanduser("~"), "")
+PROJ = os.path.join(HOME, "projects")
+REPO = os.path.join(PROJ, "dotfiles")
+
 
 def get_dotfiles(proj):
     """Move to a pre-designated directory for the dotfiles and git clone them.
@@ -133,7 +137,7 @@ def main():
 
     # symlink every file you can find
     try:
-        repo_files = subprocess.check_output(['git', 'ls-files'])
+        repo_files = subprocess.run(['git', 'ls-files'], capture_output=True)
     except subprocess.CalledProcessError as e:
         logging.debug("CalledProcessError was: " + str(e.returncode) +
                       str(e.args) + str(e.stdout) + str(e.stderr))
@@ -144,10 +148,6 @@ def main():
 
 
 if __name__ == '__main__':
-    HOME = os.path.join(os.path.expanduser("~"), "")
-    PROJ = os.path.join(HOME, "projects")
-    REPO = os.path.join(PROJ, "dotfiles")
-
-    logging.basicConfig(level=logging.WARNING)
+    logging.getLogger(name=__name__)
 
     main()

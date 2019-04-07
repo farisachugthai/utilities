@@ -72,7 +72,7 @@ from pathlib import Path
 
 
 def check_xdg_config_home():
-    """Check to see if ``$XDG_CONFIG_HOME`` has been defined.
+    """Check to see if :envvar:`$XDG_CONFIG_HOME` has been defined.
 
     Returns
     -------
@@ -90,19 +90,22 @@ def check_xdg_config_home():
     """
     if os.environ.get('XDG_CONFIG_HOME'):
         return True
-    else:
-        return False
 
 
-def get_script_dir():
+def get_script_dir(fobj):
     """Determine the directory the script is in.
+
+    Parameters
+    ----------
+    fobj : str
+        Path to file to check
 
     Returns
     -------
     Directory the file is in : str
 
     """
-    return os.path.dirname(os.path.realpath(__file__))
+    return os.path.dirname(os.path.realpath(fobj))
 
 
 def env_check(env_var):
@@ -144,6 +147,7 @@ def env_check(env_var):
         if i.find(env_var) > 0:
             yield i
 
+
 def get_home_3():
     """Return the user's home directory. Python3 only!
 
@@ -161,11 +165,13 @@ def get_home_3():
 
 
 def check_xdg_config_home_2(conf_file=None):
-    """An implementation of check_xdg_config_home that works with Python2!
-    
+    """An implementation of check_xdg_config_home that works with Python2
+
     .. admonition::
 
         Has not been tested on Python2.
+
+    .. todo:: Doesn't return consistent return values.
 
     Parameters
     ----------
@@ -183,7 +189,7 @@ def check_xdg_config_home_2(conf_file=None):
     if xdg_config_home:
         if conf_file:
             user_conf_file = os.path.join(xdg_config_home, conf_file)
-            if not os.path.isfile(user_conf_file):
-                return None
-            else:
+            if os.path.isfile(user_conf_file):
                 return user_conf_file
+    else:
+        return os.path.isdir(os.path.join(os.path.expanduser('~'), '.config'))

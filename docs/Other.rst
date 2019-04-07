@@ -70,15 +70,6 @@ Remaining Modules
     :show-inheritance:
 
 
-:mod:`inspect_module`
----------------------
-
-.. automodule:: pyutil.inspect_module
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 :mod:`itersrc`
 ---------------
 

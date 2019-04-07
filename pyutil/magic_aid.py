@@ -16,7 +16,7 @@ import sys
 from IPython import get_ipython
 
 
-def inspector(char):
+def search(char):
     """Do a simple search for aliased names in :mod:`IPython`.
 
     This function independently initializes IPython so that it can be
@@ -45,15 +45,5 @@ def inspector(char):
 
 
 if __name__ == "__main__":
-    matches = []
-
-    if len(sys.argv) == 2:
-        char = sys.argv[1]
-
-    elif len(sys.argv) > 2:
-        for i in sys.argv[1:]:
-            matches.append(inspector(i))
-
-    matches = inspector(char)
-
-    print(matches)
+    for i in sys.argv[1:]:
+        search(i)

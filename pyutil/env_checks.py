@@ -69,10 +69,11 @@ Here's an interesting way to memoize return values.::
 """
 import os
 from pathlib import Path
+import pwd
 
 
 def check_xdg_config_home():
-    """Check to see if ``$XDG_CONFIG_HOME`` has been defined.
+    """Check to see if :envvar:`$XDG_CONFIG_HOME` has been defined.
 
     Returns
     -------
@@ -144,6 +145,7 @@ def env_check(env_var):
         if i.find(env_var) > 0:
             yield i
 
+
 def get_home_3():
     """Return the user's home directory. Python3 only!
 
@@ -162,7 +164,7 @@ def get_home_3():
 
 def check_xdg_config_home_2(conf_file=None):
     """An implementation of check_xdg_config_home that works with Python2!
-    
+
     .. admonition::
 
         Has not been tested on Python2.
@@ -187,3 +189,18 @@ def check_xdg_config_home_2(conf_file=None):
                 return None
             else:
                 return user_conf_file
+
+
+def get_username(arg1):
+    """TODO: Docstring for get_username.
+
+    Parameters
+    ----------
+    arg1 : TODO
+
+    Returns
+    -------
+    TODO
+
+    """
+    pwd.getpwuid(os.getuid()).pw_name

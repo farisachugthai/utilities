@@ -10,13 +10,21 @@ regularly more than 1000 aliases in the namespace.
 This makes basic lookups slightly more involved.
 
 As I've ran this script twice in the last 2 days I figured time to save it.
+
 """
 import sys
 
 from IPython import get_ipython
+from IPython.core.magic import register_line_magic, line_magic
+from IPython.core.interactiveshell.
 
 
-def inspector(char):
+@line_magic
+def phelp(obj):
+    """Pipe `obj` through :mod:`pydoc` to :mod:`pynvim` with ``ft`` set to man."""
+
+
+def search(char):
     """Do a simple search for aliased names in :mod:`IPython`.
 
     This function independently initializes IPython so that it can be
@@ -45,15 +53,5 @@ def inspector(char):
 
 
 if __name__ == "__main__":
-    matches = []
-
-    if len(sys.argv) == 2:
-        char = sys.argv[1]
-
-    elif len(sys.argv) > 2:
-        for i in sys.argv[1:]:
-            matches.append(inspector(i))
-
-    matches = inspector(char)
-
-    print(matches)
+    for i in sys.argv[1:]:
+        search(i)

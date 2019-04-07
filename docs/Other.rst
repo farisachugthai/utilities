@@ -16,15 +16,6 @@ Remaining Modules
     :show-inheritance:
 
 
-:mod:`conda_export`
--------------------
-
-.. automodule:: pyutil.conda_export
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 :mod:`dir_cleaner`
 ------------------
 
@@ -79,23 +70,6 @@ Remaining Modules
     :show-inheritance:
 
 
-:mod:`g`
---------
-
-.. automodule:: pyutil.g
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-:mod:`inspect_module`
----------------------
-
-.. automodule:: pyutil.inspect_module
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 :mod:`itersrc`
 ---------------
@@ -115,28 +89,10 @@ Remaining Modules
     :show-inheritance:
 
 
-:mod:`magic_aid`
-----------------
-
-.. automodule:: pyutil.magic_aid
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 :mod:`mv_to_repo`
 -----------------
 
 .. automodule:: pyutil.mv_to_repo
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-:mod:`nvim_profiling`
----------------------
-
-.. automodule:: pyutil.nvim_profiling
     :members:
     :undoc-members:
     :show-inheritance:

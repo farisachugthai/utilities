@@ -57,12 +57,10 @@ import os
 from platform import system
 import subprocess
 
-# Does this need to get moved back so we can initialize a logger or are we
-# cool because we have one in the init file?
 try:
-    import pynvim
-except ImportError as e:
-    logging.debug(e)
+    from matplotlib import get_home
+except ModuleNotFoundError:  # what?
+    get_home = None
 
 from pyutil.env_checks import env_check, check_xdg_config_home
 
@@ -81,7 +79,7 @@ def find_init_files():
     Returns
     --------
     nvim_root : path-like object
-        The directory where nvim's configuration files are found.
+        The directory where nvim's configuration files are found
 
     .. todo:: Alright so if ``XDG_CONFIG_HOME`` isn't set we need to check ~/.config/nvim and check whether we're on windows or not
 
@@ -96,7 +94,17 @@ def find_init_files():
         else:
             return nvim_root
     else:
-        pass
+        userConfFile = os.path.join(
+            os.path.expanduser('~'), '.config', 'nvim', 'init.vim')
+
+        # Handle windows
+        if not os.path.isfile(userConfFile):
+            appdata_dir = os.getenv('appdata')
+
+        if userConf is None:
+            userConf = []
+
+        return userConf
 
 
 def main(nvim_root):
@@ -104,12 +112,12 @@ def main(nvim_root):
 
     Parameters
     -----------
-    nvim_root : path-like object
+    nvim_root : str
         The directory where nvim's configuration files are found.
 
     Returns
     --------
-    profiling_log_file : file
+    profiling_log_file : str
         Creates file based on the current time in ISO format profiling nvim.
 
 
@@ -123,35 +131,6 @@ def main(nvim_root):
     subprocess.check_output([
         'nvim', '--startuptime', profiling_log_file, 'test.py', '-c', ':qall'
     ])
-
-
-def find_init_files():
-    """Discover the initialization files used for nvim.
-
-    Should theoretically work on both Windows and Unix systems.
-
-    Returns
-    --------
-    nvim_root : path-like object
-        The directory where nvim's configuration files are found.
-
-    .. todo::
-
-        Alright so if ``XDG_CONFIG_HOME`` isn't set we need
-        to check ~/.config/nvim and check whether we're on windows or not
-
-    """
-    global OS
-    OS = system()
-    if check_xdg_config_home():
-        nvim_root = os.path.join(os.environ.get('XDG_CONFIG_HOME'), '', 'nvim')
-        if not os.path.isdir(nvim_root):
-            logging.ERROR(
-                "XDG_CONFIG_HOME set but $XDG_CONFIG_HOME/nvim doesn't exist.")
-        else:
-            return nvim_root
-    else:
-        pass
 
 
 if __name__ == "__main__":

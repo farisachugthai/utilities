@@ -9,14 +9,44 @@ regularly more than 1000 aliases in the namespace.
 
 This makes basic lookups slightly more involved.
 
-As I've ran this script twice in the last 2 days I figured time to save it.
 """
 import sys
 
 from IPython import get_ipython
+from IPython.core.magic import line_magic
+
+from pyutil.rclone import run
 
 
-def search(char):
+@line_magic
+def phelp(obj, shell=None):
+    """Pipe `obj` through :mod:`pydoc` to :mod:`pynvim` with ``ft`` set to man.
+
+    Parameters
+    ----------
+    obj : object
+        Object to view documentation for in :mod:`pynvim` with :mod:`pydoc`.
+    shell : |ip|
+        Global IPython instance.
+
+    Examples
+    --------
+    ::
+
+        >>> from pyutil.magic_aid import phelp
+        >>> from IPython import get_ipython
+        >>> import matplotlib as mpl
+        >>> _ip = get_ipython()
+        >>> object_of_interest = mpl
+        >>> phelp(object_of_interest, _ip)
+
+    """
+    cmd = ['nvim', '-c', 'set ft=man']
+    return_code = run(cmd)
+    return return_code
+
+
+def search(char, shell=None):
     """Do a simple search for aliased names in :mod:`IPython`.
 
     This function independently initializes IPython so that it can be
@@ -26,24 +56,40 @@ def search(char):
     ----------
     char : str
         Character to search through available magics for.
+    shell : |ip|
+        Global IPython instance.
 
     Returns
     -------
     results : list of strs
         All matching magics
 
-    """
-    _ip = get_ipython()
+    Examples
+    --------
+    ::
 
-    alias = _ip.run_line_magic('alias', 'line')
+        >>> from pyutil.magic_aid import search
+        >>> from IPython import get_ipython
+        >>> _ip = get_ipython()
+        >>> g_aliases = search('g', shell=_ip)
+        >>> print(len(g_aliases))
+
+    The above produced a value of 111 for me!
+
+
+    """
+    _user_aliases = shell.run_line_magic('alias', '')
 
     results = []
-    for i in alias:
-        if i[0].startswith(char):
-            results.append(i)
+    for each_alias in _user_aliases:
+        if each_alias[0].startswith(char):
+            results.append(each_alias)
     return results
 
 
 if __name__ == "__main__":
-    for i in sys.argv[1:]:
-        search(i)
+    _ip = get_ipython()
+
+    matches = []
+    for arg in sys.argv[1:]:
+        matches.append(search(arg, _ip))

@@ -167,9 +167,7 @@ def get_home_3():
 def check_xdg_config_home_2(conf_file=None):
     """An implementation of check_xdg_config_home that works with Python2
 
-    .. admonition::
-
-        Has not been tested on Python2.
+    .. admonition:: Has not been tested on Python2.
 
     .. todo:: Doesn't return consistent return values.
 

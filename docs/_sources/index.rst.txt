@@ -14,11 +14,9 @@ Welcome to utilities's documentation!
 .. toctree::
     :name: mastertoc
     :maxdepth: 1
-    :hidden:
 
     Usage and Contributing <tutorial>
     Documentation and Examples <numpydoc>
-    Numerical Analysis <numerical>
     Todo <todo>
     API <api>
 

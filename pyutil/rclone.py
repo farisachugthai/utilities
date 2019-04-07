@@ -70,7 +70,7 @@ def _parse_arguments(cwd=None, **kwargs):
     return parser
 
 
-def run(cmd):
+def run(cmd, **kwargs):
     """Execute the required command in a subshell.
 
     First the command is splited used typical shell grammer.
@@ -98,7 +98,7 @@ def run(cmd):
     """
     cmd = shlex.split(cmd)
     logging.debug("Cmd is: " + str(cmd))
-    process = subprocess.Popen(cmd)
+    process = subprocess.Popen(cmd, kwargs)
 
     if process.wait():
         raise SystemExit(process.returncode)

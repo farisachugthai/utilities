@@ -1,5 +1,3 @@
-.. _numpydoc:
-
 =================
 :mod:`Numpydoc`
 =================
@@ -526,7 +524,7 @@ Documenting classes
 -------------------
 
 Class docstring
-```````````````
+^^^^^^^^^^^^^^^
 Use the same sections as outlined above (all except ``Returns`` are
 applicable).  The constructor (``__init__``) should also be documented
 here, the **Parameters** section of the docstring details the constructors
@@ -587,7 +585,7 @@ Do not list private methods in the **methods** section.
 Note that `self` is *not* listed as the first parameter of methods.
 
 Method docstrings
-`````````````````
+^^^^^^^^^^^^^^^^^
 Document these as you would any other function.  Do not include
 ``self`` in the list of parameters.  If a method has an equivalent function
 (which is the case for many ndarray methods for example), the function

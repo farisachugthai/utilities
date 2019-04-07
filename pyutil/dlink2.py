@@ -3,23 +3,15 @@
 """Possibly rewrote the entire module in half as many lines.
 
 Now utilizes necessary libraries like glob.
+Should add pathlib in here for a nice one stop shop for symlinking, getting
+relative paths, symlinks and globs.
 
-.. note:
-
-    I was just in ``~/.config/nvim`` trying to symlink my dots from
-    ``~/projects/viconf/.config/nvim`` and running::
-
-        dlink2.py ~/projects/viconf/.config/nvim
-
-    while in ~/.config/nvim did nothing at all.
-
-.. version-changed:: Added argparse
+.. versionchanged:: Added argparse
 
 """
 import argparse
 import glob
 import os
-import sys
 
 from pyutil.__about__ import __version__
 
@@ -30,7 +22,6 @@ def _parse_arguments():
     parser.add_argument(
         "destination",
         type=str,
-        metavar="destination",
         nargs=1,
         help="Files to symlink to."
     )
@@ -48,7 +39,6 @@ def _parse_arguments():
     parser.add_argument(
         '-V',
         '--version',
-        metavar='version',
         action='version',
         version='%(prog)s' + __version__)
 

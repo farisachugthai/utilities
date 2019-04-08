@@ -118,7 +118,7 @@ class ZimText(TextWrapper):
     def body(self, text):
         """No idea if I'm doing this right."""
         print(text)
-        return (text)
+        return text
 
 
 def wrap_paragraphs(text, ncols=80):

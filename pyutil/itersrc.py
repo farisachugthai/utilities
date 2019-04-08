@@ -1,12 +1,11 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """Iterate over all of the python files in a directory recursively.
 
 .. module:: itersrc.py
     :synopsis: Iterate over all of the python files in a directory recursively.
 
 
-.. versionchanged:: 0.0.1
+.. version-changed:: 0.0.1
     Just added a check for python files. This could be useful as a base
     for a test runner.
 

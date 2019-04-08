@@ -67,7 +67,6 @@ def get_envs():
     short_envs : list
         list of conda environments
 
-
     """
     envlist = run(["conda", "env", "list"], stdout=PIPE, stderr=PIPE)
 

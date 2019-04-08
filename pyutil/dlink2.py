@@ -42,7 +42,6 @@ def _parse_arguments():
         action='version',
         version='%(prog)s' + __version__)
 
-
     args = parser.parse_args()
 
     return args

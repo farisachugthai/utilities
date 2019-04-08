@@ -1,6 +1,6 @@
 .. _tutorial:
 
-Tutorial.rst
+Tutorial
 ==============
 .. module:: tutorial
    :synopsis: The pyutils tutorial
@@ -19,8 +19,6 @@ A bare template for a full docstring with all :mod:`numpy` subsections has been
 included below.
 
 .. include:: numpydoc_docstring.rst
-
-.. jesus i don't know why i struggled with that so much. Refer to
 
 .. http://docutils.sourceforge.net/docs/ref/rst/directives.html#include
 

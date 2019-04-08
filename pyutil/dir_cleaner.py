@@ -4,11 +4,15 @@
 
 Run in :envvar:`$PREFIX`/tmp
 
-Can modify to accept user input and fall back to that dir.
-Implement once all the logic has panned out.
+However, there has to be a middle ground between deleting thousands of files
+one by one and ``rm -rf /tmp/*``.
 
-.. todo:: Write a second function that implemenents ``rm -r`` if ``du dir==0``
+This module attempts that.
 
+Initially tested on the android app Termux, this specifically deletes
+directories with only month old sockets.
+    - :envvar:`$PREFIX`/tmp/nvim
+    - :envvar:`$PREFIX`/tmp/ssh
 
 - Failing that, specifically delete directories with only month old sockets
     - :envvar:`$PREFIX`/tmp/nvim*
@@ -51,6 +55,7 @@ def clean(ftype='*.pyc', recursive=False):
 
     Parameters
     ----------
+    recursive : Bool
     ftype : filetype
         File to iterately remove.
 

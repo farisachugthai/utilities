@@ -163,7 +163,8 @@ def main(url, output_fname):
 
 
         USER_AGENTS = {
-            'Safari': 'Mozilla/5.0 (X11; Linux x86_64; rv:10.0) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27',
+            'Safari': 'Mozilla/5.0 (X11; Linux x86_64; rv:10.0)
+             AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27',
         }
 
 
@@ -211,7 +212,8 @@ if __name__ == "__main__":
     # ...??
     # USER_AGENTS = {
     #     'Safari':
-    #     'Mozilla/5.0 (X11; Linux x86_64; rv:10.0) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27',
+    #     'Mozilla/5.0 (X11; Linux x86_64; rv:10.0)
+    #     AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27',
     # }
 
     try:

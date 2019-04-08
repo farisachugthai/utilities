@@ -33,15 +33,20 @@ def _parse_arguments():
     """Handle user inputs."""
     parser = argparse.ArgumentParser(description=__doc__)
 
-    parser.add_argument('oldtree', metavar='oldtree',
-                        type=Path, help='Starting directory tree to symlink'
-                        'from.')
+    parser.add_argument(
+        'oldtree',
+        metavar='oldtree',
+        type=Path,
+        help='Starting directory tree to symlink'
+        'from.')
 
-    parser.add_argument('newtree', metavar='newtree',
-                        type=Path, help='Directory tree to symlink to ')
+    parser.add_argument(
+        'newtree',
+        metavar='newtree',
+        type=Path,
+        help='Directory tree to symlink to ')
 
-    parser.add_argument('-l', dest='linkto', metavar='linkto',
-                        help='Linkto')
+    parser.add_argument('-l', dest='linkto', metavar='linkto', help='Linkto')
 
     args = parser.parse_args()
 

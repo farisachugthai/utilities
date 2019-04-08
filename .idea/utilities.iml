@@ -6,6 +6,8 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7 (utilities)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="dynamic_ipython" />
+    <orderEntry type="module" module-name=".ipython" />
   </component>
   <component name="PackageRequirementsSettings">
     <option name="requirementsPath" value="" />

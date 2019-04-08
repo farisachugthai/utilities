@@ -17,7 +17,10 @@ class Command:
 
     def _vers(self):
         vers = sys.version_info[0:2]
-        if vers > (3, 6, ):
+        if vers > (
+                3,
+                6,
+        ):
             has37 = True
         else:
             has37 = False

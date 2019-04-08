@@ -12,7 +12,7 @@ Allow the user to input any parameters that are accepted by
 TextWrapper
 -----------
 
-Help on class TextWrapper in textwrap:
+Help on class :class:`textwrapper.TextWrapper` in :mod:`textwrap`:
 
 textwrap.TextWrapper = class TextWrapper(builtins.object)
  | textwrap.TextWrapper(width=70, initial_indent='', subsequent_indent='',
@@ -98,7 +98,7 @@ from textwrap import dedent, fill, TextWrapper
 
 try:
     from prompt_toolkit import print_formatted_text as print
-except ImportError:
+except (ImportError, ModuleNotFoundError):
     pass
 
 
@@ -166,12 +166,3 @@ if __name__ == '__main__':
         sys.exit('Requires a file to re-format.')
     else:
         sys.exit(wrap_paragraphs(args[1:]))
-
-    # it might be easier to do the above.
-    # can't do it like the below because then we have to hardcode the value of
-    # ncols so we could force some kw args for the script but it's then easier
-    # for the user to import the function and use it themselves.
-
-    # if len(args) > 2:
-    # for i in args[1:]:
-    # wrap_paragraphs(i, 80)

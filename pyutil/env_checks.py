@@ -69,6 +69,7 @@ Here's an interesting way to memoize return values.::
 """
 import os
 from pathlib import Path
+import pwd
 
 
 def check_xdg_config_home():
@@ -165,11 +166,11 @@ def get_home_3():
 
 
 def check_xdg_config_home_2(conf_file=None):
-    """An implementation of check_xdg_config_home that works with Python2
+    """An implementation of check_xdg_config_home that works with Python2!
+
+    Unfortunately the code is quite repetitive as it stands and needs refactoring.
 
     .. admonition:: Has not been tested on Python2.
-
-    .. todo:: Doesn't return consistent return values.
 
     Parameters
     ----------
@@ -190,4 +191,25 @@ def check_xdg_config_home_2(conf_file=None):
             if os.path.isfile(user_conf_file):
                 return user_conf_file
     else:
-        return os.path.isdir(os.path.join(os.path.expanduser('~'), '.config'))
+        xdg_config_dir = os.path.isdir(
+            os.path.join(os.path.expanduser('~'), '.config'))
+        if xdg_config_dir:
+            if conf_file:
+                user_conf_file = os.path.join(xdg_config_dir, conf_file)
+                if os.path.isfile(user_conf_file):
+                    return user_conf_file
+
+
+def get_username(arg1):
+    """TODO: Docstring for get_username.
+
+    Parameters
+    ----------
+    arg1 : TODO
+
+    Returns
+    -------
+    TODO
+
+    """
+    return pwd.getpwuid(os.getuid()).pw_name

@@ -123,12 +123,3 @@ Remaining Modules
     :members:
     :undoc-members:
     :show-inheritance:
-
-
-:mod:`yes_no_question`
-----------------------
-
-.. automodule:: pyutil.yes_no_question
-    :members:
-    :undoc-members:
-    :show-inheritance:

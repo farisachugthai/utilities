@@ -5,7 +5,7 @@
     :synopsis: Iterate over all of the python files in a directory recursively.
 
 
-.. version-changed:: 0.0.1
+.. versionchanged:: 0.0.1
     Just added a check for python files. This could be useful as a base
     for a test runner.
 

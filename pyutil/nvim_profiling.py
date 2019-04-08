@@ -55,18 +55,31 @@ import os
 from platform import system
 import subprocess
 
-try:
-    from matplotlib import get_home
-except ModuleNotFoundError:
-    get_home = None
-
 from pyutil.env_checks import env_check, check_xdg_config_home
 
 
 def output_results(output_dir):
-    """Checks that an directory named profiling exists."""
+    """Checks that an directory named profiling exists.
+
+    Parameters
+    ----------
+    output_dir : str
+        Directory to store profiling results in.
+
+    Returns
+    -------
+    Bool
+
+    """
     if os.path.isdir(os.path.join(output_dir, 'profiling')) is False:
-        os.mkdir(os.path.join(output_dir, 'profiling'))
+        try:
+            os.mkdir(os.path.join(output_dir, 'profiling'))
+        except OSError:
+            raise SystemExit  # is this how we do this?
+        else:
+            return True
+    else:
+        return True
 
 
 def find_init_files():
@@ -93,8 +106,8 @@ def find_init_files():
         else:
             return nvim_root
     else:
-        userConfFile = os.path.join(os.path.expanduser('~'), '.config', 'nvim',
-                                    'init.vim')
+        userConfFile = os.path.join(
+            os.path.expanduser('~'), '.config', 'nvim', 'init.vim')
 
         # Handle windows
         if not os.path.isfile(userConfFile):
@@ -125,6 +138,9 @@ def main(nvim_root):
     """
     now = datetime.date.isoformat(datetime.datetime.now())
 
+    if output_results(nvim_root):
+        now = 'profiling' + os.path.sep + str(now)
+
     profiling_log_file = os.path.join(nvim_root, '', now)
 
     subprocess.check_output([
@@ -133,6 +149,8 @@ def main(nvim_root):
 
 
 if __name__ == "__main__":
+    logger = logging.getLogger(name=__name__)
+
     nvim_root = find_init_files()
 
     main(nvim_root)

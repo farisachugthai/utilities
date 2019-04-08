@@ -55,9 +55,8 @@ def get_git_branch():
     """Get the symbolic name for the current git branch."""
     cmd = "git rev-parse --abbrev-ref HEAD".split()
     try:
-        return subprocess.check_output(cmd,
-                                       stderr=subprocess.STDOUT,
-                                       cwd=SRCDIR)
+        return subprocess.check_output(
+            cmd, stderr=subprocess.STDOUT, cwd=SRCDIR)
     except subprocess.CalledProcessError:
         return None
 

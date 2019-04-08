@@ -39,11 +39,12 @@ def _parse_arguments(cwd=None, **kwargs):
         "simple backup creation.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument(action='store',
-                        dest='src',
-                        default=cwd,
-                        help="the source directory. "
-                        "defaults to the cwd.")
+    parser.add_argument(
+        action='store',
+        dest='src',
+        default=cwd,
+        help="the source directory. "
+        "defaults to the cwd.")
 
     parser.add_argument(
         "dst",
@@ -58,12 +59,13 @@ def _parse_arguments(cwd=None, **kwargs):
         "however, :mod:`pyutil.rclone` will halt execution as rclone is configured."
     )
 
-    parser.add_argument('-f',
-                        '--follow',
-                        action='store_true',
-                        default=False,
-                        dest='follow',
-                        help="Follow symlinks.")
+    parser.add_argument(
+        '-f',
+        '--follow',
+        action='store_true',
+        default=False,
+        dest='follow',
+        help="Follow symlinks.")
 
     return parser
 

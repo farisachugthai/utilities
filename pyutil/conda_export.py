@@ -15,12 +15,13 @@ def _parse_arguments():
     """Parse user arguments."""
     parser = argparse.ArgumentParser(prog='%(prog)s', description=__doc__)
 
-    parser.add_argument('-c',
-                        '--command',
-                        dest='comm',
-                        metavar='Command',
-                        nargs='?',
-                        help='Optional. Command to pass to Conda.')
+    parser.add_argument(
+        '-c',
+        '--command',
+        dest='comm',
+        metavar='Command',
+        nargs='?',
+        help='Optional. Command to pass to Conda.')
 
     parser.add_argument(
         '-u',
@@ -28,10 +29,8 @@ def _parse_arguments():
         dest='update',
         action='store_true',
         help='Iterate through all Conda environments and update all.')
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    parser.add_argument(
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

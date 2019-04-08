@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """Deletes extraneous files.
 
-Run in :envvar:`$PREFIX`/tmp
+Without frequent monitoring, directories like /tmp and /var/log can frequently
+grow to sizes that are difficult to manage because of clutter and files.
 
 However, there has to be a middle ground between deleting thousands of files
 one by one and ``rm -rf /tmp/*``.
@@ -14,9 +15,11 @@ directories with only month old sockets.
     - :envvar:`$PREFIX`/tmp/nvim
     - :envvar:`$PREFIX`/tmp/ssh
 
-- Failing that, specifically delete directories with only month old sockets
-    - :envvar:`$PREFIX`/tmp/nvim*
-    - :envvar:`$PREFIX`/tmp/ssh*
+.. note:: On Ubuntu the big one is /var/log/journal so we might need to
+          remind the user for credentials. :func:`getpass.getpass`?
+
+In addition, it felt like a good way to get more familiar with the new
+:mod:`pathlib` module.
 
 """
 from glob import glob
@@ -33,21 +36,6 @@ def dir_cleaner(i):
                 os.rmdir(i)
             except OSError:
                 pass  # more than likely dir not empty.
-
-
-def extract_dir():
-    """Could be used in dir_cleaner. Yeah let's do that.
-
-    .. todo::
-
-        *sigh* Alright so we need to add a check that the zip starts with a dir
-        If the top level isn't a dir holding everything then you'll have loose
-        files everywhere.
-
-    """
-    for i in glob('*.zip'):
-        shutil.unpack_archive(i)
-        os.unlink(i)
 
 
 def clean(ftype='*.pyc', recursive=False):

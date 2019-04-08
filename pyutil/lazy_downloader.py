@@ -41,11 +41,10 @@ def _parse_arguments():
     """Parse user input."""
     parser = argparse.ArgumentParser(prog='__name__', description=__doc__)
 
-    parser.add_argument(
-        "URL",
-        nargs=1,
-        type=str,
-        help="The URL to download. Must be plaintext.")
+    parser.add_argument("URL",
+                        nargs=1,
+                        type=str,
+                        help="The URL to download. Must be plaintext.")
 
     # Will need to learn how to parse and tokenize the URL to get a reasonable
     # guess for the filename though
@@ -53,18 +52,16 @@ def _parse_arguments():
         "fname",
         help="The name of the file to write to. Must not exist already.")
 
-    parser.add_argument(
-        "-ha",
-        "--headers",
-        nargs='*',
-        help="Headers to send to the web server.")
+    parser.add_argument("-ha",
+                        "--headers",
+                        nargs='*',
+                        help="Headers to send to the web server.")
 
-    parser.add_argument(
-        '-V',
-        '--version',
-        metavar='version',
-        action='version',
-        version='%(prog)s' + __version__)
+    parser.add_argument('-V',
+                        '--version',
+                        metavar='version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

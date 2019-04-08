@@ -19,28 +19,23 @@ from pyutil.__about__ import __version__
 def _parse_arguments():
     parser = argparse.ArgumentParser(description=__doc__)
 
-    parser.add_argument(
-        "destination",
-        type=str,
-        nargs=1,
-        help="Files to symlink to."
-    )
+    parser.add_argument("destination",
+                        type=str,
+                        nargs=1,
+                        help="Files to symlink to.")
 
-    parser.add_argument(
-        "-s",
-        "--source",
-        default=os.getcwd,
-        type=str,
-        metavar="source",
-        nargs=1,
-        help="Files to symlink to."
-    )
+    parser.add_argument("-s",
+                        "--source",
+                        default=os.getcwd,
+                        type=str,
+                        metavar="source",
+                        nargs=1,
+                        help="Files to symlink to.")
 
-    parser.add_argument(
-        '-V',
-        '--version',
-        action='version',
-        version='%(prog)s' + __version__)
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

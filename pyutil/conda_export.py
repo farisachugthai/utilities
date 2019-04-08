@@ -8,30 +8,30 @@ import shutil
 from subprocess import run, PIPE
 import sys
 
-from .__about__ import __version__
+from pyutil.__about__ import __version__
 
 
 def _parse_arguments():
     """Parse user arguments."""
-    parser = argparse.ArgumentParser(name='%(prog)s', description=__doc__)
+    parser = argparse.ArgumentParser(prog='%(prog)s', description=__doc__)
 
-    parser.add_argument(
-        '-c',
-        '--command',
-        dest='comm',
-        metavar='Command',
-        nargs='?',
-        help='Optional. Command to pass to Conda.')
+    parser.add_argument('-c',
+                        '--command',
+                        dest='comm',
+                        metavar='Command',
+                        nargs='?',
+                        help='Optional. Command to pass to Conda.')
 
     parser.add_argument(
         '-u',
         '--update',
         dest='update',
-        metavar='Update all',
         action='store_true',
-        help='Iterate through all Conda ' + 'environments and update all.')
-    parser.add_argument(
-        '-V', '--version', action='version', version='%(prog)s' + __version__)
+        help='Iterate through all Conda environments and update all.')
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 
@@ -82,10 +82,12 @@ def get_envs():
         # Now let's take this long unwieldy string we have and clean it up
         decoded = decoded.splitlines()
         # Initially it prints out a few unnecessary lines. Let's chop them off
-        short_envs = decoded[2:-1]
+        envs = decoded[2:-1]
 
+        short_envs = []
         # now let's get rid of extraneous info
-        # short_envs = []
+        for env in envs:
+            short_envs.append(env.split()[0])
 
         return short_envs
 

@@ -7,12 +7,13 @@
 `rclone`_, a Golang package.
 
 
-.. todo::
+.. hlist::
 
-    - Set up a simple single use case backup.
-    - Add :func:`collections.ChainMap()` to set precedence of backupdir.
-    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync's file input.
-    - How do you correctly use :mod:`argparse` and ``**kwargs`` together?
+    * Set up a simple single use case backup.
+        * Realistically this should be more of the focus.
+    * However if it's not, then we could make a :class:`collections.defaultdict` that holds default values for each
+    * option. In addition we could use :class:`collections.ChainMap()` to set precedence of `backupdir`.
+    * Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync's file input.
 
 .. _`rclone`: https://rclone.org
 
@@ -23,7 +24,6 @@ import os
 import shlex
 import subprocess
 import sys
-
 
 def _parse_arguments(cwd=None, **kwargs):
     """Parse user-given arguments."""
@@ -43,18 +43,19 @@ def _parse_arguments(cwd=None, **kwargs):
         action='store',
         dest='src',
         default=cwd,
-        help="the source directory. "
-        "defaults to the cwd.")
+        required=False,
+        metavar='source dir',
+        help="The source directory. Defaults to the cwd.")
 
     parser.add_argument(
         "dst",
+        action='store',
+        metavar='Destination directory for backups.',
         help="The folder that the files should be backed up to."
         "Can be a remote instance as well. See rclone.org for "
         "all accepted values for this parameter")
 
-    parser.add_subparsers(
-        "config",
-        required=False,
+    config = parser.add_subparsers(
         help="Configure rclone. Additional options can't be specified;"
         "however, :mod:`pyutil.rclone` will halt execution as rclone is configured."
     )
@@ -65,9 +66,11 @@ def _parse_arguments(cwd=None, **kwargs):
         action='store_true',
         default=False,
         dest='follow',
+        metavar='follow',
         help="Follow symlinks.")
 
-    return parser
+    args = parser.parse_args()
+    return args
 
 
 def run(cmd, **kwargs):
@@ -78,11 +81,9 @@ def run(cmd, **kwargs):
     A new process is created, and from the resulting subprocess object,
     the :func:`subprocess.Popen().wait()`.
 
-    This function returns the return code of split ``cmd``, so any
+    This function returns the return code of split `cmd`, so any
     non-zero value will lead to a ``SystemExit`` with a passed value
     of ``returncode``.
-
-    .. should i use **kwargs as a parameter here? If so, how do i mark that up in a docstring?
 
     Parameters
     ----------
@@ -180,28 +181,14 @@ def rclone_follow(dst, src):
 
 
 def main():
-    """Run module."""
+    """Receive user arguments and begin executing module appropriately."""
     cwd = os.getcwd()
-
-    try:
-        home = os.path.expanduser("~")
-    except OSError:
-        home = os.environ.get('userprofile')
-
-    # Quite honestly most of everything below was garbage and needs to be
-    # rewritten ground up.
-
-    # Use :Glog if you want a reference of what was here.
-    parser = _parse_arguments(cwd)
-
-    args = parser.parse_args()
+    args = _parse_arguments(cwd)
 
     if args.src:
         src = args.src
     else:
         src = cwd
-
-    assert args.dst
 
     dst = args.dst
 

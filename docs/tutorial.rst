@@ -1,7 +1,7 @@
-.. _tutorial:
-
+=========
 Tutorial
-==============
+=========
+
 .. module:: tutorial
    :synopsis: The pyutils tutorial
 
@@ -23,7 +23,3 @@ included below.
 .. http://docutils.sourceforge.net/docs/ref/rst/directives.html#include
 
 In addition, full details of the numpy docstring format are given at :ref:`format`
-
-Continue to the next page:
-
-:doc:`numpydoc`

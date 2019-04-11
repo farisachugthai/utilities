@@ -6,7 +6,7 @@ Without frequent monitoring, directories like /tmp and /var/log can frequently
 grow to sizes that are difficult to manage because of clutter and files.
 
 However, there has to be a middle ground between deleting thousands of files
-one by one and ``rm -rf /tmp/*``.
+one by one and :command:`rm -rf /tmp/*`.
 
 This module attempts that.
 
@@ -24,7 +24,6 @@ In addition, it felt like a good way to get more familiar with the new
 """
 from glob import glob
 import os
-import shutil
 
 
 def dir_cleaner(i):

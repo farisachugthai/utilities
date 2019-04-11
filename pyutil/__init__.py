@@ -30,7 +30,7 @@ from .__about__ import (  # noqa F401
     __author__, __copyright__, __description__, __docformat__, __license__,
     __title__, __version__, __version_info__)
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(name=__name__)
 
 PYUTIL_DIR = os.path.dirname(os.path.abspath('__init__.py'))
 

@@ -56,7 +56,7 @@ def main():
 
     Determine if a file name is in the current directory or absolute path.
 
-    Then set up a relative path from ``$HOME``. Use the root of the repo
+    Then set up a relative path from :envvar:`$HOME`. Use the root of the repo
     as the new root and move the file there, all while creating
     directories and backups.
 

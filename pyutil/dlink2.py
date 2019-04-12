@@ -36,11 +36,7 @@ def _parse_arguments():
         help="Files to symlink to.")
 
     parser.add_argument(
-        '-V',
-        '--version',
-        metavar='version',
-        action='version',
-        version='%(prog)s' + __version__)
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

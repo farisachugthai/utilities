@@ -14,12 +14,11 @@ Safety Features
 If the filename already exists on the system it will NOT be overwritten,
 and the script will safely exit.
 
-
 Setting User Options
 --------------------
-
-This module a perfect candidate for :ref:`collections.Chainmap`. Check env vars,
-config files, command line args and user provided parameters.
+This module is a perfect candidate for :ref:`collections.ChainMap`.
+We could check env vars, config files, command line args and user provided parameters
+and rank them in that order of importance when configuring the download.
 
 """
 import argparse
@@ -27,14 +26,12 @@ from contextlib import closing
 import logging
 import os
 import re
-import sys
 
 import requests
 
 from pyutil.__about__ import __version__
 
-# logger = logging.getlogger(__name__)
-# handler =
+logger = logging.getlogger(__name__)
 
 
 def _parse_arguments():
@@ -64,7 +61,6 @@ def _parse_arguments():
         '--version',
         action='version',
         version='%(prog)s' + __version__)
-
     args = parser.parse_args()
 
     return args
@@ -82,7 +78,7 @@ def _get_page(URL):
             else:
                 return None
 
-    except requests.RequestException as e:
+    except requests.RequestException:
         # logger.something
         return None
 
@@ -149,28 +145,6 @@ def main(url, output_fname):
 
     Well here's part of one of your todos. :mod:`youtube_dl` has these
     defined in their utils
-
-    .. code-block:: python3
-
-        std_headers = {
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0',
-            'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Encoding': 'gzip, deflate',
-            'Accept-Language': 'en-us,en;q=0.5',
-        }
-
-
-        USER_AGENTS = {
-            'Safari': 'Mozilla/5.0 (X11; Linux x86_64; rv:10.0)
-             AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27',
-        }
-
-
-    .. todo::
-
-        Could add in a check. if the file is over a certain size use :func:`requests.res.iter_chunk()`
-
 
     Parameters
     ----------

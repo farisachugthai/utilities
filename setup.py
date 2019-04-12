@@ -31,11 +31,12 @@ from shutil import rmtree
 
 from setuptools import setup, find_packages, Command
 
+from pyutil.__about__ import __version__
+
 if sys.version_info[:2] < (3, 6):
     raise RuntimeError("Python version >= 3.6 required.")
 
 # Metadata: {{{1
-
 NAME = 'utilities'
 AUTHOR = "Faris Chugthai",
 EMAIL = "farischugthai@gmail.com",
@@ -44,7 +45,7 @@ LICENSE = "MIT",
 KEYWORDS = "linux math science",
 URL = "https://github.com/farisachugthai/utilities",
 REQUIRES_PYTHON = '>=3.6.0'  # actually could be as bad as 3.7+ only.
-VERSION = '0.0.1'
+VERSION = __version__
 
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 CONF_PATH = os.path.dirname(os.path.abspath('docs'))
@@ -74,7 +75,7 @@ with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
 # Load the package's __version__.py module as a dictionary.
-about = {'__version__': '0.0.1'}
+about = {'__version__': __version__}
 # if not VERSION:
 #     try:
 #         with open(os.path.join(here, NAME, '__version__.py')) as f:

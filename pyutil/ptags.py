@@ -1,4 +1,4 @@
-#!/usr/bin/python3.6
+#!/usr/bin/python3
 """Create a tags file for Python programs, usable with vi.
 
 Currently uses a regex to create a tags file.

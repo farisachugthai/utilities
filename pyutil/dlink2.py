@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Temporary module holding rewrites to dlink.
+"""Possibly rewrote the entire module in half as many lines.
 
-This module will be renamed in the future. For the time being it's a testing ground for rewriting the dlink module.
+Now utilizes necessary libraries like glob.
+Should add pathlib in here for a nice one stop shop for symlinking, getting
+relative paths, symlinks and globs.
 
-For this script, I'm attempting to try exclusively using :mod:`pathlib`.
+.. versionchanged:: Added argparse
 
 """
 import argparse
-from pathlib import Path
-import sys
+import glob
+import os
 
 from pyutil.__about__ import __version__
 
@@ -22,40 +24,27 @@ def _parse_arguments():
         type=str,
         metavar="destination",
         nargs=1,
-        help="Files to symlink to."
-    )
+        help="Files to symlink to.")
 
     parser.add_argument(
         "-s",
         "--source",
-        default=Path.cwd(),
+        default=os.getcwd,
+        type=str,
         metavar="source",
-        nargs='?',
-        help="Files to symlink to."
-    )
+        nargs=1,
+        help="Files to symlink to.")
 
     parser.add_argument(
-        '-V',
-        '--version',
-        metavar='version',
-        action='version',
-        version='%(prog)s' + __version__)
-
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 
     return args
 
 
-def main():
+def main(i, j=os.getcwd):
     """Symlink user provided files."""
-    args = _parse_arguments()
-    dest = args.destination
-    try:
-        src = args.source
-    except IndexError:
-        src = None
-    cwd = Path()
     for i in glob.glob("./**", recursive=True):
         if os.path.isfile(i):
             try:
@@ -67,4 +56,11 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    args = _parse_arguments()
+    dest = args.destination
+    try:
+        src = args.source
+    except Exception:
+        src = None
+
+    main(i=dest, j=src)

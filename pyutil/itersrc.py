@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """Iterate over all of the python files in a directory recursively.
 
 .. module:: itersrc.py
@@ -25,7 +24,7 @@ def iter_source_code(paths):
 
     Parameters
     ----------
-    paths : list
+    paths: list
         A list of paths.  Directories will be recursed into and
         any .py files found will be yielded.
         Any non-directories will be yielded as-is.
@@ -50,5 +49,5 @@ def iter_source_code(paths):
 
 
 if __name__ == "__main__":
-    for i in sys.argv[1:]:
-        iter_source_code(i)
+    paths = sys.argv[1:]
+    iter_source_code(paths)

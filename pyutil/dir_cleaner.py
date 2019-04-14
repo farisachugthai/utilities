@@ -2,28 +2,38 @@
 # -*- coding: utf-8 -*-
 """Deletes extraneous files.
 
-Run in ``$PREFIX/tmp.``
+Without frequent monitoring, directories like /tmp and /var/log can frequently
+grow to sizes that are difficult to manage because of clutter and files.
 
-Can modify to accept user input and fall back to that dir.
-Implement once all the logic has panned out.
+However, there has to be a middle ground between deleting thousands of files
+one by one and :command:`rm -rf /tmp/`.
 
-.. todo:: Write a second function that implemenents ``rm -r`` if ``du dir==0``
+This module attempts that.
 
+Initially tested on the android app Termux, this specifically deletes
+directories with only month old sockets.
 
-- Failing that, specifically delete directories with only month old sockets
-    - ``$PREFIX/tmp/nvim-*``
-    - ``$PREFIX/tmp/ssh-*``
+    - :envvar:`$PREFIX`/tmp/nvim
+    - :envvar:`$PREFIX`/tmp/ssh
 
-Dec 01, 2018:
+.. note:: On Ubuntu the big one is /var/log/journal so we might need to
+          remind the user for credentials. :func:`getpass.getpass`?
 
-    I was writing this like on termux like 4 days ago. Cleaned up
-    ~/python/tutorials/fnmatch.py and realized it's the exact same thing.
+In addition, it felt like a good way to get more familiar with the new
+:mod:`pathlib` module.
 
+Well it will be after rewriting it all.
 
 """
 from glob import glob
+import logging
 import os
+# from pathlib import Path
+import shlex
 import shutil
+import sys
+
+logger = logging.getLogger(__name__)
 
 
 def dir_cleaner(i):
@@ -37,16 +47,6 @@ def dir_cleaner(i):
                 pass  # more than likely dir not empty.
 
 
-def extract_dir():
-    """Could be used in dir_cleaner. Yeah let's do that.
-
-    .. todo:: *sigh* alright so we need to add a check that the zip has a child dir in it. Extracted 3 zips rn and its all mixed together :(
-    """
-    for i in glob('*.zip'):
-        shutil.unpack_archive(i)
-        os.unlink(i)
-
-
 def clean(ftype='*.pyc', recursive=False):
     """Remove all pyc files. Add input for filetype later.
 
@@ -54,17 +54,34 @@ def clean(ftype='*.pyc', recursive=False):
     ----------
     ftype : filetype
         File to iterately remove.
+    recursive : Bool, Optional
+        Whether to search the directory recursively or not.
 
     """
     j = [os.unlink(i) for i in glob(ftype, recursive=recursive)]
     return j
 
 
-if __name__ == "__main__":
+def rmtree(path, ignore_errors=False, onerror=None):
+    """Returns :func:`shutil.rmtree`."""
+    return shutil.rmtree(path, ignore_errors, onerror)
+
+
+def main():
+    """Directory cleaner."""
+    # There are better ways to determine if Android. check :envvar:`ANDROIDROOT`?
     try:
         tmp = os.environ.get('PREFIX') + '/tmp/'
     except (OSError, TypeError):
         tmp = '/tmp/'
     tmpd = os.scandir(tmp)
+
+    # Also let's start handling command line arguments please?
+    # args = shlex.split(sys.argv[:])
+
     for i in tmpd:
         dir_cleaner(i)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

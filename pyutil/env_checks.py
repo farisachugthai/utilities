@@ -69,10 +69,11 @@ Here's an interesting way to memoize return values.::
 """
 import os
 from pathlib import Path
+import pwd
 
 
 def check_xdg_config_home():
-    """Check to see if ``$XDG_CONFIG_HOME`` has been defined.
+    """Check to see if :envvar:`$XDG_CONFIG_HOME` has been defined.
 
     Returns
     -------
@@ -92,15 +93,20 @@ def check_xdg_config_home():
         return True
 
 
-def get_script_dir():
+def get_script_dir(fobj):
     """Determine the directory the script is in.
+
+    Parameters
+    ----------
+    fobj : str
+        Path to file to check
 
     Returns
     -------
     Directory the file is in : str
 
     """
-    return os.path.dirname(os.path.realpath(__file__))
+    return os.path.dirname(os.path.realpath(fobj))
 
 
 def env_check(env_var):
@@ -142,6 +148,7 @@ def env_check(env_var):
         if i.find(env_var) > 0:
             yield i
 
+
 def get_home_3():
     """Return the user's home directory. Python3 only!
 
@@ -160,10 +167,10 @@ def get_home_3():
 
 def check_xdg_config_home_2(conf_file=None):
     """An implementation of check_xdg_config_home that works with Python2!
-    
-    .. admonition::
 
-        Has not been tested on Python2.
+    Unfortunately the code is quite repetitive as it stands and needs refactoring.
+
+    .. admonition:: Has not been tested on Python2.
 
     Parameters
     ----------
@@ -181,7 +188,28 @@ def check_xdg_config_home_2(conf_file=None):
     if xdg_config_home:
         if conf_file:
             user_conf_file = os.path.join(xdg_config_home, conf_file)
-            if not os.path.isfile(user_conf_file):
-                return None
-            else:
+            if os.path.isfile(user_conf_file):
                 return user_conf_file
+    else:
+        xdg_config_dir = os.path.isdir(
+            os.path.join(os.path.expanduser('~'), '.config'))
+        if xdg_config_dir:
+            if conf_file:
+                user_conf_file = os.path.join(xdg_config_dir, conf_file)
+                if os.path.isfile(user_conf_file):
+                    return user_conf_file
+
+
+def get_username(arg1):
+    """TODO: Docstring for get_username.
+
+    Parameters
+    ----------
+    arg1 : TODO
+
+    Returns
+    -------
+    TODO
+
+    """
+    return pwd.getpwuid(os.getuid()).pw_name

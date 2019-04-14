@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Move files from the home directory to the dotfiles repo.
 
-.. module:: `mv_to_repo`
+.. module:: mv_to_repo
     :synopsis: Move files from the home directory to the dotfiles repo.
 
 This is a script I've been using for the better part of a year, so while
@@ -56,7 +56,7 @@ def main():
 
     Determine if a file name is in the current directory or absolute path.
 
-    Then set up a relative path from ``$HOME``. Use the root of the repo
+    Then set up a relative path from :envvar:`$HOME`. Use the root of the repo
     as the new root and move the file there, all while creating
     directories and backups.
 
@@ -66,15 +66,9 @@ def main():
     Moves file to a hardcoded path but will be generalized to take as an
     argument.
 
-    Assumes
-    -------
-        User runs the script from inside the folder of the file they want to
-        move.
+    .. rubric:: Assumes
 
-    Parameters
-    ----------
-    src : str
-        Name of file to backup, move and symlink.
+    User runs the script from inside the folder of the file they want to move.
 
     """
     inputted = sys.argv[1] if len(

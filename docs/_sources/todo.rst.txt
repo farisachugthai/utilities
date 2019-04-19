@@ -32,13 +32,14 @@ your hearts content.
 
 scripts
 ---------
-- Either add doctests, logging or unittests to `dlink <https://github.com/farisachugthai/utilities/python/dlink.py>`_ that you feel confident enough to begin basing `dot_sym.ipy <https://github.com/farisachugthai/utilities/python/dot_sym.ipy>`_ off of it and then begin basing `newbuntu <https://github.com/farisachugthai/newbuntu>`_ off of that.
+.. hlist::
 
-- Make a script that deletes empty dirs in ``$PREFIX/tmp``. Termux has 100s now.
-
+- Either add doctests, logging or unittests to `dlink <https://github.com/farisachugthai/utilities/python/dlink.py>`_
+- Continue adding these support structures until  you feel confident enough to begin basing `dot_sym.ipy <https://github.com/farisachugthai/utilities/python/dot_sym.ipy>`_ off of it
+- At some point we can then begin basing `newbuntu <https://github.com/farisachugthai/newbuntu>`_ off of that.
 - A script that utilizes `dlink <https://github.com/farisachugthai/utilities/python/dlink.py>`_ to update the scripts in `<~/bin>`_. Quite annoying to do this manually.
-
 - Rsync and rclone scripts aren't close to done. Part of that will be encrypting/archiving your notebooks and pulling them down on different devices.
+- :ref:`pyutil.conda_export._cmd_wrapper()` doesn't work.
 
 Linting
 -------

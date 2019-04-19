@@ -29,12 +29,11 @@ from glob import glob
 import logging
 import os
 # from pathlib import Path
-import shlex
+# import shlex
 import shutil
 import sys
 
 logger = logging.getLogger(__name__)
-
 
 def dir_cleaner(i):
     """Yield all directories before november."""
@@ -75,7 +74,6 @@ def main():
     except (OSError, TypeError):
         tmp = '/tmp/'
     tmpd = os.scandir(tmp)
-
     # Also let's start handling command line arguments please?
     # args = shlex.split(sys.argv[:])
 

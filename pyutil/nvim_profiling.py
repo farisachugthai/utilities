@@ -57,6 +57,8 @@ import subprocess
 
 from pyutil.env_checks import env_check, check_xdg_config_home
 
+logger = logging.getLogger(name=__name__)
+
 
 def output_results(output_dir):
     """Checks that an directory named profiling exists.
@@ -149,8 +151,6 @@ def main(nvim_root):
 
 
 if __name__ == "__main__":
-    logger = logging.getLogger(name=__name__)
-
     nvim_root = find_init_files()
 
     main(nvim_root)

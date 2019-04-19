@@ -3,17 +3,44 @@
 """Module to check a user is utilizing the proper version of python.
 
 Even outside of the 2 to 3 incompatibilities, the standard library
-introduces new modules often enough that it's useful to check.
-
-Utilized by importing as so.
-
+introduces new modules often enough that it's useful to check what version oof
+Python is being run.
 
 .. rubric:: Assumes: All functions are imported as the module will immediately exit if directly executed.
 
 If nothing else this is a lesson in how painful it becomes to maintain
 nonsense names.
+
+Expanding to Paths
+------------------
+This module is admittedly quite limited if we only check ``sys.executable``.
+
+Let's do some general file checking with :mod:`pathlib`. This module itself
+was added to the standard library recently, and as a result, we'll import it
+with a try statement.
+
 """
 import sys
+try:
+    from pathlib import Path
+except ImportError:
+    pass
+
+
+def is_file(file_obj):
+    """Check a file exists on the system.
+
+    Examples
+    --------
+    ::
+
+         >>> from pyutil.sys_checks import is_file
+         >>> if is_file('path/to/file'):
+             >>> pass
+
+    """
+    p = Path(file_obj)
+    return p.is_file()
 
 
 def py_gt_raise(min_py_version):

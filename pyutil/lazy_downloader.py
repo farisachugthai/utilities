@@ -31,7 +31,7 @@ import requests
 
 from pyutil.__about__ import __version__
 
-logger = logging.getlogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def _parse_arguments():

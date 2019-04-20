@@ -45,7 +45,7 @@ def gcd_iter(a, b):
 if __name__ == "__main__":
     args = sys.argv[:]
 
-    logging.basicConfig(level=logging.warning)
+    logging.basicConfig(level=logging.WARNING)
 
     if len(args) > 2:
         a = args[1]

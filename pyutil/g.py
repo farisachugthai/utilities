@@ -6,8 +6,11 @@
 
     What version of python was :func:`subprocess.check_output()` introduced in?
 
+04/16/19
+There is a silly amount of repitition in this file.
 
 """
+import shlex
 import subprocess
 import sys
 import sysconfig
@@ -17,6 +20,25 @@ import sysconfig
 # except ImportError:
 #     pass
 SRCDIR = sysconfig.get_config_var('srcdir')
+
+
+class Git():
+    """Create a base class for working with Git in Python."""
+
+    def __init__(self, version, root=None):
+        """Initialize a few necessary parameters."""
+        self.version = version
+        self.root = root
+
+    def _quote_cmd(self, cmd):
+        """Is this a @staticmethod?"""
+        return shlex.quote(cmd)
+
+    def capture_output(self,
+                       cmd,
+                       stderr=subprocess.PIPE,
+                       stdout=subprocess.PIPE):
+        split_cmd = shlex.quote(cmd.split())
 
 
 def git_touch(args):
@@ -55,8 +77,9 @@ def get_git_branch():
     """Get the symbolic name for the current git branch."""
     cmd = "git rev-parse --abbrev-ref HEAD".split()
     try:
-        return subprocess.check_output(
-            cmd, stderr=subprocess.STDOUT, cwd=SRCDIR)
+        return subprocess.check_output(cmd,
+                                       stderr=subprocess.STDOUT,
+                                       cwd=SRCDIR)
     except subprocess.CalledProcessError:
         return None
 

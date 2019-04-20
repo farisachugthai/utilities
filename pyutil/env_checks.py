@@ -67,6 +67,7 @@ Here's an interesting way to memoize return values.::
 
 
 """
+from get_pass import getuser
 import os
 from pathlib import Path
 import pwd
@@ -200,16 +201,31 @@ def check_xdg_config_home_2(conf_file=None):
                     return user_conf_file
 
 
-def get_username(arg1):
-    """TODO: Docstring for get_username.
-
-    Parameters
-    ----------
-    arg1 : TODO
+def get_unix_username():
+    """Get username. Unix only!
 
     Returns
     -------
-    TODO
+    username : str
+        User username
 
     """
     return pwd.getpwuid(os.getuid()).pw_name
+
+
+def get_username():
+    """More cross-platform implementation of retrieving a username.
+
+
+   Return the "login name" of the user.
+
+   This function checks the environment variables :envvar:`LOGNAME`,
+   :envvar:`USER`, :envvar:`LNAME` and :envvar:`USERNAME`, in order, and
+   returns the value of the first one which is set to a non-empty string.  If
+   none are set, the login name from the password database is returned on
+   systems which support the :mod:`pwd` module, otherwise, an exception is
+   raised.
+
+   In general, this function should be preferred over :func:`os.getlogin()`.
+    """
+    return getuser()

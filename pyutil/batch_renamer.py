@@ -33,7 +33,7 @@ from string import Template
 
 from .__about__ import __version__
 
-LOG_LEVEL = "logging.warning"
+LOG_LEVEL = "logging.WARNING"
 
 
 class BatchRename(Template):
@@ -129,11 +129,6 @@ def main():
         logging.basicConfig(level=LOG_LEVEL)
     else:
         logging.basicConfig(level=log_level)
-
-    # Wait until we're sure we got the args we needed before setting the log
-    # level.
-    # Now we can configure that level based on user input and default to WARNING
-    logging.basicConfig(level=log_level)
 
     logging.debug("The directory that was chosen was: " + str(d))
 

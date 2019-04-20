@@ -20,12 +20,24 @@ This module is a perfect candidate for :ref:`collections.ChainMap`.
 We could check env vars, config files, command line args and user provided parameters
 and rank them in that order of importance when configuring the download.
 
+
+Attributes
+----------
+url : str
+    A url to download
+
+output_fname : str, optional
+    A path to write the downloaded content to. Defaults to the last
+    section of the URL when split by forward slashes, or :kbd:`/`.
+
+
 """
 import argparse
 from contextlib import closing
 import logging
 import os
 import re
+from urllib.parse import urlparse
 
 import requests
 
@@ -38,32 +50,41 @@ def _parse_arguments():
     """Parse user input."""
     parser = argparse.ArgumentParser(prog='__name__', description=__doc__)
 
-    parser.add_argument(
-        "URL",
-        nargs=1,
-        type=str,
-        help="The URL to download. Must be plaintext.")
+    parser.add_argument("URL",
+                        nargs=1,
+                        type=str,
+                        metavar="URL",
+                        help="The URL to download. Must be plaintext.")
 
-    # Will need to learn how to parse and tokenize the URL to get a reasonable
-    # guess for the filename though
     parser.add_argument(
         "fname",
+        metavar="Output filename",
         help="The name of the file to write to. Must not exist already.")
 
-    parser.add_argument(
-        "-ha",
-        "--headers",
-        nargs='*',
-        help="Headers to send to the web server.")
+    parser.add_argument("-ha",
+                        "--headers",
+                        metavar="headers",
+                        nargs='?',
+                        type=dict,
+                        help="Headers to send to the web server.")
 
-    parser.add_argument(
-        '-V',
-        '--version',
-        action='version',
-        version='%(prog)s' + __version__)
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
+
     args = parser.parse_args()
 
     return args
+
+
+def _parse_url(URL):
+    """Parse the url in order to get something usable if we don't get a fname.
+
+    If no output filename is given don't crash!
+    """
+    stripped_url = urlparse(URL)['path']
+    return stripped_url.split('/')[-1]
 
 
 def _get_page(URL):
@@ -72,7 +93,7 @@ def _get_page(URL):
     Returns content if it is recognized HTML/XML. If not, return `None`.
     """
     try:
-        with closing(requests.get(url, stream=True)) as res:
+        with closing(requests.get(URL, stream=True)) as res:
             if check_response(res):
                 return res.content
             else:
@@ -92,7 +113,7 @@ def check_response(server_response):
         return server_response.status_code
 
 
-def _parse_site(URL, *args, **kwargs):
+def _parse_site(URL, **kwargs):
     """Parse the given `URL`, remove tags and return plaintext.
 
     This should probably be modified to take the user agent and header args.
@@ -108,7 +129,7 @@ def _parse_site(URL, *args, **kwargs):
         Plaintext view of the website.
 
     """
-    res = requests.get(URL)
+    res = requests.get(URL, kwargs)
     res.raise_for_status()
 
     txt = res.text()
@@ -133,7 +154,7 @@ def find_links(text):
     return links
 
 
-def main(url, output_fname):
+def main():
     """Download URL and write to disk.
 
     .. todo:: Add headers.
@@ -143,33 +164,19 @@ def main(url, output_fname):
             if res.headers['Content-Type']:
                  pass
 
-    Well here's part of one of your todos. :mod:`youtube_dl` has these
-    defined in their utils
-
-    Parameters
-    ----------
-    url : str
-        A url to download
-
-    output_fname : str
-        A path to write the downloaded content to.
-
     """
-    txt = _parse_site(url)
-
-    with open(output_fname, "xt") as f:
-        f.write(txt)
-
-
-if __name__ == "__main__":
     args = _parse_arguments()
-    # With xt permissions the script crashes so no point raising anything.
-    # Just bail
-    if os.path.isfile(args.fname):
+    # With xt permissions the script crashes so just bail
+    try:
+        fname = args.fname
+    except Exception as e:
+        print(e)
+
+    if os.path.isfile(fname):
         raise FileExistsError
     # And if we're good, then bind the properties from the parser
     else:
-        output_fname = args.fname
+        # should this be a try/except?
         url = args.URL
 
     std_headers = {
@@ -182,13 +189,6 @@ if __name__ == "__main__":
         'Accept-Language': 'en-us,en;q=0.5',
     }
 
-    # ...??
-    # USER_AGENTS = {
-    #     'Safari':
-    #     'Mozilla/5.0 (X11; Linux x86_64; rv:10.0)
-    #     AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27',
-    # }
-
     try:
         headers = args.headers
     except Exception:
@@ -199,4 +199,11 @@ if __name__ == "__main__":
     # except Exception:
     #     user_agent = USER_AGENTS
 
-    main(url, output_fname)
+    txt = _parse_site(url)
+
+    with open(fname, "xt") as f:
+        f.write(txt)
+
+
+if __name__ == "__main__":
+    main()

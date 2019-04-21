@@ -17,7 +17,6 @@ Welcome to utilities's documentation!
 
     Usage and Contributing <tutorial>
     Documentation and Examples <numpydoc>
-    Todo <todo>
     API <api>
 
 

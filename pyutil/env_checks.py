@@ -67,7 +67,7 @@ Here's an interesting way to memoize return values.::
 
 
 """
-from get_pass import getuser
+from getpass import getuser
 import os
 from pathlib import Path
 import pwd

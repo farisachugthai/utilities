@@ -28,6 +28,7 @@ import os
 from pathlib import Path
 import sys
 
+logger = logging.getLogger(name=__name__)
 
 def _parse_arguments():
     """Handle user inputs."""
@@ -50,19 +51,19 @@ def _parse_arguments():
 
     args = parser.parse_args()
 
+    if not 3 <= len(sys.argv) <= 4:
+        parser.print_help()
+
     return args
 
 
 def _check_existence(directory):
     """Check that a directory exists."""
-    pass
+    return directory.isdir()
 
 
 def main():
     """Handle user inputs and initialize arguments."""
-    if not 3 <= len(sys.argv) <= 4:
-        print('usage:', sys.argv[0], 'oldtree newtree [linkto]')
-        return 2
     oldtree, newtree = sys.argv[1], sys.argv[2]
 
     if len(sys.argv) > 3:
@@ -73,23 +74,23 @@ def main():
         link_may_fail = 0
 
     if not os.path.isdir(oldtree):
-        print(oldtree + ': not a directory')
+        logging.warning(oldtree + ': not a directory')
         return 1
 
     try:
         os.mkdir(newtree, 0o777)
     except OSError as msg:
-        print(newtree + ': cannot mkdir:', msg)
+        logging.warning(newtree + ': cannot mkdir:', msg)
         return 1
     linkname = os.path.join(newtree, link)
     try:
         os.symlink(os.path.join(os.pardir, oldtree), linkname)
     except OSError as msg:
         if not link_may_fail:
-            print(linkname + ': cannot symlink:', msg)
+            logging.warning(linkname + ': cannot symlink:', msg)
             return 1
         else:
-            print(linkname + ': warning: cannot symlink:', msg)
+            logging.warning(linkname + ': warning: cannot symlink:', msg)
     linknames(oldtree, newtree, link)
     return 0
 
@@ -117,7 +118,7 @@ def linknames(old, new, link):
                     os.mkdir(newname, 0o777)
                     ok = 1
                 except Exception as msg:
-                    print(newname + ': warning: cannot mkdir:', msg)
+                    logging.warning(newname + ': warning: cannot mkdir:', msg)
                     ok = 0
                 if ok:
                     linkname = os.path.join(os.pardir, linkname)
@@ -127,7 +128,7 @@ def linknames(old, new, link):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.WARNING)
+    logger.setLevel(logging.WARNING)
 
     LINK = '.LINK'  # Name of special symlink at the top.
 

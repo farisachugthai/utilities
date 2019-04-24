@@ -43,14 +43,27 @@ def gcd_iter(a, b):
 
 
 if __name__ == "__main__":
-    args = sys.argv[:]
+    args = sys.argv[1:]
 
-    logging.basicConfig(level=logging.warning)
+    logging.basicConfig(level=logging.WARNING)
 
-    if len(args) > 2:
-        a = args[1]
-        b = args[2]
-    else:
+    if len(args) == 2:
+        a = args[0]
+        b = args[1]
+
+    try:
+        a = args[0]
+        b = args[1]
+    except (NameError, IndexError):
         logging.error("Not enough args provided.")
+        sys.exit()
 
-    gcd_iter(a, b)
+    try:
+        a = int(a)
+        b = int(b)
+    except TypeError as e:
+        print(e)
+        sys.exit()
+
+    gcd = gcd_iter(a, b)
+    print(gcd)

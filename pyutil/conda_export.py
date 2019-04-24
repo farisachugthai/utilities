@@ -3,8 +3,8 @@
 """Iterate over the list of conda environments that are present.
 
 In it's current implementation, the base command works. However the
-:func:`conda_export._cmd_wrapper` doesn't work and as a result, can't pass
-arguments along to conda yet.
+:func:`pyutil.conda_export._cmd_wrapper` doesn't work and as a result,
+we can't pass arguments along to conda yet.
 
 """
 import argparse
@@ -27,7 +27,7 @@ def _parse_arguments():
         dest='comm',
         metavar='Command',
         nargs='?',
-        type=str,
+        type=str,  # wait how is this not bytes
         help='Optional. Command to pass to Conda.')
 
     parser.add_argument(
@@ -36,6 +36,7 @@ def _parse_arguments():
         dest='update',
         action='store_true',
         help='Iterate through all Conda environments and update all.')
+
     parser.add_argument(
         '-V', '--version', action='version', version='%(prog)s' + __version__)
 
@@ -52,7 +53,7 @@ def _cmd_wrapper(cmd=None):
 
     Parameters
     ----------
-    cmd : list, optional
+    cmd : str, optional
         cmd to pass to conda
 
     Returns
@@ -123,12 +124,10 @@ def main():
     try:
         cmd = args.comm
     except IndexError:  # ? idk what error
-        pass
+        full_name_envs = get_envs()
+        return full_name_envs
     else:
-        _cmd_wrapper(cmd)
-
-    full_name_envs = get_envs()
-    return full_name_envs
+        return _cmd_wrapper(cmd)
 
 
 if __name__ == "__main__":

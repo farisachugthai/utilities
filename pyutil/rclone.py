@@ -25,40 +25,47 @@ import shlex
 import subprocess
 import sys
 
+from pyutil.__about__ import __version__
+
+LOG_LEVEL = "logging.WARNING"
+
+
 def _parse_arguments(cwd=None, **kwargs):
     """Parse user-given arguments."""
     if cwd is None:
         cwd = os.getcwd()
 
     parser = argparse.ArgumentParser(
-        description="Automate usage of rclone for simple backup creation.")
-    # parser.add_argument(dest=src, required=True, help='A directory, presumably local, to sync with a remote.')
-    parser = argparse.ArgumentParser(
-        usage="%(prog)s [options]",
         description="Automate usage of rclone for "
-        "simple backup creation.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        "simple backup creation.")
 
     parser.add_argument(
         action='store',
         dest='src',
         default=cwd,
-        required=False,
-        metavar='source dir',
+        metavar='source_dir',
         help="The source directory. Defaults to the cwd.")
 
     parser.add_argument(
         "dst",
         action='store',
-        metavar='Destination directory for backups.',
+        metavar='dest_directory',
         help="The folder that the files should be backed up to."
         "Can be a remote instance as well. See rclone.org for "
         "all accepted values for this parameter")
 
-    config = parser.add_subparsers(
-        help="Configure rclone. Additional options can't be specified;"
-        "however, :mod:`pyutil.rclone` will halt execution as rclone is configured."
-    )
+    # config = parser.add_subparsers(
+    #     help="Configure rclone. Additional options can't be specified;"
+    #     "however, :mod:`pyutil.rclone` will halt execution as rclone is configured."
+    # )
+
+    parser.add_argument(
+        '-l',
+        '--log_level',
+        dest='log_level',
+        metavar='log_level',
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        help='Set the logging level')
 
     parser.add_argument(
         '-f',
@@ -66,11 +73,26 @@ def _parse_arguments(cwd=None, **kwargs):
         action='store_true',
         default=False,
         dest='follow',
-        metavar='follow',
         help="Follow symlinks.")
 
+    parser.add_argument(
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
+
     args = parser.parse_args()
+
     return args
+
+
+def _set_debugging():
+    """Enable debug logging."""
+    root = logging.getLogger(name=__name__)
+    root.setLevel(logging.DEBUG)
+
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
+    ch.setFormatter(formatter)
+    root.addHandler(ch)
 
 
 def run(cmd, **kwargs):
@@ -184,6 +206,13 @@ def main():
     """Receive user arguments and begin executing module appropriately."""
     cwd = os.getcwd()
     args = _parse_arguments(cwd)
+
+    try:
+        log_level = args.log_level
+    except Exception:  # IndexError?
+        logging.basicConfig(level=LOG_LEVEL)
+    else:
+        logging.basicConfig(level=log_level)
 
     if args.src:
         src = args.src

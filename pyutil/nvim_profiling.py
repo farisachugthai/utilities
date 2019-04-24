@@ -55,7 +55,7 @@ import os
 from platform import system
 import subprocess
 
-from pyutil.env_checks import env_check, check_xdg_config_home
+from pyutil.env_checks import check_xdg_config_home
 
 logger = logging.getLogger(name=__name__)
 
@@ -152,5 +152,9 @@ def main(nvim_root):
 
 if __name__ == "__main__":
     nvim_root = find_init_files()
+
+    LOG_LEVEL = "logging.WARNING"
+
+    logging.basicConfig(level=LOG_LEVEL)
 
     main(nvim_root)

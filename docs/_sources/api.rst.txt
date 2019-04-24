@@ -20,10 +20,12 @@ following sections.
    Numerical Analysis <numerical>
    Text
    External Commands <External_Commands>
+   Other
 
 .. toctree::
    :maxdepth: 1
+   :hidden:
 
-   Other
+   Todo <todo>
 
 First we'll start with the :doc:`Backups`.

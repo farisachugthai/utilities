@@ -10,10 +10,10 @@
     :copyright: Copyright 2007-2014 by the Sphinx team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
+import logging
 from logging import NullHandler
 import os
 import sys
-import logging
 
 from pyutil.__about__ import (
     __author__,

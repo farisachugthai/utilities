@@ -1,4 +1,5 @@
 {
+    "python.pythonPath": "C:\\Users\\faris\\Miniconda3\\envs\\utilities\\python.exe",
     "python.pythonPath": "/home/faris/miniconda3/envs/utilities/bin/python",
     "files.exclude": {
         "**/.git": false,
@@ -14,8 +15,6 @@
         "-p",
         "test_*.py"
     ],
-    "python.unitTest.pyTestEnabled": false,
-    "python.unitTest.nosetestsEnabled": false,
     "python.unitTest.unittestEnabled": true,
     "files.eol": "\n",
     "editor.fontLigatures": true,

@@ -116,11 +116,8 @@ def file_check(pattern, file_to_check):
 def main():
     """Execute module."""
     args = _parse_arguments()
-
     d = args.directory
-
     fmt = args.rename_format
-
     old = args.old_pattern
 
     try:
@@ -131,7 +128,6 @@ def main():
         logging.basicConfig(level=log_level)
 
     logging.debug("The directory that was chosen was: " + str(d))
-
     batch_mover(pattern=fmt, new_pattern=old, directory=d)
 
 

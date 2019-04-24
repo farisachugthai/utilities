@@ -31,12 +31,15 @@ logger = logging.getLogger(name=__name__)
 class BaseCommand(object):
     """Create a base command class."""
 
-    def run(self, cmd=None):
+    def __init__(self, cmd=None):
+        self.cmd = cmd
+
+    def run(self, **kwargs, cmd=None):
         """Run a safer subprocess.
 
         Parameters
         ----------
-        cmd : str, optional
+        cmd : list, optional
             cmd to run in subprocess
 
         Returns
@@ -48,12 +51,13 @@ class BaseCommand(object):
             cmd = shlex.split(cmd)
         else:
             return None
-        output = subprocess.run([cmd], capture_output=True)
+        logging.debug("Cmd is: " + str(cmd))
+        output = subprocess.run([cmd], kwargs, capture_output=True)
 
-        validated_output = _validate(output)
+        validated_output = self._validate(output)
         return validated_output
 
-    def _validate(subprocess_output):
+    def _validate(self, subprocess_output):
         """Take output from :func:`subprocess.run()`.
 
         First the func will check :attr:`returncode`.
@@ -72,6 +76,18 @@ class BaseCommand(object):
                 logging.warning("Subprocess didn't return bytes. Maybe str?")
                 logging.warning(type(subprocess_output.stdout))
                 return subprocess_output
+
+    def popen(self, **kwargs, cmd=None):
+        """If we don't need to capture output, check the return code."""
+        if cmd:
+            process = subprocess.Popen(cmd, kwargs)
+        else:
+            return None
+
+        if process.wait():
+            raise SystemExit(process.returncode)
+        else:
+            return process.returncode
 
 
 class Git(BaseCommand):

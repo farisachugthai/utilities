@@ -4,20 +4,14 @@
 
 Leading whitespace is significant in Python so don't touch it.
 
-Python Requirement
-------------------
-<Python 3.4
-
-Still need to implement
------------------------
-Give some kind of undo option.
-Needs more file checks.
 
 """
 import logging
 from pathlib import Path
 import shutil
 import sys
+
+logging.getLogger(name=__name__)
 
 
 def backup(src):
@@ -57,12 +51,8 @@ def strip_space(src=sys.stdin):
     logging.warning("Done!")
 
 
-def main(file_obj):
+def main():
     """Dispatch the strip_space function."""
-    strip_space(file_obj)
-
-
-if __name__ == '__main__':
     logging.basicConfig(level=logging.WARNING)
 
     if len(sys.argv) >= 2:
@@ -79,3 +69,7 @@ if __name__ == '__main__':
     else:
         src = sys.stdin
         strip_space(src)
+
+
+if __name__ == '__main__':
+    main()

@@ -2,26 +2,10 @@
 # -*- coding: utf-8 -*-
 """Create an installable package for the utilities repository.
 
-Largely based off of the work done by @kennethreitz in his `setup.py`_
+Largely based off of the work done by @kennethreitz in his setup.py_
 repository.
 
 _`Kenneth Reitz setup.py template <https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py>`
-
-Still needs a handful of things panned out.
-
-Need to read the following.::
-
-    import setuptools
-    from setuptools import Distribution
-    help(Distribution)
-
-Has some useful things and also
-
-.. see also::
-
-    numpy.distutils.core
-    numpt.distutils.misc_utils
-
 
 """
 import codecs
@@ -31,12 +15,11 @@ from shutil import rmtree
 
 from setuptools import setup, find_packages, Command
 
-from pyutil.__about__ import __version__
-
 if sys.version_info[:2] < (3, 6):
     raise RuntimeError("Python version >= 3.6 required.")
 
 # Metadata: {{{1
+
 NAME = 'utilities'
 AUTHOR = "Faris Chugthai",
 EMAIL = "farischugthai@gmail.com",
@@ -45,20 +28,17 @@ LICENSE = "MIT",
 KEYWORDS = "linux math science",
 URL = "https://github.com/farisachugthai/utilities",
 REQUIRES_PYTHON = '>=3.6.0'  # actually could be as bad as 3.7+ only.
-VERSION = __version__
+VERSION = '0.0.1'
 
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 CONF_PATH = os.path.dirname(os.path.abspath('docs'))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 
-REQUIRED = [
-    'pynvim', 'IPython', 'youtube_dl', 'requests', 'pygments', 'numpydoc',
-    'matplotlib'
-]
+REQUIRED = ['pynvim', 'IPython', 'youtube_dl']
 
 EXTRAS = {
-    'develop': ['flake8', 'flake8-rst', 'yapf'],
+    'develop': ['requests', 'flake8', 'flake8-rst', 'yapf'],
     'docs': [
         'sphinx',
         # Project uses reStructuredText, so ensure that the docutils get
@@ -75,7 +55,7 @@ with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
 # Load the package's __version__.py module as a dictionary.
-about = {'__version__': __version__}
+about = {'__version__': '0.0.1'}
 # if not VERSION:
 #     try:
 #         with open(os.path.join(here, NAME, '__version__.py')) as f:
@@ -138,7 +118,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(where='.'),
+    packages=find_packages(exclude=('tests', )),
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
 
@@ -147,14 +127,13 @@ setup(
     # },
     install_requires=REQUIRED,
     extras_require=EXTRAS,
-    test_suite='test',
-    setup_requires=['nose>=1.0'],
+    # setup_requires=['nose>=1.0'],
     include_package_data=True,
     package_data={
         # If any package contains *.txt or *.rst files, include them:
         '': ['*.txt', '*.rst'],
     },
-    license=LICENSE,
+    license='MIT',
 
     #  https://www.python.org/dev/peps/pep-0345/#platform-multiple-use
     # A Platform specification describing an operating system supported by the

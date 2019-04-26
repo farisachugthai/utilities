@@ -67,10 +67,14 @@ Here's an interesting way to memoize return values.::
 
 
 """
-from getpass import getuser
 import os
+from getpass import getuser
 from pathlib import Path
-import pwd
+
+try:
+    import pwd
+except ModuleNotFoundError:
+    pass
 
 
 def check_xdg_config_home():

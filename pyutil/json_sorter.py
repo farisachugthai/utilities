@@ -12,7 +12,7 @@ import os
 import sys
 import yaml
 
-logger = logging.getLogger(name=__name__)
+LOG_LEVEL = 'logging.WARNING'
 
 
 def _parse_arguments():
@@ -45,7 +45,6 @@ def _parse_arguments():
         '--log_level',
         dest='log_level',
         metavar='Log Level.',
-        default='logging.WARNING',
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         help='Set the logging level')
 
@@ -126,16 +125,15 @@ def main():
 
     try:
         log_level = args.log_level
-    except Exception as e:
-        print(e)
+    except Exception:  # IndexError?
+        logging.basicConfig(level=LOG_LEVEL)
     else:
-        logger.setLevel(level=log_level)
+        logging.basicConfig(level=log_level)
 
     fobj = args.input
     o_file = args.output
 
     if os.path.isfile(o_file):
-        logging.error('Selected output file already exists on disk.')
         raise FileExistsError
     else:
         try:

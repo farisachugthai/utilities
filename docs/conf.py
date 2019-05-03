@@ -80,8 +80,8 @@ release = version
 # -- General configuration ------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
-#
-needs_sphinx = '1.7'
+# Just updated 1.8 because of app.add_js_fileg()
+needs_sphinx = '1.8'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -243,6 +243,8 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [(master_doc, 'pyutil', 'Pyutil Documentation', [author], 1)]
 
+manpages_url = 'https://linux.die.net/man/'
+
 # -- Options for Texinfo output -------------------------------------
 
 # Grouping the document tree into Texinfo files. List of tuples
@@ -319,12 +321,28 @@ napoleon_include_private_with_doc = True
 # napoleon_use_param = True
 # napoleon_use_rtype = True
 
-# ---
-# Add custom css from rtd
-# ---
-
 
 def setup(app):
-    """Add custom css styling."""
-    custom_css = os.path.abspath(os.path.join('_static', '', 'custom.css_t'))
+    """Add custom css styling.
+
+    Don't use :func:`os.path.abspath()` if you need to extend this.
+
+    See Also
+    --------
+    /usr/lib/python3/site-packages/sphinx/config.py : mod
+        Source code where this is implemented
+    http://www.sphinx-doc.org/en/master/extdev/appapi.html : URL
+        help docs
+
+    """
+    custom_css = os.path.join('_static', '', 'custom.css_t')
+    graphviz_css = os.path.join('_static', '', 'graphviz.css_t')
     app.add_stylesheet(custom_css)
+    app.add_stylesheet(graphviz_css)
+    # app.add_js_file(os.path.join('_static', '', '')
+
+    return {
+        'version': 'builtin',
+        'parallel_read_safe': True,
+        'parallel_write_safe': True,
+    }

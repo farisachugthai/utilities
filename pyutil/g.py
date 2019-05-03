@@ -34,7 +34,7 @@ class BaseCommand(object):
     def __init__(self, cmd=None):
         self.cmd = cmd
 
-    def run(self, **kwargs, cmd=None):
+    def run(self, cmd=None, **kwargs):
         """Run a safer subprocess.
 
         Parameters
@@ -77,7 +77,7 @@ class BaseCommand(object):
                 logging.warning(type(subprocess_output.stdout))
                 return subprocess_output
 
-    def popen(self, **kwargs, cmd=None):
+    def popen(self, cmd=None, **kwargs):
         """If we don't need to capture output, check the return code."""
         if cmd:
             process = subprocess.Popen(cmd, kwargs)
@@ -101,16 +101,20 @@ class Git(BaseCommand):
 
     """
 
-    def __init__(self, version=None, root=None, **kwargs):
+    def __init__(self, root=None, **kwargs):
         """Initialize a few necessary parameters."""
         self.root = root
-        self.version = version
         super.__init__(self, **kwargs)
 
-    def _quote_cmd(self, cmd):
-        """Is this a @staticmethod?"""
-        return shlex.quote(cmd)
+    @property
+    def version(self):
+        """Return the version of Git we have."""
+        return self.run('git --version')
 
+    def _quote_cmd(self, cmd):
+        """Maybe this should be in the parent class?"""
+        cmd = shlex.quote(cmd)
+        return self.run(cmd)
 
 
 def git_touch(args):
@@ -155,7 +159,11 @@ def get_git_branch():
 def get_git_upstream_remote():
     """Get the remote name to use for upstream branches.
 
-    Uses "upstream" if it exists, "origin" otherwise
+    Returns
+    -------
+    str : Remote git server
+        Uses "upstream" if it exists, "origin" otherwise
+
     """
     cmd = "git remote get-url upstream".split()
     try:

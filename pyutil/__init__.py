@@ -14,6 +14,16 @@ Let it doctest!
 >>> import pyutil.ytdl
 >>> from pyutil import g
 
+May 03, 2019:
+
+    Don't include the pkg_resources line anymore.
+
+.. code-block:: python-traceback
+
+    File "/data/data/com.termux/files/home/projects/utilities/pyutil/__init__.py", line 37, in <module> pkg_resources.declare_namespace(PYUTIL_DIR)
+    File "/data/data/com.termux/files/home/virtualenvs/utilities/lib/python3.7/site-packages/pkg_resources/__init__.py", line 2263, in declare_namespace
+    path = sys.modules[parent].__path__
+    KeyError: '/data/data/com'
 
 NOQA F401
 
@@ -28,17 +38,14 @@ import pkg_resources
 
 from .__about__ import (  # noqa F401
     __author__, __copyright__, __description__, __docformat__, __license__,
-    __title__, __version__, __version_info__)
+    __title__, __version__)
 
-logger = logging.getLogger(name=__name__)
+logging.getLogger(__name__).addHandler(NullHandler())
 
 PYUTIL_DIR = os.path.dirname(os.path.abspath('__init__.py'))
-
 sys.path.insert(0, PYUTIL_DIR)
-
+# pkg_resources.declare_namespace(PYUTIL_DIR)
 del PYUTIL_DIR
-
-pkg_resources.declare_namespace('.')
 
 
 def __parse_arguments():
@@ -53,8 +60,10 @@ def __parse_arguments():
     """
     parser = argparse.ArgumentParser(description=__doc__)
 
-    parser.add_argument(
-        '-V', '--version', action='version', version='%(prog)s' + __version__)
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
     parser.add_argument(
         '-l',

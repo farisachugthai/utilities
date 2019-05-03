@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 """Well this isn't set up yet but if you want something that may help.
 
+.. highlight:: python3
+
 See Also
 --------
 :mod:`IPython.utils.tempdir`
@@ -28,7 +30,7 @@ import unittest
 
 from pyutil.backup_nt_and_posix import timestamped_dir
 
-logging.getLogger(name=__name__)
+logger = logging.getLogger(name=__name__)
 
 
 class TestBackupDirectory(unittest.TestCase):
@@ -51,5 +53,5 @@ class TestBackupDirectory(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    logger.setLevel(logging.WARNING)
     unittest.main()

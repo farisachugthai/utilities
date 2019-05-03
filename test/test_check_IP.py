@@ -11,7 +11,7 @@ from pyutil import check_IP
 
 
 class TestCheckIP(unittest.TestCase):
-    """Ensure :mod:`check_IP` behaves as expected.
+    """Ensure :mod:`pyutil.check_IP` behaves as expected.
 
     In addition, appreciate the need to stop naming functions using verbs.
     TestCheck is such a clumsy sounding string of words.

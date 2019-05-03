@@ -212,7 +212,7 @@ class CloudProvider():
     def url(self):
         logging.debug("URL was: " + self.url)
 
-    @property.setter
+    @url.setter
     def url(self):
         logging.debug("Old URL was: " + self.url)
         # set it

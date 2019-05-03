@@ -8,6 +8,13 @@ Allow the user to input any parameters that are accepted by
 .. seealso:: :mod:`IPython.utils.text`
 
 
+In it's current implementation ZimText doesn't do anything and wrap_paragraph
+doesn't write the text to a file :/
+
+Just dropped string2lines down there thanks to docutils and the
+:mod:`docutils.state_machine`.
+
+
 """
 import re
 import sys
@@ -27,13 +34,19 @@ class ZimText(TextWrapper):
     Primarily want to modify initialized arguments.
     Not entirely looking to reimplement the text formatting methods, both
     private and public.
+
+    Now the publicly available methods from textwrapper.
     """
 
-    def __init__(self, text, **kwargs):
+    def __init__(self,
+                 width=80,
+                 break_long_words=False,
+                 break_on_hyphens=False,
+                 **kwargs):
         """Initialize the class."""
-        self.width = 80
-        self.break_long_words = False
-        self.break_on_hyphens = False
+        self.width = width
+        self.break_long_words = break_long_words
+        self.break_on_hyphens = break_on_hyphens
         super().__init__(**kwargs)
 
 
@@ -76,11 +89,32 @@ def wrap_paragraphs(text, ncols=80):
     return wrapped_text
 
 
+def string2lines(astring,
+                 tab_width=8,
+                 convert_whitespace=False,
+                 whitespace=re.compile('[\v\f]')):
+    """
+    Return a list of one-line strings with tabs expanded, no newlines, and
+    trailing whitespace stripped.
+
+    Each tab is expanded with between 1 and `tab_width` spaces, so that the
+    next character's index becomes a multiple of `tab_width` (8 by default).
+
+    Parameters:
+
+    - `astring`: a multi-line string.
+    - `tab_width`: the number of columns between tab stops.
+    - `convert_whitespace`: convert form feeds and vertical tabs to spaces?
+    """
+    if convert_whitespace:
+        astring = whitespace.sub(' ', astring)
+    return [s.expandtabs(tab_width).rstrip() for s in astring.splitlines()]
+
+
 if __name__ == '__main__':
     args = sys.argv[:]
     if len(args) < 2:
-        print("Needs a file to reformat as an argument.")
-        raise RuntimeError
+        raise RuntimeError("Needs a file to reformat as an argument.")
     else:
         for i in args[1:]:
             if is_file(i):

@@ -7,13 +7,15 @@
 `rclone`_, a Golang package.
 
 
-.. hlist::
-
-    * Set up a simple single use case backup.
-        * Realistically this should be more of the focus.
-    * However if it's not, then we could make a :class:`collections.defaultdict` that holds default values for each
-    * option. In addition we could use :class:`collections.ChainMap()` to set precedence of `backupdir`.
-    * Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync's file input.
+* Set up a simple single use case backup.
+    * Realistically this should be more of the focus.
+* However if it's not, then we could make a :class:`collections.defaultdict`
+  that holds default values for each option.
+  * Actually wouldn't :class:`configparser.ConfigParser` make more sense?
+* In addition we could use :class:`collections.ChainMap()` to set precedence of
+  `backupdir`.
+* Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`
+  to emulate rsync's file input.
 
 .. _`rclone`: https://rclone.org
 
@@ -200,6 +202,21 @@ def rclone_follow(dst, src):
         '--copy-links', src, dst
     ]
     run(cmd)
+
+
+# uhhh how do we implememt this
+class CloudProvider():
+    """Emulate the provider rclone is syncing to."""
+
+    @property
+    def url(self):
+        logging.debug("URL was: " + self.url)
+
+    @property.setter
+    def url(self):
+        logging.debug("Old URL was: " + self.url)
+        # set it
+        logging.debug("New URL is: " + self.url)
 
 
 def main():

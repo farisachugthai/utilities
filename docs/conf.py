@@ -290,8 +290,9 @@ todo_include_todos = True
 
 # Viewcode
 # --------
-viewcode_import = True
-
+# The below is deprecated
+# viewcode_import = True
+viewcode_follow_imported_members = True
 # -------------------------------------------------------------------
 # Autosummary
 # -------------------------------------------------------------------

@@ -3,6 +3,11 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/pyutil" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/.eggs" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/utilities.egg-info" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7 (utilities)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

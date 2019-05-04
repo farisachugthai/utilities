@@ -1,12 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Programmatically work with subprocesses and Git.
+"""Programmatically work with subprocess' and Git.
 
-04/16/19
-There is a silly amount of repitition in this file.
+Subprocess and Git
+====================
 
-Implementing a base class to work with a safer subprocess with the intention
-of building up a safer minimal Git object.
+This module intends to build a base class through subprocesses in order to
+build up a trimmed-down, and more importantly *safer* Git object.
+
+05/03/2019:
+
+    Currently we need to move some module functions into our BaseCommand class.
+    I don't want it to attempt implementing too much however. But it should have
+    a method that checks output in the way that our module function does for the
+    :command:`git rev-parse` expression that sets up the git root.
+
+    Also we need some module wide logging. I mean all across :ref:`pyutil` it's nuts
+    how poorly spread out and inconsistent it is.
+
 """
 import codecs
 import logging
@@ -14,18 +25,8 @@ import logging
 import shlex
 import subprocess
 import sys
-import sysconfig
-"""
-don't need this but could utilize
-try:
-    from git import Git
-except ImportError:
-    sys.exit()
-"""
 
-SRCDIR = sysconfig.get_config_var('srcdir')
-
-logger = logging.getLogger(name=__name__)
+LOGGER = logging.getLogger(name=__name__)
 
 
 class BaseCommand(object):
@@ -52,11 +53,14 @@ class BaseCommand(object):
         else:
             return None
         logging.debug("Cmd is: " + str(cmd))
-        output = subprocess.run([cmd], kwargs, capture_output=True)
+
+        # How to implement kwargs in the function call to subprocess.run()?
+        output = subprocess.run([cmd], capture_output=True)
 
         validated_output = self._validate(output)
         return validated_output
 
+    @staticmethod
     def _validate(self, subprocess_output):
         """Take output from :func:`subprocess.run()`.
 
@@ -78,7 +82,24 @@ class BaseCommand(object):
                 return subprocess_output
 
     def popen(self, cmd=None, **kwargs):
-        """If we don't need to capture output, check the return code."""
+        """If we don't need to capture output, check the return code.
+
+        Parameters
+        ----------
+        cmd : list, optional
+            cmd to run in subprocess
+
+        Returns
+        -------
+        process.returncode : int
+            Output from subprocess.
+
+
+        Raises
+        ------
+        subprocess.CalledProcessError
+            If there is an error in the command.
+        """
         if cmd:
             process = subprocess.Popen(cmd, kwargs)
         else:
@@ -111,13 +132,18 @@ class Git(BaseCommand):
         """Return the version of Git we have."""
         return self.run('git --version')
 
+    @staticmethod
+    def _static_quote_cmd(self, cmd):
+        """Which one of these two is preferable?"""
+        return shlex.quote(cmd)
+
     def _quote_cmd(self, cmd):
         """Maybe this should be in the parent class?"""
         cmd = shlex.quote(cmd)
         return self.run(cmd)
 
 
-def git_touch(args):
+def touch(args):
     """Create a file and ``git add`` it.
 
     Parameters
@@ -176,11 +202,4 @@ def get_git_upstream_remote():
 if __name__ == "__main__":
     args = sys.argv[:]
 
-    logging.basicConfig(level=logging.WARN)
-
-    # git_touch(args)
-
-    # The above is basically a placeholder. This should be run interactively
-    # and will expose commands as necessary and give useful defaults and
-    # prompts that guide users in the right direction to running a correct
-    # command short of "read 170 different man pages"
+    LOGGER.setLevel(logging.WARNING)

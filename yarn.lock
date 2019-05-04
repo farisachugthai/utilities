@@ -448,9 +448,9 @@ inherits@2:
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
 inquirer@^6.2.2:
-  version "6.2.2"
-  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.2.2.tgz#46941176f65c9eb20804627149b743a218f25406"
-  integrity sha512-Z2rREiXA6cHRR9KBOarR3WuLlFzlIfAEIiB45ll5SSadMg7WqOh1MKEjjndfuH5ewXdixWCxqnVfGOQzPeiztA==
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.3.1.tgz#7a413b5e7950811013a3db491c61d1f3b776e8e7"
+  integrity sha512-MmL624rfkFt4TG9y/Jvmt8vdmOo836U7Y0Hxr2aFk3RelZEGX4Igk0KabWrcaaZaTv9uzglOqWh1Vly+FAWAXA==
   dependencies:
     ansi-escapes "^3.2.0"
     chalk "^2.4.2"
@@ -463,7 +463,7 @@ inquirer@^6.2.2:
     run-async "^2.2.0"
     rxjs "^6.4.0"
     string-width "^2.1.0"
-    strip-ansi "^5.0.0"
+    strip-ansi "^5.1.0"
     through "^2.3.6"
 
 int64-buffer@^0.1.9:
@@ -673,9 +673,9 @@ prelude-ls@~1.1.2:
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
 
 prettier@^1.16.4:
-  version "1.16.4"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.4.tgz#73e37e73e018ad2db9c76742e2647e21790c9717"
-  integrity sha512-ZzWuos7TI5CKUeQAtFd6Zhm2s6EpAD/ZLApIhsF9pRvRtM1RFo61dM/4MSRUA0SuLugA/zgrZD8m0BaY46Og7g==
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.17.0.tgz#53b303676eed22cc14a9f0cec09b477b3026c008"
+  integrity sha512-sXe5lSt2WQlCbydGETgfm1YBShgOX4HxQkFPvbxkcwgDvGDeqVau8h+12+lmSVlP3rHPz0oavfddSZg/q+Szjw==
 
 progress@^2.0.0:
   version "2.0.3"
@@ -720,9 +720,9 @@ run-async@^2.2.0:
     is-promise "^2.1.0"
 
 rxjs@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.4.0.tgz#f3bb0fe7bda7fb69deac0c16f17b50b0b8790504"
-  integrity sha512-Z9Yfa11F6B9Sg/BK9MnqnQ+aQYicPLtilXBp2yUtDt2JRCE0h26d33EnfO3ZxoNxG0T92OUucP3Ct7cpfkdFfw==
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.1.tgz#f7a005a9386361921b8524f38f54cbf80e5d08f4"
+  integrity sha512-y0j31WJc83wPu31vS1VlAFW5JGrnGC+j+TtGAa1fRQphy48+fDYiDmX8tjGloToEsMkxnouOg/1IzXGKkJnZMg==
   dependencies:
     tslib "^1.9.0"
 
@@ -796,7 +796,7 @@ strip-ansi@^4.0.0:
   dependencies:
     ansi-regex "^3.0.0"
 
-strip-ansi@^5.0.0, strip-ansi@^5.1.0:
+strip-ansi@^5.1.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-5.2.0.tgz#8c9a536feb6afc962bdfa5b104a5091c1ad9c0ae"
   integrity sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==

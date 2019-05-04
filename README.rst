@@ -8,11 +8,15 @@ pyutil
 
 .. title:: utilities
 
+.. highlight:: sh
+
 This repository houses a number of functional scripts I utilize to
 administer multiple workstations.
 
 
 .. contents: Table of Contents
+    :local:
+    :backlinks: "entry"
 
 
 .. _root-installation:
@@ -21,7 +25,7 @@ Installation
 ------------
 Python offers it's users a large number of ways to install new packages.
 
-One can install :ref:`pyutil` by:
+One can install the python modules by:
 
 * Installing with pip
 

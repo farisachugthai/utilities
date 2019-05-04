@@ -7,21 +7,6 @@ Should add pathlib in here for a nice one stop shop for symlinking, getting
 relative paths, symlinks and globs.
 
 .. versionchanged:: Added argparse
-
-This module would probably be a lot easier to work with if we used pathlib and Path.relative_to()
-
-Apr 22, 2019
-
-.. code-block:: python-session
-
-    Traceback (most recent call last):
-      File "/data/data/com.termux/files/home/bin/dlink2.py", line 75, in <module>
-        main(dest, src)
-      File "/data/data/com.termux/files/home/bin/dlink2.py", line 57, in main
-        for i in glob.glob(destination_dir+"/**", recursive=True):
-    TypeError: can only concatenate list (not "str") to list
-
-
 04/25/2019:
 
 Well now this is going to be the testing ground for getting a version of this
@@ -35,30 +20,31 @@ import os
 import subprocess
 
 from pyutil.__about__ import __version__
-from pyutil.env_checks import get_home_3
+
+# from pyutil.env_checks import get_home_3
 
 
 def _parse_arguments():
     parser = argparse.ArgumentParser(description=__doc__)
 
-    parser.add_argument(
-        "destination",
-        type=str,
-        metavar="destination",
-        nargs=1,
-        help="Files to symlink to.")
+    parser.add_argument("destination",
+                        type=str,
+                        metavar="destination",
+                        nargs='?',
+                        help="Files to symlink to.")
 
-    parser.add_argument(
-        "-s",
-        "--source",
-        default=os.getcwd(),
-        type=str,
-        metavar="source",
-        nargs='?',
-        help="Files to symlink to.")
+    parser.add_argument("-s",
+                        "--source",
+                        default=os.getcwd(),
+                        type=str,
+                        metavar="source",
+                        nargs='?',
+                        help="Files to symlink to.")
 
-    parser.add_argument(
-        '-V', '--version', action='version', version='%(prog)s' + __version__)
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 
@@ -113,6 +99,8 @@ if __name__ == "__main__":
         cmd = sys.argv[1:]
         if len(cmd) >= 0:
             run(cmd)
+        else:
+            raise
 
     # Let's continue onwards as usual
     args = _parse_arguments()

@@ -2,16 +2,6 @@
 # -*- coding: utf-8 -*-
 """Automate profiling nvim.
 
-This module currently assumes a lot but there could and should be a lot of
-ways to do this.
-
-However we haven't implemented the important part nor have we began
-utilizing :mod:`argparse`.
-
-Then as we keep going we can import :mod:`pynvim`, :func:`pynvim.attach()`
-and possibly run this inside of nvim?.
-
-Actually that might be where we want to start.
 
 .. code-block:: python3
 
@@ -25,7 +15,8 @@ Actually that might be where we want to start.
 
 Or something to that effect.
 
-Feb 28, 2019
+Feb 28, 2019:
+
 Nice intuition man. Look what I found today.:
 
 .. code-block:: vim
@@ -46,7 +37,15 @@ Nice intuition man. Look what I found today.:
     Example:
         :echo stdpath("config")
 
-Outputs `<~/.config/nvim>`_. So that should work.
+Outputs <~/.config/nvim>. So that should work.
+
+In the future this module is going to move towards implementing a command that
+will behave similarly to the following command run in the shell:
+
+.. code-block:: shell-session
+
+    nvim --startuptime test.txt test.py test.txt -c"bn"
+
 
 """
 import datetime

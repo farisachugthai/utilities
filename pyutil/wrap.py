@@ -14,11 +14,10 @@ doesn't write the text to a file :/
 Just dropped string2lines down there thanks to docutils and the
 :mod:`docutils.state_machine`.
 
-
 """
 import re
 import sys
-from textwrap import dedent, fill, TextWrapper
+from textwrap import dedent, TextWrapper
 
 try:
     from prompt_toolkit import print_formatted_text as print
@@ -35,7 +34,25 @@ class ZimText(TextWrapper):
     Not entirely looking to reimplement the text formatting methods, both
     private and public.
 
-    Now the publicly available methods from textwrapper.
+    Now the publicly available methods from :class:`~textwrap.TextWrapper`.::
+
+        >>> from textwrap import TextWrapper
+        >>> dir(TextWrapper)
+        ['_fix_sentence_endings',
+        '_handle_long_word',
+        '_munge_whitespace',
+        '_split',
+        '_split_chunks',
+        '_wrap_chunks',
+        'fill',
+        'sentence_end_re',
+        'unicode_whitespace_trans',
+        'uspace',
+        'wordsep_re',
+        'wordsep_simple_re',
+        'wrap',
+        'x']
+
     """
 
     def __init__(self,
@@ -49,66 +66,72 @@ class ZimText(TextWrapper):
         self.break_on_hyphens = break_on_hyphens
         super().__init__(**kwargs)
 
+    def wrap_paragraphs(self, text):
+        """Wrap multiple paragraphs to fit a specified width.
 
-def wrap_paragraphs(text, ncols=80):
-    """Wrap multiple paragraphs to fit a specified width.
+        This is equivalent to :func:`textwrap.wrap()`, but with support for multiple
+        paragraphs, as separated by empty lines.
 
-    This is equivalent to :func:`textwrap.wrap()`, but with support for multiple
-    paragraphs, as separated by empty lines.
+        Considering initializing an instance of :class:`textwrap.TextWrapper()`
+        for increased configurability.
 
-    Considering initializing an instance of :class:`textwrap.TextWrapper()`
-    for increased configurability.
+        Parameters
+        ----------
+        text : str
+            text to wrap using :mod:`re` and :func:`textwrap.dedent()`
+        ncols : int
+            column to wrap text at
 
-    Parameters
-    ----------
-    text : str
-        text to wrap using :mod:`re` and :func:`textwrap.dedent()`
-    ncols : int
-        column to wrap text at
+        Returns
+        -------
+        wrapped_text : list of str
+            list of complete paragraphs, wrapped to fill `ncols` columns.
 
-
-    Returns
-    -------
-    wrapped_text : list of str
-        list of complete paragraphs, wrapped to fill `ncols` columns.
-
-
-    """
-    paragraph_re = re.compile(r'\n(\s*\n)+', re.MULTILINE)
-    text = dedent(text).strip()
-    paragraphs = paragraph_re.split(text)[::2]  # every other entry is space
-    wrapped_text = []
-    indent_re = re.compile(r'\n\s+', re.MULTILINE)
-    for p in paragraphs:
-        # presume indentation that survives dedent is meaningful formatting,
-        # so don't fill unless text is flush.
-        if indent_re.search(p) is None:
-            # wrap paragraph
-            p = fill(p, ncols)
-        wrapped_text.append(p)
-    return wrapped_text
+        Examples
+        --------
+        >>> from wrap import ZimText
+        >>> wrapper = ZimText()
+        >>> f = open('unix-ide-editing.txt')
+        >>> text = f.read()
+        >>> wrapped = wrapper.wrap(text)                                                                    with open('unix-ide-editing.txt' , 'wt') as f:
+        >>> with open('unix-ide-editing.txt', 'wt') as f:
+        ...     f.write(text)
 
 
-def string2lines(astring,
-                 tab_width=8,
-                 convert_whitespace=False,
-                 whitespace=re.compile('[\v\f]')):
-    """
-    Return a list of one-line strings with tabs expanded, no newlines, and
-    trailing whitespace stripped.
+        """
+        paragraph_re = re.compile(r'\n(\s*\n)+', re.MULTILINE)
+        text = dedent(text).strip()
+        paragraphs = paragraph_re.split(self)[::
+                                              2]  # every other entry is space
+        wrapped_text = []
+        indent_re = re.compile(r'\n\s+', re.MULTILINE)
+        for p in paragraphs:
+            # presume indentation that survives dedent is meaningful formatting,
+            # so don't fill unless text is flush.
+            if indent_re.search(p) is None:
+                # wrap paragraph
+                p = self.fill(p)
+            wrapped_text.append(p)
+        return wrapped_text
 
-    Each tab is expanded with between 1 and `tab_width` spaces, so that the
-    next character's index becomes a multiple of `tab_width` (8 by default).
+    def string2lines(self, text, convert_whitespace=True):
+        """
+        Return a list of one-line strings with tabs expanded, no newlines, and
+        trailing whitespace stripped.
 
-    Parameters:
+        Parameters:
+        -----------
+        text : str
+            A multi-line string.
 
-    - `astring`: a multi-line string.
-    - `tab_width`: the number of columns between tab stops.
-    - `convert_whitespace`: convert form feeds and vertical tabs to spaces?
-    """
-    if convert_whitespace:
-        astring = whitespace.sub(' ', astring)
-    return [s.expandtabs(tab_width).rstrip() for s in astring.splitlines()]
+        Returns
+        -------
+        convert_whitespace : bool
+            convert form feeds and vertical tabs to spaces
+        """
+        if convert_whitespace:
+            text = self._munge_whitespace(text)
+        return [s for s in text.splitlines()]
 
 
 if __name__ == '__main__':
@@ -118,4 +141,5 @@ if __name__ == '__main__':
     else:
         for i in args[1:]:
             if is_file(i):
-                wrap_paragraphs(args[1:])
+                wrapper = ZimText()
+                wrapper.wrap_paragraphs(args[1:])

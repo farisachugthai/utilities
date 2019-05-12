@@ -26,89 +26,9 @@ import shlex
 import subprocess
 import sys
 
+from pyutil.shell import BaseCommand
+
 LOGGER = logging.getLogger(name=__name__)
-
-
-class BaseCommand(object):
-    """Create a base command class."""
-
-    def __init__(self, cmd=None):
-        self.cmd = cmd
-
-    def run(self, cmd=None, **kwargs):
-        """Run a safer subprocess.
-
-        Parameters
-        ----------
-        cmd : list, optional
-            cmd to run in subprocess
-
-        Returns
-        -------
-        output : bytes
-            Output from subprocess. Can return `NoneType` if no `cmd`.
-        """
-        if cmd:
-            cmd = shlex.split(cmd)
-        else:
-            return None
-        logging.debug("Cmd is: " + str(cmd))
-
-        # How to implement kwargs in the function call to subprocess.run()?
-        output = subprocess.run([cmd], capture_output=True)
-
-        validated_output = self._validate(output)
-        return validated_output
-
-    @staticmethod
-    def _validate(self, subprocess_output):
-        """Take output from :func:`subprocess.run()`.
-
-        First the func will check :attr:`returncode`.
-
-        Then the bytes that were returned from the *presumably* Unix OS
-        will be decoded into a human readable format.
-        """
-        if subprocess_output.returncode != 0:
-            logging.error(subprocess_output.returncode)
-        else:
-            if isinstance(subprocess_output.stdout, bytes):
-                decoded_output = codecs.decode(subprocess_output.stdout)
-                # also probably gonna wanna pprint that when you receive it
-                return decoded_output
-            else:
-                logging.warning("Subprocess didn't return bytes. Maybe str?")
-                logging.warning(type(subprocess_output.stdout))
-                return subprocess_output
-
-    def popen(self, cmd=None, **kwargs):
-        """If we don't need to capture output, check the return code.
-
-        Parameters
-        ----------
-        cmd : list, optional
-            cmd to run in subprocess
-
-        Returns
-        -------
-        process.returncode : int
-            Output from subprocess.
-
-
-        Raises
-        ------
-        subprocess.CalledProcessError
-            If there is an error in the command.
-        """
-        if cmd:
-            process = subprocess.Popen(cmd, kwargs)
-        else:
-            return None
-
-        if process.wait():
-            raise SystemExit(process.returncode)
-        else:
-            return process.returncode
 
 
 class Git(BaseCommand):
@@ -176,10 +96,11 @@ def get_git_branch():
     """Get the symbolic name for the current git branch."""
     cmd = "git rev-parse --abbrev-ref HEAD".split()
     try:
-        return subprocess.check_output(
-            cmd, stderr=subprocess.STDOUT, cwd=SRCDIR)
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
         return None
+    else:
+        return output
 
 
 def get_git_upstream_remote():
@@ -193,7 +114,7 @@ def get_git_upstream_remote():
     """
     cmd = "git remote get-url upstream".split()
     try:
-        subprocess.check_output(cmd, stderr=subprocess.DEVNULL, cwd=SRCDIR)
+        subprocess.check_output(cmd, stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError:
         return "origin"
     return "upstream"

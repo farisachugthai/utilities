@@ -48,8 +48,8 @@ This never occured to me to do this...
 
 Attributes
 -----------
-`builder` : str
-    The filetype that ``make`` will invoke ``sphinx-build`` to create
+builder : str
+    The filetype that :command:`make` will invoke :command:`sphinx-build` to create
 
 
 """
@@ -60,18 +60,24 @@ import shlex
 import shutil
 import subprocess
 import sys
+import webbrowser
 
 from pyutil.__about__ import __version__
+from pyutil.shell import BaseCommand
+
+DOC_PATH = os.path.dirname(os.path.abspath(__file__))
+SOURCE_PATH = os.path.join(DOC_PATH, '_source')
+BUILD_PATH = os.path.join(DOC_PATH, '_build')
 
 
-def _parse_arguments():
+def _parse_arguments(cmds=None):
     """Parse user arguments.
 
     .. todo:: Add a ton of arguments this isn't close to done.
 
     Returns
     -------
-    args : str
+    cmd : str
         Arguments provided by the user.
 
 
@@ -97,74 +103,84 @@ def _parse_arguments():
     Or we can invoke the :mod:`sphinx` API to maximize customization.
 
     """
-    parser = argparse.ArgumentParser(description=__doc__)
+    cmds = [method for method in dir(DocBuilder) if not method.startswith('_')]
 
-    parser.add_argument(
-        'builder', help='Builder to invoke sphinx-build to use')
+    parser = argparse.ArgumentParser(description="Pyutil doc builder.",
+                                     epilog="Commands: {}".format(
+                                         ','.join(cmds)))
 
-    parser.add_argument(
-        '-l',
-        '--log',
-        default=sys.stdout,
-        type=argparse.FileType('w'),
-        help='File to write logging messages to.')
+    parser.add_argument('command',
+                        nargs='?',
+                        default='html',
+                        help='command to run: {}'.format(', '.join(cmds)))
 
-    parser.add_argument(
-        '-ll',
-        '--log-level',
-        dest='log_level',
-        default='INFO',
-        help='Log level. Defaults to INFO. Implies logging.')
+    parser.add_argument('--num-jobs',
+                        type=int,
+                        default=0,
+                        help='number of jobs used by sphinx-build')
+
+    parser.add_argument('--no-api',
+                        default=False,
+                        help='Omit api and autosummary',
+                        action='store_true')
+
+    parser.add_argument('--single',
+                        metavar='FILENAME',
+                        type=str,
+                        default=None,
+                        help=('filename of section or method name to '
+                              'compile, e.g. "indexing", "DataFrame.join"'))
+
+    parser.add_argument('--python-path',
+                        type=str,
+                        default=os.path.dirname(DOC_PATH),
+                        help='path')
+
+    parser.add_argument('-l',
+                        '--log',
+                        default=sys.stdout,
+                        type=argparse.FileType('w'),
+                        help='File to write logging messages to.')
+
+    parser.add_argument('-ll',
+                        '--log-level',
+                        dest='log_level',
+                        default='INFO',
+                        help='Log level. Defaults to INFO. Implies logging.')
 
     parser.add_argument('--version', action='version', version=__version__)
 
-    args = parser.parse_args()
+    user_args = parser.parse_args()
 
-    return args
-
-
-def run(cmd):
-    """Execute the required command in a subshell.
-
-    First the command is split using :mod:`shlex`.
-
-    A new process is created, and from the resulting subprocess object
-    the :func:`subprocess.Popen().wait()` is invoked.
-
-    When the subprocess returns, any non-zero value will lead to a
-    `SystemExit` with a passed value of `returncode`.
-
-    Parameters
-    ----------
-    cmd : str
-        The command to be called
-
-    Returns
-    -------
-    process.returncode : int
-        The returncode from the process.
+    return user_args
 
 
+class DocBuilder(BaseCommand):
+    """Class to wrap the different commands of this script.
+
+    All public methods of this class can be called as parameters of the
+    script.
     """
-    cmd = shlex.split(cmd)
-    logging.debug("Cmd is: " + str(cmd))
-    process = subprocess.Popen(cmd)
 
-    if process.wait():
-        raise SystemExit(process.returncode)
-    else:
-        return process.returncode
+    def __init__(self):
+        """Initialize self."""
+        super().__init__()
 
-
-def _termux_hack():
-    """Android permissions don't allow viewing files in app specific files."""
-    try:
-        shutil.copytree('_build/html/', '/data/data/com.termux/files/home/storage/downloads/html')
-    except FileExistsError:
-        shutil.rmtree('/data/data/com.termux/files/home/storage/downloads/html')
-        shutil.copytree('_build/html/', '/data/data/com.termux/files/home/storage/downloads/html')
-    except FileNotFoundError:
-        logging.error("The build directory currently doesn't exist. Exiting.")
+    def termux_hack(self):
+        """Android permissions don't allow viewing files in app specific files."""
+        try:
+            shutil.copytree(
+                '_build/html/',
+                '/data/data/com.termux/files/home/storage/downloads/html')
+        except FileExistsError:
+            shutil.rmtree(
+                '/data/data/com.termux/files/home/storage/downloads/html')
+            shutil.copytree(
+                '_build/html/',
+                '/data/data/com.termux/files/home/storage/downloads/html')
+        except FileNotFoundError:
+            logging.error(
+                "The build directory currently doesn't exist. Exiting.")
 
 
 if __name__ == "__main__":

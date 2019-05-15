@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyutil.find_pics &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/custom.css_t" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/graphviz.css_t" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyutil.find_pics</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Module that finds jpg and jpegs files in the current dir.</span>
+
+<span class="sd">.. module:: find_pics</span>
+<span class="sd">    :synopsis: Module that finds jpg and jpegs files in the current dir.</span>
+
+<span class="sd">.. todo:: Should accept command line arguments.</span>
+
+<span class="sd">We&#39;ll say that another thing on the todo list is</span>
+<span class="sd">return a path-like object from :func:`find_pics()`.</span>
+<span class="sd"># print(os.path.abspath(match)</span>
+
+
+<span class="sd">Considering generalizing the module as I just whipped this up in the interpreter.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="find_text"><a class="viewcode-back" href="../../Other.html#pyutil.find_pics.find_text">[docs]</a><span class="k">def</span> <span class="nf">find_text</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Attempt at using re.&quot;&quot;&quot;</span>
+    <span class="n">haystack</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">scandir</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="n">compiled</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;[0-9]+.[a-z]+$&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">needle</span> <span class="ow">in</span> <span class="n">haystack</span><span class="p">:</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">compiled</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">needle</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">match</span></div>
+
+
+<div class="viewcode-block" id="_format_return_value"><a class="viewcode-back" href="../../Other.html#pyutil.find_pics._format_return_value">[docs]</a><span class="k">def</span> <span class="nf">_format_return_value</span><span class="p">(</span><span class="n">matches</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Remove all entries that weren&#39;t matches.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    matches : list of :class:`re.match` objects</span>
+<span class="sd">        The compiled list returned from find_text.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TODO</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    In a script one could use the functions as so::</span>
+
+<span class="sd">        &gt;&gt;&gt; from find_pics import find_text, _format_return_value</span>
+<span class="sd">        &gt;&gt;&gt; matches = list(find_text(&#39;/path/to/dir&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; cleaned_data = _format_return_value(matches)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">compact_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">match</span> <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matches</span> <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">compact_matches</span></div>
+
+
+<div class="viewcode-block" id="find_pics"><a class="viewcode-back" href="../../Other.html#pyutil.find_pics.find_pics">[docs]</a><span class="k">def</span> <span class="nf">find_pics</span><span class="p">(</span><span class="n">picture</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Finds jpegs and jpgs.</span>
+
+<span class="sd">    .. todo:: Format the match object so it&#39;s more usable</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    picture : str</span>
+<span class="sd">        Path to a file that may or may not be a jpg/jpeg</span>
+
+
+<span class="sd">    Yields</span>
+<span class="sd">    ------</span>
+<span class="sd">    matched : :class:`re.match()` object</span>
+<span class="sd">        Filename that matches a jpg/jpeg regex.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">matched</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;.*jp(e)?g&quot;</span><span class="p">,</span> <span class="n">picture</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">matched</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">matched</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+    <span class="n">matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">path</span> <span class="k">if</span> <span class="n">find_pics</span><span class="p">(</span><span class="n">f</span><span class="p">)]</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2019, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

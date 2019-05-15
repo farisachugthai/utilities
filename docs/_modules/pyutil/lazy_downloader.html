@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyutil.lazy_downloader &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/custom.css_t" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/graphviz.css_t" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyutil.lazy_downloader</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># Maintainer: Faris Chugthai</span>
+<span class="sd">&quot;&quot;&quot;Automates downloading plain text files from the Web.</span>
+
+<span class="sd">As implemented currently, it will only correctly handle plain text;</span>
+<span class="sd">however, there are plans to implement the :mod:`mimetype` module and</span>
+<span class="sd">properly handle a much wider range of files.</span>
+
+<span class="sd">Both parameters, `url` and `output_fname` are required parameters.</span>
+
+
+<span class="sd">Safety Features</span>
+<span class="sd">---------------</span>
+<span class="sd">If the filename already exists on the system it will NOT be overwritten,</span>
+<span class="sd">and the script will safely exit.</span>
+
+<span class="sd">Setting User Options</span>
+<span class="sd">--------------------</span>
+<span class="sd">This module is a perfect candidate for :ref:`collections.ChainMap`.</span>
+<span class="sd">We could check env vars, config files, command line args and user provided parameters</span>
+<span class="sd">and rank them in that order of importance when configuring the download.</span>
+
+
+<span class="sd">Attributes</span>
+<span class="sd">----------</span>
+<span class="sd">url : str</span>
+<span class="sd">    A url to download</span>
+
+<span class="sd">output_fname : str, optional</span>
+<span class="sd">    A path to write the downloaded content to. Defaults to the last</span>
+<span class="sd">    section of the URL when split by forward slashes, or :kbd:`/`.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">closing</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">urlparse</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">pyutil.__about__</span> <span class="k">import</span> <span class="n">__version__</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../Internet.html#pyutil.lazy_downloader._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Parse user input.&quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;URL&quot;</span><span class="p">,</span>
+                        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;URL&quot;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The URL to download. Must be plaintext.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;fname&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;Output filename&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The name of the file to write to. Must not exist already.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-ha&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;--headers&quot;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;headers&quot;</span><span class="p">,</span>
+                        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Headers to send to the web server.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-V&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;--version&#39;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+                        <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">args</span></div>
+
+
+<div class="viewcode-block" id="_parse_url"><a class="viewcode-back" href="../../Internet.html#pyutil.lazy_downloader._parse_url">[docs]</a><span class="k">def</span> <span class="nf">_parse_url</span><span class="p">(</span><span class="n">URL</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse the url in order to get something usable if we don&#39;t get a fname.</span>
+
+<span class="sd">    If no output filename is given don&#39;t crash!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">stripped_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">URL</span><span class="p">)[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">stripped_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="_get_page"><a class="viewcode-back" href="../../Internet.html#pyutil.lazy_downloader._get_page">[docs]</a><span class="k">def</span> <span class="nf">_get_page</span><span class="p">(</span><span class="n">URL</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the content at `URL`.</span>
+
+<span class="sd">    Returns content if it is recognized HTML/XML. If not, return `None`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="k">as</span> <span class="n">res</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">check_response</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">content</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">RequestException</span><span class="p">:</span>
+        <span class="c1"># logger.something</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="check_response"><a class="viewcode-back" href="../../Internet.html#pyutil.lazy_downloader.check_response">[docs]</a><span class="k">def</span> <span class="nf">check_response</span><span class="p">(</span><span class="n">server_response</span><span class="p">):</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">server_response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">server_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span> <span class="ow">and</span> <span class="n">content</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># logger</span>
+        <span class="k">return</span> <span class="n">server_response</span><span class="o">.</span><span class="n">status_code</span></div>
+
+
+<div class="viewcode-block" id="_parse_site"><a class="viewcode-back" href="../../Internet.html#pyutil.lazy_downloader._parse_site">[docs]</a><span class="k">def</span> <span class="nf">_parse_site</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse the given `URL`, remove tags and return plaintext.</span>
+
+<span class="sd">    This should probably be modified to take the user agent and header args.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    URL : str</span>
+<span class="sd">        Page to download.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    txt : str</span>
+<span class="sd">        Plaintext view of the website.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="n">txt</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">txt</span></div>
+
+
+<div class="viewcode-block" id="find_links"><a class="viewcode-back" href="../../Internet.html#pyutil.lazy_downloader.find_links">[docs]</a><span class="k">def</span> <span class="nf">find_links</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Search body of text for URLs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    text : str</span>
+<span class="sd">        Body of formatted text to search for URLs.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    links : todo</span>
+<span class="sd">        URLs found on site.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;&quot;((http|ftp)s?://.*?)&quot;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">links</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../Internet.html#pyutil.lazy_downloader.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Download URL and write to disk.</span>
+
+<span class="sd">    .. todo:: Add headers.</span>
+
+<span class="sd">        .. code-block:: python3</span>
+
+<span class="sd">            if res.headers[&#39;Content-Type&#39;]:</span>
+<span class="sd">                 pass</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
+    <span class="c1"># With xt permissions the script crashes so just bail</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">fname</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileExistsError</span>
+    <span class="c1"># And if we&#39;re good, then bind the properties from the parser</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># should this be a try/except?</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">URL</span>
+
+    <span class="n">std_headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span>
+        <span class="s1">&#39;Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Accept-Charset&#39;</span><span class="p">:</span> <span class="s1">&#39;ISO-8859-1,utf-8;q=0.7,*;q=0.7&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Accept&#39;</span><span class="p">:</span>
+        <span class="s1">&#39;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Accept-Encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;gzip, deflate&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Accept-Language&#39;</span><span class="p">:</span> <span class="s1">&#39;en-us,en;q=0.5&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">headers</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">std_headers</span>
+
+    <span class="c1"># try:</span>
+    <span class="c1">#     user_agent = args.user_agent</span>
+    <span class="c1"># except Exception:</span>
+    <span class="c1">#     user_agent = USER_AGENTS</span>
+
+    <span class="n">txt</span> <span class="o">=</span> <span class="n">_parse_site</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;xt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2019, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

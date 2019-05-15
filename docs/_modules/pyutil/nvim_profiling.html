@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyutil.nvim_profiling &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/custom.css_t" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/graphviz.css_t" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyutil.nvim_profiling</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Automate profiling nvim.</span>
+
+
+<span class="sd">.. code-block:: python3</span>
+
+<span class="sd">    &gt;&gt;&gt; if not os.environ.get(&#39;NVIM_LISTEN_ADDRESS&#39;):  # we have no running nvim</span>
+<span class="sd">        &gt;&gt;&gt; subprocess.run([&#39;nvim&amp;&#39;])  # are we allowed to do this?</span>
+<span class="sd">    &gt;&gt;&gt; import pynvim</span>
+<span class="sd">    &gt;&gt;&gt; vim = pynvim.attach(&#39;socket&#39;, path=os.environ.get(&#39;NVIM_LISTEN_ADDRESS&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; vim.command(&#39;edit $MYVIMRC&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; vim_root = vim.current.buffer</span>
+
+
+<span class="sd">Or something to that effect.</span>
+
+<span class="sd">Feb 28, 2019:</span>
+
+<span class="sd">Nice intuition man. Look what I found today.:</span>
+
+<span class="sd">.. code-block:: vim</span>
+
+<span class="sd">    stdpath({what})                 *stdpath()* *E6100*</span>
+<span class="sd">    Returns |standard-path| locations of various default files and directories.</span>
+
+<span class="sd">    {what}       Type    Description ~</span>
+<span class="sd">    cache        String  Cache directory. Arbitrary temporary</span>
+<span class="sd">                         storage for plugins, etc.</span>
+<span class="sd">    config       String  User configuration directory. The</span>
+<span class="sd">                         |init.vim| is stored here.</span>
+<span class="sd">    config_dirs  List    Additional configuration directories.</span>
+<span class="sd">    data         String  User data directory. The |shada-file|</span>
+<span class="sd">                         is stored here.</span>
+<span class="sd">    data_dirs    List    Additional data directories.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        :echo stdpath(&quot;config&quot;)</span>
+
+<span class="sd">Outputs &lt;~/.config/nvim&gt;. So that should work.</span>
+
+<span class="sd">In the future this module is going to move towards implementing a command that</span>
+<span class="sd">will behave similarly to the following command run in the shell:</span>
+
+<span class="sd">.. code-block:: shell-session</span>
+
+<span class="sd">    nvim --startuptime test.txt test.py test.txt -c&quot;bn&quot;</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">platform</span> <span class="k">import</span> <span class="n">system</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="kn">from</span> <span class="nn">pyutil.env_checks</span> <span class="k">import</span> <span class="n">check_xdg_config_home</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="output_results"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.output_results">[docs]</a><span class="k">def</span> <span class="nf">output_results</span><span class="p">(</span><span class="n">output_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks that an directory named profiling exists.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    output_dir : str</span>
+<span class="sd">        Directory to store profiling results in.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Bool</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;profiling&#39;</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;profiling&#39;</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">SystemExit</span>  <span class="c1"># is this how we do this?</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="find_init_files"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.find_init_files">[docs]</a><span class="k">def</span> <span class="nf">find_init_files</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Discover the initialization files used for nvim.</span>
+
+<span class="sd">    Should theoretically work on both Windows and Unix systems.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    nvim_root : str</span>
+<span class="sd">        The directory where nvim&#39;s configuration files are found</span>
+
+<span class="sd">    .. todo:: Alright so if :envvar:`XDG_CONFIG_HOME` isn&#39;t set we need to</span>
+<span class="sd">        check `&lt;~/.config/nvim&gt;`_ and check whether we&#39;re on Windows or not</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">OS</span>
+    <span class="n">OS</span> <span class="o">=</span> <span class="n">system</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">check_xdg_config_home</span><span class="p">():</span>
+        <span class="n">nvim_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XDG_CONFIG_HOME&#39;</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;nvim&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span>
+                <span class="s2">&quot;XDG_CONFIG_HOME set but $XDG_CONFIG_HOME/nvim doesn&#39;t exist.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">nvim_root</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">userConfFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">),</span> <span class="s1">&#39;.config&#39;</span><span class="p">,</span> <span class="s1">&#39;nvim&#39;</span><span class="p">,</span> <span class="s1">&#39;init.vim&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Handle windows</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">userConfFile</span><span class="p">):</span>
+            <span class="n">appdata_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;appdata&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">userConf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">userConf</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">return</span> <span class="n">userConf</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Profile nvim.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    -----------</span>
+<span class="sd">    nvim_root : str</span>
+<span class="sd">        The directory where nvim&#39;s configuration files are found.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    profiling_log_file : str</span>
+<span class="sd">        Creates file based on the current time in ISO format profiling nvim.</span>
+
+
+<span class="sd">    .. todo:: Allow the ``test.py`` file that we use for startup to be configured.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="n">output_results</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">):</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="s1">&#39;profiling&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+
+    <span class="n">profiling_log_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span>
+
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span>
+        <span class="s1">&#39;nvim&#39;</span><span class="p">,</span> <span class="s1">&#39;--startuptime&#39;</span><span class="p">,</span> <span class="n">profiling_log_file</span><span class="p">,</span> <span class="s1">&#39;test.py&#39;</span><span class="p">,</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;:qall&#39;</span>
+    <span class="p">])</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">nvim_root</span> <span class="o">=</span> <span class="n">find_init_files</span><span class="p">()</span>
+
+    <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s2">&quot;logging.WARNING&quot;</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+
+    <span class="n">main</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2019, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

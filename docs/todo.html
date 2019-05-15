@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>todo &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css_t" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css_t" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Remaining Modules" href="Other.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="todo">
+<h1>todo<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h1>
+<p>Not too dissimilar to the world’s worst kanban board, this file is going
+to be a manually created index for every <strong>TODO</strong> I write in this repo.</p>
+<div class="section" id="docs">
+<h2>docs<a class="headerlink" href="#docs" title="Permalink to this headline">¶</a></h2>
+<p>It’s not much but the docs build. However your readme file still renders as
+markdown so you’ll probably wanna change the file extension there and rewrite
+it.</p>
+<p><strong>02-06-19</strong></p>
+<div class="section" id="syntax-highlighting">
+<h3>syntax highlighting<a class="headerlink" href="#syntax-highlighting" title="Permalink to this headline">¶</a></h3>
+<p>Give the snippet below a shot and see if you can’t instantiate a <code class="xref py py-mod docutils literal notranslate"><span class="pre">Sphinx</span></code>
+instance and build the docs that way.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sphinx.pygments_style</span> <span class="k">import</span> <span class="n">SphinxStyle</span>
+
+<span class="k">global</span> <span class="n">sph</span>
+<span class="n">sph</span> <span class="o">=</span> <span class="n">SphinxStyle</span><span class="p">()</span>
+<span class="n">sph</span><span class="o">.</span><span class="n">styles</span>
+</pre></div>
+</div>
+<p>Will print off all the <code class="xref py py-class docutils literal notranslate"><span class="pre">traitlets.Token()</span></code> configs. Figure out how to
+return the global instance and then we have a gruvbox <code class="xref py py-mod docutils literal notranslate"><span class="pre">pygments</span></code> file on Termux. Override to
+your hearts content.</p>
+</div>
+</div>
+<div class="section" id="scripts">
+<h2>scripts<a class="headerlink" href="#scripts" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Either add doctests, logging or unittests to <a class="reference external" href="https://github.com/farisachugthai/utilities/python/dlink.py">dlink</a></p></li>
+<li><p>Continue adding these support structures until  you feel confident enough to begin basing <a class="reference external" href="https://github.com/farisachugthai/utilities/python/dot_sym.ipy">dot_sym.ipy</a> off of it</p></li>
+<li><p>At some point we can then begin basing <a class="reference external" href="https://github.com/farisachugthai/newbuntu">newbuntu</a> off of that.</p></li>
+<li><p>A script that utilizes <a class="reference external" href="https://github.com/farisachugthai/utilities/python/dlink.py">dlink</a> to update the scripts in <a class="reference external" href="~/bin">~/bin</a>. Quite annoying to do this manually.</p></li>
+<li><p>Rsync and rclone scripts aren’t close to done. Part of that will be encrypting/archiving your notebooks and pulling them down on different devices.</p></li>
+<li><p><span class="xref std std-ref">pyutil.conda_export._cmd_wrapper()</span> doesn’t work.</p></li>
+</ul>
+</div>
+<div class="section" id="linting">
+<h2>Linting<a class="headerlink" href="#linting" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Run <code class="xref py py-mod docutils literal notranslate"><span class="pre">rstcheck</span></code> on all of the rst files in <a class="reference external" href="./docs">./docs</a>. If you want to do it from Termux you’ll need to specify <code class="docutils literal notranslate"><span class="pre">rstcheck</span> <span class="pre">-j</span> <span class="pre">1</span></code> because <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code></a> doesn’t work.</p></li>
+<li><p>Also this needs to be able to pass a standard <code class="xref py py-mod docutils literal notranslate"><span class="pre">flake8</span></code> lint.</p></li>
+<li><p>Then I want a simple unit test suite created for all publicly exported functions.
+- Not a high bar, but a necessary one.</p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a><ul>
+      <li>Previous: <a href="Other.html" title="previous chapter">Remaining Modules</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">todo</a><ul>
+<li><a class="reference internal" href="#docs">docs</a><ul>
+<li><a class="reference internal" href="#syntax-highlighting">syntax highlighting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scripts">scripts</a></li>
+<li><a class="reference internal" href="#linting">Linting</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/todo.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2019, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/todo.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

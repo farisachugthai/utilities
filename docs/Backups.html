@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Backup Utilities &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css_t" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css_t" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Internet Utilities" href="Internet.html" />
+    <link rel="prev" title="API" href="api.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="backup-utilities">
+<h1>Backup Utilities<a class="headerlink" href="#backup-utilities" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyutil.backup_nt_and_posix">
+<span id="backup-nt-and-posix"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code><a class="headerlink" href="#module-pyutil.backup_nt_and_posix" title="Permalink to this headline">¶</a></h2>
+<p>Backup a directory by appending the date and time and copying over.</p>
+<div class="section" id="motivation">
+<h3>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h3>
+<p>This script aims to be platform agnostic and in the long term will be used on
+Windows, Linux, Mac and Android systems.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="admonition-title">Todo</p>
+<p>Consider rewriting using classes to hold state based on OS. Then utilize <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#module-pathlib" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code></a>.</p>
+</div>
+<dl class="function">
+<dt id="pyutil.backup_nt_and_posix.timestamped_dir">
+<code class="descclassname">pyutil.backup_nt_and_posix.</code><code class="descname">timestamped_dir</code><span class="sig-paren">(</span><em>backup_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#timestamped_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.timestamped_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a backup of a directory. Append date and time to new dir name.</p>
+<div class="admonition-todo admonition" id="index-1">
+<p class="admonition-title">Todo</p>
+<p>Change this so that it utilizes <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.check_call" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_call()</span></code></a> so we handle return codes in a better way.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>backup_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Directory to backup</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>err_code</strong> (<em>int</em>) – Non-zero value indicates error code, or zero on success.</p></li>
+<li><p><strong>err_msg</strong> (<em>str or None</em>) – Human readable error message, or None on success.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-pyutil.rclone">
+<span id="rclone"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code><a class="headerlink" href="#module-pyutil.rclone" title="Permalink to this headline">¶</a></h2>
+<p>Rewriting rclone.sh as a python module.</p>
+<p class="rubric">Requires</p>
+<p><a class="reference external" href="https://rclone.org">rclone</a>, a Golang package.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Set up a simple single use case backup.</dt><dd><ul>
+<li><p>Realistically this should be more of the focus.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>However if it’s not, then we could make a <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.defaultdict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.defaultdict</span></code></a>
+that holds default values for each option.
+* Actually wouldn’t <a class="reference external" href="https://docs.python.org/3/library/configparser.html#configparser.ConfigParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">configparser.ConfigParser</span></code></a> make more sense?</p></li>
+<li><p>In addition we could use <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.ChainMap()</span></code> to set precedence of
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">backupdir</span></code>.</p></li>
+<li><p>Expand <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> usage with <code class="xref py py-func docutils literal notranslate"><span class="pre">argparse.fromfile_prefix_chars()</span></code>
+to emulate rsync’s file input.</p></li>
+</ul>
+<dl class="class">
+<dt id="pyutil.rclone.CloudProvider">
+<em class="property">class </em><code class="descclassname">pyutil.rclone.</code><code class="descname">CloudProvider</code><a class="reference internal" href="_modules/pyutil/rclone.html#CloudProvider"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.CloudProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Emulate the provider rclone is syncing to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>url</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="pyutil.rclone.CloudProvider.url">
+<code class="descname">url</code><a class="reference internal" href="_modules/pyutil/rclone.html#CloudProvider.url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.CloudProvider.url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.rclone._dir_checker">
+<code class="descclassname">pyutil.rclone.</code><code class="descname">_dir_checker</code><span class="sig-paren">(</span><em>dir_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#_dir_checker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone._dir_checker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that necessary directories exist.</p>
+<p>If the default <code class="xref py py-obj docutils literal notranslate"><span class="pre">dst</span></code> doesn’t exist, definitely create it.
+If the user provided <code class="xref py py-obj docutils literal notranslate"><span class="pre">src</span></code> doesn’t exist, crash without making one.</p>
+<p>It’s more likely that they typed the src dir incorrectly rather than
+running the script aware of the fact that it is nonexistent.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.rclone._parse_arguments">
+<code class="descclassname">pyutil.rclone.</code><code class="descname">_parse_arguments</code><span class="sig-paren">(</span><em>cwd=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone._parse_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse user-given arguments.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.rclone._set_debugging">
+<code class="descclassname">pyutil.rclone.</code><code class="descname">_set_debugging</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#_set_debugging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone._set_debugging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable debug logging.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.rclone.main">
+<code class="descclassname">pyutil.rclone.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive user arguments and begin executing module appropriately.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.rclone.rclone_base_case">
+<code class="descclassname">pyutil.rclone.</code><code class="descname">rclone_base_case</code><span class="sig-paren">(</span><em>src</em>, <em>dst</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#rclone_base_case"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.rclone_base_case" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base case that all other functions build off of.</p>
+<p>This function shouldn’t be executed directly; however, it serves as a good
+template detailing a function and useful command with parameters that
+rclone uses.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">--follow</span></code> is a flag that has conditionals associated it with it.</p>
+<p>There are situations in which one wants to follow symlinks and others
+that they don’t.</p>
+<p>This command assumes a use case and configures it rclone for it properly.</p>
+<div class="admonition-todo admonition" id="index-2">
+<p class="admonition-title">Todo</p>
+<p>rclone takes an argument for user-agent</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – directory to clone files from</p></li>
+<li><p><strong>dst</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – destination to send files to. Can be configured as a local directory,
+a dropbox directory, a google drive folder or a google cloud storage
+bucket among many other things.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.rclone.rclone_follow">
+<code class="descclassname">pyutil.rclone.</code><code class="descname">rclone_follow</code><span class="sig-paren">(</span><em>dst</em>, <em>src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#rclone_follow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.rclone_follow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Follow symlinks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – directory to clone files from</p></li>
+<li><p><strong>dst</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – destination to send files to. Can be configured as a local directory,
+a dropbox directory, a google drive folder or a google cloud storage
+bucket among many other things.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.rclone.run">
+<code class="descclassname">pyutil.rclone.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the required command in a subshell.</p>
+<p>First the command is splited used typical shell grammer.</p>
+<p>A new process is created, and from the resulting subprocess object,
+the <code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.Popen().wait()</span></code>.</p>
+<p>This function returns the return code of split <a class="reference external" href="https://docs.python.org/3/library/cmd.html#module-cmd" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmd</span></code></a>, so any
+non-zero value will lead to a <code class="docutils literal notranslate"><span class="pre">SystemExit</span></code> with a passed value
+of <code class="docutils literal notranslate"><span class="pre">returncode</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The command to be called</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>process.returncode</strong> – The returncode from the process.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a><ul>
+      <li>Previous: <a href="api.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a></li>
+      <li>Next: <a href="Internet.html" title="next chapter">Internet Utilities</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Backup Utilities</a><ul>
+<li><a class="reference internal" href="#module-pyutil.backup_nt_and_posix"><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code></a><ul>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyutil.rclone"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Backups.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2019, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Backups.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

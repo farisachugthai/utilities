@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Text Utilities &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css_t" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css_t" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Numerical" href="numerical.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="text-utilities">
+<h1>Text Utilities<a class="headerlink" href="#text-utilities" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="json-sorter">
+<h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code><a class="headerlink" href="#json-sorter" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyutil.wrap">
+<span id="wrap"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code><a class="headerlink" href="#module-pyutil.wrap" title="Permalink to this headline">¶</a></h2>
+<p>Wrap text similarly to <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.dedent" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">textwrap.dedent()</span></code></a> but with multiple paragraphs.</p>
+<p>Allow the user to input any parameters that are accepted by
+<code class="xref py py-class docutils literal notranslate"><span class="pre">textwrap.TextWrapper()</span></code></p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.text.html#module-IPython.utils.text" title="(in IPython v7.5.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython.utils.text</span></code></a></p>
+</div>
+<p>In it’s current implementation ZimText doesn’t do anything and wrap_paragraph
+doesn’t write the text to a file :/</p>
+<p>Just dropped string2lines down there thanks to docutils and the
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">docutils.state_machine</span></code>.</p>
+<dl class="class">
+<dt id="pyutil.wrap.ZimText">
+<em class="property">class </em><code class="descclassname">pyutil.wrap.</code><code class="descname">ZimText</code><span class="sig-paren">(</span><em>width=80</em>, <em>break_long_words=False</em>, <em>break_on_hyphens=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/wrap.html#ZimText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.wrap.ZimText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.TextWrapper" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">textwrap.TextWrapper</span></code></a></p>
+<p>Subclass <code class="xref py py-class docutils literal notranslate"><span class="pre">textwrap.TextWrapper()</span></code>.</p>
+<p>Primarily want to modify initialized arguments.
+Not entirely looking to reimplement the text formatting methods, both
+private and public.</p>
+<p>Now the publicly available methods from <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.TextWrapper" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextWrapper</span></code></a>.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">textwrap</span> <span class="k">import</span> <span class="n">TextWrapper</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">TextWrapper</span><span class="p">)</span>
+<span class="go">[&#39;_fix_sentence_endings&#39;,</span>
+<span class="go">&#39;_handle_long_word&#39;,</span>
+<span class="go">&#39;_munge_whitespace&#39;,</span>
+<span class="go">&#39;_split&#39;,</span>
+<span class="go">&#39;_split_chunks&#39;,</span>
+<span class="go">&#39;_wrap_chunks&#39;,</span>
+<span class="go">&#39;fill&#39;,</span>
+<span class="go">&#39;sentence_end_re&#39;,</span>
+<span class="go">&#39;unicode_whitespace_trans&#39;,</span>
+<span class="go">&#39;uspace&#39;,</span>
+<span class="go">&#39;wordsep_re&#39;,</span>
+<span class="go">&#39;wordsep_simple_re&#39;,</span>
+<span class="go">&#39;wrap&#39;,</span>
+<span class="go">&#39;x&#39;]</span>
+</pre></div>
+</div>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fill</span></code>(self, text)</p></td>
+<td><p>Reformat the single paragraph in ‘text’ to fit in lines of no more than ‘self.width’ columns, and return a new string containing the entire wrapped paragraph.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyutil.wrap.ZimText.string2lines" title="pyutil.wrap.ZimText.string2lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">string2lines</span></code></a>(self, text[, convert_whitespace])</p></td>
+<td><p>Return a list of one-line strings with tabs expanded, no newlines, and trailing whitespace stripped.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">wrap</span></code>(self, text)</p></td>
+<td><p>Reformat the single paragraph in ‘text’ so it fits in lines of no more than ‘self.width’ columns, and return a list of wrapped lines.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyutil.wrap.ZimText.wrap_paragraphs" title="pyutil.wrap.ZimText.wrap_paragraphs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wrap_paragraphs</span></code></a>(self, text)</p></td>
+<td><p>Wrap multiple paragraphs to fit a specified width.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyutil.wrap.ZimText.string2lines">
+<code class="descname">string2lines</code><span class="sig-paren">(</span><em>self</em>, <em>text</em>, <em>convert_whitespace=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/wrap.html#ZimText.string2lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.wrap.ZimText.string2lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of one-line strings with tabs expanded, no newlines, and
+trailing whitespace stripped.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyutil.wrap.ZimText.wrap_paragraphs">
+<code class="descname">wrap_paragraphs</code><span class="sig-paren">(</span><em>self</em>, <em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/wrap.html#ZimText.wrap_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.wrap.ZimText.wrap_paragraphs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap multiple paragraphs to fit a specified width.</p>
+<p>This is equivalent to <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.wrap" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">textwrap.wrap()</span></code></a>, but with support for multiple
+paragraphs, as separated by empty lines.</p>
+<p>Considering initializing an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">textwrap.TextWrapper()</span></code>
+for increased configurability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – text to wrap using <a class="reference external" href="https://docs.python.org/3/library/re.html#module-re" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.dedent" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">textwrap.dedent()</span></code></a></p></li>
+<li><p><strong>ncols</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – column to wrap text at</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>wrapped_text</strong> – list of complete paragraphs, wrapped to fill <code class="xref py py-obj docutils literal notranslate"><span class="pre">ncols</span></code> columns.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">wrap</span> <span class="k">import</span> <span class="n">ZimText</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wrapper</span> <span class="o">=</span> <span class="n">ZimText</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;unix-ide-editing.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wrapped</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>                                                                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;unix-ide-editing.txt&#39;</span> <span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;unix-ide-editing.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a><ul>
+      <li>Previous: <a href="numerical.html" title="previous chapter">Numerical</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Text Utilities</a><ul>
+<li><a class="reference internal" href="#json-sorter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.wrap"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Text.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2019, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Text.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

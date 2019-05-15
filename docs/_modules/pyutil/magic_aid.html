@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyutil.magic_aid &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/custom.css_t" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/graphviz.css_t" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyutil.magic_aid</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Create a script for searching through aliases.</span>
+
+<span class="sd">IPython Aliases</span>
+<span class="sd">---------------</span>
+<span class="sd">By invoking ``%rehashx`` on :mod:`IPython`&#39;s startup, there are</span>
+<span class="sd">regularly more than 1000 aliases in the namespace.</span>
+
+<span class="sd">This makes basic lookups slightly more involved.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">IPython</span> <span class="k">import</span> <span class="n">get_ipython</span>
+<span class="kn">from</span> <span class="nn">IPython.core.magic</span> <span class="k">import</span> <span class="n">line_magic</span>
+
+<span class="kn">from</span> <span class="nn">pyutil.rclone</span> <span class="k">import</span> <span class="n">run</span>
+
+
+<div class="viewcode-block" id="phelp"><a class="viewcode-back" href="../../External_Commands.html#pyutil.magic_aid.phelp">[docs]</a><span class="nd">@line_magic</span>
+<span class="k">def</span> <span class="nf">phelp</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Pipe `obj` through :mod:`pydoc` to :mod:`pynvim` with ``ft`` set to man.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obj : object</span>
+<span class="sd">        Object to view documentation for in :mod:`pynvim` with :mod:`pydoc`.</span>
+<span class="sd">    shell : |ip|</span>
+<span class="sd">        Global IPython instance.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    ::</span>
+
+<span class="sd">        &gt;&gt;&gt; from pyutil.magic_aid import phelp</span>
+<span class="sd">        &gt;&gt;&gt; from IPython import get_ipython</span>
+<span class="sd">        &gt;&gt;&gt; import matplotlib as mpl</span>
+<span class="sd">        &gt;&gt;&gt; _ip = get_ipython()</span>
+<span class="sd">        &gt;&gt;&gt; object_of_interest = mpl</span>
+<span class="sd">        &gt;&gt;&gt; phelp(object_of_interest, _ip)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nvim&#39;</span><span class="p">,</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;set ft=man&#39;</span><span class="p">]</span>
+    <span class="n">return_code</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">return_code</span></div>
+
+
+<div class="viewcode-block" id="search"><a class="viewcode-back" href="../../External_Commands.html#pyutil.magic_aid.search">[docs]</a><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Do a simple search for aliased names in :mod:`IPython`.</span>
+
+<span class="sd">    This function independently initializes IPython so that it can be</span>
+<span class="sd">    easily imported and run.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    char : str</span>
+<span class="sd">        Character to search through available magics for.</span>
+<span class="sd">    shell : |ip|</span>
+<span class="sd">        Global IPython instance.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    results : list of strs</span>
+<span class="sd">        All matching magics</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    ::</span>
+
+<span class="sd">        &gt;&gt;&gt; from pyutil.magic_aid import search</span>
+<span class="sd">        &gt;&gt;&gt; from IPython import get_ipython</span>
+<span class="sd">        &gt;&gt;&gt; _ip = get_ipython()</span>
+<span class="sd">        &gt;&gt;&gt; g_aliases = search(&#39;g&#39;, shell=_ip)</span>
+<span class="sd">        &gt;&gt;&gt; print(len(g_aliases))</span>
+
+<span class="sd">    The above produced a value of 111 for me!</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_user_aliases</span> <span class="o">=</span> <span class="n">shell</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;alias&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">each_alias</span> <span class="ow">in</span> <span class="n">_user_aliases</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">each_alias</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">char</span><span class="p">):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each_alias</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">_ip</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
+
+    <span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">search</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">_ip</span><span class="p">))</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2019, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

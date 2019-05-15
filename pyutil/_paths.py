@@ -34,6 +34,9 @@ class PathTools(Path):
         def __repr__(self):
             return "{}({!r})".format(self.__class__.__name__, self.as_posix())
 
+    If we know for a fact that we're on Powershell, that shell accepts ``/``
+    to my knowledge and we can use it. But it'll crash :command:`cmd`.
+
     """
 
     def __init__(self, log_level=logging.WARNING, **kwargs):

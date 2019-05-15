@@ -5,11 +5,11 @@ r"""Wrap text similarly to :func:`textwrap.dedent()` but with multiple paragraph
 Allow the user to input any parameters that are accepted by
 :class:`textwrap.TextWrapper()`
 
+Utilizes :mod:`prompt_toolkit.print_formatted_text` to easily display
+prettified text.
+
+
 .. seealso:: :mod:`IPython.utils.text`
-
-
-In it's current implementation ZimText doesn't do anything and wrap_paragraph
-doesn't write the text to a file :/
 
 Just dropped string2lines down there thanks to docutils and the
 :mod:`docutils.state_machine`.
@@ -56,17 +56,24 @@ class ZimText(TextWrapper):
     """
 
     def __init__(self,
+                 text=None,
                  width=80,
                  break_long_words=False,
                  break_on_hyphens=False,
                  **kwargs):
-        """Initialize the class."""
+        """Initialize the class. ``__init__().text`` defaults to None.
+
+        However, it is still a required parameter. It's simply not enforced.
+
+        We're all responsible users here right?
+
+        """
         self.width = width
         self.break_long_words = break_long_words
         self.break_on_hyphens = break_on_hyphens
         super().__init__(**kwargs)
 
-    def wrap_paragraphs(self, text):
+    def wrap_paragraphs(self):
         """Wrap multiple paragraphs to fit a specified width.
 
         This is equivalent to :func:`textwrap.wrap()`, but with support for multiple
@@ -100,9 +107,8 @@ class ZimText(TextWrapper):
 
         """
         paragraph_re = re.compile(r'\n(\s*\n)+', re.MULTILINE)
-        text = dedent(text).strip()
-        paragraphs = paragraph_re.split(self)[::
-                                              2]  # every other entry is space
+        self.text = dedent(self.text).strip()
+        paragraphs = paragraph_re.split(self.text)[::2]  # every other entry is space
         wrapped_text = []
         indent_re = re.compile(r'\n\s+', re.MULTILINE)
         for p in paragraphs:

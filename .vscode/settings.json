@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/faris/miniconda3/envs/utilities/bin/python",
+    "python.pythonPath": "C:\\Users\\faris\\Miniconda3\\envs\\utilities\\python.exe",
     "files.exclude": {
         "**/.git": false,
         "**/.svn": true,
@@ -19,7 +19,17 @@
     "python.unitTest.unittestEnabled": true,
     "files.eol": "\n",
     "editor.fontLigatures": true,
-    "restructuredtext.confPath": "${workspaceFolder}/docs",
+    "restructuredtext.confPath": "${workspaceFolder}\\docs",
     "restructuredtext.experimental": true,
-    "restructuredtext.languageServer.trace.server": "messages"
+    "restructuredtext.languageServer.trace.server": "messages",
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./test",
+        "-p",
+        "test*.py"
+    ],
+    "python.testing.pyTestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.unittestEnabled": true
 }

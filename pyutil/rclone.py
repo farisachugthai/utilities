@@ -24,6 +24,7 @@ import argparse
 import logging
 import os
 import shlex
+import shutil
 import subprocess
 import sys
 
@@ -243,4 +244,8 @@ def main():
 
 
 if __name__ == "__main__":
+    # This feels like a necessary stopgap
+    if not shutil.which('rclone'):
+        sys.exit('rclone not in $PATH. Exiting.')
+
     sys.exit(main())

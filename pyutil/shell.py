@@ -16,10 +16,12 @@ simply utilize it.
 
 
 """
+import codecs
 import logging
 import os
-import sys
+import shlex
 import subprocess
+import sys
 
 
 class Command:
@@ -98,7 +100,6 @@ class BaseCommand:
         validated_output = self._validate(output)
         return validated_output
 
-
     def popen(self, cmd=None):
         """Execute the required command in a subshell.
 
@@ -136,6 +137,7 @@ class BaseCommand:
             raise SystemExit(process.returncode)
         else:
             return process.returncode
+
 
 def _validate(self, subprocess_output):
     """Take output from :func:`subprocess.run()`.

@@ -325,6 +325,10 @@ viewcode_follow_imported_members = False
 
 ipython_warning_is_error = False
 
+# Numpydoc
+
+numpydoc_show_class_members = False  # Otherwise Sphinx emits thousands of warnings
+numpydoc_class_members_toctree = False
 
 def setup(app):
     """Add custom css styling.
@@ -341,8 +345,8 @@ def setup(app):
         help docs
 
     """
-    custom_css = os.path.join('_static', '', 'custom.css_t')
-    graphviz_css = os.path.join('_static', '', 'graphviz.css_t')
+    custom_css = os.path.join('_static', '', 'custom.css')
+    graphviz_css = os.path.join('_static', '', 'graphviz.css')
     app.add_stylesheet(custom_css)
     app.add_stylesheet(graphviz_css)
     app.add_js_file(os.path.join('_static', '', 'sidebar.js'))

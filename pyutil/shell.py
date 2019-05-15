@@ -1,6 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Base class for shell commands."""
+"""Base class for shell commands.
+
+In it's current state the Command class is unusable but the BaseCommand class
+is interesting and a good starting point.
+
+05/14/2019
+
+Moved the _validate function on its own. It doesn't entirely make sense to have
+it with an instance or class because if the class is instantiated and _validate
+is invoked by the user it doesn't really make sense.
+
+It's better to leave it in the module for consistency and then have the class
+simply utilize it.
+
+
+"""
 import logging
 import os
 import sys
@@ -83,26 +98,6 @@ class BaseCommand:
         validated_output = self._validate(output)
         return validated_output
 
-    @staticmethod
-    def _validate(self, subprocess_output):
-        """Take output from :func:`subprocess.run()`.
-
-        First the func will check :attr:`returncode`.
-
-        Then the bytes that were returned from the *presumably* Unix OS
-        will be decoded into a human readable format.
-        """
-        if subprocess_output.returncode != 0:
-            logging.error(subprocess_output.returncode)
-        else:
-            if isinstance(subprocess_output.stdout, bytes):
-                decoded_output = codecs.decode(subprocess_output.stdout)
-                # also probably gonna wanna pprint that when you receive it
-                return decoded_output
-            else:
-                logging.warning("Subprocess didn't return bytes. Maybe str?")
-                logging.warning(type(subprocess_output.stdout))
-                return subprocess_output
 
     def popen(self, cmd=None):
         """Execute the required command in a subshell.
@@ -141,3 +136,23 @@ class BaseCommand:
             raise SystemExit(process.returncode)
         else:
             return process.returncode
+
+def _validate(self, subprocess_output):
+    """Take output from :func:`subprocess.run()`.
+
+    First the func will check :attr:`returncode`.
+
+    Then the bytes that were returned from the *presumably* Unix OS
+    will be decoded into a human readable format.
+    """
+    if subprocess_output.returncode != 0:
+        logging.error(subprocess_output.returncode)
+    else:
+        if isinstance(subprocess_output.stdout, bytes):
+            decoded_output = codecs.decode(subprocess_output.stdout)
+            # also probably gonna wanna pprint that when you receive it
+            return decoded_output
+        else:
+            logging.warning("Subprocess didn't return bytes. Maybe str?")
+            logging.warning(type(subprocess_output.stdout))
+            return subprocess_output

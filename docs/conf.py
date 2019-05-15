@@ -290,11 +290,6 @@ intersphinx_mapping = {
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
-# Viewcode
-# --------
-# The below is deprecated
-# viewcode_import = True
-viewcode_follow_imported_members = True
 # -------------------------------------------------------------------
 # Autosummary
 # -------------------------------------------------------------------
@@ -321,11 +316,22 @@ napoleon_include_private_with_doc = True
 # napoleon_use_param = True
 # napoleon_use_rtype = True
 
+# RemovedInSphinx30Warning:
+# viewcode_import was renamed to viewcode_follow_imported_members.
+# Please update your configuration.
+viewcode_follow_imported_members = False
+
+# Option for IPython directive
+
+ipython_warning_is_error = False
+
 
 def setup(app):
     """Add custom css styling.
 
-    Don't use :func:`os.path.abspath()` if you need to extend this.
+    .. admonition::
+
+        Don't use :func:`os.path.abspath()` if you need to extend this.
 
     See Also
     --------
@@ -339,7 +345,7 @@ def setup(app):
     graphviz_css = os.path.join('_static', '', 'graphviz.css_t')
     app.add_stylesheet(custom_css)
     app.add_stylesheet(graphviz_css)
-    # app.add_js_file(os.path.join('_static', '', '')
+    app.add_js_file(os.path.join('_static', '', 'sidebar.js'))
 
     return {
         'version': 'builtin',

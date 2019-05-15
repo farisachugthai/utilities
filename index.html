@@ -1,23 +1,24 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>utilities &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css_t" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css_t" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Tutorial.rst" href="tutorial.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -44,9 +45,9 @@ administer multiple workstations.</p>
 <div class="section" id="installation">
 <span id="root-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Python offers it’s users a large number of ways to install new packages.</p>
-<p>One can install <a class="reference internal" href="#pyutil"><span class="std std-ref">pyutil</span></a> by:</p>
+<p>One can install the python modules by:</p>
 <ul>
-<li><p class="first">Installing with pip</p>
+<li><p>Installing with pip</p>
 <p>Install from newest dev version in master branch</p>
 </li>
 </ul>
@@ -54,26 +55,26 @@ administer multiple workstations.</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li>Cloning with git and installing with pip</li>
+<li><p>Cloning with git and installing with pip</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone git+https://github.com/farisachugthai/utilities
 pip install .
 </pre></div>
 </div>
-<ul>
-<li><p class="first">As an alternative to a pip install, obtain the source code and run the <a class="reference external" href="setup.py">setup.py</a> file.</p>
-<p>If you are on a Unix-like system, the following will ensure everything
-below pyutil/ is in your PATH.</p>
-</li>
+<ul class="simple">
+<li><p>As an alternative to a pip install, obtain the source code and run the <a class="reference external" href="setup.py">setup.py</a> file.</p></li>
 </ul>
+<p>If you are on a Unix-like system, the following will ensure everything
+below pyutil/ is in your PATH and give you the ability to modify the source
+code in place.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/farisachugthai/utilities
 <span class="nb">cd</span> utilities
 
-python3 setup.py bdist_wheel <span class="o">&amp;&amp;</span> python3 -m pip install -U -e .
+python3 setup.py build <span class="o">&amp;&amp;</span> python3 -m pip install -U -e .
 </pre></div>
 </div>
 <ul class="simple">
-<li>After which point, the only necessary step will be ensuring that the scripts in sh/ are in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>.</li>
+<li><p>After which point, the only necessary step will be ensuring that the scripts in sh/ are in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>.</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># The script at pyutil/dlink.py is useful for creating symlinks for every</span>
 <span class="c1"># file in a directory. If the directory ~/bin is in your path...</span>
@@ -105,7 +106,7 @@ different; however, not tremendously.</p>
 </div>
 <div class="section" id="building-documentation-from-source">
 <span id="root-docs"></span><h2>Building Documentation From Source<a class="headerlink" href="#building-documentation-from-source" title="Permalink to this headline">¶</a></h2>
-<p>The documentation can be read online at <a class="reference external" href="https://farisachugthai.github.io/utilities">GitHub pages</a></p>
+<p>The documentation can be read online at <a class="reference external" href="https://farisachugthai.github.io/utilities">GitHub Pages</a></p>
 <p>However, the documentation can be built locally as well.</p>
 <p>After following the installation instructions at <a class="reference internal" href="#root-installation">root-installation</a>, one can run</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> doc
@@ -113,9 +114,10 @@ make html
 </pre></div>
 </div>
 <p>Then, direct your browser to <code class="docutils literal notranslate"><span class="pre">_build/html/index.html</span></code>.</p>
-<p>To do so in a more direct manner, a <em>htmlview</em> target has been created as a convenience
-in the docs/Makefile.</p>
-<p>This target will build the documentation and open up your default web browser automatically.</p>
+<p>To do so in a more direct manner, a <em>htmlview</em> target has been created as a
+convenience in the docs/Makefile.</p>
+<p>This target will build the documentation and open up your default web browser
+automatically.</p>
 </div>
 <div class="section" id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
@@ -139,26 +141,19 @@ any constructive criticism or pointers on how to get any module listed to work
 better!</p>
 <p>I hope it goes without saying, but if it doesn’t, please don’t hesitate
 to fork or create an issue.</p>
-</div>
-<div class="section" id="table-of-contents">
-<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound" id="mastertoc">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst</a></li>
-<li class="toctree-l1"><a class="reference internal" href="numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="numerical.html">numerical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="todo.html">todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpydoc.html">Documentation and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 </div>
-<p>Continue to the next page:</p>
-<p><a class="reference internal" href="tutorial.html#tutorial"><span class="std std-ref">Tutorial.rst</span></a></p>
 <div class="section" id="indices-and-tables">
 <h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -187,31 +182,34 @@ to fork or create an issue.</p>
 
 
 
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial.rst</a></li>
-<li class="toctree-l1"><a class="reference internal" href="numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="numerical.html">numerical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="todo.html">todo</a></li>
-</ul>
-
-<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="tutorial.html" title="next chapter">Tutorial.rst</a></li>
+      <li>Next: <a href="tutorial.html" title="next chapter">Tutorial</a></li>
   </ul></li>
 </ul>
-</div>
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to utilities’s documentation!</a></li>
+<li><a class="reference internal" href="#pyutil">pyutil</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#building-documentation-from-source">Building Documentation From Source</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#contributing">Contributing</a><ul>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -223,23 +221,15 @@ to fork or create an issue.</p>
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Faris A Chugthai.
+      &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -247,6 +237,10 @@ to fork or create an issue.</p>
           rel="nofollow">Page source</a>
     </div>
 
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
     
 
     

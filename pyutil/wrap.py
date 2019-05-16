@@ -108,7 +108,8 @@ class ZimText(TextWrapper):
         """
         paragraph_re = re.compile(r'\n(\s*\n)+', re.MULTILINE)
         self.text = dedent(self.text).strip()
-        paragraphs = paragraph_re.split(self.text)[::2]  # every other entry is space
+        paragraphs = paragraph_re.split(
+            self.text)[::2]  # every other entry is space
         wrapped_text = []
         indent_re = re.compile(r'\n\s+', re.MULTILINE)
         for p in paragraphs:
@@ -120,7 +121,7 @@ class ZimText(TextWrapper):
             wrapped_text.append(p)
         return wrapped_text
 
-    def string2lines(self, text, convert_whitespace=True):
+    def string2lines(self, convert_whitespace=True):
         """
         Return a list of one-line strings with tabs expanded, no newlines, and
         trailing whitespace stripped.
@@ -136,8 +137,9 @@ class ZimText(TextWrapper):
             convert form feeds and vertical tabs to spaces
         """
         if convert_whitespace:
-            text = self._munge_whitespace(text)
-        return [s for s in text.splitlines()]
+            self.text = self._munge_whitespace(self.text)
+        new_text = [s for s in self.text.splitlines()]
+        return new_text
 
 
 if __name__ == '__main__':

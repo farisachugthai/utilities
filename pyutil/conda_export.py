@@ -37,8 +37,10 @@ def _parse_arguments():
         action='store_true',
         help='Iterate through all Conda environments and update all.')
 
-    parser.add_argument(
-        '-V', '--version', action='version', version='%(prog)s' + __version__)
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

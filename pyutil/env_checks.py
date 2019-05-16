@@ -68,11 +68,12 @@ Here's an interesting way to memoize return values.::
 
 """
 import os
-from getpass import getuser
+import getpass
 from pathlib import Path
 
+# unix only
 try:
-    import pwd
+    import pwd as _pwd
 except ModuleNotFoundError:
     pass
 
@@ -214,14 +215,12 @@ def get_unix_username():
         User username
 
     """
-    return pwd.getpwuid(os.getuid()).pw_name
+    return _pwd.getpwuid(os.getuid()).pw_name
 
 
 def get_username():
     """More cross-platform implementation of retrieving a username.
 
-
-   Return the "login name" of the user.
 
    This function checks the environment variables :envvar:`LOGNAME`,
    :envvar:`USER`, :envvar:`LNAME` and :envvar:`USERNAME`, in order, and
@@ -230,6 +229,6 @@ def get_username():
    systems which support the :mod:`pwd` module, otherwise, an exception is
    raised.
 
-   In general, this function should be preferred over :func:`os.getlogin()`.
+    In general, this function should be preferred over :func:`os.getlogin()`.
     """
-    return getuser()
+    return getpass.getuser()

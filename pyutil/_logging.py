@@ -125,6 +125,9 @@ def queued_logging(debug=True, logfile=None, name='__name__'):
 
     handlers = []
     handlers.append(QueueHandler(QUEUE))
+
+    # In it's current implementation logfile=None and if it isn't specified there's no else...?
+    # So shouldn't it just not do anything at all?
     if logfile:
         if logfile == '-':
             handlers.append(logging.StreamHandler())

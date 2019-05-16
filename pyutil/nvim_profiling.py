@@ -107,8 +107,8 @@ def find_init_files():
         else:
             return nvim_root
     else:
-        userConfFile = os.path.join(
-            os.path.expanduser('~'), '.config', 'nvim', 'init.vim')
+        userConfFile = os.path.join(os.path.expanduser('~'), '.config', 'nvim',
+                                    'init.vim')
 
         # Handle windows
         if not os.path.isfile(userConfFile):

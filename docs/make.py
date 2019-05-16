@@ -68,6 +68,7 @@ from pyutil.shell import BaseCommand
 DOC_PATH = os.path.dirname(os.path.abspath(__file__))
 SOURCE_PATH = os.path.join(DOC_PATH, '_source')
 BUILD_PATH = os.path.join(DOC_PATH, '_build')
+LOGGER = logging.getLogger(name=__name__)
 
 
 def _parse_arguments(cmds=None):
@@ -109,14 +110,15 @@ def _parse_arguments(cmds=None):
                                      epilog="Commands: {}".format(
                                          ','.join(cmds)))
 
-    parser.add_argument('command',
+    parser.add_argument('builder',
                         nargs='?',
                         default='html',
+                        metavar='builder: (html or latex)',
                         help='command to run: {}'.format(', '.join(cmds)))
 
     parser.add_argument('--num-jobs',
                         type=int,
-                        default=0,
+                        default=os.cpu_count(),
                         help='number of jobs used by sphinx-build')
 
     parser.add_argument('--no-api',
@@ -128,8 +130,7 @@ def _parse_arguments(cmds=None):
                         metavar='FILENAME',
                         type=str,
                         default=None,
-                        help=('filename of section or method name to '
-                              'compile, e.g. "indexing", "DataFrame.join"'))
+                        help=('filename of section or method name to build.'))
 
     parser.add_argument('--python-path',
                         type=str,
@@ -162,25 +163,48 @@ class DocBuilder(BaseCommand):
     script.
     """
 
-    def __init__(self):
+    def __init__(self, cmd):
         """Initialize self."""
-        super().__init__()
+        super().__init__(cmd)
 
-    def termux_hack(self):
-        """Android permissions don't allow viewing files in app specific files."""
-        try:
-            shutil.copytree(
-                '_build/html/',
-                '/data/data/com.termux/files/home/storage/downloads/html')
-        except FileExistsError:
-            shutil.rmtree(
-                '/data/data/com.termux/files/home/storage/downloads/html')
-            shutil.copytree(
-                '_build/html/',
-                '/data/data/com.termux/files/home/storage/downloads/html')
-        except FileNotFoundError:
-            logging.error(
-                "The build directory currently doesn't exist. Exiting.")
+    def sphinx_build(self, kind='html'):
+        """Build docs.
+
+        Parameters
+        ----------
+        kind : {'html', 'latex'}
+
+        Examples
+        --------
+        >>> DocBuilder(num_jobs=4)._sphinx_build('html')
+        """
+        if kind not in ('html', 'latex'):
+            raise ValueError('kind must be html or latex, '
+                             'not {}'.format(kind))
+
+        cmd = ['sphinx-build', '-b', kind]
+        cmd += [
+            '-d',
+            os.path.join(BUILD_PATH, 'doctrees'), SOURCE_PATH,
+            os.path.join(BUILD_PATH, kind)
+        ]
+        return self.run(cmd)
+
+
+def termux_hack():
+    """Android permissions don't allow viewing files in app specific files."""
+    try:
+        shutil.copytree(
+            '_build/html/',
+            '/data/data/com.termux/files/home/storage/downloads/html')
+    except FileExistsError:
+        shutil.rmtree(
+            '/data/data/com.termux/files/home/storage/downloads/html')
+        shutil.copytree(
+            '_build/html/',
+            '/data/data/com.termux/files/home/storage/downloads/html')
+    except FileNotFoundError:
+        logging.error("The build directory currently doesn't exist. Exiting.")
 
 
 if __name__ == "__main__":
@@ -198,7 +222,7 @@ if __name__ == "__main__":
     logging.debug(jobs)
     builder = args.builder
 
-    run(f'make -j{jobs} {builder}')
+    DocBuilder(f'make -j{jobs} {builder}').run()
 
     if os.environ.get('ANDROID_ROOT'):
-        _termux_hack()
+        termux_hack()

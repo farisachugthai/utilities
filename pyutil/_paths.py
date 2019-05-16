@@ -42,7 +42,7 @@ class PathTools(Path):
     def __init__(self, log_level=logging.WARNING, **kwargs):
         """Initialize the PathTools object with an optional argument for logging."""
         self.log_level = log_level
-        super().__self__(kwargs)
+        super().__init__(kwargs)
 
     def logger(self):
         """Initialize a named logger for the PathTools object."""

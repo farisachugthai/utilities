@@ -51,8 +51,11 @@ EXTRAS = {
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
-    long_description = "\n" + f.read()
+try:
+    with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
+        long_description = "\n" + f.read()
+except FileNotFoundError:
+    long_description = DESCRIPTION
 
 # Load the package's __version__.py module as a dictionary.
 about = {'__version__': '0.0.1'}
@@ -77,8 +80,8 @@ class UploadCommand(Command):  # {{{1
         print('\033[1m{0}\033[0m'.format(s))
 
     def initialize_options(self):
-        """Initialize upload options."""
         pass
+        """Initialize upload options."""
 
     def finalize_options(self):
         """Finalize upload options."""

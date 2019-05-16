@@ -56,7 +56,7 @@ import subprocess
 
 from pyutil.env_checks import check_xdg_config_home
 
-logger = logging.getLogger(name=__name__)
+LOGGER = logging.getLogger(name=__name__)
 
 
 def output_results(output_dir):
@@ -94,7 +94,7 @@ def find_init_files():
         The directory where nvim's configuration files are found
 
     .. todo:: Alright so if :envvar:`XDG_CONFIG_HOME` isn't set we need to
-        check `<~/.config/nvim>`_ and check whether we're on Windows or not
+        check <~/.config/nvim> and check whether we're on Windows or not
 
     """
     global OS
@@ -102,7 +102,7 @@ def find_init_files():
     if check_xdg_config_home():
         nvim_root = os.path.join(os.environ.get('XDG_CONFIG_HOME'), '', 'nvim')
         if not os.path.isdir(nvim_root):
-            logging.ERROR(
+           LOGGER.error(
                 "XDG_CONFIG_HOME set but $XDG_CONFIG_HOME/nvim doesn't exist.")
         else:
             return nvim_root

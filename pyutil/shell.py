@@ -23,13 +23,15 @@ import shlex
 import subprocess
 import sys
 
+LOGGER = logging.getLogger(name=__name__)
+
 
 class Command:
     """Run a shell command."""
 
     def __init__(self, shell=None, *args, **kwargs):
         """Initialize the command."""
-        shell = self.shell
+        self.shell = shell
 
     def _vers(self):
         vers = sys.version_info[0:2]
@@ -46,9 +48,9 @@ class Command:
     def get_shell(self):
         """Determine the user's shell. May be able to decorate with property."""
         try:
-            shell = os.getenv('SHELL')
+            self.shell = os.getenv('SHELL')
         except OSError:
-            shell = os.getenv('COMSPEC')
+            self.shell = os.getenv('COMSPEC')
 
         return shell
 
@@ -70,8 +72,9 @@ class BaseCommand:
 
     def __init__(self, cmd=None):
         self.cmd = cmd
+        logging.debug("Cmd is: " + str(self.cmd))
 
-    def run(self, cmd=None, *args):
+    def run(self):
         """Run a safer subprocess.
 
         Parameters
@@ -91,11 +94,10 @@ class BaseCommand:
         >>> BaseCommand().run('python', '--version')
 
         """
-        if cmd:
-            cmd = shlex.split(cmd)
-        logging.debug("Cmd is: " + str(cmd))
+        if self.cmd:
+            self.cmd = shlex.split(self.cmd)
 
-        output = subprocess.run([cmd], capture_output=True)
+        output = subprocess.run([self.cmd], capture_output=True)
 
         validated_output = self._validate(output)
         return validated_output
@@ -128,10 +130,10 @@ class BaseCommand:
             If there is an error in the command.
 
         """
-        if cmd:
-            cmd = shlex.split(cmd)
-            logging.debug("Cmd is: " + str(cmd))
-            process = subprocess.Popen([cmd])
+        if self.self.cmd:
+            self.self.cmd = shlex.split(self.cmd)
+            logging.debug("Cmd is: " + str(self.self.cmd))
+            process = subprocess.Popen([self.self.cmd])
 
         if process.wait():
             raise SystemExit(process.returncode)

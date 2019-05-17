@@ -79,9 +79,6 @@ class ZimText(TextWrapper):
         This is equivalent to :func:`textwrap.wrap()`, but with support for multiple
         paragraphs, as separated by empty lines.
 
-        Considering initializing an instance of :class:`textwrap.TextWrapper()`
-        for increased configurability.
-
         Parameters
         ----------
         text : str
@@ -100,7 +97,7 @@ class ZimText(TextWrapper):
         >>> wrapper = ZimText()
         >>> f = open('unix-ide-editing.txt')
         >>> text = f.read()
-        >>> wrapped = wrapper.wrap(text)                                                                    with open('unix-ide-editing.txt' , 'wt') as f:
+        >>> wrapped = wrapper.wrap(text)
         >>> with open('unix-ide-editing.txt', 'wt') as f:
         ...     f.write(text)
 
@@ -108,7 +105,8 @@ class ZimText(TextWrapper):
         """
         paragraph_re = re.compile(r'\n(\s*\n)+', re.MULTILINE)
         self.text = dedent(self.text).strip()
-        paragraphs = paragraph_re.split(self.text)[::2]  # every other entry is space
+        paragraphs = paragraph_re.split(
+            self.text)[::2]  # every other entry is space
         wrapped_text = []
         indent_re = re.compile(r'\n\s+', re.MULTILINE)
         for p in paragraphs:
@@ -120,24 +118,26 @@ class ZimText(TextWrapper):
             wrapped_text.append(p)
         return wrapped_text
 
-    def string2lines(self, text, convert_whitespace=True):
+    def string2lines(self, convert_whitespace=True):
         """
-        Return a list of one-line strings with tabs expanded, no newlines, and
-        trailing whitespace stripped.
 
         Parameters:
         -----------
         text : str
             A multi-line string.
+        convert_whitespace : bool
+            convert form feeds and vertical tabs to spaces
 
         Returns
         -------
-        convert_whitespace : bool
-            convert form feeds and vertical tabs to spaces
+        list of str
+            Return a list of one-line strings with tabs expanded, no newlines, and
+            trailing whitespace stripped.
+
         """
         if convert_whitespace:
-            text = self._munge_whitespace(text)
-        return [s for s in text.splitlines()]
+            self.text = self._munge_whitespace(self.text)
+        return [s for s in self.text.splitlines()]
 
 
 if __name__ == '__main__':
@@ -147,5 +147,6 @@ if __name__ == '__main__':
     else:
         for i in args[1:]:
             if is_file(i):
+                print("Rewrapping " + i)
                 wrapper = ZimText()
                 wrapper.wrap_paragraphs(args[1:])

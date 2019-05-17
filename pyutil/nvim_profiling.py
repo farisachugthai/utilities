@@ -102,7 +102,7 @@ def find_init_files():
     if check_xdg_config_home():
         nvim_root = os.path.join(os.environ.get('XDG_CONFIG_HOME'), '', 'nvim')
         if not os.path.isdir(nvim_root):
-           LOGGER.error(
+            LOGGER.error(
                 "XDG_CONFIG_HOME set but $XDG_CONFIG_HOME/nvim doesn't exist.")
         else:
             return nvim_root

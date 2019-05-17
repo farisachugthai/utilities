@@ -330,6 +330,7 @@ ipython_warning_is_error = False
 numpydoc_show_class_members = False  # Otherwise Sphinx emits thousands of warnings
 numpydoc_class_members_toctree = False
 
+
 def setup(app):
     """Add custom css styling.
 

@@ -35,6 +35,7 @@ import sys
 
 logger = logging.getLogger(__name__)
 
+
 def dir_cleaner(i):
     """Yield all directories before november."""
     if i.is_dir():

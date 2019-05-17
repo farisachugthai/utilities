@@ -30,6 +30,7 @@ import sys
 
 logger = logging.getLogger(name=__name__)
 
+
 def _parse_arguments():
     """Handle user inputs."""
     parser = argparse.ArgumentParser(description=__doc__)

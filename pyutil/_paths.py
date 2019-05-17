@@ -76,7 +76,8 @@ class PathTools(Path):
                 return True
         else:
             if self.joinpath(output_dir).is_dir() is False:
-                self.logger.error('The output directory exists but is not a directory.')
+                self.logger.error(
+                    'The output directory exists but is not a directory.')
                 return False
             else:
                 return True

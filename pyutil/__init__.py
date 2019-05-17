@@ -60,10 +60,8 @@ def __parse_arguments():
     """
     parser = argparse.ArgumentParser(description=__doc__)
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    parser.add_argument(
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     parser.add_argument(
         '-l',

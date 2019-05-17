@@ -12,8 +12,8 @@
 * However if it's not, then we could make a :class:`collections.defaultdict`
   that holds default values for each option.
   * Actually wouldn't :class:`configparser.ConfigParser` make more sense?
-* In addition we could use :class:`collections.ChainMap()` to set precedence of
-  `backupdir`.
+* In addition we could use :class:`collections.ChainMap()` to set
+  precedence of `backupdir`.
 * Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`
   to emulate rsync's file input.
 

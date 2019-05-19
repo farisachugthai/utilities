@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="todo" href="todo.html" />
@@ -114,7 +114,7 @@ files with names we want to rename.</p>
 
 <dl class="function">
 <dt id="pyutil.batch_renamer.batch_mover">
-<code class="descclassname">pyutil.batch_renamer.</code><code class="descname">batch_mover</code><span class="sig-paren">(</span><em>pattern</em>, <em>new_pattern</em>, <em>directory=PosixPath('/home/faris/projects/utilities/docs')</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#batch_mover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.batch_mover" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyutil.batch_renamer.</code><code class="descname">batch_mover</code><span class="sig-paren">(</span><em>pattern</em>, <em>new_pattern</em>, <em>directory=WindowsPath('C:/Users/faris/projects/utilities/docs')</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#batch_mover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.batch_mover" title="Permalink to this definition">¶</a></dt>
 <dd><p>Move files in the current working directory that match a pattern.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -485,14 +485,15 @@ Returns <a class="reference external" href="https://docs.python.org/3/library/co
 <dt id="pyutil.env_checks.get_username">
 <code class="descclassname">pyutil.env_checks.</code><code class="descname">get_username</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env_checks.html#get_username"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env_checks.get_username" title="Permalink to this definition">¶</a></dt>
 <dd><p>More cross-platform implementation of retrieving a username.</p>
-<p>Return the “login name” of the user.</p>
 <p>This function checks the environment variables <span class="target" id="index-3"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LOGNAME</span></code>,
 <span class="target" id="index-4"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">USER</span></code>, <span class="target" id="index-5"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LNAME</span></code> and <span class="target" id="index-6"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">USERNAME</span></code>, in order, and
 returns the value of the first one which is set to a non-empty string.  If
 none are set, the login name from the password database is returned on
 systems which support the <a class="reference external" href="https://docs.python.org/3/library/pwd.html#module-pwd" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code></a> module, otherwise, an exception is
 raised.</p>
-<p>In general, this function should be preferred over <a class="reference external" href="https://docs.python.org/3/library/os.html#os.getlogin" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.getlogin()</span></code></a>.</p>
+<blockquote>
+<div><p>In general, this function should be preferred over <a class="reference external" href="https://docs.python.org/3/library/os.html#os.getlogin" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.getlogin()</span></code></a>.</p>
+</div></blockquote>
 </dd></dl>
 
 </div>
@@ -857,6 +858,13 @@ with a try statement.</p>
   </ul></li>
   </ul></li>
 </ul>
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpydoc.html">Documentation and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Remaining Modules</a><ul>

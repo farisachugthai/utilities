@@ -12,6 +12,7 @@ import os
 import sys
 import yaml
 
+LOGGER = logging.Logger(name=__name__)
 LOG_LEVEL = 'logging.WARNING'
 
 
@@ -121,11 +122,11 @@ def main():
     args = _parse_arguments()
 
     try:
-        log_level = args.log_level
-    except Exception:  # IndexError?
-        logging.basicConfig(level=LOG_LEVEL)
-    else:
-        logging.basicConfig(level=log_level)
+        LOG_LEVEL = args.log_level
+    except Exception as e:  # IndexError?
+        print(e)
+
+    LOGGER.setLevel(level=LOG_LEVEL)
 
     fobj = args.input
     o_file = args.output

@@ -169,3 +169,15 @@ def setup_ipython_logger():
 
     logger.addHandler(file_handler)
     return logger
+
+
+def _set_debugging():
+    """Enable debug logging. From rclone.py"""
+    root = logging.getLogger(name=__name__)
+    root.setLevel(logging.DEBUG)
+
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
+    ch.setFormatter(formatter)
+    root.addHandler(ch)

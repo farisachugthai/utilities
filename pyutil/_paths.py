@@ -56,22 +56,21 @@ class PathTools(Path):
         Parameters
         ----------
         output_dir : str (path-like)
-            Directory to store profiling results in.
+            Directory to check.
 
         Returns
         -------
         Bool
 
-        Raises
-        -------
-        SystemExit if there is an error while making a directory.
 
         """
         if self.joinpath(output_dir).exists() is False:
             try:
                 self.mkdir(output_dir)
-            except OSError:
-                raise SystemExit
+            except OSError as e:
+                self.logger.error(
+                    "The directory {} does not exist but we can't create it because: {}"
+                    .format(output_dir, e))
             else:
                 return True
         else:
@@ -81,3 +80,12 @@ class PathTools(Path):
                 return False
             else:
                 return True
+
+        def as_posix(self):
+            """Return the string representation of the path with forward (/) slashes."""
+            f = self._flavour
+            return str(self).replace(f.sep, '/')
+
+        def __repr__(self):
+            """Is it so wrong to copy paste?"""
+            return "{}({!r})".format(self.__class__.__name__, self.as_posix())

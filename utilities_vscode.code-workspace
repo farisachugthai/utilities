@@ -7,6 +7,32 @@
 	"settings": {
 		"restructuredtext.languageServer.disabled": false,
 		"restructuredtext.languageServer.trace.server": "messages",
-		"restructuredtext.experimental": true
+		"restructuredtext.experimental": true,
+		"pythonTestExplorer.testFramework": "unittest",
+		"python.testing.unittestEnabled": true,
+		"python.linting.flake8Enabled": true,
+		"python.linting.pylintUseMinimalCheckers": false,
+		"python.linting.pylintEnabled": false,
+		"restructuredtext.confPath": "${workspaceFolder}/docs/",
+		"terminal.integrated.scrollback": 10000,
+		"terminal.integrated.windowsAllowConptyTasks": true,
+		"terminal.integrated.fontWeightBold": "normal",
+		"debug.console.fontFamily": "\"Fira Code\"",
+		"terminal.integrated.experimentalRefreshOnResume": true,
+		"terminal.integrated.copyOnSelection": true,
+		"terminal.integrated.shell.windows": "pwsh-preview.cmd",
+		"npm.packageManager": "yarn",
+		"powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
+		"powershell.developer.powerShellExeIsWindowsDevBuild": true,
+		"powershell.codeFormatting.useCorrectCasing": true,
+		"python.autoComplete.addBrackets": true,
+		"python.dataScience.exportWithOutputEnabled": true,
+		"python.linting.pydocstyleEnabled": true,
+		"spotify.showVolumeUpButton": true,
+		"spotify.showVolumeDownButton": true,
+		"vsicons.presets.jsOfficial": true,
+		"vsicons.presets.jsonOfficial": true,
+		"vsicons.projectDetection.autoReload": true,
+		"vsicons.presets.tsOfficial": true
 	}
 }

@@ -19,7 +19,6 @@
     "python.unitTest.unittestEnabled": true,
     "files.eol": "\n",
     "editor.fontLigatures": true,
-    "restructuredtext.confPath": "${workspaceFolder}\\docs",
     "restructuredtext.experimental": true,
     "restructuredtext.languageServer.trace.server": "messages",
     "python.testing.unittestArgs": [
@@ -31,5 +30,6 @@
     ],
     "python.testing.pyTestEnabled": false,
     "python.testing.nosetestsEnabled": false,
-    "python.testing.unittestEnabled": true
+    "python.testing.unittestEnabled": true,
+    "restructuredtext.confPath": "${workspaceFolder}\\docs"
 }

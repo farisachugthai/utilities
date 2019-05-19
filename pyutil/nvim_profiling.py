@@ -48,15 +48,40 @@ will behave similarly to the following command run in the shell:
 
 
 """
+import argparse
 import datetime
 import logging
 import os
 from platform import system
 import subprocess
 
+from pyutil.__about__ import __version__
 from pyutil.env_checks import check_xdg_config_home
 
 LOGGER = logging.getLogger(name=__name__)
+LOG_LEVEL = "logging.WARNING"
+
+
+def _parse_arguments():
+    """Parse arguments given by the user."""
+    parser = argparse.ArgumentParser(description=__doc__)
+
+    parser.add_argument(
+        '-l',
+        '--log_level',
+        dest='log_level',
+        metavar='Log Level.',
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        help='Set the logging level')
+
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
+
+    args = parser.parse_args()
+
+    return args
 
 
 def output_results(output_dir):
@@ -102,7 +127,7 @@ def find_init_files():
     if check_xdg_config_home():
         nvim_root = os.path.join(os.environ.get('XDG_CONFIG_HOME'), '', 'nvim')
         if not os.path.isdir(nvim_root):
-           LOGGER.error(
+            LOGGER.error(
                 "XDG_CONFIG_HOME set but $XDG_CONFIG_HOME/nvim doesn't exist.")
         else:
             return nvim_root
@@ -150,10 +175,14 @@ def main(nvim_root):
 
 
 if __name__ == "__main__":
+    user_args = _parse_arguments()
+    try:
+        LOG_LEVEL = args.log_level
+    except Exception as e:
+        print(e)
+
+    # _setup_logging()
+
     nvim_root = find_init_files()
-
-    LOG_LEVEL = "logging.WARNING"
-
-    logging.basicConfig(level=LOG_LEVEL)
 
     main(nvim_root)

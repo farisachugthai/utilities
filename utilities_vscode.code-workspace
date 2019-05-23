@@ -33,6 +33,10 @@
 		"vsicons.presets.jsOfficial": true,
 		"vsicons.presets.jsonOfficial": true,
 		"vsicons.projectDetection.autoReload": true,
-		"vsicons.presets.tsOfficial": true
+		"vsicons.presets.tsOfficial": true,
+		"files.eol": "\n",
+		"files.trimFinalNewlines": true,
+		"python.linting.pep8Enabled": true,
+		"editor.lineNumbers": "relative"
 	}
 }

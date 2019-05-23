@@ -49,7 +49,7 @@ This never occured to me to do this...
 Attributes
 -----------
 builder : str
-    The filetype that :command:`make` will invoke :command:`sphinx-build` to create
+    The filetype :command:`make` invokes :command:`sphinx-build` to create
 
 
 """

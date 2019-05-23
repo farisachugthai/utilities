@@ -1,0 +1,5 @@
+# Gonna try to enforce only using Unix EOL. VSCode can make automatic conversions
+# and Vim could set fileformat=unix
+[core]
+eol = lf
+autocrlf = input

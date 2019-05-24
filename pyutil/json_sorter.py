@@ -12,6 +12,9 @@ import os
 import sys
 import yaml
 
+from pyutil.__about__ import __version__
+
+
 LOGGER = logging.Logger(name=__name__)
 LOG_LEVEL = 'logging.WARNING'
 
@@ -40,11 +43,21 @@ def _parse_arguments():
 
     parser.add_argument(
         '-l',
+        '--log',
+        action='store_true',
+        dest="log",
+        help='Turn logging on and print to console.')
+
+    parser.add_argument(
+        '-ll',
         '--log_level',
         dest='log_level',
-        metavar='Log Level.',
+        metavar='log level.',
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         help='Set the logging level')
+
+    parser.add_argument(
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

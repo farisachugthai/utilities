@@ -23,14 +23,14 @@ And also gives you a new :class:`tempfile.TemporaryDirectory` class.
 
 
 """
+import atexit
 import logging
 import os
+import shutil
 import tempfile
 import unittest
 
 from pyutil.backup_nt_and_posix import timestamped_dir
-
-logger = logging.getLogger(name=__name__)
 
 
 class TestBackupDirectory(unittest.TestCase):
@@ -39,11 +39,11 @@ class TestBackupDirectory(unittest.TestCase):
     long_message = True  # is this how we do this?
 
     def setUp(self):
-        """Create a temporary directory to backup."""
-        d = tempfile.TemporaryDirectory()
-        logging.debug("The temp dir is: ")
-        logging.debug(d)
-        return d
+        """If the config directory can not be created, create a temporary directory."""
+        configdir = (tempfile.mkdtemp(prefix='pyutil-'))
+        logger.debug("The temp dir is: %s" % configdir)
+        atexit.register(shutil.rmtree, configdir)
+        return configdir
 
     def test_timestamped_dir(self):
         """Test that a directory is backed up correctly."""
@@ -53,5 +53,6 @@ class TestBackupDirectory(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logger = logging.getLogger(name=__name__)
     logger.setLevel(logging.WARNING)
     unittest.main()

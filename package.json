@@ -12,8 +12,8 @@
     "jsonlint": "^1.6.3"
   },
   "dependencies": {
-    "bash-language-server": "^1.5.6",
     "neovim": "^4.2.1",
+    "normalize.css": "^8.0.1",
     "prettier": "^1.16.4"
   }
 }

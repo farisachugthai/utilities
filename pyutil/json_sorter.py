@@ -4,6 +4,22 @@ r"""Take a :mod:`json` file and sort the keys and insert 4 spaces for indents.
 
 This module was originally used to fix my settings.json from VSCode.
 
+One Line Solution
+=================
+>>> sorted((json.loads(open('settings.json').read()).items()), key=operator.getitemattr)
+
+You definitely shouldn't implement it as a one liner, *as you can clearly see,*;
+however 5 functions and a handful of instantiated classes and debugging, and
+we're somehow barely closer to done.
+
+The functions for reading and writing files could be refactored and used over the
+entire package.
+
+The logger **should** be set up that way.
+
+This code is going to easily clear 100 lines when a JSON encoded object shouldn't
+take more than a few lines to deserialize and work with.
+
 """
 import argparse
 import json

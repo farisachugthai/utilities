@@ -52,7 +52,7 @@ class Command:
         except OSError:
             self.shell = os.getenv('COMSPEC')
 
-        return shell
+        return self.shell
 
     def run(self, args, kwargs):
         """Run a command."""
@@ -77,6 +77,9 @@ class BaseCommand:
     def run(self):
         """Run a safer subprocess.
 
+        Currently getting a TypeError. Need to cast to str. Might need to
+        define __str__.
+
         Parameters
         ----------
         cmd : list, optional
@@ -94,12 +97,14 @@ class BaseCommand:
         >>> BaseCommand().run('python', '--version')
 
         """
-        if self.cmd:
-            self.cmd = shlex.split(self.cmd)
+        try:
+            self.cmd = shlex.quote(str(self.cmd))
+        except TypeError:
+            return None
 
-        output = subprocess.run([self.cmd], capture_output=True)
+        output = subprocess.run(self.cmd, capture_output=True)
 
-        validated_output = self._validate(output)
+        validated_output = _validate(output)
         return validated_output
 
     def popen(self, cmd=None):
@@ -141,7 +146,7 @@ class BaseCommand:
             return process.returncode
 
 
-def _validate(self, subprocess_output):
+def _validate(subprocess_output):
     """Take output from :func:`subprocess.run()`.
 
     First the func will check :attr:`returncode`.

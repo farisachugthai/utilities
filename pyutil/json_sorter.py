@@ -4,6 +4,22 @@ r"""Take a :mod:`json` file and sort the keys and insert 4 spaces for indents.
 
 This module was originally used to fix my settings.json from VSCode.
 
+One Line Solution
+=================
+>>> sorted((json.loads(open('settings.json').read()).items()), key=operator.getitemattr)
+
+You definitely shouldn't implement it as a one liner, *as you can clearly see,*;
+however 5 functions and a handful of instantiated classes and debugging, and
+we're somehow barely closer to done.
+
+The functions for reading and writing files could be refactored and used over the
+entire package.
+
+The logger **should** be set up that way.
+
+This code is going to easily clear 100 lines when a JSON encoded object shouldn't
+take more than a few lines to deserialize and work with.
+
 """
 import argparse
 import json
@@ -11,6 +27,9 @@ import logging
 import os
 import sys
 import yaml
+
+from pyutil.__about__ import __version__
+
 
 LOGGER = logging.Logger(name=__name__)
 LOG_LEVEL = 'logging.WARNING'
@@ -40,11 +59,21 @@ def _parse_arguments():
 
     parser.add_argument(
         '-l',
+        '--log',
+        action='store_true',
+        dest="log",
+        help='Turn logging on and print to console.')
+
+    parser.add_argument(
+        '-ll',
         '--log_level',
         dest='log_level',
-        metavar='Log Level.',
+        metavar='log level.',
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         help='Set the logging level')
+
+    parser.add_argument(
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

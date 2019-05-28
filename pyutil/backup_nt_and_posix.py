@@ -15,7 +15,7 @@ import sys
 from time import strftime
 
 
-def timestamped_dir(backup_dir):
+def timestamped_dir(backup_dir, path='.'):
     r"""Create a backup of a directory. Append date and time to new dir name.
 
     .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` so we handle return codes in a better way.
@@ -25,6 +25,8 @@ def timestamped_dir(backup_dir):
     ----------
     backup_dir : str
         Directory to backup
+    path : str, optional
+        Directory to back up to. Defaults to cwd.
 
     Returns
     -------

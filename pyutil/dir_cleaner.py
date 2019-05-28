@@ -24,6 +24,29 @@ In addition, it felt like a good way to get more familiar with the new
 
 Well it will be after rewriting it all.
 
+May 24, 2019:
+
+    Holy cow this is gonna be rough. However if you combine this with the
+    :ref:`~pyutil.find_pics` module we might be able to get something pretty
+    comprehensive.
+
+    Also get to figure out to what extent you wanna learn regular expressions
+    OR object-oriented programming depending on how we set this up.
+
+Concrete Roadmap
+----------------
+Up until now this has been fairly general and quite abstract.
+
+Let's come up with a few pre-planned and clear endpoints.
+
+One way to implement this module would be:
+
+1. Compare packages that are installed to what's contained /usr/share/doc.
+   I have like 4500 folders in that directory and nowhere near that many
+   packages installed. Cruft and accumulation frequently doesn't get cleared
+   out of there correctly.
+
+
 """
 from glob import glob
 import logging

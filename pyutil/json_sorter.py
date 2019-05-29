@@ -30,7 +30,6 @@ import yaml
 
 from pyutil.__about__ import __version__
 
-
 LOGGER = logging.Logger(name=__name__)
 LOG_LEVEL = 'logging.WARNING'
 
@@ -39,23 +38,26 @@ def _parse_arguments():
     """Parse arguments given by the user."""
     parser = argparse.ArgumentParser(description=__doc__)
 
-    parser.add_argument('input',
-                        type=argparse.FileType('r'),
-                        default=sys.stdin,
-                        help="File to parse. Defaults to stdin.")
+    parser.add_argument(
+        'input',
+        type=argparse.FileType('r'),
+        default=sys.stdin,
+        help="File to parse. Defaults to stdin.")
 
-    parser.add_argument('-o',
-                        '--output',
-                        default=sys.stdout,
-                        type=argparse.FileType(mode='w'),
-                        help="File to write to. Defaults to stdout.")
+    parser.add_argument(
+        '-o',
+        '--output',
+        default=sys.stdout,
+        type=argparse.FileType(mode='w'),
+        help="File to write to. Defaults to stdout.")
 
-    parser.add_argument('-y',
-                        '--yaml',
-                        dest='yaml',
-                        default=sys.stdout,
-                        type=argparse.FileType(mode='w'),
-                        help="YAML file to write to. Defaults to stdout.")
+    parser.add_argument(
+        '-y',
+        '--yaml',
+        dest='yaml',
+        default=sys.stdout,
+        type=argparse.FileType(mode='w'),
+        help="YAML file to write to. Defaults to stdout.")
 
     parser.add_argument(
         '-l',
@@ -97,8 +99,8 @@ def convert_to_yaml(file_obj):
     json_data = json.loads(open(file_obj))
     converted_json_data = json.dumps(json_data, sort_keys=True)
     # output yaml
-    yaml_text = yaml.dump(yaml.load(converted_json_data),
-                          default_flow_style=False)
+    yaml_text = yaml.dump(
+        yaml.load(converted_json_data), default_flow_style=False)
     return yaml_text
 
 

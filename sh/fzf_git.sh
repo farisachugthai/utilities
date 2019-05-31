@@ -204,6 +204,7 @@ fgr() { # {{{1 git remote
 }
 # }}}
 # Key bindings for each. {{{1
+# Definitely go through everything and optimize
 bind '"\er": redraw-current-line'
 bind '"\C-g\C-f": "$(fgf)\e\C-e\er"'
 bind '"\C-g\C-b": "$(fgb)\e\C-e\er"'

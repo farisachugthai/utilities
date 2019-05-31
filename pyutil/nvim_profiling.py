@@ -74,10 +74,8 @@ def _parse_arguments():
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         help='Set the logging level')
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    parser.add_argument(
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 
@@ -132,8 +130,8 @@ def find_init_files():
         else:
             return nvim_root
     else:
-        userConfFile = os.path.join(os.path.expanduser('~'), '.config', 'nvim',
-                                    'init.vim')
+        userConfFile = os.path.join(
+            os.path.expanduser('~'), '.config', 'nvim', 'init.vim')
 
         # Handle windows
         if not os.path.isfile(userConfFile):

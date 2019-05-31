@@ -42,11 +42,12 @@ def _parse_arguments(cwd=None, **kwargs):
         description="Automate usage of rclone for "
         "simple backup creation.")
 
-    parser.add_argument(action='store',
-                        dest='src',
-                        default=cwd,
-                        metavar='source_dir',
-                        help="The source directory. Defaults to the cwd.")
+    parser.add_argument(
+        action='store',
+        dest='src',
+        default=cwd,
+        metavar='source_dir',
+        help="The source directory. Defaults to the cwd.")
 
     parser.add_argument(
         "dst",
@@ -69,17 +70,16 @@ def _parse_arguments(cwd=None, **kwargs):
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         help='Set the logging level')
 
-    parser.add_argument('-f',
-                        '--follow',
-                        action='store_true',
-                        default=False,
-                        dest='follow',
-                        help="Follow symlinks.")
+    parser.add_argument(
+        '-f',
+        '--follow',
+        action='store_true',
+        default=False,
+        dest='follow',
+        help="Follow symlinks.")
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    parser.add_argument(
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

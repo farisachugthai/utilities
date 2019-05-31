@@ -54,10 +54,11 @@ def _parse_arguments():
         default=Path.cwd(),
         help="Directory containing only the files to be renamed.")
 
-    parser.add_argument('old_format',
-                        nargs=1,
-                        metavar='old_format',
-                        help=r'Enter old format to replace.')
+    parser.add_argument(
+        'old_format',
+        nargs=1,
+        metavar='old_format',
+        help=r'Enter old format to replace.')
 
     parser.add_argument(
         'rename_format',
@@ -67,24 +68,22 @@ def _parse_arguments():
         r'Enter rename style (%d-date %n-seqnum %f-format I.E.  Ashley_%n%f)')
 
     parser.add_argument(
-        '-l',
+        '-ll',
         '--log_level',
         dest='log_level',
         metavar='log level',
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         help='Set the logging level')
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    parser.add_argument(
+        '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 
     return args
 
 
-def batch_mover(pattern, new_pattern, directory=Path.cwd()):
+def batch_mover(pattern, new_pattern, directory=None):
     """Move files in the current working directory that match a pattern.
 
     Parameters
@@ -101,11 +100,13 @@ def batch_mover(pattern, new_pattern, directory=Path.cwd()):
     Bool
 
     """
-    # Now let's check the file matches the desired pattern
+    if directory is None:
+        directory = Path().cwd()
+
     for i in os.scandir(directory):
-        if file_check(pattern, i):
-            # TODO
+        if file_check(pattern, i.name):
             pass
+            # shutil.move(i.name, yeah we gotta change a lot here
 
 
 def file_check(pattern, file_to_check):
@@ -129,7 +130,7 @@ def main():
         logging.basicConfig(level=log_level)
 
     logging.debug("The directory that was chosen was: " + str(d))
-    batch_mover(pattern=fmt, new_pattern=old, directory=d)
+    batch_mover(pattern=old, new_pattern=fmt, directory=d)
 
 
 if __name__ == '__main__':

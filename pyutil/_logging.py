@@ -60,6 +60,7 @@ From :class:`logging.Formatter()`:
 from collections import deque
 import logging
 from pathlib import Path
+import sys
 import time
 
 
@@ -181,3 +182,4 @@ def _set_debugging():
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
     ch.setFormatter(formatter)
     root.addHandler(ch)
+    return root

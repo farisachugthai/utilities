@@ -7,6 +7,7 @@ Should add pathlib in here for a nice one stop shop for symlinking, getting
 relative paths, symlinks and globs.
 
 .. versionchanged:: Added argparse
+
 04/25/2019:
 
 Well now this is going to be the testing ground for getting a version of this
@@ -15,44 +16,67 @@ script functional on Windows!
 """
 import argparse
 import glob
+import logging
 import os
-# from pathlib import Path
-import subprocess
+from pathlib import Path
+import sys
+# import subprocess
 
 from pyutil.__about__ import __version__
 
-# from pyutil.env_checks import get_home_3
+logging.basicConfig(level=logging.DEBUG)
 
 
 def _parse_arguments():
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(prog='Directory Linker 2.0',
+                                     description=__doc__)
 
     parser.add_argument(
         "destination",
-        type=str,
         metavar="destination",
         nargs='?',
+        type=Path,
         help="Files to symlink to.")
 
     parser.add_argument(
         "-s",
         "--source",
-        default=os.getcwd(),
-        type=str,
         metavar="source",
         nargs='?',
-        help="Files to symlink to.")
+        help="Where to create the symlinks. Defaults to the cwd.")
 
     parser.add_argument(
         '-V', '--version', action='version', version='%(prog)s' + __version__)
 
-    args = parser.parse_args()
+    logging.debug("Dir(parser): {} ".format(dir(parser)))
 
-    return args
+    if len(sys.argv) == 1:
+        parser.print_usage()
+        sys.exit()
+    else:
+        return parser.parse_args()
 
 
 def main(destination_dir, source_dir):
     """Symlink user provided files.
+
+    The module doesn't immediately check for correct permissions or operating system.
+
+    As a result, the onus is put on the user to ensure that the necessary requirements
+    per OS are met. Namely on Windows 10, that if symlinks are allowed on the filesystem,
+    they can only be created by an administrator.
+
+    If we're refactoring for pathlib check out what we have to work with.::
+
+        :func:`pathlib.glob`
+        :func:`pathlib.iterdir`
+        :func:`pathlib.rglob`
+
+    Holy cow. I mean call that a wrap right? Let's spend some time dissecting
+    the information we're given via argparse and log it if necessary, but after
+    running a recursive glob on the destination then we should easily be able
+    to handle the rest.
+
 
     Parameters
     ----------
@@ -60,6 +84,7 @@ def main(destination_dir, source_dir):
          Directory where symlinks point to.
     source_dir : str, optional
         Directory where symlinks are created.
+
     """
     for i in glob.glob(destination_dir + "/**", recursive=True):
         if os.path.isfile(i):
@@ -68,46 +93,22 @@ def main(destination_dir, source_dir):
                 os.symlink(i, source_file)
             except FileExistsError:
                 pass
-            #  except OSError as e:
-            #      print(e)
-
-
-def run(cmd=None):
-    """Run a directory symlinker using Windows specific commands.
-
-    Needs to check htat the user has admin access in order to create symlinks.
-
-    Also what's up with ``NoneType`` being undefined? Like this implementation
-    CAN'T be right.
-    """
-    NoneType = type(None)
-    if isinstance(cmd, NoneType):
-        return None
-    elif not isinstance(cmd, list):
-        cmd = cmd.split(' ')
-
-    for i in os.listdir('.'):
-        subprocess.run(cmd)
+            except OSError:
+                print("Ensure that you are running this script as an admin"
+                      " if it's being run on Windows!")
+                raise RuntimeError
 
 
 if __name__ == "__main__":
-    # Side step everything for a moment
-    # HACK
-    from platform import system
-    if system() == 'Windows':
-        import sys
-        cmd = sys.argv[1:]
-        if len(cmd) >= 0:
-            run(cmd)
-        else:
-            raise
-
-    # Let's continue onwards as usual
     args = _parse_arguments()
+
     dest = args.destination
+
     try:
         src = args.source
-    except Exception:
-        src = None
+    except IndexError:
+        src = Path().cwd()
+    # except Exception: logger.error('what happened'); sys.exit()
 
     main(dest, src)
+    # TODO: add recursive as a parameter

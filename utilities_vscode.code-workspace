@@ -1,6 +1,9 @@
 {
 	"folders": [
 		{
+			"path": "~/Anaconda3/envs/utilities/"
+		},
+		{
 			"path": "."
 		}
 	],
@@ -8,7 +11,6 @@
 		"restructuredtext.languageServer.disabled": false,
 		"restructuredtext.languageServer.trace.server": "messages",
 		"restructuredtext.experimental": true,
-		"pythonTestExplorer.testFramework": "unittest",
 		"python.testing.unittestEnabled": true,
 		"python.linting.flake8Enabled": true,
 		"python.linting.pylintUseMinimalCheckers": false,
@@ -37,6 +39,11 @@
 		"files.eol": "\n",
 		"files.trimFinalNewlines": true,
 		"python.linting.pep8Enabled": true,
-		"editor.lineNumbers": "relative"
+		"editor.lineNumbers": "relative",
+		"telemetry.enableCrashReporter": false,
+		"telemetry.enableTelemetry": false,
+		"python.condaPath": "C:\\Users\\faris\\Anaconda3\\Scripts\\conda.exe",
+		"python.venvPath": "C:\\Users\\faris\\anaconda3\\envs\\utilities",
+		"restructuredtext.builtDocumentationPath": "${workspaceFolder}\\docs\\_build"
 	}
 }

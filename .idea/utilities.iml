@@ -9,7 +9,7 @@
       <excludeFolder url="file://$MODULE_DIR$/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/utilities.egg-info" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (utilities)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (web)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="dynamic_ipython" />
     <orderEntry type="module" module-name=".ipython" />

@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\faris\\Miniconda3\\envs\\utilities\\python.exe",
+    "python.pythonPath": "C:\\Users\\faris\\Anaconda3\\python.exe",
     "files.exclude": {
         "**/.git": false,
         "**/.svn": true,

@@ -35,7 +35,7 @@ CONF_PATH = os.path.dirname(os.path.abspath('docs'))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 
-REQUIRED = ['pynvim', 'IPython', 'youtube_dl']
+REQUIRED = ['pynvim', 'IPython',]
 
 EXTRAS = {
     'develop': ['requests', 'flake8', 'flake8-rst', 'yapf'],

@@ -57,6 +57,11 @@ def __parse_arguments():
     us import it?
 
     Because this would save me a lot of time.
+
+    Ooo what if we made it def __unparsed(): then we could simply call the function,
+    store the return value and then continue adding arguments. We'd need to delete
+    the parser.parse_args() line out but that could work.
+
     """
     parser = argparse.ArgumentParser(description=__doc__)
 
@@ -64,7 +69,7 @@ def __parse_arguments():
         '-V', '--version', action='version', version='%(prog)s' + __version__)
 
     parser.add_argument(
-        '-l',
+        '-ll',
         '--log_level',
         dest='log_level',
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],

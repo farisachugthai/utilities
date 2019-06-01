@@ -19,4 +19,3 @@ rstcheck>=3.3.1
 Sphinx>=1.8.4
 twine>=1.13.0
 yapf>=0.25.0
-youtube-dl>=2019.1.30.1

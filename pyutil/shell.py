@@ -18,47 +18,10 @@ simply utilize it.
 """
 import codecs
 import logging
-import os
 import shlex
 import subprocess
-import sys
 
 LOGGER = logging.getLogger(name=__name__)
-
-
-class Command:
-    """Run a shell command."""
-
-    def __init__(self, shell=None, *args, **kwargs):
-        """Initialize the command."""
-        self.shell = shell
-
-    def _vers(self):
-        vers = sys.version_info[0:2]
-        if vers > (
-                3,
-                6,
-        ):
-            has37 = True
-        else:
-            has37 = False
-
-        return has37
-
-    def get_shell(self):
-        """Determine the user's shell. May be able to decorate with property."""
-        try:
-            self.shell = os.getenv('SHELL')
-        except OSError:
-            self.shell = os.getenv('COMSPEC')
-
-        return self.shell
-
-    def run(self, args, kwargs):
-        """Run a command."""
-        if Command._vers(self):
-            # subprocess.run([cmd], capture_output=True)
-            subprocess.run([args], kwargs)
 
 
 class BaseCommand:
@@ -66,13 +29,12 @@ class BaseCommand:
 
     Pass ``cmd`` to :mod:`subprocess` and process output and build in logging.
 
-    .. todo:: Use ``cmd`` or ``*args``.
 
     """
 
     def __init__(self, cmd=None):
         self.cmd = cmd
-        logging.debug("Cmd is: " + str(self.cmd))
+        LOGGER.debug("Cmd is: %s" % str(self.cmd))
 
     def run(self):
         """Run a safer subprocess.
@@ -135,10 +97,10 @@ class BaseCommand:
             If there is an error in the command.
 
         """
-        if self.self.cmd:
-            self.self.cmd = shlex.split(self.cmd)
-            logging.debug("Cmd is: " + str(self.self.cmd))
-            process = subprocess.Popen([self.self.cmd])
+        if self.cmd:
+            self.cmd = shlex.split(self.cmd)
+            logging.debug("Cmd is: " + str(self.cmd))
+            process = subprocess.Popen([self.cmd])
 
         if process.wait():
             raise SystemExit(process.returncode)
@@ -147,7 +109,7 @@ class BaseCommand:
 
 
 def _validate(subprocess_output):
-    """Take output from :func:`subprocess.run()`.
+    """Take output from :func:`subprocess.run()` and test
 
     First the func will check :attr:`returncode`.
 

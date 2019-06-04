@@ -13,6 +13,17 @@ import sys
 
 import pkg_resources
 
+logging.getLogger(__name__).addHandler(NullHandler())
+
+pkg_resources.declare_namespace(__name__)
+
+__path__ = extend_path(sys.path, __file__)
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__name__)))
+
+# noqa
+import pyutil
+
 from pyutil.__about__ import (
     __author__,
     __copyright__,
@@ -21,10 +32,3 @@ from pyutil.__about__ import (
     __license__,
 )
 
-logging.getLogger(__name__).addHandler(NullHandler())
-
-pkg_resources.declare_namespace(__name__)
-
-__path__ = extend_path(sys.path, __file__)
-
-sys.path.insert(0, os.path.dirname(os.path.abspath(__name__)))

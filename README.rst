@@ -22,7 +22,8 @@ administer multiple workstations.
 .. _root-installation:
 
 Installation
-------------
+============
+
 Python offers it's users a large number of ways to install new packages.
 
 One can install the python modules by:
@@ -45,8 +46,10 @@ One can install the python modules by:
 * As an alternative to a pip install, obtain the source code and run the `setup.py`_ file.
 
 If you are on a Unix-like system, the following will ensure everything
-below pyutil/ is in your PATH and give you the ability to modify the source
+below `pyutil/`_ is in your :envvar:`PATH` and give you the ability to modify the source
 code in place.
+
+.. _pyutil: ./pyutil
 
 
 .. code-block:: sh
@@ -56,7 +59,10 @@ code in place.
 
     python3 setup.py build && python3 -m pip install -U -e .
 
-* After which point, the only necessary step will be ensuring that the scripts in sh/ are in ``$PATH``.
+* After which point, the only necessary step will be ensuring that the scripts
+  in `sh/`_ are in your environment variable :envvar:`$PATH`.
+
+.. _sh: ./sh
 
 .. code-block:: sh
 
@@ -69,7 +75,7 @@ code in place.
     # Then link the scripts in sh/ to a directory in your path!
     python3 pyutil/dlink.py "$PWD/sh" ~/bin
 
-For anyone using Windows 10, the Powershell installation will be slightly
+For anyone using Windows 10, the PowerShell installation will be slightly
 different; however, not tremendously.
 
 .. code-block:: console
@@ -78,21 +84,30 @@ different; however, not tremendously.
 
     # `cd` is aliased to set-location for most instances of powershell;
     # however in the interest of using domain specific built-ins:
-    set-location utilities
+    Set-Location utilities
 
-    python3 setup.py bdist_wheel && python3 -m pip install -I -e .
+    python3 setup.py build; python3 -m pip install -U -e .
 
     # to view the environment variable path, run:
-    get-childitem -path env:path
+    Get-ChildItem -path $env:path
 
     # then ensure that the directory you pick is in your path, and run
     python3 pyutil\dlink.py "$pwd\sh" C:\users\path\to\directory
 
 
+.. note::
+
+   When creating symbolic links on Windows, it's necessary to run the
+   command as an administrator.
+   In addition, be aware that symlinks created in a bash subshell
+   won't be recognized as valid by the Windows OS!
+
+
 .. _root-docs:
 
 Building Documentation From Source
-----------------------------------
+==================================
+
 The documentation can be read online at `GitHub Pages <https://farisachugthai.github.io/utilities>`_
 
 However, the documentation can be built locally as well.
@@ -107,13 +122,16 @@ After following the installation instructions at `root-installation`_, one can r
 Then, direct your browser to ``_build/html/index.html``.
 
 To do so in a more direct manner, a *htmlview* target has been created as a
-convenience in the docs/Makefile.
+convenience in the `docs/Makefile`_
+
+.. _`docs/Makefile`: ./docs/Makefile
 
 This target will build the documentation and open up your default web browser
 automatically.
 
 Testing
--------
+=======
+
 To run the tests with the interpreter available as ``python``, use
 
 .. code-block:: sh
@@ -127,11 +145,13 @@ If you want to explicitly define which interpreter, e.g. ``python3``, use
     PYTHON=python3 make test
 
 License
--------
+=======
+
 MIT
 
 Contributing
---------------
+==============
+
 Even though these are mostly scripts I've thrown together; I'd absolutely love
 any constructive criticism or pointers on how to get any module listed to work
 better!

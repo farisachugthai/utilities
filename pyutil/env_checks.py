@@ -176,7 +176,9 @@ def check_xdg_config_home_2(conf_file=None):
 
     Unfortunately the code is quite repetitive as it stands and needs refactoring.
 
-    .. admonition:: Has not been tested on Python2.
+    .. note::
+
+        Has not been tested on Python2.
 
     Parameters
     ----------

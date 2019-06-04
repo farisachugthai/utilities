@@ -18,6 +18,20 @@ build up a trimmed-down, and more importantly *safer* Git object.
     Also we need some module wide logging. I mean all across :ref:`pyutil` it's nuts
     how poorly spread out and inconsistent it is.
 
+06/01/2019:
+
+Should changing the module functions so that they use
+:func:`subprocess.check_call()`.
+
+Git touch uses :func:`subprocess.run()` which is fine, and the commands
+that we're implementing for the sake of information gather (I.E. git root)
+already use check_output because we need the return values.
+
+The only point in changing them would be to use :func:`subprocess.run()`
+and give it the parameter :attr:`capture_output`....but I'm hesistant because
+that's exclusively a python3.7 feature.
+
+
 """
 import codecs
 import logging
@@ -45,7 +59,7 @@ class Git(BaseCommand):
     def __init__(self, root=None, **kwargs):
         """Initialize a few necessary parameters."""
         self.root = root
-        super.__init__(self, **kwargs)
+        super().__init__(self, **kwargs)
 
     @property
     def version(self):

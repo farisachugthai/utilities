@@ -20,7 +20,7 @@ class TestCheckIP(unittest.TestCase):
     def test_get_public_url(self):
         """Assert that we received a status code that indicated success."""
         response = check_IP.get_public_ip()
-        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.startswith('Your IP is'))
 
 
 if __name__ == '__main__':

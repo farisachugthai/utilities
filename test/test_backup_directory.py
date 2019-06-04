@@ -43,7 +43,7 @@ class TestBackupDirectory(unittest.TestCase):
     def setUp(self):
         """If the config directory can not be created, create a temporary directory."""
         configdir = (tempfile.mkdtemp(prefix='pyutil-'))
-        LOGGER.debug("The temp dir is: %s" % configdir)
+        LOGGER.debug("The temp dir is: %s"  % configdir)
         atexit.register(shutil.rmtree, configdir)
         return configdir
 

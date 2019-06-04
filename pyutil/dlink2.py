@@ -13,6 +13,11 @@ relative paths, symlinks and globs.
 Well now this is going to be the testing ground for getting a version of this
 script functional on Windows!
 
+See Also
+---------
+
+IPython's :func:`IPython.utils.path.ensure_dir_exists()`
+
 """
 import argparse
 import glob
@@ -22,9 +27,11 @@ from pathlib import Path
 import sys
 # import subprocess
 
+from IPython.utils.path import ensure_dir_exists
+
 from pyutil.__about__ import __version__
 
-logging.basicConfig(level=logging.DEBUG)
+logging.getLogger(name=__name__)
 
 
 def _parse_arguments():
@@ -40,10 +47,13 @@ def _parse_arguments():
 
     parser.add_argument(
         "-s",
-        "--source",
-        metavar="source",
+        "--source_directory",
+        metavar="SOURCE_DIRECTORY",
         nargs='?',
         help="Where to create the symlinks. Defaults to the cwd.")
+
+    parser.add_argument('-g', '--glob-pattern', metavar='GLOB_PATTERN',
+            help='Filter files in the destination dir with a glob pattern.')
 
     parser.add_argument(
         '-V', '--version', action='version', version='%(prog)s' + __version__)
@@ -51,10 +61,20 @@ def _parse_arguments():
     logging.debug("Dir(parser): {} ".format(dir(parser)))
 
     if len(sys.argv) == 1:
-        parser.print_usage()
+        parser.print_help()
         sys.exit()
     else:
         return parser.parse_args()
+
+
+def generate_dest(dest, glob_pattern=None):
+    """Return a generator for all the files in the destination directory."""
+    if not ensure_dir_exists(dest):
+        logging.error('%s' % dest, exc_info=1)
+    if glob_pattern:
+        yield Path(dest).glob(glob_pattern)
+    else:
+        yield Path(dest).glob('*')
 
 
 def main(destination_dir, source_dir):
@@ -100,13 +120,14 @@ def main(destination_dir, source_dir):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG)
     args = _parse_arguments()
 
     dest = args.destination
 
     try:
         src = args.source
-    except IndexError:
+    except (IndexError, AttributeError):
         src = Path().cwd()
     # except Exception: logger.error('what happened'); sys.exit()
 

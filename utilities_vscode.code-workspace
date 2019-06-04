@@ -22,7 +22,7 @@
 		"debug.console.fontFamily": "\"Fira Code\"",
 		"terminal.integrated.experimentalRefreshOnResume": true,
 		"terminal.integrated.copyOnSelection": true,
-		"terminal.integrated.shell.windows": "pwsh-preview.cmd",
+		"terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
 		"npm.packageManager": "yarn",
 		"powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
 		"powershell.developer.powerShellExeIsWindowsDevBuild": true,
@@ -42,8 +42,14 @@
 		"editor.lineNumbers": "relative",
 		"telemetry.enableCrashReporter": false,
 		"telemetry.enableTelemetry": false,
-		"python.condaPath": "C:\\Users\\faris\\Anaconda3\\Scripts\\conda.exe",
-		"python.venvPath": "C:\\Users\\faris\\anaconda3\\envs\\utilities",
+		"windows": {
+			"python.condaPath": "C:\\Users\\faris\\Anaconda3\\Scripts\\conda.exe",
+			"python.venvPath": "C:\\Users\\faris\\anaconda3\\envs\\utilities",
+			"python.pythonPath": "C:\\Users\\faris\\anaconda3\\envs\\dynamic\\python.exe",
+		},
+		"linux": {
+			"python.condaPath": "/home/faris/miniconda3/conda",
+		},
 		"restructuredtext.builtDocumentationPath": "${workspaceFolder}\\docs\\_build"
 	}
 }

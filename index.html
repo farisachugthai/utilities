@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tutorial" href="tutorial.html" />
@@ -65,7 +65,7 @@ pip install .
 <li><p>As an alternative to a pip install, obtain the source code and run the <a class="reference external" href="setup.py">setup.py</a> file.</p></li>
 </ul>
 <p>If you are on a Unix-like system, the following will ensure everything
-below pyutil/ is in your PATH and give you the ability to modify the source
+below <a href="#id2"><span class="problematic" id="id3">`pyutil/`_</span></a> is in your <span class="target" id="index-0"></span><a class="reference external" href="https://matplotlib.org/faq/environment_variables_faq.html#envvar-PATH" title="(in Matplotlib v3.1.0)"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PATH</span></code></a> and give you the ability to modify the source
 code in place.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/farisachugthai/utilities
 <span class="nb">cd</span> utilities
@@ -74,7 +74,8 @@ python3 setup.py build <span class="o">&amp;&amp;</span> python3 -m pip install 
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>After which point, the only necessary step will be ensuring that the scripts in sh/ are in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>.</p></li>
+<li><p>After which point, the only necessary step will be ensuring that the scripts
+in <a href="#id4"><span class="problematic" id="id5">`sh/`_</span></a> are in your environment variable <span class="target" id="index-1"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">$PATH</span></code>.</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># The script at pyutil/dlink.py is useful for creating symlinks for every</span>
 <span class="c1"># file in a directory. If the directory ~/bin is in your path...</span>
@@ -86,22 +87,29 @@ python3 setup.py build <span class="o">&amp;&amp;</span> python3 -m pip install 
 python3 pyutil/dlink.py <span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/sh&quot;</span> ~/bin
 </pre></div>
 </div>
-<p>For anyone using Windows 10, the Powershell installation will be slightly
+<p>For anyone using Windows 10, the PowerShell installation will be slightly
 different; however, not tremendously.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git clone https://github.com/farisachugthai/utilities</span>
 
 <span class="gp">#</span> <span class="sb">`</span><span class="nb">cd</span><span class="sb">`</span> is aliased to set-location <span class="k">for</span> most instances of powershell<span class="p">;</span>
 <span class="gp">#</span> however in the interest of using domain specific built-ins:
-<span class="go">set-location utilities</span>
+<span class="go">Set-Location utilities</span>
 
-<span class="go">python3 setup.py bdist_wheel &amp;&amp; python3 -m pip install -I -e .</span>
+<span class="go">python3 setup.py build; python3 -m pip install -U -e .</span>
 
 <span class="gp">#</span> to view the environment variable path, run:
-<span class="go">get-childitem -path env:path</span>
+<span class="go">Get-ChildItem -path $env:path</span>
 
 <span class="gp">#</span> <span class="k">then</span> ensure that the directory you pick is in your path, and run
 <span class="go">python3 pyutil\dlink.py &quot;$pwd\sh&quot; C:\users\path\to\directory</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When creating symbolic links on Windows, it’s necessary to run the
+command as an administrator.
+In addition, be aware that symlinks created in a bash subshell
+won’t be recognized as valid by the Windows OS!</p>
 </div>
 </div>
 <div class="section" id="building-documentation-from-source">
@@ -115,7 +123,7 @@ make html
 </div>
 <p>Then, direct your browser to <code class="docutils literal notranslate"><span class="pre">_build/html/index.html</span></code>.</p>
 <p>To do so in a more direct manner, a <em>htmlview</em> target has been created as a
-convenience in the docs/Makefile.</p>
+convenience in the <a class="reference external" href="./docs/Makefile">docs/Makefile</a></p>
 <p>This target will build the documentation and open up your default web browser
 automatically.</p>
 </div>
@@ -144,18 +152,17 @@ to fork or create an issue.</p>
 <div class="toctree-wrapper compound" id="mastertoc">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="numpydoc.html">Documentation and Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 </div>
+</div>
 <div class="section" id="indices-and-tables">
-<h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h3>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-</div>
 </div>
 </div>
 
@@ -184,29 +191,28 @@ to fork or create an issue.</p>
 
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="tutorial.html" title="next chapter">Tutorial</a></li>
-  </ul></li>
+  <li><a href="#">Documentation overview</a>
+    <ul>
+          <li>Next: <a href="tutorial.html" title="next chapter">Tutorial</a></li>
+    </ul>
+  </li>
 </ul>
-<h3><a href="#">Table of Contents</a></h3>
+<h3><a href="#">Global Table of Contents</a></h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="numpydoc.html">Documentation and Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 
-  <h3><a href="#">Table of Contents</a></h3>
-  <ul>
+<h3><a href="#">Local Table of Contents</a></h3>
+<ul>
 <li><a class="reference internal" href="#">Welcome to utilities’s documentation!</a></li>
 <li><a class="reference internal" href="#pyutil">pyutil</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#building-documentation-from-source">Building Documentation From Source</a></li>
 <li><a class="reference internal" href="#testing">Testing</a></li>
 <li><a class="reference internal" href="#license">License</a></li>
-<li><a class="reference internal" href="#contributing">Contributing</a><ul>
+<li><a class="reference internal" href="#contributing">Contributing</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>

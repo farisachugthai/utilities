@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Internet Utilities" href="Internet.html" />
@@ -51,7 +51,7 @@ Windows, Linux, Mac and Android systems.</p>
 </div>
 <dl class="function">
 <dt id="pyutil.backup_nt_and_posix.timestamped_dir">
-<code class="descclassname">pyutil.backup_nt_and_posix.</code><code class="descname">timestamped_dir</code><span class="sig-paren">(</span><em>backup_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#timestamped_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.timestamped_dir" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyutil.backup_nt_and_posix.</code><code class="descname">timestamped_dir</code><span class="sig-paren">(</span><em>backup_dir</em>, <em>path='.'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#timestamped_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.timestamped_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a backup of a directory. Append date and time to new dir name.</p>
 <div class="admonition-todo admonition" id="index-1">
 <p class="admonition-title">Todo</p>
@@ -59,7 +59,10 @@ Windows, Linux, Mac and Android systems.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>backup_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Directory to backup</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backup_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Directory to backup</p></li>
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – Directory to back up to. Defaults to cwd.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
@@ -89,8 +92,8 @@ Windows, Linux, Mac and Android systems.</p>
 <li><p>However if it’s not, then we could make a <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.defaultdict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.defaultdict</span></code></a>
 that holds default values for each option.
 * Actually wouldn’t <a class="reference external" href="https://docs.python.org/3/library/configparser.html#configparser.ConfigParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">configparser.ConfigParser</span></code></a> make more sense?</p></li>
-<li><p>In addition we could use <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.ChainMap()</span></code> to set precedence of
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">backupdir</span></code>.</p></li>
+<li><p>In addition we could use <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.ChainMap()</span></code> to set
+precedence of <code class="xref py py-obj docutils literal notranslate"><span class="pre">backupdir</span></code>.</p></li>
 <li><p>Expand <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> usage with <code class="xref py py-func docutils literal notranslate"><span class="pre">argparse.fromfile_prefix_chars()</span></code>
 to emulate rsync’s file input.</p></li>
 </ul>
@@ -228,22 +231,25 @@ of <code class="docutils literal notranslate"><span class="pre">returncode</span
 
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-  <li><a href="api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a><ul>
-      <li>Previous: <a href="api.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a></li>
-      <li>Next: <a href="Internet.html" title="next chapter">Internet Utilities</a></li>
-  </ul></li>
-  </ul></li>
+  <li><a href="index.html">Documentation overview</a>
+    <ul>
+      <li><a href="api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a>
+        <ul>
+          <li>Previous: <a href="api.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a></li>
+          <li>Next: <a href="Internet.html" title="next chapter">Internet Utilities</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-<h3><a href="index.html">Table of Contents</a></h3>
+<h3><a href="index.html">Global Table of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="numpydoc.html">Documentation and Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+<h3><a href="index.html">Local Table of Contents</a></h3>
+<ul>
 <li><a class="reference internal" href="#">Backup Utilities</a><ul>
 <li><a class="reference internal" href="#module-pyutil.backup_nt_and_posix"><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code></a><ul>
 <li><a class="reference internal" href="#motivation">Motivation</a></li>

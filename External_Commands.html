@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Remaining Modules" href="Other.html" />
@@ -113,6 +113,26 @@ a method that checks output in the way that our module function does for the
 <p>Also we need some module wide logging. I mean all across <a class="reference internal" href="index.html#pyutil"><span class="std std-ref">pyutil</span></a> it’s nuts
 how poorly spread out and inconsistent it is.</p>
 </div></blockquote>
+<p>06/01/2019:</p>
+<p>Should changing the module functions so that they use
+<a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.check_call" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_call()</span></code></a>.</p>
+<p><strong class="command">git-touch</strong> uses <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.run" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.run()</span></code></a> which is fine, and the
+commands that we’re implementing for the sake of information gathering
+(I.E. the one <strong class="command">git rev-parse</strong> already use
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">check_output</span></code> because we need the return values.</p>
+<p>The only point in changing them would be to use <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.run" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.run()</span></code></a>
+and give it the parameter <code class="xref py py-attr docutils literal notranslate"><span class="pre">subprocess.capture_output</span></code>….but I’m
+hesistant because that’s exclusively a python3.7 feature.</p>
+<p>Jun 03, 2019</p>
+<p>You know what would be nice? Run the following commands in one.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git branch -d foo</span>
+<span class="go">git branch -rd origin/foo</span>
+<span class="go">git push origin :foo</span>
+</pre></div>
+</div>
+<p>There’s no reason that that’s 3 commands with differing syntax.</p>
+<p>All you need to do is check if the branch exists both locally and
+remotely and kill everything.</p>
 <dl class="class">
 <dt id="pyutil.g.Git">
 <em class="property">class </em><code class="descclassname">pyutil.g.</code><code class="descname">Git</code><span class="sig-paren">(</span><em>root=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git" title="Permalink to this definition">¶</a></dt>
@@ -375,22 +395,25 @@ will behave similarly to the following command run in the shell:</p>
 
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-  <li><a href="api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a><ul>
-      <li>Previous: <a href="Text.html" title="previous chapter">Text Utilities</a></li>
-      <li>Next: <a href="Other.html" title="next chapter">Remaining Modules</a></li>
-  </ul></li>
-  </ul></li>
+  <li><a href="index.html">Documentation overview</a>
+    <ul>
+      <li><a href="api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a>
+        <ul>
+          <li>Previous: <a href="Text.html" title="previous chapter">Text Utilities</a></li>
+          <li>Next: <a href="Other.html" title="next chapter">Remaining Modules</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-<h3><a href="index.html">Table of Contents</a></h3>
+<h3><a href="index.html">Global Table of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="numpydoc.html">Documentation and Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+<h3><a href="index.html">Local Table of Contents</a></h3>
+<ul>
 <li><a class="reference internal" href="#">External Commands</a><ul>
 <li><a class="reference internal" href="#module-pyutil.conda_export"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code></a></li>
 <li><a class="reference internal" href="#module-pyutil.g"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><ul>

@@ -23,19 +23,32 @@ build up a trimmed-down, and more importantly *safer* Git object.
 Should changing the module functions so that they use
 :func:`subprocess.check_call()`.
 
-Git touch uses :func:`subprocess.run()` which is fine, and the commands
-that we're implementing for the sake of information gather (I.E. git root)
-already use check_output because we need the return values.
+:command:`git-touch` uses :func:`subprocess.run()` which is fine, and the
+commands that we're implementing for the sake of information gathering
+(I.E. the one :command:`git rev-parse` already use
+:attr:`~subprocess.check_output` because we need the return values.
 
 The only point in changing them would be to use :func:`subprocess.run()`
-and give it the parameter :attr:`capture_output`....but I'm hesistant because
-that's exclusively a python3.7 feature.
+and give it the parameter :attr:`subprocess.capture_output`....but I'm
+hesistant because that's exclusively a python3.7 feature.
 
+Jun 03, 2019
+
+You know what would be nice? Run the following commands in one.
+
+.. code-block:: console
+
+    git branch -d foo
+    git branch -rd origin/foo
+    git push origin :foo
+
+There's no reason that that's 3 commands with differing syntax.
+
+All you need to do is check if the branch exists both locally and
+remotely and kill everything.
 
 """
-import codecs
 import logging
-# from pathlib import Path not yet
 import shlex
 import subprocess
 import sys
@@ -84,7 +97,6 @@ def touch(args):
     ----------
     args : str (path-like object)
         Path to a file that's needs to be staged and added to the Git index.
-
 
     """
     if len(args) > 2:

@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 """Create an installable package for the utilities repository.
 
-Largely based off of the work done by @kennethreitz in his setup.py_
+Largely based off of the work done by @kennethreitz in his `setup.py`_
 repository.
 
-_`Kenneth Reitz setup.py template <https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py>`
+.. _setup.py: https://raw.githubusercontent.com/kennethreitz/setup.py/master/setup.py
 
 """
 import codecs
@@ -13,7 +13,7 @@ import os
 import sys
 from shutil import rmtree
 
-from setuptools import setup, find_packages, Command
+from setuptools import Command, find_packages, setup
 
 if sys.version_info[:2] < (3, 6):
     raise RuntimeError("Python version >= 3.6 required.")

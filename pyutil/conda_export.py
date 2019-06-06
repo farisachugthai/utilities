@@ -70,8 +70,6 @@ def _cmd_wrapper(cmd=None):
 
         output = run([pieces], capture_output=True)
         return output
-    else:
-        return None
 
 
 def get_envs():

@@ -95,18 +95,20 @@ fcoc() { # {{{1 checkout git commit
 }
 # }}}
 fshow() { # {{{1 git commit browser
-  git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-      --bind "ctrl-m:execute:
+
+    git log --graph --color=always \
+        --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+    fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+        --no-multi --header="Ctrl-s to toggle sort. C-m to execute." \
+        --bind "ctrl-m:execute:
                 (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                xargs -I % sh -c 'git show --color=always % | bat -R') << 'FZF-EOF'
                 {}
 FZF-EOF"
 }
 # }}}
 glNoGraph(){  # An alias I converted into a function. cross your fingers
-    'git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
+    git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"
 }
 
 # Wait are these backslashes necessary inside of a single quote?
@@ -123,11 +125,11 @@ fcoc_preview() { # {{{ checkout git commit with previews. Probably won't work be
 }
 # }}}
 fshow_preview() { # {{{ fshow_preview - git commit browser with previews
-    glNoGraph |
+    glNoGraph "$@" |
         fzf --no-sort --reverse --tiebreak=index --no-multi \
             --ansi --preview="$_viewGitLogLine" \
                 --header "enter to view, alt-y to copy hash" \
-                --bind "enter:execute:$_viewGitLogLine   | less -R" \
+                --bind "enter:execute:$_viewGitLogLine   | bat - " \
                 --bind "alt-y:execute:$_gitLogLineToHash | xclip"
 }
 # }}}

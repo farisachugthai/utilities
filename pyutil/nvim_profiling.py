@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """Automate profiling nvim.
 
-
 .. code-block:: python3
 
     >>> if not os.environ.get('NVIM_LISTEN_ADDRESS'):  # we have no running nvim
@@ -54,6 +53,7 @@ import logging
 import os
 from platform import system
 import subprocess
+import sys
 
 from pyutil.__about__ import __version__
 from pyutil.env_checks import check_xdg_config_home
@@ -67,19 +67,23 @@ def _parse_arguments():
     parser = argparse.ArgumentParser(description=__doc__)
 
     parser.add_argument(
-        '-l',
+        '-ll',
         '--log_level',
         dest='log_level',
         metavar='Log Level.',
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         help='Set the logging level')
 
-    parser.add_argument(
-        '-V', '--version', action='version', version='%(prog)s' + __version__)
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
-    args = parser.parse_args()
-
-    return args
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit()
+    else:
+        return parser.parse_args()
 
 
 def output_results(output_dir):
@@ -130,8 +134,8 @@ def find_init_files():
         else:
             return nvim_root
     else:
-        userConfFile = os.path.join(
-            os.path.expanduser('~'), '.config', 'nvim', 'init.vim')
+        userConfFile = os.path.join(os.path.expanduser('~'), '.config', 'nvim',
+                                    'init.vim')
 
         # Handle windows
         if not os.path.isfile(userConfFile):

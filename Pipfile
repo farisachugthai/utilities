@@ -6,6 +6,8 @@ verify_ssl = true
 [dev-packages]
 numpydoc = "*"
 python-language-server = "*"
+matplotlib = "*"
+yapf = "*"
 
 [packages]
 utilities = {editable = true,path = "."}

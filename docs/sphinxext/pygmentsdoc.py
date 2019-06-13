@@ -135,8 +135,9 @@ class PygmentsDoc(sphinxext.Directive):
                 docstring = docstring.decode('utf8')
             heading = cls.__name__
             out.append(
-                FMTERDOC % (heading, ', '.join(data[2]) or 'None', ', '.join(
-                    data[3]).replace('*', '\\*') or 'None', docstring))
+                FMTERDOC %
+                (heading, ', '.join(data[2]) or 'None',
+                 ', '.join(data[3]).replace('*', '\\*') or 'None', docstring))
         return ''.join(out)
 
     def document_filters(self):

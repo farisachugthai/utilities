@@ -35,10 +35,8 @@ from sphinx.domains.python import PythonDomain
 from numpydoc.docscrape_sphinx import get_doc_object
 from numpydoc.docscrape_sphinx import SphinxDocString
 
-
 if sphinx.__version__ < '1.0.1':
     raise RuntimeError("Sphinx 1.0.1 or newer is required")
-
 
 if sys.version_info[0] >= 3:
     sixu = lambda s: s
@@ -120,16 +118,12 @@ def mangle_docstrings(app, what, name, obj, options, lines):
         return
 
     cfg = {
-        'use_plots':
-            app.config.numpydoc_use_plots,
-        'use_blockquotes':
-            app.config.numpydoc_use_blockquotes,
-        'show_class_members':
-            app.config.numpydoc_show_class_members,
+        'use_plots': app.config.numpydoc_use_plots,
+        'use_blockquotes': app.config.numpydoc_use_blockquotes,
+        'show_class_members': app.config.numpydoc_show_class_members,
         'show_inherited_class_members':
-            app.config.numpydoc_show_inherited_class_members,
-        'class_members_toctree':
-            app.config.numpydoc_class_members_toctree
+        app.config.numpydoc_show_inherited_class_members,
+        'class_members_toctree': app.config.numpydoc_class_members_toctree
     }
 
     u_NL = sixu('\n')
@@ -139,8 +133,11 @@ def mangle_docstrings(app, what, name, obj, options, lines):
         title_re = re.compile(sixu(pattern), re.I | re.S)
         lines[:] = title_re.sub(sixu(''), u_NL.join(lines)).split(u_NL)
     else:
-        doc = get_doc_object(
-            obj, what, u_NL.join(lines), config=cfg, builder=app.builder)
+        doc = get_doc_object(obj,
+                             what,
+                             u_NL.join(lines),
+                             config=cfg,
+                             builder=app.builder)
         if sys.version_info[0] >= 3:
             doc = str(doc)
         else:
@@ -313,7 +310,9 @@ def match_items(lines, content_old):
 
 
 def wrap_mangling_directive(base_directive, objtype):
+
     class directive(base_directive):
+
         def run(self):
             env = self.state.document.settings.env
 
@@ -329,8 +328,9 @@ def wrap_mangling_directive(base_directive, objtype):
             mangle_docstrings(env.app, objtype, name, None, None, lines)
             if self.content:
                 items = match_items(lines, self.content)
-                self.content = ViewList(
-                    lines, items=items, parent=self.content.parent)
+                self.content = ViewList(lines,
+                                        items=items,
+                                        parent=self.content.parent)
 
             return base_directive.run(self)
 

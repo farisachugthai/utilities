@@ -2,10 +2,6 @@
 # -*- coding: utf-8 -*-
 """Possibly rewrote the entire module in half as many lines.
 
-Now utilizes necessary libraries like glob.
-Should add pathlib in here for a nice one stop shop for symlinking, getting
-relative paths, symlinks and globs.
-
 .. versionchanged:: Added argparse
 
 04/25/2019:
@@ -15,17 +11,15 @@ script functional on Windows!
 
 See Also
 ---------
-
-IPython's :func:`IPython.utils.path.ensure_dir_exists()`
+:func:`~IPython.utils.path.ensure_dir_exists()` : function
+    Check for a dir and create it if it doesn't exist.
 
 """
 import argparse
-import glob
 import logging
 import os
 from pathlib import Path
 import sys
-# import subprocess
 
 from IPython.utils.path import ensure_dir_exists
 
@@ -38,12 +32,11 @@ def _parse_arguments():
     parser = argparse.ArgumentParser(prog='Directory Linker 2.0',
                                      description=__doc__)
 
-    parser.add_argument(
-        "destination",
-        metavar="destination",
-        nargs='?',
-        type=Path,
-        help="Files to symlink to.")
+    parser.add_argument("destination",
+                        metavar="destination",
+                        nargs='?',
+                        type=Path,
+                        help="Files to symlink to.")
 
     parser.add_argument(
         "-s",
@@ -52,11 +45,25 @@ def _parse_arguments():
         nargs='?',
         help="Where to create the symlinks. Defaults to the cwd.")
 
-    parser.add_argument('-g', '--glob-pattern', metavar='GLOB_PATTERN',
-            help='Filter files in the destination dir with a glob pattern.')
+    parser.add_argument(
+        '-g',
+        '--glob-pattern',
+        metavar='GLOB_PATTERN',
+        help='Filter files in the destination dir with a glob pattern.')
 
     parser.add_argument(
-        '-V', '--version', action='version', version='%(prog)s' + __version__)
+        '-r',
+        '--recursive',
+        action='store_True',
+        default=False,
+        help=
+        "Whether to recursively symlink the child directories below the destination folder as well."
+    )
+
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
     logging.debug("Dir(parser): {} ".format(dir(parser)))
 
@@ -106,8 +113,8 @@ def main(destination_dir, source_dir):
         Directory where symlinks are created.
 
     """
-    for i in glob.glob(destination_dir + "/**", recursive=True):
-        if os.path.isfile(i):
+    for i in destination_dir.iterdir():
+        if Path.is_file(i):
             source_file = os.path.join(source_dir, i)
             try:
                 os.symlink(i, source_file)
@@ -124,6 +131,9 @@ if __name__ == "__main__":
     args = _parse_arguments()
 
     dest = args.destination
+
+    if not dest.is_dir():
+        sys.exit("Provided target not a directory. Exiting.")
 
     try:
         src = args.source

@@ -7,12 +7,13 @@ Assumes Python3.4 as it utilizes pathlib heavily.
 
 Roadmap
 -------
+
 * Read through :mod:`pathlib`.
-* Figure out what slots are. They're initialized in PurePath() but I
+* Figure out what slots are. They're initialized in :class:`pathlib.PurePath()` but I
   don't get what they're doing
-* Determine how we want to define __repr__ and __str__ because we should
-  probably override at least __repr__
-  * __str__ follows repr
+* Determine how we want to define ``__repr__`` and ``__str__`` because we should
+  probably override at least ``__repr__``
+  * ``__str__`` follows ``__repr__``
 
 """
 import logging
@@ -46,9 +47,9 @@ class PathTools(Path):
 
     def logger(self):
         """Initialize a named logger for the PathTools object."""
-        self.logger = logging.getLogger(name=__name__)
-        self.logger.setLevel(self.log_level)
-        return self.logger
+        self.log = logging.getLogger(name=__name__)
+        self.log.setLevel(self.log_level)
+        return self.log
 
     def output_results(self, output_dir):
         """Checks that an directory exists and create it if not.

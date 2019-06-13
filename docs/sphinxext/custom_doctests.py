@@ -123,11 +123,10 @@ def float_doctest(sphinx_shell, args, input_lines, found, submitted):
         found_isnan = np.isnan(found)
         submitted_isnan = np.isnan(submitted)
         error = not np.allclose(found_isnan, submitted_isnan)
-        error |= not np.allclose(
-            found[~found_isnan],
-            submitted[~submitted_isnan],
-            rtol=rtol,
-            atol=atol)
+        error |= not np.allclose(found[~found_isnan],
+                                 submitted[~submitted_isnan],
+                                 rtol=rtol,
+                                 atol=atol)
 
     TAB = ' ' * 4
     directive = sphinx_shell.directive
@@ -146,13 +145,12 @@ def float_doctest(sphinx_shell, args, input_lines, found, submitted):
              'On input line(s):\n{TAB}{2}\n\n'
              'we found output:\n{TAB}{3}\n\n'
              'instead of the expected:\n{TAB}{4}\n\n')
-        e = e.format(
-            source,
-            content,
-            '\n'.join(input_lines),
-            repr(found),
-            repr(submitted),
-            TAB=TAB)
+        e = e.format(source,
+                     content,
+                     '\n'.join(input_lines),
+                     repr(found),
+                     repr(submitted),
+                     TAB=TAB)
         raise RuntimeError(e)
 
 

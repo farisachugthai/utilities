@@ -54,11 +54,10 @@ def _parse_arguments():
         default=Path.cwd(),
         help="Directory containing only the files to be renamed.")
 
-    parser.add_argument(
-        'old_format',
-        nargs=1,
-        metavar='old_format',
-        help=r'Enter old format to replace.')
+    parser.add_argument('old_format',
+                        nargs=1,
+                        metavar='old_format',
+                        help=r'Enter old format to replace.')
 
     parser.add_argument(
         'rename_format',
@@ -75,8 +74,10 @@ def _parse_arguments():
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         help='Set the logging level')
 
-    parser.add_argument(
-        '-V', '--version', action='version', version='%(prog)s' + __version__)
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
     args = parser.parse_args()
 

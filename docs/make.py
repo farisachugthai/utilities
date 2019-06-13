@@ -5,15 +5,12 @@
 .. module:: make
     :synopsis: Expedite documentation builds.
 
-We could, in addition to automatic documentation builds, attempt to automate
-installation of the package with subcommands. Uhm well argparse doesn't really
-give us that functionality so it'd be more like
+We, in addition to automatic documentation builds, attempt to automate
+installation of the package with subcommands.
 
 .. sourcecode:: shell
 
     python make.py --install
-
-But that works IMO.
 
 Utilizing IPython's Sphinx plugin
 ---------------------------------
@@ -56,9 +53,7 @@ builder : str
 import argparse
 import logging
 import os
-import shlex
 import shutil
-import subprocess
 import sys
 import webbrowser
 
@@ -76,17 +71,20 @@ def _parse_arguments(cmds=None):
 
     .. todo:: Add a ton of arguments this isn't close to done.
 
-    Returns
-    -------
+    Parameters
+    ----------
     cmd : str
         Arguments provided by the user.
 
+    Returns
+    -------
+    user_args : :class:`argparse.NameSpace`
+        Argumemts as they've been interpreted by :mod:`argparse`.
 
     See Also
     --------
     :mod:`docutils.core`
         Shows a few good methods on how to programatically publish docs.
-
 
     Examples
     --------
@@ -98,8 +96,8 @@ def _parse_arguments(cmds=None):
         help(publish_programatically)
 
     Should give some inspiration on easy ways to invoke docutils from
-    within python. In addition we can use :mod:`runpy` to run sphinx-build
-    directly.
+    within python. In addition we can use :mod:`runpy` to run
+    :command:`sphinx-build` directly.
 
     Or we can invoke the :mod:`sphinx` API to maximize customization.
 
@@ -116,23 +114,27 @@ def _parse_arguments(cmds=None):
                         metavar='builder: (html or latex)',
                         help='command to run: {}'.format(', '.join(cmds)))
 
-    parser.add_argument('--num-jobs',
+    parser.add_argument('-j',
+                        '--num-jobs',
                         type=int,
                         default=os.cpu_count(),
                         help='number of jobs used by sphinx-build')
 
-    parser.add_argument('--no-api',
+    parser.add_argument('-n',
+                        '--no-api',
                         default=False,
                         help='Omit api and autosummary',
                         action='store_true')
 
-    parser.add_argument('--single',
+    parser.add_argument('-s',
+                        '--single',
                         metavar='FILENAME',
                         type=str,
                         default=None,
                         help=('filename of section or method name to build.'))
 
-    parser.add_argument('--python-path',
+    parser.add_argument('-p',
+                        '--python-path',
                         type=str,
                         default=os.path.dirname(DOC_PATH),
                         help='path')
@@ -173,10 +175,12 @@ class DocBuilder(BaseCommand):
         Parameters
         ----------
         kind : {'html', 'latex'}
+            Kind of docs to build.
 
         Examples
         --------
         >>> DocBuilder(num_jobs=4)._sphinx_build('html')
+
         """
         if kind not in ('html', 'latex'):
             raise ValueError('kind must be html or latex, '
@@ -217,7 +221,11 @@ if __name__ == "__main__":
     else:
         logging.basicConfig(level=log_level)
 
-    jobs = f'{os.cpu_count()}'
+    try:
+        jobs = args.jobs
+    except AttributeError:
+        logging.error('No jobs attribute in jobs.')
+        jobs = f'{os.cpu_count()}'
 
     logging.debug(jobs)
     builder = args.builder

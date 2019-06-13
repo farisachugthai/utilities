@@ -57,10 +57,9 @@ def latex2png(latex, filename, fontset='cm'):
         try:
             depth = mathtext_parser.to_png(filename, latex, dpi=100)
         except:
-            warnings.warn(
-                "Could not render math expression %s" % latex,
-                Warning,
-                stacklevel=2)
+            warnings.warn("Could not render math expression %s" % latex,
+                          Warning,
+                          stacklevel=2)
             depth = 0
     rcParams['mathtext.fontset'] = orig_fontset
     sys.stdout.write("#")
@@ -117,10 +116,9 @@ def setup(app):
     def depart_latex_math_latex(self, node):
         pass
 
-    app.add_node(
-        latex_math,
-        html=(visit_latex_math_html, depart_latex_math_html),
-        latex=(visit_latex_math_latex, depart_latex_math_latex))
+    app.add_node(latex_math,
+                 html=(visit_latex_math_html, depart_latex_math_html),
+                 latex=(visit_latex_math_latex, depart_latex_math_latex))
     app.add_role('mathmpl', math_role)
     app.add_directive('mathmpl', math_directive, True, (0, 0, 0),
                       **options_spec)

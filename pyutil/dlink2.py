@@ -11,11 +11,10 @@ Directory Linker Rewrite
 This is a rewrite of a script I've had for years, so I decided to go above and beyond.
 
 
-
 See Also
 ---------
-
-IPython's :func:`IPython.utils.path.ensure_dir_exists()`
+:func:`~IPython.utils.path.ensure_dir_exists()` : function
+    Check for a dir and create it if it doesn't exist.
 
 """
 import argparse
@@ -24,6 +23,7 @@ import sys
 from pathlib import Path
 
 from IPython.utils.path import ensure_dir_exists
+
 from pyutil.__about__ import __version__
 
 logging.getLogger(name=__name__)
@@ -55,6 +55,15 @@ def _parse_arguments():
         '--glob-pattern',
         metavar='GLOB_PATTERN',
         help='Filter files in the destination dir with a glob pattern.')
+
+    parser.add_argument(
+        '-r',
+        '--recursive',
+        action='store_True',
+        default=False,
+        help=
+        "Whether to recursively symlink the child directories below the destination folder as well."
+    )
 
     parser.add_argument('-V',
                         '--version',
@@ -109,13 +118,10 @@ def main(destination_dir, source_dir):
         Directory where symlinks are created.
 
     """
-    # for i in glob.glob(destination_dir + "/**", recursive=True):
-    for i in Path(destination_dir).glob('*'):
-        if i.is_file():
-            source_file = i.joinpath(source_dir)
-            # source_file = os.path.join(source_dir, i)
+    for i in destination_dir.iterdir():
+        if Path.is_file(i):
+            source_file = os.path.join(source_dir, i)
             try:
-                # os.symlink(i, source_file)
                 i.symlink_to(sourcefile)
             except FileExistsError:
                 pass
@@ -132,6 +138,9 @@ if __name__ == "__main__":
     args = _parse_arguments()
 
     dest = args.destination
+
+    if not dest.is_dir():
+        sys.exit("Provided target not a directory. Exiting.")
 
     try:
         src = args.source

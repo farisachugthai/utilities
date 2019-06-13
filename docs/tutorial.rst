@@ -11,9 +11,8 @@ repetitive and error prone tasks.
 
 Contributing Tutorial
 ---------------------
-This package has recently adopted the :mod:`numpy` convention for docstrings.
-As a result, all docstrings must conform to this standard.
 
+This package has recently adopted the :mod:`numpy` convention for docstrings.
 
 A bare template for a full docstring with all :mod:`numpy` subsections has been
 included below.

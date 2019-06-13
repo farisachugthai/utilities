@@ -5,8 +5,9 @@
 This is actually implemented as an IPython magic but to make it easier
 to use in a typical Python REPL it's also implemented here.
 
-The if name == '__main__' is left off so that it can be run directly
+The ``if name == '__main__'`` is left off so that it can be run directly
 or sourced.
+
 """
 import os
 import pprint
@@ -15,3 +16,4 @@ import pprint
 def current():
     """Prints all current environment variables."""
     pprint.pprint(sorted(os.environ.items()))
+    return dict(sorted(os.environ.items()))

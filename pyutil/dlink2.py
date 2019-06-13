@@ -1,17 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Possibly rewrote the entire module in half as many lines.
+"""Utilize argparse, pathlib and IPython to generate symlinks.
 
-Now utilizes necessary libraries like glob.
-Should add pathlib in here for a nice one stop shop for symlinking, getting
-relative paths, symlinks and globs.
+=========================
+Directory Linker Rewrite
+=========================
 
 .. versionchanged:: Added argparse
 
-04/25/2019:
+This is a rewrite of a script I've had for years, so I decided to go above and beyond.
 
-Well now this is going to be the testing ground for getting a version of this
-script functional on Windows!
+
 
 See Also
 ---------
@@ -20,30 +19,29 @@ IPython's :func:`IPython.utils.path.ensure_dir_exists()`
 
 """
 import argparse
-import glob
 import logging
-import os
-from pathlib import Path
 import sys
-# import subprocess
+from pathlib import Path
 
 from IPython.utils.path import ensure_dir_exists
-
 from pyutil.__about__ import __version__
 
 logging.getLogger(name=__name__)
 
 
 def _parse_arguments():
-    parser = argparse.ArgumentParser(prog='Directory Linker 2.0',
-                                     description=__doc__)
+    parser = argparse.ArgumentParser(
+        prog='Directory Linker 2.0',
+        description="Iterate over a `dest` folder"
+        " and create symlinks in directory "
+        "`source`. If `source` is not provided use"
+        " current working directory.")
 
-    parser.add_argument(
-        "destination",
-        metavar="destination",
-        nargs='?',
-        type=Path,
-        help="Files to symlink to.")
+    parser.add_argument("destination",
+                        metavar="destination",
+                        nargs='?',
+                        type=Path,
+                        help="Files to symlink to.")
 
     parser.add_argument(
         "-s",
@@ -52,11 +50,16 @@ def _parse_arguments():
         nargs='?',
         help="Where to create the symlinks. Defaults to the cwd.")
 
-    parser.add_argument('-g', '--glob-pattern', metavar='GLOB_PATTERN',
-            help='Filter files in the destination dir with a glob pattern.')
-
     parser.add_argument(
-        '-V', '--version', action='version', version='%(prog)s' + __version__)
+        '-g',
+        '--glob-pattern',
+        metavar='GLOB_PATTERN',
+        help='Filter files in the destination dir with a glob pattern.')
+
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
     logging.debug("Dir(parser): {} ".format(dir(parser)))
 
@@ -106,14 +109,19 @@ def main(destination_dir, source_dir):
         Directory where symlinks are created.
 
     """
-    for i in glob.glob(destination_dir + "/**", recursive=True):
-        if os.path.isfile(i):
-            source_file = os.path.join(source_dir, i)
+    # for i in glob.glob(destination_dir + "/**", recursive=True):
+    for i in Path(destination_dir).glob('*'):
+        if i.is_file():
+            source_file = i.joinpath(source_dir)
+            # source_file = os.path.join(source_dir, i)
             try:
-                os.symlink(i, source_file)
+                # os.symlink(i, source_file)
+                i.symlink_to(sourcefile)
             except FileExistsError:
                 pass
-            except OSError:
+            # except OSError:
+            # let's be a little more specific
+            except WindowsError:
                 print("Ensure that you are running this script as an admin"
                       " if it's being run on Windows!")
                 raise RuntimeError

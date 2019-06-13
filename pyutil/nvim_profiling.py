@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """Automate profiling nvim.
 
-
 .. code-block:: python3
 
     >>> if not os.environ.get('NVIM_LISTEN_ADDRESS'):  # we have no running nvim
@@ -64,7 +63,8 @@ LOG_LEVEL = "logging.WARNING"
 
 def _parse_arguments():
     """Parse arguments given by the user."""
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(prog='Neovim Profiler',
+                                     description='Automate timing startuptime.')
 
     parser.add_argument(
         '-l',
@@ -84,6 +84,9 @@ def _parse_arguments():
 
 def output_results(output_dir):
     """Checks that an directory named profiling exists.
+
+    IPython has a function in :ref:`IPython.utils` that I believe is called
+    ensure_dir_exists. Do we provide anything that doesn't?
 
     Parameters
     ----------
@@ -107,17 +110,17 @@ def output_results(output_dir):
 
 
 def find_init_files():
-    """Discover the initialization files used for nvim.
+    """Locate the initialization files used for nvim.
 
     Should theoretically work on both Windows and Unix systems.
+
+    .. todo:: Alright so if :envvar:`XDG_CONFIG_HOME` isn't set we need to
+        check <~/.config/nvim> and check whether we're on Windows or not
 
     Returns
     --------
     nvim_root : str
         The directory where nvim's configuration files are found
-
-    .. todo:: Alright so if :envvar:`XDG_CONFIG_HOME` isn't set we need to
-        check <~/.config/nvim> and check whether we're on Windows or not
 
     """
     global OS
@@ -174,12 +177,11 @@ def main(nvim_root):
 
 if __name__ == "__main__":
     user_args = _parse_arguments()
+
     try:
         LOG_LEVEL = args.log_level
     except Exception as e:
-        print(e)
-
-    # _setup_logging()
+        LOGGER.error(e, exc_info=True)
 
     nvim_root = find_init_files()
 

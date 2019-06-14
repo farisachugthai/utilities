@@ -8,6 +8,9 @@ numpydoc = "*"
 python-language-server = "*"
 matplotlib = "*"
 yapf = "*"
+utilities = {editable = true,path = "."}
+pynvim = "*"
+flake8-rst = "*"
 
 [packages]
 utilities = {editable = true,path = "."}

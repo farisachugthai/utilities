@@ -16,7 +16,6 @@ Welcome to utilities's documentation!
     :maxdepth: 1
 
     Usage and Contributing <tutorial>
-    Documentation and Examples <numpydoc>
     API <api>
 
 

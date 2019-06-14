@@ -40,62 +40,8 @@
 <h1>External Commands<a class="headerlink" href="#external-commands" title="Permalink to this headline">¶</a></h1>
 <p>All commands in this section rely on another tool or piece of software.</p>
 <p>The scripts therein collectively automate use of Git, Neovim, conda, and IPython.</p>
-<div class="section" id="module-pyutil.conda_export">
-<span id="conda-export"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code><a class="headerlink" href="#module-pyutil.conda_export" title="Permalink to this headline">¶</a></h2>
-<p>Iterate over the list of conda environments that are present.</p>
-<p>In it’s current implementation, the base command works. However the
-<a class="reference internal" href="#pyutil.conda_export._cmd_wrapper" title="pyutil.conda_export._cmd_wrapper"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyutil.conda_export._cmd_wrapper()</span></code></a> doesn’t work and as a result,
-we can’t pass arguments along to conda yet.</p>
-<dl class="function">
-<dt id="pyutil.conda_export._cmd_wrapper">
-<code class="descclassname">pyutil.conda_export.</code><code class="descname">_cmd_wrapper</code><span class="sig-paren">(</span><em>cmd=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/conda_export.html#_cmd_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.conda_export._cmd_wrapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handle any command that the user wants to pass to conda.</p>
-<p>The module should be able to execute and produce meaningful output without
-a user provided argument.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – cmd to pass to conda</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>output</strong> – Output from subprocess passed to conda. Can return <code class="xref py py-obj docutils literal notranslate"><span class="pre">NoneType</span></code> if no <a class="reference external" href="https://docs.python.org/3/library/cmd.html#module-cmd" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmd</span></code></a>.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.conda_export._parse_arguments">
-<code class="descclassname">pyutil.conda_export.</code><code class="descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/conda_export.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.conda_export._parse_arguments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse user arguments.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.conda_export.get_envs">
-<code class="descclassname">pyutil.conda_export.</code><code class="descname">get_envs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/conda_export.html#get_envs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.conda_export.get_envs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterate through conda envs and return a list holding each environment as an element.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>short_envs</strong> – list of conda environments</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 conda_export.py
-<span class="gp">#</span> <span class="o">[</span><span class="s1">&#39;base&#39;</span>, <span class="s1">&#39;dynamic&#39;</span>, <span class="s1">&#39;flask&#39;</span>, <span class="s1">&#39;navigator&#39;</span>, <span class="s1">&#39;tdd&#39;</span>, <span class="s1">&#39;utilities&#39;</span><span class="o">]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.conda_export.main">
-<code class="descclassname">pyutil.conda_export.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/conda_export.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.conda_export.main" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call other functions.</p>
-</dd></dl>
-
+<div class="section" id="conda-export">
+<h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code><a class="headerlink" href="#conda-export" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pyutil.g">
 <span id="g"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code><a class="headerlink" href="#module-pyutil.g" title="Permalink to this headline">¶</a></h2>
@@ -135,7 +81,7 @@ hesistant because that’s exclusively a python3.7 feature.</p>
 remotely and kill everything.</p>
 <dl class="class">
 <dt id="pyutil.g.Git">
-<em class="property">class </em><code class="descclassname">pyutil.g.</code><code class="descname">Git</code><span class="sig-paren">(</span><em>root=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">Git</code><span class="sig-paren">(</span><em class="sig-param">root=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyutil.shell.BaseCommand</span></code></p>
 <p>Create a base class for working with Git in Python.</p>
 <p>For the time being we only really need to run the <code class="xref py py-func docutils literal notranslate"><span class="pre">g.BaseCommand.run()</span></code>
@@ -145,19 +91,19 @@ Silencing the warnings about <a class="reference internal" href="#pyutil.g.Git.v
 learning how to properly initialize a class.</p>
 <dl class="method">
 <dt id="pyutil.g.Git._quote_cmd">
-<code class="descname">_quote_cmd</code><span class="sig-paren">(</span><em>self</em>, <em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._quote_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git._quote_cmd" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">_quote_cmd</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._quote_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git._quote_cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maybe this should be in the parent class?</p>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="pyutil.g.Git._static_quote_cmd">
-<em class="property">static </em><code class="descname">_static_quote_cmd</code><span class="sig-paren">(</span><em>self</em>, <em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._static_quote_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git._static_quote_cmd" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">_static_quote_cmd</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._static_quote_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git._static_quote_cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Which one of these two is preferable?</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="pyutil.g.Git.version">
-<code class="descname">version</code><a class="reference internal" href="_modules/pyutil/g.html#Git.version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git.version" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">version</code><a class="reference internal" href="_modules/pyutil/g.html#Git.version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git.version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the version of Git we have.</p>
 </dd></dl>
 
@@ -165,19 +111,19 @@ learning how to properly initialize a class.</p>
 
 <dl class="function">
 <dt id="pyutil.g.get_git_branch">
-<code class="descclassname">pyutil.g.</code><code class="descname">get_git_branch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_branch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_branch" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">get_git_branch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_branch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_branch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the symbolic name for the current git branch.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.g.get_git_root">
-<code class="descclassname">pyutil.g.</code><code class="descname">get_git_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_root" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">get_git_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_root" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show the root of a repo.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.g.get_git_upstream_remote">
-<code class="descclassname">pyutil.g.</code><code class="descname">get_git_upstream_remote</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_upstream_remote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_upstream_remote" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">get_git_upstream_remote</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_upstream_remote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_upstream_remote" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the remote name to use for upstream branches.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -191,7 +137,7 @@ learning how to properly initialize a class.</p>
 
 <dl class="function">
 <dt id="pyutil.g.touch">
-<code class="descclassname">pyutil.g.</code><code class="descname">touch</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#touch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.touch" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">touch</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#touch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.touch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a file and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -205,14 +151,25 @@ learning how to properly initialize a class.</p>
 <div class="section" id="module-pyutil.magic_aid">
 <span id="magic-aid"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code><a class="headerlink" href="#module-pyutil.magic_aid" title="Permalink to this headline">¶</a></h2>
 <p>Create a script for searching through aliases.</p>
-<div class="section" id="ipython-aliases">
-<h3>IPython Aliases<a class="headerlink" href="#ipython-aliases" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>Magic Aid<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>By invoking <code class="docutils literal notranslate"><span class="pre">%rehashx</span></code> on <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.5.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>’s startup, there are
-regularly more than 1000 aliases in the namespace.</p>
+regularly more than 1000 aliases in the user’s namespace.</p>
 <p>This makes basic lookups slightly more involved.</p>
+<div class="section" id="ipython-aliases">
+<h4>IPython Aliases<a class="headerlink" href="#ipython-aliases" title="Permalink to this headline">¶</a></h4>
+<p>As a result, this exports an IPython magic that searches through
+all listed aliases by checking the first letter provided.</p>
+<p>Multiple letters can be provided as long as they are whitespace
+separated. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span> <span class="n">magic_aid</span><span class="o">.</span><span class="n">py</span> <span class="n">i</span> <span class="n">p</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>Combining the letters together in one string or leaving them separate
+as different elements in a list; however, would not work.</p>
 <dl class="function">
 <dt id="pyutil.magic_aid.phelp">
-<code class="descclassname">pyutil.magic_aid.</code><code class="descname">phelp</code><span class="sig-paren">(</span><em>obj</em>, <em>shell=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/magic_aid.html#phelp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.magic_aid.phelp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.magic_aid.</code><code class="sig-name descname">phelp</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">shell=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/magic_aid.html#phelp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.magic_aid.phelp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pipe <code class="xref py py-obj docutils literal notranslate"><span class="pre">obj</span></code> through <a class="reference external" href="https://docs.python.org/3/library/pydoc.html#module-pydoc" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code></a> to <code class="xref py py-mod docutils literal notranslate"><span class="pre">pynvim</span></code> with <code class="docutils literal notranslate"><span class="pre">ft</span></code> set to man.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -235,7 +192,7 @@ regularly more than 1000 aliases in the namespace.</p>
 
 <dl class="function">
 <dt id="pyutil.magic_aid.search">
-<code class="descclassname">pyutil.magic_aid.</code><code class="descname">search</code><span class="sig-paren">(</span><em>char</em>, <em>shell=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/magic_aid.html#search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.magic_aid.search" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.magic_aid.</code><code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">char</em>, <em class="sig-param">shell=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/magic_aid.html#search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.magic_aid.search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Do a simple search for aliased names in <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.5.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
 <p>This function independently initializes IPython so that it can be
 easily imported and run.</p>
@@ -264,6 +221,7 @@ easily imported and run.</p>
 <p>The above produced a value of 111 for me!</p>
 </dd></dl>
 
+</div>
 </div>
 </div>
 <div class="section" id="module-pyutil.nvim_profiling">
@@ -305,33 +263,33 @@ will behave similarly to the following command run in the shell:</p>
 </div>
 <dl class="function">
 <dt id="pyutil.nvim_profiling._parse_arguments">
-<code class="descclassname">pyutil.nvim_profiling.</code><code class="descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling._parse_arguments" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling._parse_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse arguments given by the user.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.nvim_profiling.find_init_files">
-<code class="descclassname">pyutil.nvim_profiling.</code><code class="descname">find_init_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#find_init_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.find_init_files" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discover the initialization files used for nvim.</p>
+<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">find_init_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#find_init_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.find_init_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locate the initialization files used for nvim.</p>
 <p>Should theoretically work on both Windows and Unix systems.</p>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Alright so if <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">XDG_CONFIG_HOME</span></code> isn’t set we need to
+check &lt;~/.config/nvim&gt; and check whether we’re on Windows or not</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><ul>
-<li><p><strong>nvim_root</strong> (<em>str</em>) – The directory where nvim’s configuration files are found</p></li>
-<li><div class="admonition-todo admonition" id="index-1">
-<p class="admonition-title">Todo</p>
-<p>Alright so if <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">XDG_CONFIG_HOME</span></code> isn’t set we need to – check &lt;~/.config/nvim&gt; and check whether we’re on Windows or not</p>
-</div>
-</li>
-</ul>
-</p>
+<dd class="field-odd"><p><strong>nvim_root</strong> – The directory where nvim’s configuration files are found</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.nvim_profiling.main">
-<code class="descclassname">pyutil.nvim_profiling.</code><code class="descname">main</code><span class="sig-paren">(</span><em>nvim_root</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.main" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><em class="sig-param">nvim_root</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Profile nvim.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -344,7 +302,7 @@ will behave similarly to the following command run in the shell:</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
 </dd>
 </dl>
-<div class="admonition-todo admonition" id="index-2">
+<div class="admonition-todo admonition" id="id3">
 <p class="admonition-title">Todo</p>
 <p>Allow the <code class="docutils literal notranslate"><span class="pre">test.py</span></code> file that we use for startup to be configured.</p>
 </div>
@@ -352,8 +310,10 @@ will behave similarly to the following command run in the shell:</p>
 
 <dl class="function">
 <dt id="pyutil.nvim_profiling.output_results">
-<code class="descclassname">pyutil.nvim_profiling.</code><code class="descname">output_results</code><span class="sig-paren">(</span><em>output_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#output_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.output_results" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">output_results</code><span class="sig-paren">(</span><em class="sig-param">output_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#output_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.output_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks that an directory named profiling exists.</p>
+<p>IPython has a function in <span class="xref std std-ref">IPython.utils</span> that I believe is called
+ensure_dir_exists. Do we provide anything that doesn’t?</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Directory to store profiling results in.</p>
@@ -415,13 +375,16 @@ will behave similarly to the following command run in the shell:</p>
 <h3><a href="index.html">Local Table of Contents</a></h3>
 <ul>
 <li><a class="reference internal" href="#">External Commands</a><ul>
-<li><a class="reference internal" href="#module-pyutil.conda_export"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code></a></li>
+<li><a class="reference internal" href="#conda-export"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code></a></li>
 <li><a class="reference internal" href="#module-pyutil.g"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><ul>
 <li><a class="reference internal" href="#subprocess-and-git">Subprocess and Git</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-pyutil.magic_aid"><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code></a><ul>
+<li><a class="reference internal" href="#id1">Magic Aid</a><ul>
 <li><a class="reference internal" href="#ipython-aliases">IPython Aliases</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-pyutil.nvim_profiling"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a></li>
@@ -430,10 +393,10 @@ will behave similarly to the following command run in the shell:</p>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -454,7 +417,7 @@ will behave similarly to the following command run in the shell:</p>
       &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

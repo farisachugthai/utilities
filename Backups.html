@@ -38,6 +38,8 @@
             
   <div class="section" id="backup-utilities">
 <h1>Backup Utilities<a class="headerlink" href="#backup-utilities" title="Permalink to this headline">¶</a></h1>
+<p>All of the following modules are used for creating backups
+for files in as painless a way as possible.</p>
 <div class="section" id="module-pyutil.backup_nt_and_posix">
 <span id="backup-nt-and-posix"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code><a class="headerlink" href="#module-pyutil.backup_nt_and_posix" title="Permalink to this headline">¶</a></h2>
 <p>Backup a directory by appending the date and time and copying over.</p>
@@ -45,15 +47,15 @@
 <h3>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h3>
 <p>This script aims to be platform agnostic and in the long term will be used on
 Windows, Linux, Mac and Android systems.</p>
-<div class="admonition-todo admonition" id="index-0">
+<div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>Consider rewriting using classes to hold state based on OS. Then utilize <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#module-pathlib" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code></a>.</p>
 </div>
 <dl class="function">
 <dt id="pyutil.backup_nt_and_posix.timestamped_dir">
-<code class="descclassname">pyutil.backup_nt_and_posix.</code><code class="descname">timestamped_dir</code><span class="sig-paren">(</span><em>backup_dir</em>, <em>path='.'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#timestamped_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.timestamped_dir" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.backup_nt_and_posix.</code><code class="sig-name descname">timestamped_dir</code><span class="sig-paren">(</span><em class="sig-param">backup_dir</em>, <em class="sig-param">path='.'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#timestamped_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.timestamped_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a backup of a directory. Append date and time to new dir name.</p>
-<div class="admonition-todo admonition" id="index-1">
+<div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>Change this so that it utilizes <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.check_call" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_call()</span></code></a> so we handle return codes in a better way.</p>
 </div>
@@ -78,7 +80,9 @@ Windows, Linux, Mac and Android systems.</p>
 </div>
 <div class="section" id="module-pyutil.rclone">
 <span id="rclone"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code><a class="headerlink" href="#module-pyutil.rclone" title="Permalink to this headline">¶</a></h2>
-<p>Rewriting rclone.sh as a python module.</p>
+<p>Backup files using <a class="reference internal" href="#id3"><span class="std std-ref">rclone</span></a>.</p>
+<div class="section" id="id3">
+<h3>rclone<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p class="rubric">Requires</p>
 <p><a class="reference external" href="https://rclone.org">rclone</a>, a Golang package.</p>
 <ul class="simple">
@@ -99,19 +103,19 @@ to emulate rsync’s file input.</p></li>
 </ul>
 <dl class="class">
 <dt id="pyutil.rclone.CloudProvider">
-<em class="property">class </em><code class="descclassname">pyutil.rclone.</code><code class="descname">CloudProvider</code><a class="reference internal" href="_modules/pyutil/rclone.html#CloudProvider"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.CloudProvider" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.rclone.</code><code class="sig-name descname">CloudProvider</code><a class="reference internal" href="_modules/pyutil/rclone.html#CloudProvider"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.CloudProvider" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Emulate the provider rclone is syncing to.</p>
-<dl class="attribute">
+<dl class="method">
 <dt id="pyutil.rclone.CloudProvider.url">
-<code class="descname">url</code><a class="reference internal" href="_modules/pyutil/rclone.html#CloudProvider.url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.CloudProvider.url" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">url</code><a class="reference internal" href="_modules/pyutil/rclone.html#CloudProvider.url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.CloudProvider.url" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.rclone._dir_checker">
-<code class="descclassname">pyutil.rclone.</code><code class="descname">_dir_checker</code><span class="sig-paren">(</span><em>dir_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#_dir_checker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone._dir_checker" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.rclone.</code><code class="sig-name descname">_dir_checker</code><span class="sig-paren">(</span><em class="sig-param">dir_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#_dir_checker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone._dir_checker" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check that necessary directories exist.</p>
 <p>If the default <code class="xref py py-obj docutils literal notranslate"><span class="pre">dst</span></code> doesn’t exist, definitely create it.
 If the user provided <code class="xref py py-obj docutils literal notranslate"><span class="pre">src</span></code> doesn’t exist, crash without making one.</p>
@@ -121,25 +125,25 @@ running the script aware of the fact that it is nonexistent.</p>
 
 <dl class="function">
 <dt id="pyutil.rclone._parse_arguments">
-<code class="descclassname">pyutil.rclone.</code><code class="descname">_parse_arguments</code><span class="sig-paren">(</span><em>cwd=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone._parse_arguments" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.rclone.</code><code class="sig-name descname">_parse_arguments</code><span class="sig-paren">(</span><em class="sig-param">cwd=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone._parse_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse user-given arguments.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.rclone._set_debugging">
-<code class="descclassname">pyutil.rclone.</code><code class="descname">_set_debugging</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#_set_debugging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone._set_debugging" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.rclone.</code><code class="sig-name descname">_set_debugging</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#_set_debugging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone._set_debugging" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable debug logging.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.rclone.main">
-<code class="descclassname">pyutil.rclone.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.main" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.rclone.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receive user arguments and begin executing module appropriately.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.rclone.rclone_base_case">
-<code class="descclassname">pyutil.rclone.</code><code class="descname">rclone_base_case</code><span class="sig-paren">(</span><em>src</em>, <em>dst</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#rclone_base_case"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.rclone_base_case" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.rclone.</code><code class="sig-name descname">rclone_base_case</code><span class="sig-paren">(</span><em class="sig-param">src</em>, <em class="sig-param">dst</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#rclone_base_case"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.rclone_base_case" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base case that all other functions build off of.</p>
 <p>This function shouldn’t be executed directly; however, it serves as a good
 template detailing a function and useful command with parameters that
@@ -148,7 +152,7 @@ rclone uses.</p>
 <p>There are situations in which one wants to follow symlinks and others
 that they don’t.</p>
 <p>This command assumes a use case and configures it rclone for it properly.</p>
-<div class="admonition-todo admonition" id="index-2">
+<div class="admonition-todo admonition" id="id5">
 <p class="admonition-title">Todo</p>
 <p>rclone takes an argument for user-agent</p>
 </div>
@@ -166,7 +170,7 @@ bucket among many other things.</p></li>
 
 <dl class="function">
 <dt id="pyutil.rclone.rclone_follow">
-<code class="descclassname">pyutil.rclone.</code><code class="descname">rclone_follow</code><span class="sig-paren">(</span><em>dst</em>, <em>src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#rclone_follow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.rclone_follow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.rclone.</code><code class="sig-name descname">rclone_follow</code><span class="sig-paren">(</span><em class="sig-param">dst</em>, <em class="sig-param">src</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#rclone_follow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.rclone_follow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Follow symlinks.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -182,7 +186,7 @@ bucket among many other things.</p></li>
 
 <dl class="function">
 <dt id="pyutil.rclone.run">
-<code class="descclassname">pyutil.rclone.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.rclone.</code><code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">cmd</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/rclone.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute the required command in a subshell.</p>
 <p>First the command is splited used typical shell grammer.</p>
 <p>A new process is created, and from the resulting subprocess object,
@@ -203,6 +207,7 @@ of <code class="docutils literal notranslate"><span class="pre">returncode</span
 </dl>
 </dd></dl>
 
+</div>
 </div>
 </div>
 
@@ -255,16 +260,19 @@ of <code class="docutils literal notranslate"><span class="pre">returncode</span
 <li><a class="reference internal" href="#motivation">Motivation</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.rclone"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.rclone"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code></a><ul>
+<li><a class="reference internal" href="#id3">rclone</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -285,7 +293,7 @@ of <code class="docutils literal notranslate"><span class="pre">returncode</span
       &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -56,7 +56,7 @@ prettified text.</p>
 <code class="xref py py-mod docutils literal notranslate"><span class="pre">docutils.state_machine</span></code>.</p>
 <dl class="class">
 <dt id="pyutil.wrap.ZimText">
-<em class="property">class </em><code class="descclassname">pyutil.wrap.</code><code class="descname">ZimText</code><span class="sig-paren">(</span><em>text=None</em>, <em>width=80</em>, <em>break_long_words=False</em>, <em>break_on_hyphens=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/wrap.html#ZimText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.wrap.ZimText" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.wrap.</code><code class="sig-name descname">ZimText</code><span class="sig-paren">(</span><em class="sig-param">text=None</em>, <em class="sig-param">width=80</em>, <em class="sig-param">break_long_words=False</em>, <em class="sig-param">break_on_hyphens=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/wrap.html#ZimText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.wrap.ZimText" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.TextWrapper" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">textwrap.TextWrapper</span></code></a></p>
 <p>Subclass <code class="xref py py-class docutils literal notranslate"><span class="pre">textwrap.TextWrapper()</span></code>.</p>
 <p>Primarily want to modify initialized arguments.
@@ -83,12 +83,12 @@ private and public.</p>
 </div>
 <dl class="method">
 <dt id="pyutil.wrap.ZimText.string2lines">
-<code class="descname">string2lines</code><span class="sig-paren">(</span><em>self</em>, <em>convert_whitespace=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/wrap.html#ZimText.string2lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.wrap.ZimText.string2lines" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">string2lines</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">convert_whitespace=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/wrap.html#ZimText.string2lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.wrap.ZimText.string2lines" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyutil.wrap.ZimText.wrap_paragraphs">
-<code class="descname">wrap_paragraphs</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/wrap.html#ZimText.wrap_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.wrap.ZimText.wrap_paragraphs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wrap_paragraphs</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/wrap.html#ZimText.wrap_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.wrap.ZimText.wrap_paragraphs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrap multiple paragraphs to fit a specified width.</p>
 <p>This is equivalent to <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.wrap" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">textwrap.wrap()</span></code></a>, but with support for multiple
 paragraphs, as separated by empty lines.</p>
@@ -175,10 +175,10 @@ paragraphs, as separated by empty lines.</p>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -199,7 +199,7 @@ paragraphs, as separated by empty lines.</p>
       &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

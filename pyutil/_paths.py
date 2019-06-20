@@ -20,7 +20,7 @@ import logging
 from pathlib import Path
 
 
-class PathTools(Path):
+class PathTools:
     """Frequently used methods for :mod:`pathlib` bundled together.
 
     Here's a few interesting methods from the original implementation of
@@ -43,7 +43,12 @@ class PathTools(Path):
     def __init__(self, log_level=logging.WARNING, **kwargs):
         """Initialize the PathTools object with an optional argument for logging."""
         self.log_level = log_level
-        super().__init__(kwargs)
+        self._Path = Path('.')
+
+    def __repr__(self):
+        """Stolen from the stdlib."""
+        return "{}({!r})".format(self.__class__.__name__,
+                                 self._Path.as_posix())
 
     def logger(self):
         """Initialize a named logger for the PathTools object."""
@@ -63,11 +68,10 @@ class PathTools(Path):
         -------
         Bool
 
-
         """
-        if self.joinpath(output_dir).exists() is False:
+        if self._Path.joinpath(output_dir).exists() is False:
             try:
-                self.mkdir(output_dir)
+                self._Path.mkdir(output_dir)
             except OSError as e:
                 self.logger.error(
                     "The directory {} does not exist but we can't create it because: {}"
@@ -75,18 +79,9 @@ class PathTools(Path):
             else:
                 return True
         else:
-            if self.joinpath(output_dir).is_dir() is False:
+            if self._Path.joinpath(output_dir).is_dir() is False:
                 self.logger.error(
                     'The output directory exists but is not a directory.')
                 return False
             else:
                 return True
-
-        def as_posix(self):
-            """Return the string representation of the path with forward (/) slashes."""
-            f = self._flavour
-            return str(self).replace(f.sep, '/')
-
-        def __repr__(self):
-            """Is it so wrong to copy paste?"""
-            return "{}({!r})".format(self.__class__.__name__, self.as_posix())

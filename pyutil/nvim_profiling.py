@@ -64,8 +64,15 @@ LOG_LEVEL = "logging.WARNING"
 
 def _parse_arguments():
     """Parse arguments given by the user."""
-    parser = argparse.ArgumentParser(prog='Neovim Profiler',
-                                     description='Automate timing startuptime.')
+    parser = argparse.ArgumentParser(
+        prog='Neovim Profiler', description='Automate profiling startuptime.')
+
+    parser.add_argument(
+        "-p",
+        "--path",
+        dest="path",
+        metavar="path",
+        help="Path to the location of the temporary buffer for Nvim.")
 
     parser.add_argument(
         '-ll',
@@ -151,6 +158,24 @@ def find_init_files():
         return userConf
 
 
+def temporary_buffer(buffer=None, path=None):
+    """TODO: Docstring for temporary_buffer.
+
+    Parameters
+    ----------
+    buffer : TODO, optional
+    path : TODO, optional
+
+    Returns
+    -------
+    TODO
+
+    """
+    if path is None:
+        path = os.path.join(os.environ.get('PREFIX'), '', 'tmp')
+    os.environ.putenv('NVIM_LISTEN_ADDRESS', path)
+
+
 def main(nvim_root):
     """Profile nvim.
 
@@ -184,7 +209,7 @@ if __name__ == "__main__":
     user_args = _parse_arguments()
 
     try:
-        LOG_LEVEL = args.log_level
+        LOG_LEVEL = user_args.log_level
     except Exception as e:
         LOGGER.error(e, exc_info=True)
 

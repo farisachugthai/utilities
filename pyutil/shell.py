@@ -115,15 +115,18 @@ def _validate(subprocess_output):
 
     Then the bytes that were returned from the *presumably* Unix OS
     will be decoded into a human readable format.
+
+    Admittedly, the subprocess.run() parameter universal_newlines
+    would've been simpler than this.
     """
     if subprocess_output.returncode != 0:
         logging.error(subprocess_output.returncode)
+
+    if isinstance(subprocess_output.stdout, bytes):
+        decoded_output = codecs.decode(subprocess_output.stdout)
+        # also probably gonna wanna pprint that when you receive it
+        return decoded_output
     else:
-        if isinstance(subprocess_output.stdout, bytes):
-            decoded_output = codecs.decode(subprocess_output.stdout)
-            # also probably gonna wanna pprint that when you receive it
-            return decoded_output
-        else:
-            logging.warning("Subprocess didn't return bytes. Maybe str?")
-            logging.warning(type(subprocess_output.stdout))
-            return subprocess_output
+        logging.warning("Subprocess didn't return bytes. Maybe str? Type was:")
+        logging.warning('%s' % type(subprocess_output.stdout))
+        return subprocess_output

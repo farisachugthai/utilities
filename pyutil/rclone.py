@@ -91,7 +91,6 @@ def _parse_arguments(cwd=None, **kwargs):
         return parser.parse_args()
 
 
-
 def _set_debugging():
     """Enable debug logging."""
     root = logging.getLogger(name=__name__)

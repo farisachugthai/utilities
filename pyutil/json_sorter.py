@@ -2,10 +2,15 @@
 # -*- coding: utf-8 -*-
 r"""Take a :mod:`json` file and sort the keys and insert 4 spaces for indents.
 
+==================
+:mod:`json` sorter
+==================
+
 This module was originally used to fix my settings.json from VSCode.
 
 One Line Solution
 =================
+
 >>> sorted((json.loads(open('settings.json').read()).items()), key=operator.getitemattr)
 
 You definitely shouldn't implement it as a one liner, *as you can clearly see,*;
@@ -20,10 +25,19 @@ The logger **should** be set up that way.
 This code is going to easily clear 100 lines when a JSON encoded object shouldn't
 take more than a few lines to deserialize and work with.
 
+This'll serve as a good template for testing out tools to build a simple
+script with.
+
+The problem is already solved. Let's see what we can't squeeze out of our tools
+along the way.
+
+----------
+
 """
 import argparse
 import json
 import logging
+import operator
 import os
 import sys
 import yaml
@@ -36,7 +50,7 @@ LOG_LEVEL = 'logging.WARNING'
 
 def _parse_arguments():
     """Parse arguments given by the user."""
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(prog="JSON sorter", description=__doc__)
 
     parser.add_argument('input',
                         type=argparse.FileType('r'),
@@ -56,17 +70,19 @@ def _parse_arguments():
                         type=argparse.FileType(mode='w'),
                         help="YAML file to write to. Defaults to stdout.")
 
+    # is there a way to have info printed with this from argparse?
     parser.add_argument('-l',
                         '--log',
                         action='store_true',
                         dest="log",
+                        default=False,
                         help='Turn logging on and print to console.')
 
     parser.add_argument(
         '-ll',
         '--log_level',
         dest='log_level',
-        metavar='log level.',
+        metavar='log level',
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         help='Set the logging level')
 
@@ -94,8 +110,7 @@ def convert_to_yaml(file_obj):
         Converted :mod:`PyYAML` text.
 
     """
-    json_data = json.loads(open(file_obj))
-    converted_json_data = json.dumps(json_data, sort_keys=True)
+    converted_json_data = sort_json(file_obj)
     # output yaml
     yaml_text = yaml.dump(yaml.load(converted_json_data),
                           default_flow_style=False)
@@ -122,14 +137,16 @@ def sort_json(file_obj):
     with open(file_obj) as f:
         settings = json.loads(f.read())
 
-    json_str = json.dumps(settings, indent=4, sort_keys=True)
+    json_str = sorted(json.dumps(settings, indent=4), key=operator.getitem())
 
-    logging.debug('Formatted json:\n' + str(json_str))
+    logging.debug('Formatted json: %s\n' % str(json_str))
     return json_str
 
 
 def text_writer(plaintext, output_file=sys.stdout):
     """Write the previously inputted text to a file.
+
+    This function could easily be utilized over the whole package though.
 
     Parameters
     ----------
@@ -138,7 +155,6 @@ def text_writer(plaintext, output_file=sys.stdout):
     output_file : str
         Text file to write formatted :mod:`json` to.
         It will only write to the file if the filename currently doesn't exist.
-
 
     """
     with open(output_file, 'xt') as f:
@@ -152,7 +168,7 @@ def main():
 
     try:
         LOG_LEVEL = args.log_level
-    except Exception as e:  # IndexError?
+    except AttributeError as e:
         print(e)
 
     LOGGER.setLevel(level=LOG_LEVEL)

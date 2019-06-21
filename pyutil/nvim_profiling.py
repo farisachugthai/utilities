@@ -11,7 +11,6 @@
     >>> vim.command('edit $MYVIMRC')
     >>> vim_root = vim.current.buffer
 
-
 Or something to that effect.
 
 Feb 28, 2019:
@@ -38,8 +37,8 @@ Nice intuition man. Look what I found today.:
 
 Outputs <~/.config/nvim>. So that should work.
 
-In the future this module is going to move towards implementing a command that
-will behave similarly to the following command run in the shell:
+In the future this module is going to move towards implementing a command
+that will behave similarly to the following command run in the shell:
 
 .. code-block:: shell-session
 

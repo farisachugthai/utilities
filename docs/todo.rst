@@ -2,6 +2,8 @@
 todo
 ========
 
+The list of todos.
+
 scripts
 ---------
 
@@ -14,7 +16,6 @@ scripts
   to update the scripts in `<~/bin>`_. Quite annoying to do this manually.
 - Rsync and rclone scripts aren't close to done. Part of that will be
   encrypting/archiving your notebooks and pulling them down on different devices.
-- :ref:`pyutil.conda_export._cmd_wrapper()` doesn't work.
 
 Linting
 -------

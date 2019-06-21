@@ -60,17 +60,6 @@ Remaining Modules
     :undoc-members:
     :show-inheritance:
 
-
-:mod:`find_pics`
-----------------
-
-.. automodule:: pyutil.find_pics
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-
 :mod:`itersrc`
 ---------------
 

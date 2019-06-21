@@ -215,7 +215,7 @@ bind '"\C-g\C-h": "$(fgh)\e\C-e\er"'
 bind '"\C-g\C-r": "$(fgr)\e\C-e\er"'
 
 # Different gist
-gstash() { # {{{1 preview window for git stashes
+fgstash() { # {{{1 preview window for git stashes
   local out k reflog
   out=(
     $(git stash list --pretty='%C(yellow)%gd %>(14)%Cgreen%cr %C(blue)%gs' |
@@ -236,7 +236,7 @@ gstash() { # {{{1 preview window for git stashes
 
 # Updated versions of the above. From Choi's bashrc.
 
-fs() {
+fgs() {  # git status through fzf
   is_in_git_repo || return
   git -c color.status=always status --short |
   fzf-down -m --ansi --nth 2..,.. \
@@ -244,7 +244,7 @@ fs() {
   cut -c4- | sed 's/.* -> //'
 }
 
-fb() {
+fgb() {  # git branch
   is_in_git_repo || return
   git branch -a --color=always | grep -v '/HEAD\s' | sort |
   fzf-down --ansi --multi --tac --preview-window right:70% \
@@ -253,14 +253,14 @@ fb() {
   sed 's#^remotes/##'
 }
 
-ft() {
+fgt() {  # tags
   is_in_git_repo || return
   git tag --sort -version:refname |
   fzf-down --multi --preview-window right:70% \
     --preview 'git show --color=always {} | head -200'
 }
 
-fh() {
+fgh() {  # hist
   is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
   fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
@@ -269,7 +269,7 @@ fh() {
   grep -o "[a-f0-9]\{7,\}"
 }
 
-rr() {
+fgrr() {
   is_in_git_repo || return
   git remote -v | awk '{print $1 "\t" $2}' | uniq |
   fzf-down --tac \
@@ -277,8 +277,13 @@ rr() {
   cut -d$'\t' -f1
 }
 
-rs() {
+fgshs() {
   is_in_git_repo || return
   git stash list | fzf-down --reverse -d: --preview 'git show --color=always {1}' |
   cut -d: -f1
+}
+
+fgrp() {
+    git grep -C 0 --heading --break --word-regex --no-line-number |
+    fzf-down --tac --reverse --ansi
 }

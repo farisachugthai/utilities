@@ -4,6 +4,7 @@
 
 Sphinx Configuration File
 =========================
+
 This file does only contain a selection of the most common options. For a
 full list see the documentation:
 
@@ -15,22 +16,22 @@ If extensions (or modules to document with autodoc) are in another
 directory, add these directories to `sys.path` here.
 
 If the directory is relative to the documentation root, use
-:func:`os.path.abspath()` to make it absolute, like shown here.
-
+:func:`os.path.abspath()` to make it absolute, like shown `here`_.
 
 .. code-block:: python3
 
     sys.path.insert(0, os.path.abspath('.'))
 
-
-
 As stated at:
 
-:URL: `<https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix>`_
+.. _here: `https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix`
 
 However, the filetype mapping came about in 1.8 so make sure to add that
 ``needs-sphinx=version`` bit
 
+Also note the :ref:`setup()` function modeled off of parameters described in the `official documentation`_.
+
+.. _official documentation: http://www.sphinx-doc.org/en/master/extdev/appapi.html
 
 """
 from datetime import datetime
@@ -40,14 +41,12 @@ import sys
 
 # So even though it sets off the linters this is needed to recognize numpydoc
 # as a package
-
 from numpydoc import numpydoc  # noqa
 import flake8_rst  # noqa
-# from ..docs.sphinxext import pygmentsdoc  # noqa
 
 from pyutil.__about__ import __version__
 
-logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.WARNING)
 
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
@@ -91,7 +90,8 @@ extensions = [
     'sphinx.ext.autosummary', 'sphinx.ext.doctest',
     'sphinx.ext.inheritance_diagram', 'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon', 'sphinx.ext.todo', 'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages', 'IPython.sphinxext.ipython_console_highlighting',
+    'sphinx.ext.githubpages',
+    'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
     'matplotlib.sphinxext.plot_directive', 'matplotlib.sphinxext.mathmpl',
     'numpydoc', 'flake8_rst.sphinxext.custom_roles', 'pygmentsdoc'
@@ -166,7 +166,6 @@ pygments_style = 'sphinx'
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#
 html_theme_options = {
     "github_user": "Faris A. Chugthai",
     "github_repo": "utilities",
@@ -188,9 +187,6 @@ html_static_path = ['_static']
 # defined by theme itself.  Builtin themes are using these templates by
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
-#
-# html_sidebars = {}
-# From the alabaster website
 html_sidebars = {
     '**': [
         'about.html',
@@ -263,11 +259,9 @@ epub_title = project
 
 # The unique identifier of the text. This can be a ISBN number
 # or the project homepage.
-#
 # epub_identifier = ''
 
 # A unique identification for the text.
-#
 # epub_uid = ''
 
 # A list of files that should not be packed into the epub file.
@@ -338,13 +332,6 @@ def setup(app):
     .. admonition::
 
         Don't use :func:`os.path.abspath()` if you need to extend this.
-
-    See Also
-    --------
-    /usr/lib/python3/site-packages/sphinx/config.py : mod
-        Source code where this is implemented
-    http://www.sphinx-doc.org/en/master/extdev/appapi.html : URL
-        help docs
 
     """
     custom_css = os.path.join('_static', '', 'custom.css')

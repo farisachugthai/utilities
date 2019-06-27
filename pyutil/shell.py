@@ -34,7 +34,9 @@ class BaseCommand:
 
     def __init__(self, cmd=None):
         self.cmd = cmd
-        LOGGER.debug("Cmd is: %s" % str(self.cmd))
+
+    def __repr__(self):
+        return 'BaseCommand: {!r}'.format(self.cmd)
 
     def run(self):
         """Run a safer subprocess.
@@ -60,7 +62,7 @@ class BaseCommand:
 
         """
         try:
-            self.cmd = shlex.quote(str(self.cmd))
+            self.cmd = shlex.split(shlex.quote(str(self.cmd)))
         except TypeError:
             return None
 

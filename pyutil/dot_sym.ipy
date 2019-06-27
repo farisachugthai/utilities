@@ -23,11 +23,12 @@ Or alternatively
 """
 import logging
 import os
+from pathlib import Path
 import re
-import sys
 import subprocess
+import sys
 
-HOME = os.path.join(os.path.expanduser("~"), "")
+HOME = Path.home()
 PROJ = os.path.join(HOME, "projects")
 REPO = os.path.join(PROJ, "dotfiles")
 
@@ -58,21 +59,21 @@ def get_dotfiles(proj):
 def dir_checker(repo):
     """Checks that all directories needed by ``repo`` exist in ``home``.
 
-    .. todo:: Actually as it stands I don't think it looks in ``home`` to make dirs.
+    Primarily just curious to see how the 2 different logging calls will turn out.::
 
+        logging.info("Directory {}  being created.".format(directory.name))
+        logging.debug("Directory: %s exists already." % directory.name)
 
     """
     for directory in os.scandir(repo):
         if not directory.name.startswith('.') and not directory.is_dir():
             os.makedirs(repo, exist_ok=False)
-            logging.info("Directory " + os.path.abspath(directory.name) +
-                         "being created.")
+            logging.info("Directory {}  being created.".format(directory.name))
         elif not directory.name.startswith('.') and directory.is_dir():
-            logging.debug("Directory: " + os.path.abspath(directory.name) +
-                          "exists already.")
+            logging.debug("Directory: %s exists already." % directory.name)
 
 
-def backup_prompt(fobj):
+def backup_prompt(fobj=None):
     """Prompts the user to determine whether we should back up ``fobj``.
 
     Parameters
@@ -139,8 +140,9 @@ def main():
     try:
         repo_files = subprocess.run(['git', 'ls-files'], capture_output=True)
     except subprocess.CalledProcessError as e:
-        logging.debug("CalledProcessError was: " + str(e.returncode) +
-                      str(e.args) + str(e.stdout) + str(e.stderr))
+        logging.debug(
+            "CalledProcessError was: %s %s %s %s " % str(e.returncode),
+            str(e.args), str(e.stdout), str(e.stderr))
         sys.exit()
 
     for f in repo_files:
@@ -148,6 +150,6 @@ def main():
 
 
 if __name__ == '__main__':
-    logging.getLogger(name=__name__)
+    logging.basicConfig(level=logging.INFO)
 
     main()

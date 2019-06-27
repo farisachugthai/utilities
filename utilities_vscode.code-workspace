@@ -2,9 +2,6 @@
     "folders": [
         {
             "path": "."
-        },
-        {
-            "path": "/home/faris/google-cloud-sdk"
         }
     ],
     "settings": {
@@ -54,9 +51,7 @@
         "python.condaPath": "~/miniconda3/bin/conda",
         "python.linting.banditEnabled": true,
         "python.terminal.executeInFileDir": true,
-        "python.testing.cwd": "test",
-        "python.testing.nosetestsEnabled": true,
-        "python.testing.pyTestEnabled": true,
+        "python.testing.cwd": "./test/",
         "restructuredtext.sphinxBuildPath": "${workspaceFolder}/docs",
         "shellcheck.useWorkspaceRootAsCwd": true,
         "vim.easymotion": true,
@@ -69,6 +64,10 @@
         "vim.statusBarColorControl": true,
         "vim.useSystemClipboard": true,
         "vim.visualstar": true,
-        "yaml.format.enable": true
+        "yaml.format.enable": true,
+        "vim.camelCaseMotion.enable": true,
+        "vim.highlightedyank.enable": true,
+        "vim.enableNeovim": true,
+        "vim.neovimPath": "/usr/bin/nvim"
     }
 }

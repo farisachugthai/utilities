@@ -68,13 +68,11 @@ def _parse_arguments():
                         action='version',
                         version='%(prog)s' + __version__)
 
-    logging.debug("Dir(parser): {} ".format(dir(parser)))
-
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit()
     else:
-        return parser.parse_args()
+        return parser
 
 
 def generate_dest(dest, glob_pattern=None):
@@ -85,6 +83,11 @@ def generate_dest(dest, glob_pattern=None):
         yield Path(dest).glob(glob_pattern)
     else:
         yield Path(dest).glob('*')
+
+
+def basenames(directory):
+    """This might be a good method in a dataclass if we wanted to try that."""
+    return [i.stem + i.suffix for i in directory.iterdir()]
 
 
 def main(destination_dir, source_dir):
@@ -110,6 +113,11 @@ def main(destination_dir, source_dir):
     That list comprehension is made and then iterated over. Should be a
     smarter way to do this.
 
+    Ah poop. I think we need to combine the output from `generate_dest` and
+    the list comprehension.
+
+    Also gonna throw another function out that might help.
+
     Parameters
     ----------
     destination_dir : str
@@ -118,7 +126,11 @@ def main(destination_dir, source_dir):
         Directory where symlinks are created.
 
     """
-    source_files = [i.joinpath(source_dir) for i in destination_dir.iterdir() if i.is_file()]
+    source_files = [
+        i.joinpath(source_dir)
+        for i in destination_dir.iterdir()
+        if i.is_file()
+    ]
     for i in source_files:
         logging.debug('i is %s' % i)
         logging.debug('destination_dir is %s' % destination_dir)
@@ -130,14 +142,18 @@ def main(destination_dir, source_dir):
         except OSError:
             # let's be a little more specific
             # except WindowsError: breaks linux
-            print("Ensure that you are running this script as an admin"
-                  " if it's being run on Windows!")
-            raise RuntimeError
+            raise RuntimeError(
+                'Ensure that you are running this script as an admin'
+                ' when running on Windows!')
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
-    args = _parse_arguments()
+    logging.basicConfig(level=logging.DEBUG,
+                        format='{filename} : {asctime} : {levelno}\t{msg}')
+    parser = _parse_arguments()
+    # Moved this up and out of _parse_arguments so you can introspect...and we can kill
+    # that unnecessary logging call
+    args = parser.parse_args()
 
     dest = args.destination
 

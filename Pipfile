@@ -11,6 +11,9 @@ yapf = "*"
 utilities = {editable = true,path = "."}
 pynvim = "*"
 flake8-rst = "*"
+bandit = "*"
+flake8 = "*"
+pydocstyle = "*"
 
 [packages]
 utilities = {editable = true,path = "."}

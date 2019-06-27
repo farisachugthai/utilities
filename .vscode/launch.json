@@ -37,11 +37,16 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Python: Current File (Integrated Terminal)",
+            "name": "dlink2",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
+            "program": "${workspaceRoot}/pyutil/dlink2.py",
+            "console": "integratedTerminal",
+            "args": [
+                "~/projects/viconf/.config/nvim/after/plugin",
+                "-s",
+                "~/.config/nvim/after/plugin"
+            ],
         },
         {
             "name": "Python: Attach",

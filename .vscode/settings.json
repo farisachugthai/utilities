@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/faris/miniconda3/envs/utilities/bin/python",
+    "python.pythonPath": "/home/faris/.local/share/virtualenvs/utilities-GN1BNJ3g/bin/python",
     "files.exclude": {
         "**/.git": false,
         "**/.svn": true,
@@ -7,16 +7,16 @@
         "**/CVS": true,
         "**/.DS_Store": true
     },
-    "python.unitTest.unittestArgs": [
+    "python.testing.unittestArgs": [
         "-v",
         "-s",
         "./test",
         "-p",
         "test_*.py"
     ],
-    "python.unitTest.pyTestEnabled": false,
-    "python.unitTest.nosetestsEnabled": false,
-    "python.unitTest.unittestEnabled": true,
+    "python.testing.pyTestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.unittestEnabled": true,
     "files.eol": "\n",
     "editor.fontLigatures": true,
     "restructuredtext.experimental": true,
@@ -31,5 +31,11 @@
     "python.testing.pyTestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.testing.unittestEnabled": true,
-    "restructuredtext.confPath": "${workspaceFolder}/docs"
+    "restructuredtext.confPath": "${workspaceFolder}/docs",
+    "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "restructuredtext.builtDocumentationPath": "${workspaceFolder}/docs/_build/html",
+    "restructuredtext.languageServer.disabled": false,
+    "python.dataScience.exportWithOutputEnabled": true,
+    "python.dataScience.sendSelectionToInteractiveWindow": true,
+    "python.formatting.provider": "yapf"
 }

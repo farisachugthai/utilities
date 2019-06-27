@@ -26,8 +26,6 @@ from IPython.utils.path import ensure_dir_exists
 
 from pyutil.__about__ import __version__
 
-logging.getLogger(name=__name__)
-
 
 def _parse_arguments():
     parser = argparse.ArgumentParser(
@@ -59,7 +57,7 @@ def _parse_arguments():
     parser.add_argument(
         '-r',
         '--recursive',
-        action='store_True',
+        action='store_true',
         default=False,
         help=
         "Whether to recursively symlink the child directories below the destination folder as well."
@@ -109,6 +107,8 @@ def main(destination_dir, source_dir):
     running a recursive glob on the destination then we should easily be able
     to handle the rest.
 
+    That list comprehension is made and then iterated over. Should be a
+    smarter way to do this.
 
     Parameters
     ----------
@@ -118,19 +118,21 @@ def main(destination_dir, source_dir):
         Directory where symlinks are created.
 
     """
-    for i in destination_dir.iterdir():
-        if Path.is_file(i):
-            source_file = os.path.join(source_dir, i)
-            try:
-                i.symlink_to(sourcefile)
-            except FileExistsError:
-                pass
-            # except OSError:
+    source_files = [i.joinpath(source_dir) for i in destination_dir.iterdir() if i.is_file()]
+    for i in source_files:
+        logging.debug('i is %s' % i)
+        logging.debug('destination_dir is %s' % destination_dir)
+        logging.debug('source_dir is %s' % source_dir)
+        try:
+            i.symlink_to(destination_dir.joinpath(i))
+        except FileExistsError:
+            pass
+        except OSError:
             # let's be a little more specific
-            except WindowsError:
-                print("Ensure that you are running this script as an admin"
-                      " if it's being run on Windows!")
-                raise RuntimeError
+            # except WindowsError: breaks linux
+            print("Ensure that you are running this script as an admin"
+                  " if it's being run on Windows!")
+            raise RuntimeError
 
 
 if __name__ == "__main__":

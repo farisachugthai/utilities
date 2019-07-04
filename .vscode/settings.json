@@ -12,7 +12,7 @@
         "-s",
         "./test",
         "-p",
-        "test_*.py"
+        "test*.py"
     ],
     "python.testing.pyTestEnabled": false,
     "python.testing.nosetestsEnabled": false,

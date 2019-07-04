@@ -18,6 +18,7 @@ simply utilize it.
 """
 import codecs
 import logging
+import reprlib
 import shlex
 import subprocess
 
@@ -28,8 +29,6 @@ class BaseCommand:
     """Create a base command class.
 
     Pass ``cmd`` to :mod:`subprocess` and process output and build in logging.
-
-
     """
 
     def __init__(self, cmd=None):
@@ -41,9 +40,6 @@ class BaseCommand:
     def run(self):
         """Run a safer subprocess.
 
-        Currently getting a TypeError. Need to cast to str. Might need to
-        define __str__.
-
         Parameters
         ----------
         cmd : list, optional
@@ -53,23 +49,22 @@ class BaseCommand:
 
         Returns
         -------
-        output : bytes
+        output : str
             Output from subprocess. Can return `NoneType` if no `cmd`.
 
         Examples
         --------
-        >>> BaseCommand().run('python', '--version')
+        >>> BaseCommand(['ls']).run()
+        ... CompletedProcess(args='ls', returncode=0...)
+
 
         """
-        try:
-            self.cmd = shlex.split(shlex.quote(str(self.cmd)))
-        except TypeError:
-            return None
-
-        output = subprocess.run(self.cmd, capture_output=True)
-
-        validated_output = _validate(output)
-        return validated_output
+        shlexed_cmd = shlex.quote(' '.join(i for i in self.cmd if i))
+        output = subprocess.run(shlexed_cmd, capture_output=True, text=True)
+        # meth call should be something like reprlib.aRepr.repr_str(str, level)
+        # aRepr isn't callable so don't worry about initializing
+        # logging.info('Output: %s' % reprlib.Repr(output))
+        return output
 
     def popen(self, cmd=None):
         """Execute the required command in a subshell.
@@ -105,30 +100,6 @@ class BaseCommand:
             process = subprocess.Popen([self.cmd])
 
         if process.wait():
-            raise SystemExit(process.returncode)
+            raise subprocess.CalledProcessError(process.returncode)
         else:
             return process.returncode
-
-
-def _validate(subprocess_output):
-    """Take output from :func:`subprocess.run()` and test
-
-    First the func will check :attr:`returncode`.
-
-    Then the bytes that were returned from the *presumably* Unix OS
-    will be decoded into a human readable format.
-
-    Admittedly, the subprocess.run() parameter universal_newlines
-    would've been simpler than this.
-    """
-    if subprocess_output.returncode != 0:
-        logging.error(subprocess_output.returncode)
-
-    if isinstance(subprocess_output.stdout, bytes):
-        decoded_output = codecs.decode(subprocess_output.stdout)
-        # also probably gonna wanna pprint that when you receive it
-        return decoded_output
-    else:
-        logging.warning("Subprocess didn't return bytes. Maybe str? Type was:")
-        logging.warning('%s' % type(subprocess_output.stdout))
-        return subprocess_output

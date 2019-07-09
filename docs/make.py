@@ -179,7 +179,7 @@ class DocBuilder(BaseCommand):
 
         Examples
         --------
-        >>> DocBuilder(num_jobs=4)._sphinx_build('html')
+        >>> DocBuilder(num_jobs=4).sphinx_build('html')
 
         """
         if kind not in ('html', 'latex'):
@@ -230,7 +230,7 @@ if __name__ == "__main__":
     logging.debug(jobs)
     builder = args.builder
 
-    DocBuilder(f'make -j{jobs} {builder}').run()
-
     if os.environ.get('ANDROID_ROOT'):
         termux_hack()
+    else:
+        DocBuilder(f'make -j{jobs} {builder}').sphinx_build(kind=builder)

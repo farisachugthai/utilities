@@ -93,7 +93,6 @@ extensions = [
     'sphinx.ext.githubpages',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
-    'matplotlib.sphinxext.plot_directive', 'matplotlib.sphinxext.mathmpl',
     'numpydoc', 'flake8_rst.sphinxext.custom_roles', 'pygmentsdoc'
 ]
 
@@ -104,6 +103,13 @@ except ImportError:
 else:
     logging.debug('Magics was imported.')
     extensions.append('magics')
+
+try:
+    import matplotlib
+except (ImportError,ModuleNotFoundError):
+    pass
+else:
+    'matplotlib.sphinxext.plot_directive', 'matplotlib.sphinxext.mathmpl',
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

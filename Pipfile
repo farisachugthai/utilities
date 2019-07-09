@@ -14,9 +14,15 @@ flake8-rst = "*"
 bandit = "*"
 flake8 = "*"
 pydocstyle = "*"
+sphinx = "*"
 
 [packages]
 utilities = {editable = true,path = "."}
+nose = "*"
+flake8-rst = "*"
 
 [requires]
 python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true

@@ -8,7 +8,8 @@ Directory Linker Rewrite
 
 .. versionchanged:: Added argparse
 
-This is a rewrite of a script I've had for years, so I decided to go above and beyond.
+This is a rewrite of a script I've had for years, so I decided to go above
+and beyond.
 
 
 See Also
@@ -85,12 +86,12 @@ def generate_dest(dest, glob_pattern=None):
         yield Path(dest).glob('*')
 
 
-def basenames(directory):
+def get_basenames(directory):
     """This might be a good method in a dataclass if we wanted to try that."""
     return [i.stem + i.suffix for i in directory.iterdir()]
 
 
-def main(destination_dir, source_dir):
+def main(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
     """Symlink user provided files.
 
     The module doesn't immediately check for correct permissions or operating system.
@@ -124,19 +125,26 @@ def main(destination_dir, source_dir):
          Directory where symlinks point to.
     source_dir : str, optional
         Directory where symlinks are created.
-
+    recursive : bool, optional
+        Whether to recursively symlink directories beneath the
+        `destination_dir`. Defaults to False.
+    glob_pattern : str
+        Only symlink files that match a certain pattern.
     """
-    source_files = [
-        i.joinpath(source_dir)
-        for i in destination_dir.iterdir()
-        if i.is_file()
+    base_destination_files = get_basenames(destination_dir)
+
+    full_destination_files = [j for j in destination_dir.iterdir()]
+
+    full_source_files = [
+        Path(i).joinpath(source_dir) for i in base_destination_files
     ]
-    for i in source_files:
-        logging.debug('i is %s' % i)
-        logging.debug('destination_dir is %s' % destination_dir)
-        logging.debug('source_dir is %s' % source_dir)
+    for i in full_source_files:
+        logging.debug('\ni is {0!s}'.format(i))
+        logging.debug('\nfull_destination_files is {!s}'.format(full_destination_files))
+        logging.debug('\nsource_dir is {}'.format(source_dir))
+        logging.debug('\nbase_destination_files: {!r}'.format(base_destination_files))
         try:
-            i.symlink_to(destination_dir.joinpath(i))
+            i.symlink_to(full_destination_files)
         except FileExistsError:
             pass
         except OSError:
@@ -146,14 +154,24 @@ def main(destination_dir, source_dir):
                 'Ensure that you are running this script as an admin'
                 ' when running on Windows!')
 
+        # then call it recursively
+        if i.is_dir():
+            main(destination_dir=i,
+                 source_dir=source_dir.joinpath(i),
+                 recursive=recursive,
+                 glob_pattern=glob_pattern)
+
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG,
-                        format='{filename} : {asctime} : {levelno}\t{msg}')
-    parser = _parse_arguments()
+    # uh you have to do something about this because it doesn't substitute
+    # parameters correctly.
+    # logging.basicConfig(level=logging.DEBUG,
+    #                     format='{filename} : {asctime} : {levelno}\t{msg}')
+    logging.basicConfig(level=logging.DEBUG)
+    user_arguments = _parse_arguments()
     # Moved this up and out of _parse_arguments so you can introspect...and we can kill
     # that unnecessary logging call
-    args = parser.parse_args()
+    args = user_arguments.parse_args()
 
     dest = args.destination
 
@@ -164,7 +182,15 @@ if __name__ == "__main__":
         src = args.source
     except (IndexError, AttributeError):
         src = Path().cwd()
-    # except Exception: logger.error('what happened'); sys.exit()
 
-    main(dest, src)
-    # TODO: add recursive as a parameter
+    try:
+        glob_pattern = args.glob_pattern
+    except (AttributeError):
+        glob_pattern = None
+
+    try:
+        recursive = args.recursive
+    except AttributeError:
+        recursive = False
+
+    main(dest, src, recursive, glob_pattern)

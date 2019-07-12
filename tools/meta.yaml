@@ -1,0 +1,72 @@
+{% set name = "conda" %}
+{% set version = "4.3.16" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "a91ef821343dea3ba9670f3d10b36c1ace4f4c36d70c175d8fc8886e94285953"
+
+build:
+  number: 0
+  entry_points:
+    - conda=conda.cli.pip_warning:main
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - menuinst
+    - pip
+    - pycosat >=0.6.1
+    - python
+    - requests >=2.12.4
+    - ruamel.yaml >=0.11.14
+  run:
+    - menuinst
+    - pycosat >=0.6.1
+    - python
+    - requests >=2.12.4
+    - ruamel.yaml >=0.11.14
+
+test:
+  imports:
+    - conda
+    - conda._vendor
+    - conda._vendor.auxlib
+    - conda._vendor.auxlib._vendor
+    - conda._vendor.auxlib._vendor.boltons
+    - conda._vendor.boltons
+    - conda._vendor.progressbar
+    - conda._vendor.toolz
+    - conda._vendor.urllib3
+    - conda._vendor.urllib3.util
+    - conda.base
+    - conda.cli
+    - conda.common
+    - conda.core
+    - conda.gateways
+    - conda.gateways.adapters
+    - conda.gateways.disk
+    - conda.models
+    - conda_env
+    - conda_env.cli
+    - conda_env.installers
+    - conda_env.specs
+    - conda_env.utils
+  commands:
+    - conda --help
+
+about:
+  home: "https://github.com/conda/conda"
+  license: "BSD"
+  license_family: "BSD"
+  license_file: ""
+  summary: "OS-agnostic, system-level binary package manager."
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - your-github-id-here

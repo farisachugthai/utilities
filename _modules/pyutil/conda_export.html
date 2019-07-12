@@ -1,20 +1,21 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>pyutil.conda_export &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -38,92 +39,136 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Iterate over the list of conda environments that are present.</span>
 
-
-<span class="sd">.. rubric:: Returns</span>
-
-<span class="sd">Separate text files. 2 for each environment.:</span>
-
-<span class="sd">    * One with general metadata</span>
-<span class="sd">    * One with a list of packages.</span>
-
-
-<span class="sd">.. todo::</span>
-
-<span class="sd">    - Possibly refactor into more functions.</span>
-<span class="sd">        - Would this warrant a class?</span>
-<span class="sd">    - Add logging. Return more useful info besides just printing.</span>
-
-<span class="sd">Work in progress.</span>
+<span class="sd">In it&#39;s current implementation, the base command works. However the</span>
+<span class="sd">:func:`pyutil.conda_export._cmd_wrapper` doesn&#39;t work and as a result,</span>
+<span class="sd">we can&#39;t pass arguments along to conda yet.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">from</span> <span class="nn">shlex</span> <span class="k">import</span> <span class="n">split</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">run</span><span class="p">,</span> <span class="n">PIPE</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
+<span class="kn">from</span> <span class="nn">pyutil.__about__</span> <span class="k">import</span> <span class="n">__version__</span>
 
-<div class="viewcode-block" id="munging"><a class="viewcode-back" href="../../api.html#pyutil.conda_export.munging">[docs]</a><span class="k">def</span> <span class="nf">munging</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Iterate through conda envs and return text files to replicate from.</span>
+
+<div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../External_Commands.html#pyutil.conda_export._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Parse user arguments.&quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-c&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--command&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;comm&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;Command&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>  <span class="c1"># wait how is this not bytes</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Optional. Command to pass to Conda.&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-u&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--update&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;update&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Iterate through all Conda environments and update all.&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-V&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">args</span></div>
+
+
+<div class="viewcode-block" id="_cmd_wrapper"><a class="viewcode-back" href="../../External_Commands.html#pyutil.conda_export._cmd_wrapper">[docs]</a><span class="k">def</span> <span class="nf">_cmd_wrapper</span><span class="p">(</span><span class="n">cmd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handle any command that the user wants to pass to conda.</span>
+
+<span class="sd">    The module should be able to execute and produce meaningful output without</span>
+<span class="sd">    a user provided argument.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cmd : str, optional</span>
+<span class="sd">        cmd to pass to conda</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    output : str</span>
+<span class="sd">        Output from subprocess passed to conda. Can return `NoneType` if no `cmd`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">cmd</span><span class="p">:</span>
+        <span class="n">pieces</span> <span class="o">=</span> <span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="c1"># if len(pieces) == 1:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;conda&#39;</span><span class="p">:</span>
+            <span class="n">pieces</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;conda&#39;</span><span class="p">)</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="n">pieces</span><span class="p">],</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="get_envs"><a class="viewcode-back" href="../../External_Commands.html#pyutil.conda_export.get_envs">[docs]</a><span class="k">def</span> <span class="nf">get_envs</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Iterate through conda envs and return a list holding each environment as an element.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    --------</span>
-<span class="sd">    envs: list</span>
+<span class="sd">    short_envs : list</span>
 <span class="sd">        list of conda environments</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    .. code:: shell-session</span>
+
+<span class="sd">        $ python3 conda_export.py</span>
+<span class="sd">        # [&#39;base&#39;, &#39;dynamic&#39;, &#39;flask&#39;, &#39;navigator&#39;, &#39;tdd&#39;, &#39;utilities&#39;]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ENVLIST</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;conda&quot;</span><span class="p">,</span> <span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="s2">&quot;list&quot;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+    <span class="n">envlist</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;conda&quot;</span><span class="p">,</span> <span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="s2">&quot;list&quot;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">ENVLIST</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">ENVLIST</span><span class="o">.</span><span class="n">returnode</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">envlist</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">envlist</span><span class="o">.</span><span class="n">returncode</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Unfortunately the value that conda returns is in bytes. Ugh.</span>
-        <span class="n">decoded</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">ENVLIST</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="c1"># Most returned values from the system are gonna be in bytes. However we should check</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">envlist</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">decoded</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">envlist</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># even if it is a str, keep the name change consistent.</span>
+            <span class="n">decoded</span> <span class="o">=</span> <span class="n">envlist</span><span class="o">.</span><span class="n">stdout</span>
 
         <span class="c1"># Now let&#39;s take this long unwieldy string we have and clean it up</span>
         <span class="n">decoded</span> <span class="o">=</span> <span class="n">decoded</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
         <span class="c1"># Initially it prints out a few unnecessary lines. Let&#39;s chop them off</span>
         <span class="n">envs</span> <span class="o">=</span> <span class="n">decoded</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-        <span class="k">return</span> <span class="n">envs</span></div>
+        <span class="n">short_envs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># now let&#39;s get rid of extraneous info</span>
+        <span class="k">for</span> <span class="n">env</span> <span class="ow">in</span> <span class="n">envs</span><span class="p">:</span>
+            <span class="n">short_envs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">short_envs</span></div>
 
 
-<div class="viewcode-block" id="truncate"><a class="viewcode-back" href="../../api.html#pyutil.conda_export.truncate">[docs]</a><span class="k">def</span> <span class="nf">truncate</span><span class="p">(</span><span class="n">envs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Take output from pyutil.conda_export.munging, reduce and print to console.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    envs : str</span>
-<span class="sd">        Conda environments</span>
-
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    short_envs : list of strs</span>
-<span class="sd">        Shorter name of all envs. Printed to console.</span>
-
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">short_envs</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">for</span> <span class="n">env</span> <span class="ow">in</span> <span class="n">envs</span><span class="p">:</span>
-        <span class="n">short_envs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
-
-    <span class="k">return</span> <span class="n">short_envs</span></div>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../External_Commands.html#pyutil.conda_export.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Call other functions.&quot;&quot;&quot;</span>
     <span class="c1"># First things first</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s1">&#39;conda&#39;</span><span class="p">):</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;It looks like conda isn&#39;t installed. Exiting...&quot;</span><span class="p">)</span>
 
-    <span class="n">full_name_envs</span> <span class="o">=</span> <span class="n">munging</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">comm</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>  <span class="c1"># ? idk what error</span>
+        <span class="n">full_name_envs</span> <span class="o">=</span> <span class="n">get_envs</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">full_name_envs</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_cmd_wrapper</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
 
-    <span class="n">truncated_envs</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">full_name_envs</span><span class="p">:</span>
-        <span class="n">truncated_envs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">truncate</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">truncated_envs</span><span class="p">))</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </pre></div>
 
           </div>
@@ -148,57 +193,50 @@
 
 
 
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
-</ul>
-
-<div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
+  <li><a href="../../index.html">Documentation overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-</div>
+<h3><a href="../../index.html">Global Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Faris A Chugthai.
+      &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
     
 
     

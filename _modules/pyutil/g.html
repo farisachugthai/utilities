@@ -1,20 +1,21 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>pyutil.g &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -36,36 +37,103 @@
   <h1>Source code for pyutil.g</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Export functions to ease IPython/Git interactions.</span>
+<span class="sd">&quot;&quot;&quot;Programmatically work with subprocess&#39; and Git.</span>
 
-<span class="sd">.. todo::</span>
+<span class="sd">Subprocess and Git</span>
+<span class="sd">====================</span>
 
-<span class="sd">    What version of python was :func:`subprocess.check_output()` introduced in?</span>
+<span class="sd">This module intends to build a base class through subprocesses in order to</span>
+<span class="sd">build up a trimmed-down, and more importantly *safer* Git object.</span>
 
+<span class="sd">05/03/2019:</span>
+
+<span class="sd">    Currently we need to move some module functions into our BaseCommand class.</span>
+<span class="sd">    I don&#39;t want it to attempt implementing too much however. But it should have</span>
+<span class="sd">    a method that checks output in the way that our module function does for the</span>
+<span class="sd">    :command:`git rev-parse` expression that sets up the git root.</span>
+
+<span class="sd">    Also we need some module wide logging. I mean all across :ref:`pyutil` it&#39;s nuts</span>
+<span class="sd">    how poorly spread out and inconsistent it is.</span>
+
+<span class="sd">06/01/2019:</span>
+
+<span class="sd">Should changing the module functions so that they use</span>
+<span class="sd">:func:`subprocess.check_call()`.</span>
+
+<span class="sd">:command:`git-touch` uses :func:`subprocess.run()` which is fine, and the</span>
+<span class="sd">commands that we&#39;re implementing for the sake of information gathering</span>
+<span class="sd">(I.E. the one :command:`git rev-parse` already use</span>
+<span class="sd">:attr:`~subprocess.check_output` because we need the return values.</span>
+
+<span class="sd">The only point in changing them would be to use :func:`subprocess.run()`</span>
+<span class="sd">and give it the parameter :attr:`subprocess.capture_output`....but I&#39;m</span>
+<span class="sd">hesistant because that&#39;s exclusively a python3.7 feature.</span>
+
+<span class="sd">Jun 03, 2019</span>
+
+<span class="sd">You know what would be nice? Run the following commands in one.</span>
+
+<span class="sd">.. code-block:: console</span>
+
+<span class="sd">    git branch -d foo</span>
+<span class="sd">    git branch -rd origin/foo</span>
+<span class="sd">    git push origin :foo</span>
+
+<span class="sd">There&#39;s no reason that that&#39;s 3 commands with differing syntax.</span>
+
+<span class="sd">All you need to do is check if the branch exists both locally and</span>
+<span class="sd">remotely and kill everything.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">shlex</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">sysconfig</span>
 
-<span class="c1"># try:</span>
-<span class="c1">#     from git import Git</span>
-<span class="c1"># except ImportError:</span>
-<span class="c1">#     pass</span>
-<span class="n">SRCDIR</span> <span class="o">=</span> <span class="n">sysconfig</span><span class="o">.</span><span class="n">get_config_var</span><span class="p">(</span><span class="s1">&#39;srcdir&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pyutil.shell</span> <span class="k">import</span> <span class="n">BaseCommand</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="git_touch"><a class="viewcode-back" href="../../api.html#pyutil.g.git_touch">[docs]</a><span class="k">def</span> <span class="nf">git_touch</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="Git"><a class="viewcode-back" href="../../External_Commands.html#pyutil.g.Git">[docs]</a><span class="k">class</span> <span class="nc">Git</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a base class for working with Git in Python.</span>
+
+<span class="sd">    For the time being we only really need to run the :func:`g.BaseCommand.run`</span>
+<span class="sd">    What other parameters do we need to pay attention to?</span>
+<span class="sd">    State that would be useful to grab?</span>
+<span class="sd">    Silencing the warnings about :attr:`version` is a start. So I guess</span>
+<span class="sd">    learning how to properly initialize a class.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize a few necessary parameters.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Git.version"><a class="viewcode-back" href="../../External_Commands.html#pyutil.g.Git.version">[docs]</a>    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the version of Git we have.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;git --version&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Git._static_quote_cmd"><a class="viewcode-back" href="../../External_Commands.html#pyutil.g.Git._static_quote_cmd">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_static_quote_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Which one of these two is preferable?&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">shlex</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Git._quote_cmd"><a class="viewcode-back" href="../../External_Commands.html#pyutil.g.Git._quote_cmd">[docs]</a>    <span class="k">def</span> <span class="nf">_quote_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Maybe this should be in the parent class?&quot;&quot;&quot;</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="touch"><a class="viewcode-back" href="../../External_Commands.html#pyutil.g.touch">[docs]</a><span class="k">def</span> <span class="nf">touch</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Create a file and ``git add`` it.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    args : str (path-like object)</span>
 <span class="sd">        Path to a file that&#39;s needs to be staged and added to the Git index.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    None : None</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
@@ -78,7 +146,7 @@
         <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;git&#39;</span><span class="p">,</span> <span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="get_git_root"><a class="viewcode-back" href="../../api.html#pyutil.g.get_git_root">[docs]</a><span class="k">def</span> <span class="nf">get_git_root</span><span class="p">():</span>
+<div class="viewcode-block" id="get_git_root"><a class="viewcode-back" href="../../External_Commands.html#pyutil.g.get_git_root">[docs]</a><span class="k">def</span> <span class="nf">get_git_root</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Show the root of a repo.&quot;&quot;&quot;</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;git rev-parse --show-toplevel&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
@@ -87,24 +155,29 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="get_git_branch"><a class="viewcode-back" href="../../api.html#pyutil.g.get_git_branch">[docs]</a><span class="k">def</span> <span class="nf">get_git_branch</span><span class="p">():</span>
+<div class="viewcode-block" id="get_git_branch"><a class="viewcode-back" href="../../External_Commands.html#pyutil.g.get_git_branch">[docs]</a><span class="k">def</span> <span class="nf">get_git_branch</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Get the symbolic name for the current git branch.&quot;&quot;&quot;</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;git rev-parse --abbrev-ref HEAD&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
-            <span class="n">cmd</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">SRCDIR</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">output</span></div>
 
 
-<div class="viewcode-block" id="get_git_upstream_remote"><a class="viewcode-back" href="../../api.html#pyutil.g.get_git_upstream_remote">[docs]</a><span class="k">def</span> <span class="nf">get_git_upstream_remote</span><span class="p">():</span>
+<div class="viewcode-block" id="get_git_upstream_remote"><a class="viewcode-back" href="../../External_Commands.html#pyutil.g.get_git_upstream_remote">[docs]</a><span class="k">def</span> <span class="nf">get_git_upstream_remote</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Get the remote name to use for upstream branches.</span>
 
-<span class="sd">    Uses &quot;upstream&quot; if it exists, &quot;origin&quot; otherwise</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str : Remote git server</span>
+<span class="sd">        Uses &quot;upstream&quot; if it exists, &quot;origin&quot; otherwise</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;git remote get-url upstream&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">SRCDIR</span><span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;origin&quot;</span>
     <span class="k">return</span> <span class="s2">&quot;upstream&quot;</span></div>
@@ -113,12 +186,7 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[:]</span>
 
-    <span class="c1"># git_touch(args)</span>
-
-    <span class="c1"># The above is basically a placeholder. This should be run interactively</span>
-    <span class="c1"># and will expose commands as necessary and give useful defaults and</span>
-    <span class="c1"># prompts that guide users in the right direction to running a correct</span>
-    <span class="c1"># command short of &quot;read 170 different man pages&quot;</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -143,57 +211,50 @@
 
 
 
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
-</ul>
-
-<div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
+  <li><a href="../../index.html">Documentation overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-</div>
+<h3><a href="../../index.html">Global Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Faris A Chugthai.
+      &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
     
 
     

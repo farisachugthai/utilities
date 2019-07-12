@@ -1,20 +1,21 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>pyutil.wrap &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -38,74 +39,155 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Wrap text similarly to :func:`textwrap.dedent()` but with multiple paragraphs.</span>
 
-<span class="sd">From :mod:`IPython.utils.text`.</span>
-
-<span class="sd">Possibly going to convert `sys.argv` to `**kwargs` for the function.</span>
-
 <span class="sd">Allow the user to input any parameters that are accepted by</span>
 <span class="sd">:class:`textwrap.TextWrapper()`</span>
 
+<span class="sd">Utilizes :mod:`prompt_toolkit.print_formatted_text` to easily display</span>
+<span class="sd">prettified text.</span>
+
+
+<span class="sd">.. seealso:: :mod:`IPython.utils.text`</span>
+
+<span class="sd">Just dropped string2lines down there thanks to docutils and the</span>
+<span class="sd">:mod:`docutils.state_machine`.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">textwrap</span> <span class="k">import</span> <span class="n">dedent</span><span class="p">,</span> <span class="n">fill</span>
+<span class="kn">from</span> <span class="nn">textwrap</span> <span class="k">import</span> <span class="n">dedent</span><span class="p">,</span> <span class="n">TextWrapper</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">prompt_toolkit</span> <span class="k">import</span> <span class="n">print_formatted_text</span> <span class="k">as</span> <span class="nb">print</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="n">ModuleNotFoundError</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="kn">from</span> <span class="nn">pyutil.sys_checks</span> <span class="k">import</span> <span class="n">is_file</span>
 
 
-<div class="viewcode-block" id="wrap_paragraphs"><a class="viewcode-back" href="../../api.html#pyutil.wrap.wrap_paragraphs">[docs]</a><span class="k">def</span> <span class="nf">wrap_paragraphs</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Wrap multiple paragraphs to fit a specified width.</span>
+<div class="viewcode-block" id="ZimText"><a class="viewcode-back" href="../../Text.html#pyutil.wrap.ZimText">[docs]</a><span class="k">class</span> <span class="nc">ZimText</span><span class="p">(</span><span class="n">TextWrapper</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Subclass :class:`textwrap.TextWrapper()`.</span>
 
-<span class="sd">    This is equivalent to :func:`textwrap.wrap()`, but with support for multiple</span>
-<span class="sd">    paragraphs, as separated by empty lines.</span>
+<span class="sd">    Primarily want to modify initialized arguments.</span>
+<span class="sd">    Not entirely looking to reimplement the text formatting methods, both</span>
+<span class="sd">    private and public.</span>
 
-<span class="sd">    Considering initializing an instance of :class:`textwrap.TextWrapper()`</span>
-<span class="sd">    for increased configurability.</span>
+<span class="sd">    Now the publicly available methods from :class:`~textwrap.TextWrapper`.::</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    text : str</span>
-<span class="sd">        text to wrap using :mod:`re` and :func:`textwrap.dedent()`</span>
-<span class="sd">    ncols : int</span>
-<span class="sd">        column to wrap text at</span>
-
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    wrapped_text : list of str</span>
-<span class="sd">        list of complete paragraphs, wrapped to fill `ncols` columns.</span>
-
+<span class="sd">        &gt;&gt;&gt; from textwrap import TextWrapper</span>
+<span class="sd">        &gt;&gt;&gt; dir(TextWrapper)</span>
+<span class="sd">        [&#39;_fix_sentence_endings&#39;,</span>
+<span class="sd">        &#39;_handle_long_word&#39;,</span>
+<span class="sd">        &#39;_munge_whitespace&#39;,</span>
+<span class="sd">        &#39;_split&#39;,</span>
+<span class="sd">        &#39;_split_chunks&#39;,</span>
+<span class="sd">        &#39;_wrap_chunks&#39;,</span>
+<span class="sd">        &#39;fill&#39;,</span>
+<span class="sd">        &#39;sentence_end_re&#39;,</span>
+<span class="sd">        &#39;unicode_whitespace_trans&#39;,</span>
+<span class="sd">        &#39;uspace&#39;,</span>
+<span class="sd">        &#39;wordsep_re&#39;,</span>
+<span class="sd">        &#39;wordsep_simple_re&#39;,</span>
+<span class="sd">        &#39;wrap&#39;,</span>
+<span class="sd">        &#39;x&#39;]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">paragraph_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n(\s*\n)+&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="n">paragraphs</span> <span class="o">=</span> <span class="n">paragraph_re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">text</span><span class="p">)[::</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># every other entry is space</span>
-    <span class="n">wrapped_text</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">indent_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n\s+&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paragraphs</span><span class="p">:</span>
-        <span class="c1"># presume indentation that survives dedent is meaningful formatting,</span>
-        <span class="c1"># so don&#39;t fill unless text is flush.</span>
-        <span class="k">if</span> <span class="n">indent_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># wrap paragraph</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">fill</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">ncols</span><span class="p">)</span>
-        <span class="n">wrapped_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wrapped_text</span></div>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
+                 <span class="n">break_long_words</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">break_on_hyphens</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the class. ``__init__().text`` defaults to None.</span>
+
+<span class="sd">        However, it is still a required parameter. It&#39;s simply not enforced.</span>
+
+<span class="sd">        We&#39;re all responsible users here right?</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">break_long_words</span> <span class="o">=</span> <span class="n">break_long_words</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">break_on_hyphens</span> <span class="o">=</span> <span class="n">break_on_hyphens</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ZimText.wrap_paragraphs"><a class="viewcode-back" href="../../Text.html#pyutil.wrap.ZimText.wrap_paragraphs">[docs]</a>    <span class="k">def</span> <span class="nf">wrap_paragraphs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wrap multiple paragraphs to fit a specified width.</span>
+
+<span class="sd">        This is equivalent to :func:`textwrap.wrap()`, but with support for multiple</span>
+<span class="sd">        paragraphs, as separated by empty lines.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : str</span>
+<span class="sd">            text to wrap using :mod:`re` and :func:`textwrap.dedent()`</span>
+<span class="sd">        ncols : int</span>
+<span class="sd">            column to wrap text at</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        wrapped_text : list of str</span>
+<span class="sd">            list of complete paragraphs, wrapped to fill `ncols` columns.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; from wrap import ZimText</span>
+<span class="sd">        &gt;&gt;&gt; wrapper = ZimText()</span>
+<span class="sd">        &gt;&gt;&gt; f = open(&#39;unix-ide-editing.txt&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; text = f.read()</span>
+<span class="sd">        &gt;&gt;&gt; wrapped = wrapper.wrap(text)</span>
+<span class="sd">        &gt;&gt;&gt; with open(&#39;unix-ide-editing.txt&#39;, &#39;wt&#39;) as f:</span>
+<span class="sd">        ...     f.write(text)</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">paragraph_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n(\s*\n)+&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">paragraphs</span> <span class="o">=</span> <span class="n">paragraph_re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)[::</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># every other entry is space</span>
+        <span class="n">wrapped_text</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">indent_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n\s+&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paragraphs</span><span class="p">:</span>
+            <span class="c1"># presume indentation that survives dedent is meaningful formatting,</span>
+            <span class="c1"># so don&#39;t fill unless text is flush.</span>
+            <span class="k">if</span> <span class="n">indent_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># wrap paragraph</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">wrapped_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapped_text</span></div>
+
+<div class="viewcode-block" id="ZimText.string2lines"><a class="viewcode-back" href="../../Text.html#pyutil.wrap.ZimText.string2lines">[docs]</a>    <span class="k">def</span> <span class="nf">string2lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">convert_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        text : str</span>
+<span class="sd">            A multi-line string.</span>
+<span class="sd">        convert_whitespace : bool</span>
+<span class="sd">            convert form feeds and vertical tabs to spaces</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of str</span>
+<span class="sd">            Return a list of one-line strings with tabs expanded, no newlines, and</span>
+<span class="sd">            trailing whitespace stripped.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">convert_whitespace</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_munge_whitespace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">new_text</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">new_text</span></div></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[:]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s1">&#39;Requires a file to re-format.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Needs a file to reformat as an argument.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">wrap_paragraphs</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
-
-    <span class="c1"># it might be easier to do the above.</span>
-    <span class="c1"># can&#39;t do it like the below because then we have to hardcode the value of</span>
-    <span class="c1"># ncols # so we could force some kw args for the script but it&#39;s then easier</span>
-    <span class="c1"># for # the user to import the function and use it themselves.</span>
-
-    <span class="c1"># if len(args) &gt; 2:</span>
-    <span class="c1"># for i in args[1:]:</span>
-    <span class="c1"># wrap_paragraphs(i, 80)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="n">is_file</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rewrapping &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">wrapper</span> <span class="o">=</span> <span class="n">ZimText</span><span class="p">()</span>
+                <span class="n">wrapper</span><span class="o">.</span><span class="n">wrap_paragraphs</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 </pre></div>
 
           </div>
@@ -130,57 +212,50 @@
 
 
 
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
-</ul>
-
-<div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
+  <li><a href="../../index.html">Documentation overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-</div>
+<h3><a href="../../index.html">Global Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Faris A Chugthai.
+      &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
     
 
     

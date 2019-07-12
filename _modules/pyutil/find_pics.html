@@ -1,20 +1,21 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>pyutil.find_pics &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -43,16 +44,112 @@
 
 <span class="sd">.. todo:: Should accept command line arguments.</span>
 
-<span class="sd">We&#39;ll say that another thing on the todo list is</span>
-<span class="sd">return a path-like object from :func:`find_pics()`.</span>
+<span class="sd">We&#39;ll say that another thing on the todo list is return a path-like object</span>
+<span class="sd">from :func:`find_pics()`.</span>
+
 <span class="sd"># print(os.path.abspath(match)</span>
+
+<span class="sd">Considering generalizing the module as I just whipped this up in the interpreter.</span>
+
+<span class="sd">.. todo::</span>
+
+<span class="sd">    I was on this website https://regex101.com/r/fR9oL4/1/codegen?language=python</span>
+<span class="sd">    and it literally solved our problem with this module.</span>
+
+<span class="sd">:URL: https://regex101.com/library/fR9oL4</span>
+
+<span class="sd">That&#39;s the URL to a regex that finds 2 duplicate words that are next to each other.</span>
+<span class="sd">Sort the spellfile in nvim and clean it up with this regex and the script below!::</span>
+
+<span class="sd">    &quot; \b(\w+)\s+\1\b &quot; gi</span>
+
+<span class="sd">.. code-block:: python3</span>
+
+<span class="sd">    # coding=utf8</span>
+<span class="sd">    # the above tag defines encoding for this document and is for Python 2.x compatibility</span>
+
+<span class="sd">    import re</span>
+
+<span class="sd">    regex = r&quot;\b(\w+)\s+\1\b&quot;</span>
+
+<span class="sd">    test_str = &quot;&quot;</span>
+
+<span class="sd">    matches = re.finditer(regex, test_str, re.IGNORECASE)</span>
+
+<span class="sd">    for matchNum, match in enumerate(matches, start=1):</span>
+
+<span class="sd">        print (&quot;Match {matchNum} was found at {start}-{end}: {match}&quot;.format(matchNum = matchNum, start = match.start(), end = match.end(), match = match.group()))</span>
+
+<span class="sd">        for groupNum in range(0, len(match.groups())):</span>
+<span class="sd">            groupNum = groupNum + 1</span>
+
+<span class="sd">            print(&quot;Group {groupNum} found at {start}-{end}: {group}&quot;.</span>
+<span class="sd">                   format(groupNum = groupNum, start = match.start(groupNum),</span>
+<span class="sd">                   end = match.end(groupNum), group = match.group(groupNum)))</span>
+
+<span class="sd">    # Note: for Python 2.7 compatibility, use ur&quot;&quot; to prefix the regex and u&quot;&quot;</span>
+<span class="sd">    to prefix the test string and substitution.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
 
-<div class="viewcode-block" id="find_pics"><a class="viewcode-back" href="../../api.html#pyutil.find_pics.find_pics">[docs]</a><span class="k">def</span> <span class="nf">find_pics</span><span class="p">(</span><span class="n">picture</span><span class="p">):</span>
+<div class="viewcode-block" id="find_text"><a class="viewcode-back" href="../../Other.html#pyutil.find_pics.find_text">[docs]</a><span class="k">def</span> <span class="nf">find_text</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Attempt at using :mod:`re`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        Path-like object</span>
+
+<span class="sd">    Yields</span>
+<span class="sd">    -------</span>
+<span class="sd">    match : :class`re.match` object</span>
+<span class="sd">        Actually need to double check this function works because off the top</span>
+<span class="sd">        of my head :func:`os.scandir` doesn&#39;t return a generator or at least</span>
+<span class="sd">        one that&#39;s immediately usable. I think you have to do something like::</span>
+
+<span class="sd">            for i in os.scandir(&#39;.&#39;):</span>
+<span class="sd">                print(i.name)</span>
+
+<span class="sd">        To use it&#39;s output...</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">haystack</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">scandir</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="n">compiled</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;[0-9]+.[a-z]+$&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">needle</span> <span class="ow">in</span> <span class="n">haystack</span><span class="p">:</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">compiled</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">needle</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">match</span></div>
+
+
+<div class="viewcode-block" id="_format_return_value"><a class="viewcode-back" href="../../Other.html#pyutil.find_pics._format_return_value">[docs]</a><span class="k">def</span> <span class="nf">_format_return_value</span><span class="p">(</span><span class="n">matches</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Remove all entries that weren&#39;t matches.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    matches : list of :class:`re.match` objects</span>
+<span class="sd">        The compiled list returned from find_text.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TODO</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    In a script one could use the functions as so::</span>
+
+<span class="sd">        &gt;&gt;&gt; from find_pics import find_text, _format_return_value</span>
+<span class="sd">        &gt;&gt;&gt; matches = list(find_text(&#39;/path/to/dir&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; cleaned_data = _format_return_value(matches)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">compact_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">match</span> <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matches</span> <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">compact_matches</span></div>
+
+
+<div class="viewcode-block" id="find_pics"><a class="viewcode-back" href="../../Other.html#pyutil.find_pics.find_pics">[docs]</a><span class="k">def</span> <span class="nf">find_pics</span><span class="p">(</span><span class="n">picture</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Finds jpegs and jpgs.</span>
 
 <span class="sd">    .. todo:: Format the match object so it&#39;s more usable</span>
@@ -76,9 +173,9 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">cwd_files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 
-    <span class="n">matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">path</span> <span class="k">if</span> <span class="n">find_pics</span><span class="p">(</span><span class="n">f</span><span class="p">)]</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">cwd_files</span> <span class="k">if</span> <span class="n">find_pics</span><span class="p">(</span><span class="n">f</span><span class="p">)]</span>
 </pre></div>
 
           </div>
@@ -103,57 +200,50 @@
 
 
 
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
-</ul>
-
-<div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
+  <li><a href="../../index.html">Documentation overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-</div>
+<h3><a href="../../index.html">Global Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Faris A Chugthai.
+      &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
     
 
     

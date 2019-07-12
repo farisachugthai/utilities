@@ -1,20 +1,21 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>pyutil.rclone &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -36,19 +37,26 @@
   <h1>Source code for pyutil.rclone</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Rewriting rclone.sh as a python module.</span>
+<span class="sd">&quot;&quot;&quot;Backup files using :ref:`rclone`.</span>
+
+<span class="sd">======</span>
+<span class="sd">rclone</span>
+<span class="sd">======</span>
 
 <span class="sd">.. rubric:: Requires</span>
 
 <span class="sd">`rclone`_, a Golang package.</span>
 
 
-<span class="sd">.. todo::</span>
-
-<span class="sd">    - Set up a simple single use case backup.</span>
-<span class="sd">    - Add :func:`collections.ChainMap()` to set precedence of backupdir.</span>
-<span class="sd">    - Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()` to emulate rsync&#39;s file input.</span>
-<span class="sd">    - How do you correctly use :mod:`argparse` and ``**kwargs`` together?</span>
+<span class="sd">* Set up a simple single use case backup.</span>
+<span class="sd">    * Realistically this should be more of the focus.</span>
+<span class="sd">* However if it&#39;s not, then we could make a :class:`collections.defaultdict`</span>
+<span class="sd">  that holds default values for each option.</span>
+<span class="sd">  * Actually wouldn&#39;t :class:`configparser.ConfigParser` make more sense?</span>
+<span class="sd">* In addition we could use :class:`collections.ChainMap()` to set</span>
+<span class="sd">  precedence of `backupdir`.</span>
+<span class="sd">* Expand :mod:`argparse` usage with :func:`argparse.fromfile_prefix_chars()`</span>
+<span class="sd">  to emulate rsync&#39;s file input.</span>
 
 <span class="sd">.. _`rclone`: https://rclone.org</span>
 
@@ -57,56 +65,82 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">shlex</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
+<span class="kn">from</span> <span class="nn">pyutil.__about__</span> <span class="k">import</span> <span class="n">__version__</span>
 
-<div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../api.html#pyutil.rclone._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s2">&quot;logging.WARNING&quot;</span>
+
+
+<div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../Backups.html#pyutil.rclone._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parse user-given arguments.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">cwd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Automate usage of rclone for simple backup creation.&quot;</span><span class="p">)</span>
-    <span class="c1"># parser.add_argument(dest=src, required=True, help=&#39;A directory, presumably local, to sync with a remote.&#39;)</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
-        <span class="n">usage</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(prog)s</span><span class="s2"> [options]&quot;</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Automate usage of rclone for &quot;</span>
-        <span class="s2">&quot;simple backup creation.&quot;</span><span class="p">,</span>
-        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">)</span>
+        <span class="s2">&quot;simple backup creation.&quot;</span><span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;src&#39;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the source directory. &quot;</span>
-        <span class="s2">&quot;defaults to the cwd.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span>
+                        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;src&#39;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;source_dir&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The source directory. Defaults to the cwd.&quot;</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;dst&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;dest_directory&#39;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The folder that the files should be backed up to.&quot;</span>
         <span class="s2">&quot;Can be a remote instance as well. See rclone.org for &quot;</span>
         <span class="s2">&quot;all accepted values for this parameter&quot;</span><span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
-        <span class="s2">&quot;config&quot;</span><span class="p">,</span>
-        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Configure rclone. Additional options can&#39;t be specified;&quot;</span>
-        <span class="s2">&quot;however, :mod:`pyutil.rclone` will halt execution as rclone is configured.&quot;</span>
-    <span class="p">)</span>
+    <span class="c1"># config = parser.add_subparsers(</span>
+    <span class="c1">#     help=&quot;Configure rclone. Additional options can&#39;t be specified;&quot;</span>
+    <span class="c1">#     &quot;however, :mod:`pyutil.rclone` will halt execution as rclone is configured.&quot;</span>
+    <span class="c1"># )</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s1">&#39;-f&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;--follow&#39;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;follow&#39;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Follow symlinks.&quot;</span><span class="p">)</span>
+        <span class="s1">&#39;-ll&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--log_level&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;log_level&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;log_level&#39;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="s1">&#39;INFO&#39;</span><span class="p">,</span> <span class="s1">&#39;WARNING&#39;</span><span class="p">,</span> <span class="s1">&#39;ERROR&#39;</span><span class="p">,</span> <span class="s1">&#39;CRITICAL&#39;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set the logging level&#39;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">parser</span></div>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-f&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;--follow&#39;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Follow symlinks.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-V&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;--version&#39;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+                        <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../api.html#pyutil.rclone.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+<div class="viewcode-block" id="_set_debugging"><a class="viewcode-back" href="../../Backups.html#pyutil.rclone._set_debugging">[docs]</a><span class="k">def</span> <span class="nf">_set_debugging</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Enable debug logging.&quot;&quot;&quot;</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+    <span class="n">ch</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../Backups.html#pyutil.rclone.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Execute the required command in a subshell.</span>
 
 <span class="sd">    First the command is splited used typical shell grammer.</span>
@@ -114,11 +148,9 @@
 <span class="sd">    A new process is created, and from the resulting subprocess object,</span>
 <span class="sd">    the :func:`subprocess.Popen().wait()`.</span>
 
-<span class="sd">    This function returns the return code of split ``cmd``, so any</span>
+<span class="sd">    This function returns the return code of split `cmd`, so any</span>
 <span class="sd">    non-zero value will lead to a ``SystemExit`` with a passed value</span>
 <span class="sd">    of ``returncode``.</span>
-
-<span class="sd">    .. should i use **kwargs as a parameter here? If so, how do i mark that up in a docstring?</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -134,7 +166,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Cmd is: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cmd</span><span class="p">))</span>
-    <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">():</span>
         <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">returncode</span><span class="p">)</span>
@@ -142,7 +174,7 @@
         <span class="k">return</span> <span class="n">process</span><span class="o">.</span><span class="n">returncode</span></div>
 
 
-<div class="viewcode-block" id="_dir_checker"><a class="viewcode-back" href="../../api.html#pyutil.rclone._dir_checker">[docs]</a><span class="k">def</span> <span class="nf">_dir_checker</span><span class="p">(</span><span class="n">dir_</span><span class="p">):</span>
+<div class="viewcode-block" id="_dir_checker"><a class="viewcode-back" href="../../Backups.html#pyutil.rclone._dir_checker">[docs]</a><span class="k">def</span> <span class="nf">_dir_checker</span><span class="p">(</span><span class="n">dir_</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Check that necessary directories exist.</span>
 
 <span class="sd">    If the default `dst` doesn&#39;t exist, definitely create it.</span>
@@ -157,7 +189,7 @@
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dir_</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;does not exist. Exiting.&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rclone_base_case"><a class="viewcode-back" href="../../api.html#pyutil.rclone.rclone_base_case">[docs]</a><span class="k">def</span> <span class="nf">rclone_base_case</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
+<div class="viewcode-block" id="rclone_base_case"><a class="viewcode-back" href="../../Backups.html#pyutil.rclone.rclone_base_case">[docs]</a><span class="k">def</span> <span class="nf">rclone_base_case</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base case that all other functions build off of.</span>
 
 <span class="sd">    This function shouldn&#39;t be executed directly; however, it serves as a good</span>
@@ -189,7 +221,7 @@
     <span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rclone_follow"><a class="viewcode-back" href="../../api.html#pyutil.rclone.rclone_follow">[docs]</a><span class="k">def</span> <span class="nf">rclone_follow</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
+<div class="viewcode-block" id="rclone_follow"><a class="viewcode-back" href="../../Backups.html#pyutil.rclone.rclone_follow">[docs]</a><span class="k">def</span> <span class="nf">rclone_follow</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Follow symlinks.</span>
 
 <span class="sd">    Parameters</span>
@@ -215,33 +247,50 @@
     <span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="c1"># uhhh how do we implememt this</span>
+<div class="viewcode-block" id="CloudProvider"><a class="viewcode-back" href="../../Backups.html#pyutil.rclone.CloudProvider">[docs]</a><span class="k">class</span> <span class="nc">CloudProvider</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Emulate the provider rclone is syncing to.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;URL was: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CloudProvider.url"><a class="viewcode-back" href="../../Backups.html#pyutil.rclone.CloudProvider.url">[docs]</a>    <span class="nd">@url</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Old URL was: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="c1"># set it</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;New URL is: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../Backups.html#pyutil.rclone.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Receive user arguments and begin executing module appropriately.&quot;&quot;&quot;</span>
     <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-        <span class="n">home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;userprofile&#39;</span><span class="p">)</span>
-
-    <span class="c1"># Quite honestly most of everything below was garbage and needs to be</span>
-    <span class="c1"># rewritten ground up.</span>
-
-    <span class="c1"># Use :Glog if you want a reference of what was here.</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
-
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+        <span class="n">log_level</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">log_level</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># IndexError?</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">log_level</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">src</span><span class="p">:</span>
         <span class="n">src</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">src</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">src</span> <span class="o">=</span> <span class="n">cwd</span>
 
-    <span class="k">assert</span> <span class="n">args</span><span class="o">.</span><span class="n">dst</span>
-
     <span class="n">dst</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">dst</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">follow</span><span class="p">:</span>
-        <span class="n">rclone_follow</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span>
+        <span class="n">rclone_follow</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># This feels like a necessary stop-gap</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s1">&#39;rclone&#39;</span><span class="p">):</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s1">&#39;rclone not in $PATH. Exiting.&#39;</span><span class="p">)</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </pre></div>
 
           </div>
@@ -266,57 +315,50 @@
 
 
 
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
-</ul>
-
-<div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
+  <li><a href="../../index.html">Documentation overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-</div>
+<h3><a href="../../index.html">Global Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Faris A Chugthai.
+      &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
     
 
     

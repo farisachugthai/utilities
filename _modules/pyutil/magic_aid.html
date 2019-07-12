@@ -1,20 +1,21 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>pyutil.magic_aid &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -45,14 +46,44 @@
 
 <span class="sd">This makes basic lookups slightly more involved.</span>
 
-<span class="sd">As I&#39;ve ran this script twice in the last 2 days I figured time to save it.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">from</span> <span class="nn">IPython</span> <span class="k">import</span> <span class="n">get_ipython</span>
+<span class="kn">from</span> <span class="nn">IPython.core.magic</span> <span class="k">import</span> <span class="n">line_magic</span>
+
+<span class="kn">from</span> <span class="nn">pyutil.rclone</span> <span class="k">import</span> <span class="n">run</span>
 
 
-<div class="viewcode-block" id="inspector"><a class="viewcode-back" href="../../api.html#pyutil.magic_aid.inspector">[docs]</a><span class="k">def</span> <span class="nf">inspector</span><span class="p">(</span><span class="n">char</span><span class="p">):</span>
+<div class="viewcode-block" id="phelp"><a class="viewcode-back" href="../../External_Commands.html#pyutil.magic_aid.phelp">[docs]</a><span class="nd">@line_magic</span>
+<span class="k">def</span> <span class="nf">phelp</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Pipe `obj` through :mod:`pydoc` to :mod:`pynvim` with ``ft`` set to man.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obj : object</span>
+<span class="sd">        Object to view documentation for in :mod:`pynvim` with :mod:`pydoc`.</span>
+<span class="sd">    shell : |ip|</span>
+<span class="sd">        Global IPython instance.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    ::</span>
+
+<span class="sd">        &gt;&gt;&gt; from pyutil.magic_aid import phelp</span>
+<span class="sd">        &gt;&gt;&gt; from IPython import get_ipython</span>
+<span class="sd">        &gt;&gt;&gt; import matplotlib as mpl</span>
+<span class="sd">        &gt;&gt;&gt; _ip = get_ipython()</span>
+<span class="sd">        &gt;&gt;&gt; object_of_interest = mpl</span>
+<span class="sd">        &gt;&gt;&gt; phelp(object_of_interest, _ip)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nvim&#39;</span><span class="p">,</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;set ft=man&#39;</span><span class="p">]</span>
+    <span class="n">return_code</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">return_code</span></div>
+
+
+<div class="viewcode-block" id="search"><a class="viewcode-back" href="../../External_Commands.html#pyutil.magic_aid.search">[docs]</a><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Do a simple search for aliased names in :mod:`IPython`.</span>
 
 <span class="sd">    This function independently initializes IPython so that it can be</span>
@@ -62,37 +93,43 @@
 <span class="sd">    ----------</span>
 <span class="sd">    char : str</span>
 <span class="sd">        Character to search through available magics for.</span>
+<span class="sd">    shell : |ip|</span>
+<span class="sd">        Global IPython instance.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    results : list of strs</span>
 <span class="sd">        All matching magics</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_ip</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    ::</span>
 
-    <span class="n">alias</span> <span class="o">=</span> <span class="n">_ip</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;alias&#39;</span><span class="p">,</span> <span class="s1">&#39;line&#39;</span><span class="p">)</span>
+<span class="sd">        &gt;&gt;&gt; from pyutil.magic_aid import search</span>
+<span class="sd">        &gt;&gt;&gt; from IPython import get_ipython</span>
+<span class="sd">        &gt;&gt;&gt; _ip = get_ipython()</span>
+<span class="sd">        &gt;&gt;&gt; g_aliases = search(&#39;g&#39;, shell=_ip)</span>
+<span class="sd">        &gt;&gt;&gt; print(len(g_aliases))</span>
+
+<span class="sd">    The above produced a value of 111 for me!</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_user_aliases</span> <span class="o">=</span> <span class="n">shell</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;alias&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">alias</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">char</span><span class="p">):</span>
-            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">each_alias</span> <span class="ow">in</span> <span class="n">_user_aliases</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">each_alias</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">char</span><span class="p">):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each_alias</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">results</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">_ip</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
+
     <span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">char</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-            <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inspector</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-
-    <span class="n">matches</span> <span class="o">=</span> <span class="n">inspector</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">search</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">_ip</span><span class="p">))</span>
 </pre></div>
 
           </div>
@@ -117,57 +154,50 @@
 
 
 
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
-</ul>
-
-<div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
+  <li><a href="../../index.html">Documentation overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-</div>
+<h3><a href="../../index.html">Global Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Faris A Chugthai.
+      &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
     
 
     

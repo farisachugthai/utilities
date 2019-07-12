@@ -2,6 +2,8 @@
 Backup Utilities
 ================
 
+All of the following modules are used for creating backups
+for files in as painless a way as possible.
 
 :mod:`backup_nt_and_posix`
 --------------------------
@@ -10,7 +12,6 @@ Backup Utilities
     :members:
     :undoc-members:
     :show-inheritance:
-
 
 
 :mod:`rclone`

@@ -1,20 +1,21 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>pyutil.dlink2 &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/home/faris/projects/utilities/docs/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -36,48 +37,200 @@
   <h1>Source code for pyutil.dlink2</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Possibly rewrote the entire module in half as many lines.</span>
+<span class="sd">&quot;&quot;&quot;Utilize argparse, pathlib and IPython to generate symlinks.</span>
 
-<span class="sd">Now utilizes necessary libraries like glob.</span>
+<span class="sd">=========================</span>
+<span class="sd">Directory Linker Rewrite</span>
+<span class="sd">=========================</span>
 
-<span class="sd">.. todo:: Argparse?</span>
+<span class="sd">.. versionchanged:: Added argparse</span>
 
-<span class="sd">.. note:</span>
+<span class="sd">This is a rewrite of a script I&#39;ve had for years, so I decided to go above</span>
+<span class="sd">and beyond.</span>
 
-<span class="sd">    I was just in ~/.config/nvim trying to symlink my dots from ~/projects/viconf/.config/nvim and running::</span>
 
-<span class="sd">        dlink2.py ~/projects/viconf/.config/nvim while in ~/.config/nvim did nothing at all.</span>
+<span class="sd">See Also</span>
+<span class="sd">---------</span>
+<span class="sd">:func:`~IPython.utils.path.ensure_dir_exists()` : function</span>
+<span class="sd">    Check for a dir and create it if it doesn&#39;t exist.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">IPython.utils.path</span> <span class="k">import</span> <span class="n">ensure_dir_exists</span>
+
+<span class="kn">from</span> <span class="nn">pyutil.__about__</span> <span class="k">import</span> <span class="n">__version__</span>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#pyutil.dlink2.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Symlink user provided files.&quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;./**&quot;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">FileExistsError</span><span class="p">:</span>
-                <span class="k">pass</span></div>
-            <span class="c1">#  except OSError as e:</span>
-            <span class="c1">#      print(e)</span>
+<span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">prog</span><span class="o">=</span><span class="s1">&#39;Directory Linker 2.0&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Iterate over a `dest` folder&quot;</span>
+        <span class="s2">&quot; and create symlinks in directory &quot;</span>
+        <span class="s2">&quot;`source`. If `source` is not provided use&quot;</span>
+        <span class="s2">&quot; current working directory.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;destination&quot;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;destination&quot;</span><span class="p">,</span>
+                        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Files to symlink to.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-s&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--source_directory&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;SOURCE_DIRECTORY&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Where to create the symlinks. Defaults to the cwd.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-g&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--glob-pattern&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;GLOB_PATTERN&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Filter files in the destination dir with a glob pattern.&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--recursive&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span>
+        <span class="s2">&quot;Whether to recursively symlink the child directories below the destination folder as well.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-V&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;--version&#39;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+                        <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">parser</span>
+
+
+<div class="viewcode-block" id="generate_dest"><a class="viewcode-back" href="../../Other.html#pyutil.dlink2.generate_dest">[docs]</a><span class="k">def</span> <span class="nf">generate_dest</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return a generator for all the files in the destination directory.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ensure_dir_exists</span><span class="p">(</span><span class="n">dest</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">dest</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">glob_pattern</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">Path</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">glob_pattern</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">Path</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_basenames"><a class="viewcode-back" href="../../Other.html#pyutil.dlink2.get_basenames">[docs]</a><span class="k">def</span> <span class="nf">get_basenames</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This might be a good method in a dataclass if we wanted to try that.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">stem</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="n">suffix</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">directory</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()]</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../Other.html#pyutil.dlink2.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">,</span> <span class="n">source_dir</span><span class="p">,</span> <span class="n">is_recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Symlink user provided files.</span>
+
+<span class="sd">    The module doesn&#39;t immediately check for correct permissions or operating system.</span>
+
+<span class="sd">    As a result, the onus is put on the user to ensure that the necessary requirements</span>
+<span class="sd">    per OS are met. Namely on Windows 10, that if symlinks are allowed on the filesystem,</span>
+<span class="sd">    they can only be created by an administrator.</span>
+
+<span class="sd">    If we&#39;re refactoring for pathlib check out what we have to work with.::</span>
+
+<span class="sd">        :func:`pathlib.glob`</span>
+<span class="sd">        :func:`pathlib.iterdir`</span>
+<span class="sd">        :func:`pathlib.rglob`</span>
+
+<span class="sd">    Holy cow. I mean call that a wrap right? Let&#39;s spend some time dissecting</span>
+<span class="sd">    the information we&#39;re given via argparse and log it if necessary, but after</span>
+<span class="sd">    running a recursive glob on the destination then we should easily be able</span>
+<span class="sd">    to handle the rest.</span>
+
+<span class="sd">    That list comprehension is made and then iterated over. Should be a</span>
+<span class="sd">    smarter way to do this.</span>
+
+<span class="sd">    Ah poop. I think we need to combine the output from `generate_dest` and</span>
+<span class="sd">    the list comprehension.</span>
+
+<span class="sd">    Also gonna throw another function out that might help.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    destination_dir : str</span>
+<span class="sd">         Directory where symlinks point to.</span>
+<span class="sd">    source_dir : str, optional</span>
+<span class="sd">        Directory where symlinks are created.</span>
+<span class="sd">    recursive : bool, optional</span>
+<span class="sd">        Whether to recursively symlink directories beneath the</span>
+<span class="sd">        `destination_dir`. Defaults to False.</span>
+<span class="sd">    glob_pattern : str</span>
+<span class="sd">        Only symlink files that match a certain pattern.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">base_destination_files</span> <span class="o">=</span> <span class="n">get_basenames</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">)</span>
+
+    <span class="n">full_destination_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">destination_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()]</span>
+
+    <span class="n">full_source_files</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">source_dir</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">base_destination_files</span>
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">full_source_files</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">i is </span><span class="si">{0!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">full_destination_files is </span><span class="si">{!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">full_destination_files</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">source_dir is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_dir</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">base_destination_files: </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_destination_files</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">symlink_to</span><span class="p">(</span><span class="n">full_destination_files</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileExistsError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="c1"># let&#39;s be a little more specific</span>
+            <span class="c1"># except WindowsError: breaks linux</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s1">&#39;Ensure that you are running this script as an admin&#39;</span>
+                <span class="s1">&#39; when running on Windows!&#39;</span><span class="p">)</span>
+
+        <span class="c1"># then call it recursively</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="n">main</span><span class="p">(</span><span class="n">destination_dir</span><span class="o">=</span><span class="n">i</span><span class="p">,</span>
+                 <span class="n">source_dir</span><span class="o">=</span><span class="n">source_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+                 <span class="n">recursive</span><span class="o">=</span><span class="n">recursive</span><span class="p">,</span>
+                 <span class="n">glob_pattern</span><span class="o">=</span><span class="n">glob_pattern</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[:]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="n">j</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="n">main</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">main</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># TODO:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Usage: &quot;</span><span class="p">)</span>
+    <span class="c1"># uh you have to do something about this because it doesn&#39;t substitute</span>
+    <span class="c1"># parameters correctly.</span>
+    <span class="c1"># logging.basicConfig(level=logging.DEBUG,</span>
+    <span class="c1">#                     format=&#39;{filename} : {asctime} : {levelno}\t{msg}&#39;)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">user_arguments</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
+    <span class="c1"># Moved this up and out of _parse_arguments so you can introspect...and we can kill</span>
+    <span class="c1"># that unnecessary logging call</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">user_arguments</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">dest</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">destination</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">dest</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;Provided target not a directory. Exiting.&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">source</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">glob_pattern</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">glob_pattern</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">):</span>
+        <span class="n">glob_pattern</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">recursive</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">recursive</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">recursive</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">main</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">recursive</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -102,57 +255,50 @@
 
 
 
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial.rst</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numpydoc.html"><code class="docutils literal notranslate"><span class="pre">numpydoc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">numerical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api.html"><code class="docutils literal notranslate"><span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../todo.html">todo</a></li>
-</ul>
-
-<div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
+  <li><a href="../../index.html">Documentation overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-</div>
+<h3><a href="../../index.html">Global Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Faris A Chugthai.
+      &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
     
 
     

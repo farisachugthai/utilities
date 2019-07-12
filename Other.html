@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="todo" href="todo.html" />
@@ -288,11 +288,12 @@ working directory is the <code class="xref py py-obj docutils literal notranslat
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version Added: </span>argparse</p>
 </div>
-<p>This is a rewrite of a script I’ve had for years, so I decided to go above and beyond.</p>
+<p>This is a rewrite of a script I’ve had for years, so I decided to go above
+and beyond.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.path.html#IPython.utils.path.ensure_dir_exists" title="(in IPython v7.5.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">ensure_dir_exists()</span></code></a><span class="classifier">function</span></dt><dd><p>Check for a dir and create it if it doesn’t exist.</p>
+<dt><a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.path.html#IPython.utils.path.ensure_dir_exists" title="(in IPython v7.6.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">ensure_dir_exists()</span></code></a><span class="classifier">function</span></dt><dd><p>Check for a dir and create it if it doesn’t exist.</p>
 </dd>
 </dl>
 </div>
@@ -303,8 +304,14 @@ working directory is the <code class="xref py py-obj docutils literal notranslat
 </dd></dl>
 
 <dl class="function">
+<dt id="pyutil.dlink2.get_basenames">
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">get_basenames</code><span class="sig-paren">(</span><em class="sig-param">directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#get_basenames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.get_basenames" title="Permalink to this definition">¶</a></dt>
+<dd><p>This might be a good method in a dataclass if we wanted to try that.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyutil.dlink2.main">
-<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><em class="sig-param">destination_dir</em>, <em class="sig-param">source_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.main" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><em class="sig-param">destination_dir</em>, <em class="sig-param">source_dir</em>, <em class="sig-param">is_recursive=False</em>, <em class="sig-param">glob_pattern=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Symlink user provided files.</p>
 <p>The module doesn’t immediately check for correct permissions or operating system.</p>
 <p>As a result, the onus is put on the user to ensure that the necessary requirements
@@ -320,11 +327,19 @@ they can only be created by an administrator.</p>
 the information we’re given via argparse and log it if necessary, but after
 running a recursive glob on the destination then we should easily be able
 to handle the rest.</p>
+<p>That list comprehension is made and then iterated over. Should be a
+smarter way to do this.</p>
+<p>Ah poop. I think we need to combine the output from <a class="reference internal" href="#pyutil.dlink2.generate_dest" title="pyutil.dlink2.generate_dest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_dest</span></code></a> and
+the list comprehension.</p>
+<p>Also gonna throw another function out that might help.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>destination_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Directory where symlinks point to.</p></li>
 <li><p><strong>source_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – Directory where symlinks are created.</p></li>
+<li><p><strong>recursive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to recursively symlink directories beneath the
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">destination_dir</span></code>. Defaults to False.</p></li>
+<li><p><strong>glob_pattern</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Only symlink files that match a certain pattern.</p></li>
 </ul>
 </dd>
 </dl>
@@ -919,7 +934,7 @@ with a try statement.</p>
       &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

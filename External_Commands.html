@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Remaining Modules" href="Other.html" />
@@ -40,9 +40,6 @@
 <h1>External Commands<a class="headerlink" href="#external-commands" title="Permalink to this headline">¶</a></h1>
 <p>All commands in this section rely on another tool or piece of software.</p>
 <p>The scripts therein collectively automate use of Git, Neovim, conda, and IPython.</p>
-<div class="section" id="conda-export">
-<h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code><a class="headerlink" href="#conda-export" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="module-pyutil.g">
 <span id="g"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code><a class="headerlink" href="#module-pyutil.g" title="Permalink to this headline">¶</a></h2>
 <p>Programmatically work with subprocess’ and Git.</p>
@@ -148,81 +145,8 @@ learning how to properly initialize a class.</p>
 
 </div>
 </div>
-<div class="section" id="module-pyutil.magic_aid">
-<span id="magic-aid"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code><a class="headerlink" href="#module-pyutil.magic_aid" title="Permalink to this headline">¶</a></h2>
-<p>Create a script for searching through aliases.</p>
-<div class="section" id="id1">
-<h3>Magic Aid<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>By invoking <code class="docutils literal notranslate"><span class="pre">%rehashx</span></code> on <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.5.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>’s startup, there are
-regularly more than 1000 aliases in the user’s namespace.</p>
-<p>This makes basic lookups slightly more involved.</p>
-<div class="section" id="ipython-aliases">
-<h4>IPython Aliases<a class="headerlink" href="#ipython-aliases" title="Permalink to this headline">¶</a></h4>
-<p>As a result, this exports an IPython magic that searches through
-all listed aliases by checking the first letter provided.</p>
-<p>Multiple letters can be provided as long as they are whitespace
-separated. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span> <span class="n">magic_aid</span><span class="o">.</span><span class="n">py</span> <span class="n">i</span> <span class="n">p</span> <span class="n">y</span>
-</pre></div>
-</div>
-<p>Combining the letters together in one string or leaving them separate
-as different elements in a list; however, would not work.</p>
-<dl class="function">
-<dt id="pyutil.magic_aid.phelp">
-<code class="sig-prename descclassname">pyutil.magic_aid.</code><code class="sig-name descname">phelp</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">shell=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/magic_aid.html#phelp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.magic_aid.phelp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pipe <code class="xref py py-obj docutils literal notranslate"><span class="pre">obj</span></code> through <a class="reference external" href="https://docs.python.org/3/library/pydoc.html#module-pydoc" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code></a> to <code class="xref py py-mod docutils literal notranslate"><span class="pre">pynvim</span></code> with <code class="docutils literal notranslate"><span class="pre">ft</span></code> set to man.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Object to view documentation for in <code class="xref py py-mod docutils literal notranslate"><span class="pre">pynvim</span></code> with <a class="reference external" href="https://docs.python.org/3/library/pydoc.html#module-pydoc" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code></a>.</p></li>
-<li><p><strong>shell</strong> (<a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.core.interactiveshell.html#IPython.core.interactiveshell.InteractiveShell" title="(in IPython v7.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPython.core.interactiveshell.InteractiveShell</span></code></a>) – Global IPython instance.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyutil.magic_aid</span> <span class="k">import</span> <span class="n">phelp</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">IPython</span> <span class="k">import</span> <span class="n">get_ipython</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_ip</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">object_of_interest</span> <span class="o">=</span> <span class="n">mpl</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">phelp</span><span class="p">(</span><span class="n">object_of_interest</span><span class="p">,</span> <span class="n">_ip</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.magic_aid.search">
-<code class="sig-prename descclassname">pyutil.magic_aid.</code><code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">char</em>, <em class="sig-param">shell=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/magic_aid.html#search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.magic_aid.search" title="Permalink to this definition">¶</a></dt>
-<dd><p>Do a simple search for aliased names in <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.5.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
-<p>This function independently initializes IPython so that it can be
-easily imported and run.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>char</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Character to search through available magics for.</p></li>
-<li><p><strong>shell</strong> (<a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.core.interactiveshell.html#IPython.core.interactiveshell.InteractiveShell" title="(in IPython v7.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPython.core.interactiveshell.InteractiveShell</span></code></a>) – Global IPython instance.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>results</strong> – All matching magics</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list of strs</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyutil.magic_aid</span> <span class="k">import</span> <span class="n">search</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">IPython</span> <span class="k">import</span> <span class="n">get_ipython</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_ip</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">g_aliases</span> <span class="o">=</span> <span class="n">search</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="n">_ip</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_aliases</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>The above produced a value of 111 for me!</p>
-</dd></dl>
-
-</div>
-</div>
+<div class="section" id="magic-aid">
+<h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code><a class="headerlink" href="#magic-aid" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pyutil.nvim_profiling">
 <span id="nvim-profiling"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code><a class="headerlink" href="#module-pyutil.nvim_profiling" title="Permalink to this headline">¶</a></h2>
@@ -256,8 +180,8 @@ Example:
 </pre></div>
 </div>
 <p>Outputs &lt;~/.config/nvim&gt;. So that should work.</p>
-<p>In the future this module is going to move towards implementing a command that
-will behave similarly to the following command run in the shell:</p>
+<p>In the future this module is going to move towards implementing a command
+that will behave similarly to the following command run in the shell:</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nvim --startuptime test.txt test.py test.txt -c&quot;bn&quot;</span>
 </pre></div>
 </div>
@@ -272,7 +196,7 @@ will behave similarly to the following command run in the shell:</p>
 <code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">find_init_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#find_init_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.find_init_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Locate the initialization files used for nvim.</p>
 <p>Should theoretically work on both Windows and Unix systems.</p>
-<div class="admonition-todo admonition" id="id2">
+<div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>Alright so if <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">XDG_CONFIG_HOME</span></code> isn’t set we need to
 check &lt;~/.config/nvim&gt; and check whether we’re on Windows or not</p>
@@ -302,7 +226,7 @@ check &lt;~/.config/nvim&gt; and check whether we’re on Windows or not</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
 </dd>
 </dl>
-<div class="admonition-todo admonition" id="id3">
+<div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>Allow the <code class="docutils literal notranslate"><span class="pre">test.py</span></code> file that we use for startup to be configured.</p>
 </div>
@@ -323,6 +247,26 @@ ensure_dir_exists. Do we provide anything that doesn’t?</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.nvim_profiling.temporary_buffer">
+<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">temporary_buffer</code><span class="sig-paren">(</span><em class="sig-param">buffer=None</em>, <em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#temporary_buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.temporary_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO: Docstring for temporary_buffer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffer</strong> (<em>TODO</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>path</strong> (<em>TODO</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>TODO</p>
 </dd>
 </dl>
 </dd></dl>
@@ -375,18 +319,11 @@ ensure_dir_exists. Do we provide anything that doesn’t?</p>
 <h3><a href="index.html">Local Table of Contents</a></h3>
 <ul>
 <li><a class="reference internal" href="#">External Commands</a><ul>
-<li><a class="reference internal" href="#conda-export"><code class="xref py py-mod docutils literal notranslate"><span class="pre">conda_export</span></code></a></li>
 <li><a class="reference internal" href="#module-pyutil.g"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><ul>
 <li><a class="reference internal" href="#subprocess-and-git">Subprocess and Git</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyutil.magic_aid"><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code></a><ul>
-<li><a class="reference internal" href="#id1">Magic Aid</a><ul>
-<li><a class="reference internal" href="#ipython-aliases">IPython Aliases</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a class="reference internal" href="#magic-aid"><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code></a></li>
 <li><a class="reference internal" href="#module-pyutil.nvim_profiling"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a></li>
 </ul>
 </li>
@@ -417,7 +354,7 @@ ensure_dir_exists. Do we provide anything that doesn’t?</p>
       &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

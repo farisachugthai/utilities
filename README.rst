@@ -4,7 +4,7 @@
 pyutil
 ======
 
-.. currentmodule:: readme
+.. module:: readme
 
 .. title:: utilities
 
@@ -45,11 +45,13 @@ One can install the python modules by:
 
 * As an alternative to a pip install, obtain the source code and run the `setup.py`_ file.
 
-If you are on a Unix-like system, the following will ensure everything
-below `pyutil/`_ is in your :envvar:`PATH` and give you the ability to modify the source
-code in place.
+.. _`setup.py`: setup.py
 
-.. _pyutil: ./pyutil
+If you are on a Unix-like system, the following will ensure everything
+below `pyutil/`_ is in the environment variable :envvar:`$PATH`
+and give you the ability to modify the source code in place.
+
+.. _`pyutil`: ./pyutil
 
 
 .. code-block:: sh
@@ -62,7 +64,7 @@ code in place.
 * After which point, the only necessary step will be ensuring that the scripts
   in `sh/`_ are in your environment variable :envvar:`$PATH`.
 
-.. _sh: ./sh
+.. _`sh`: ./sh
 
 .. code-block:: sh
 
@@ -89,18 +91,18 @@ different; however, not tremendously.
     python3 setup.py build; python3 -m pip install -U -e .
 
     # to view the environment variable path, run:
-    Get-ChildItem -path $env:path
+    Get-ChildItem -Path $Env:PATH
 
     # then ensure that the directory you pick is in your path, and run
-    python3 pyutil\dlink.py "$pwd\sh" C:\users\path\to\directory
+    python3 pyutil\dlink.py "$pwd\sh" C:\Users\path\to\directory
 
 
 .. note::
 
-   When creating symbolic links on Windows, it's necessary to run the
-   command as an administrator.
+   When creating symbolic links on Windows, it's necessary to start the
+   console as an administrator.
    In addition, be aware that symlinks created in a bash subshell
-   won't be recognized as valid by the Windows OS!
+   won't be recognized as valid by Windows OS!
 
 
 .. _root-docs:
@@ -122,7 +124,7 @@ After following the installation instructions at `root-installation`_, one can r
 Then, direct your browser to ``_build/html/index.html``.
 
 To do so in a more direct manner, a *htmlview* target has been created as a
-convenience in the `docs/Makefile`_
+convenience in the `docs/Makefile`_.
 
 .. _`docs/Makefile`: ./docs/Makefile
 
@@ -132,17 +134,21 @@ automatically.
 Testing
 =======
 
-To run the tests with the interpreter available as ``python``, use
+To run the tests with the interpreter available as ``python``, use:
 
-.. code-block:: sh
+.. code-block:: console
 
     make test
 
-If you want to explicitly define which interpreter, e.g. ``python3``, use
+If you want to explicitly define which interpreter, e.g. ``python3``, use:
 
-.. code-block:: sh
+.. code-block:: console
 
     PYTHON=python3 make test
+
+Alternatively, one can use :mod:`distutils` and the `setup.py`_ file like so::
+
+   python setup.py test
 
 License
 =======

@@ -1,12 +1,18 @@
 #!/usr/bin/env python
 """Backup a directory by appending the date and time and copying over.
 
+===================
+Backup NT and Posix
+===================
+
+.. highlight:: ipython
+
+.. module:: backup_nt_and_posix
+
 Motivation
 ----------
 This script aims to be platform agnostic and in the long term will be used on
 Windows, Linux, Mac and Android systems.
-
-.. todo:: Consider rewriting using classes to hold state based on OS. Then utilize :mod:`pathlib`.
 
 """
 import os

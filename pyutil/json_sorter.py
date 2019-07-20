@@ -45,11 +45,22 @@ import yaml
 from pyutil.__about__ import __version__
 
 LOGGER = logging.Logger(name=__name__)
-LOG_LEVEL = 'logging.WARNING'
 
 
 def _parse_arguments():
-    """Parse arguments given by the user."""
+    """Parse arguments given by the user.
+
+    This implementation still, somehow isn't done. An option for *inplace*
+    modifications needs to be added.
+
+    Unfortunately this will be mutually exclusive to the output file option.
+    So we'll need to work on learning argparse.mutually_exclusive_groups.
+
+    Returns
+    -------
+    args : :class:`argparse.NameSpace()`
+        Arguments provided by the user and handled by argparse.
+    """
     parser = argparse.ArgumentParser(prog="JSON sorter", description=__doc__)
 
     parser.add_argument('input',
@@ -75,6 +86,7 @@ def _parse_arguments():
                         '--log',
                         action='store_true',
                         dest="log",
+                        metavar="Enable logging",
                         default=False,
                         help='Turn logging on and print to console.')
 
@@ -170,6 +182,10 @@ def main():
         LOG_LEVEL = args.log_level
     except AttributeError as e:
         print(e)
+        LOG_LEVEL = 'WARNING'
+
+    if LOG_LEVEL is None:
+        LOG_LEVEL = 'WARNING'
 
     LOGGER.setLevel(level=LOG_LEVEL)
 

@@ -35,7 +35,10 @@ class BaseCommand:
         self.cmd = cmd
 
     def __repr__(self):
-        return 'BaseCommand: {!r}'.format(self.cmd)
+        if self.cmd is not None:
+            return 'BaseCommand: {!r}'.format(self.cmd)
+        else:
+            return 'BaseCommand: No cmd initialized'
 
     def run(self):
         """Run a safer subprocess.

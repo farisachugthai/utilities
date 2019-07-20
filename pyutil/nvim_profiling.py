@@ -43,6 +43,8 @@ that will behave similarly to the following command run in the shell:
 .. code-block:: shell-session
 
     nvim --startuptime test.txt test.py test.txt -c"bn"
+    # Also we could make the base command
+    nvim --clean --startuptime foo.log example_module.py foo.log -c'bn'
 
 
 """

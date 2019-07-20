@@ -14,27 +14,12 @@ Let it doctest!
 >>> import pyutil.ytdl
 >>> from pyutil import g
 
-May 03, 2019:
-
-    Don't include the pkg_resources line anymore.
-
-.. code-block:: python-traceback
-
-    File "/data/data/com.termux/files/home/projects/utilities/pyutil/__init__.py", line 37, in <module> pkg_resources.declare_namespace(PYUTIL_DIR)
-    File "/data/data/com.termux/files/home/virtualenvs/utilities/lib/python3.7/site-packages/pkg_resources/__init__.py", line 2263, in declare_namespace
-    path = sys.modules[parent].__path__
-    KeyError: '/data/data/com'
-
-NOQA F401
-
 """
 import argparse
 import logging
 from logging import NullHandler
 import os
 import sys
-
-import pkg_resources
 
 from .__about__ import (  # noqa F401
     __author__, __copyright__, __description__, __docformat__, __license__,
@@ -48,35 +33,38 @@ sys.path.insert(0, PYUTIL_DIR)
 del PYUTIL_DIR
 
 
-def __parse_arguments():
-    """I doubt that this is the best way to do this but I'm curious.
+class BaseArgParser:
+    """Making the __parse_arguments() function a class so we can subclass."""
 
-    March 22, 2019
+    def __parse_arguments():
+        """I doubt that this is the best way to do this but I'm curious.
 
-    Can we define a method in the __init__ file and just let every package below
-    us import it?
+        March 22, 2019
 
-    Because this would save me a lot of time.
+        Can we define a method in the __init__ file and just let every package below
+        us import it?
 
-    Ooo what if we made it def __unparsed(): then we could simply call the function,
-    store the return value and then continue adding arguments. We'd need to delete
-    the parser.parse_args() line out but that could work.
+        Because this would save me a lot of time.
 
-    """
-    parser = argparse.ArgumentParser(description=__doc__)
+        What if we made it def __unparsed(): then we could simply call the function,
+        store the return value and then continue adding arguments.
+        We'd need to delete the parser.parse_args() line out but that could work.
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+        """
+        parser = argparse.ArgumentParser(description=__doc__)
 
-    parser.add_argument(
-        '-ll',
-        '--log_level',
-        dest='log_level',
-        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
-        help='Set the logging level')
+        parser.add_argument('-V',
+                            '--version',
+                            action='version',
+                            version='%(prog)s' + __version__)
 
-    args = parser.parse_args()
+        parser.add_argument(
+            '-ll',
+            '--log_level',
+            dest='log_level',
+            choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+            help='Set the logging level')
 
-    return args
+        args = parser.parse_args()
+
+        return args

@@ -153,4 +153,3 @@ bind "\"${FZF_MARKS_JUMP:-\C-g}\":\"fzm\\n\""
 if [ "${FZF_MARKS_DMARK}" ]; then
     bind "\"${FZF_MARKS_DMARK}\":\"dmark\\n\""
 fi
- 

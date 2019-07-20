@@ -20,6 +20,7 @@ sphinx = "*"
 utilities = {editable = true,path = "."}
 nose = "*"
 flake8-rst = "*"
+youtube-dl = "*"
 
 [requires]
 python_version = "3.7"

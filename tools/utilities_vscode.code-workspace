@@ -1,7 +1,7 @@
 {
     "folders": [
         {
-            "path": "."
+            "path": ".."
         }
     ],
     "settings": {
@@ -33,14 +33,15 @@
         "telemetry.enableCrashReporter": false,
         "telemetry.enableTelemetry": false,
         "windows": {
-            "python.condaPath": "C:\\Users\\faris\\Anaconda3\\Scripts\\conda.exe",
-            "python.venvPath": "C:\\Users\\faris\\anaconda3\\envs\\utilities",
-            "python.pythonPath": "C:\\Users\\faris\\anaconda3\\envs\\dynamic\\python.exe",
+            "python.condaPath": "C:\\Users\\faris\\miniconda3\\Scripts\\conda.exe",
+            "python.venvPath": "C:\\Users\\faris\\miniconda3\\envs\\utilities",
+            "python.pythonPath": "C:\\Users\\faris\\miniconda3\\envs\\dynamic\\python.exe",
             "terminal.integrated.windowsAllowConptyTasks": true,
-            "powershell.developer.powerShellExeIsWindowsDevBuild": true,
+            "powershell.developer.powerShellExeIsWindowsDevBuild": true
         },
         "linux": {
             "python.condaPath": "/home/faris/miniconda3/conda",
+            "vim.neovimPath": "/usr/bin/nvim"
         },
         "restructuredtext.builtDocumentationPath": "${workspaceFolder}\\docs\\_build",
         "editor.formatOnSave": true,
@@ -54,20 +55,19 @@
         "python.testing.cwd": "./test/",
         "restructuredtext.sphinxBuildPath": "${workspaceFolder}/docs",
         "shellcheck.useWorkspaceRootAsCwd": true,
+        "vim.camelCaseMotion.enable": true,
         "vim.easymotion": true,
         "vim.easymotionMarkerFontFamily": "Fira Mono",
+        "vim.enableNeovim": true,
         "vim.foldfix": true,
+        "vim.highlightedyank.enable": true,
         "vim.history": 10000,
-        "vim.leader": " ",
+        "vim.leader": "<Space>",
         "vim.sneak": true,
         "vim.sneakUseIgnorecaseAndSmartcase": true,
         "vim.statusBarColorControl": true,
         "vim.useSystemClipboard": true,
         "vim.visualstar": true,
-        "yaml.format.enable": true,
-        "vim.camelCaseMotion.enable": true,
-        "vim.highlightedyank.enable": true,
-        "vim.enableNeovim": true,
-        "vim.neovimPath": "/usr/bin/nvim"
+        "yaml.format.enable": true
     }
 }

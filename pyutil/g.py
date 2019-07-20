@@ -2,21 +2,29 @@
 # -*- coding: utf-8 -*-
 """Programmatically work with subprocess' and Git.
 
-Subprocess and Git
-====================
+.. highlight:: ipython
+
+.. module:: pyutil.g
+
+===
+g
+===
 
 This module intends to build a base class through subprocesses in order to
 build up a trimmed-down, and more importantly *safer* Git object.
 
+Subprocess and Git
+====================
+
 05/03/2019:
 
-    Currently we need to move some module functions into our BaseCommand class.
-    I don't want it to attempt implementing too much however. But it should have
-    a method that checks output in the way that our module function does for the
-    :command:`git rev-parse` expression that sets up the git root.
+Currently we need to move some module functions into our BaseCommand class.
+I don't want it to attempt implementing too much however. But it should have
+a method that checks output in the way that our module function does for the
+:command:`git rev-parse` expression that sets up the git root.
 
-    Also we need some module wide logging. I mean all across :ref:`pyutil` it's nuts
-    how poorly spread out and inconsistent it is.
+Also we need some module wide logging. I mean all across :ref:`pyutil`
+it's nuts how poorly spread out and inconsistent it is.
 
 06/01/2019:
 
@@ -71,7 +79,10 @@ class Git(BaseCommand):
 
     def __init__(self, root=None, **kwargs):
         """Initialize a few necessary parameters."""
-        self.root = root
+        if root is None:
+            self.root = self._get_git_root()
+        else:
+            self.root = root
         super().__init__(self, **kwargs)
 
     @property
@@ -89,6 +100,14 @@ class Git(BaseCommand):
         cmd = shlex.quote(cmd)
         return self.run(cmd)
 
+    def _get_git_root(self):
+        """Show the root of a repo."""
+        cmd = "git rev-parse --show-toplevel".split()
+        try:
+            return subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError:
+            return None
+
 
 def touch(args):
     """Create a file and ``git add`` it.
@@ -99,23 +118,16 @@ def touch(args):
         Path to a file that's needs to be staged and added to the Git index.
 
     """
-    if len(args) > 2:
+    if len(args) > 1:
         files = args.split()
-        fname = files[1:]
-    elif len(args) < 2:
+        fname = files[0:]
+        for element in fname:
+            subprocess.run(['git', 'add', fname])
+    elif len(args) < 1:
         sys.exit("No file provided. Exiting.")
     else:
         fname = args[1]
         subprocess.run(['git', 'add', fname])
-
-
-def get_git_root():
-    """Show the root of a repo."""
-    cmd = "git rev-parse --show-toplevel".split()
-    try:
-        return subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError:
-        return None
 
 
 def get_git_branch():
@@ -147,6 +159,6 @@ def get_git_upstream_remote():
 
 
 if __name__ == "__main__":
-    args = sys.argv[:]
+    args = sys.argv[1:]
 
     LOGGER.setLevel(logging.WARNING)

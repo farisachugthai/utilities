@@ -186,7 +186,7 @@ def main(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
             main(
                 destination_dir=src_file,
                 source_dir=source_dir.joinpath(src_file),
-                recursive=recursive,
+                is_recursive=recursive,
                 glob_pattern=glob_pattern
             )
 

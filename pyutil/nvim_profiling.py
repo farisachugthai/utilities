@@ -101,7 +101,7 @@ def _parse_arguments():
 def output_results(output_dir):
     """Checks that an directory named profiling exists.
 
-    IPython has a function in :ref:`IPython.utils` that I believe is called
+    IPython has a function in :mod:`IPython.utils` that I believe is called
     ensure_dir_exists. Do we provide anything that doesn't?
 
     Parameters

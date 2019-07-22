@@ -2,6 +2,10 @@
 # Maintainer: Faris Chugthai
 """Automates downloading plain text files from the Web.
 
+===============
+Lazy Downloader
+===============
+
 As implemented currently, it will only correctly handle plain text;
 however, there are plans to implement the :mod:`mimetype` module and
 properly handle a much wider range of files.
@@ -11,21 +15,24 @@ Both parameters, `url` and `output_fname` are required parameters.
 
 Safety Features
 ---------------
+
 If the filename already exists on the system it will NOT be overwritten,
 and the script will safely exit.
 
+
 Setting User Options
 --------------------
-This module is a perfect candidate for :ref:`collections.ChainMap`.
-We could check env vars, config files, command line args and user provided parameters
-and rank them in that order of importance when configuring the download.
+
+This module is a perfect candidate for :class:`collections.ChainMap()`.
+We could check env vars, config files, command line args and user
+provided parameters and rank them in that order of importance when
+configuring the download.
 
 
 Attributes
 ----------
 url : str
     A url to download
-
 output_fname : str, optional
     A path to write the downloaded content to. Defaults to the last
     section of the URL when split by forward slashes, or :kbd:`/`.
@@ -82,6 +89,16 @@ def _parse_url(URL):
     """Parse the url in order to get something usable if we don't get a fname.
 
     If no output filename is given don't crash!
+
+    Parameters
+    ----------
+    URL : str
+        A live URL to download a page from
+
+    Returns
+    -------
+    stripped_url : list
+        A URL that's been split on the :kbd:`/` symbols.
     """
     stripped_url = urlparse(URL)['path']
     return stripped_url.split('/')[-1]
@@ -105,6 +122,7 @@ def _get_page(URL):
 
 
 def check_response(server_response):
+    """Check that the headers sent by the server exist and are *200*."""
     content = server_response.headers['Content-Type'].lower()
     if server_response.status_code == 200 and content is not None:
         return True
@@ -155,16 +173,7 @@ def find_links(text):
 
 
 def main():
-    """Download URL and write to disk.
-
-    .. todo:: Add headers.
-
-        .. code-block:: python3
-
-            if res.headers['Content-Type']:
-                 pass
-
-    """
+    """Download URL and write to disk."""
     args = _parse_arguments()
     # With xt permissions the script crashes so just bail
     try:
@@ -191,7 +200,7 @@ def main():
 
     try:
         headers = args.headers
-    except Exception:
+    except AttributeError:
         headers = std_headers
 
     # try:

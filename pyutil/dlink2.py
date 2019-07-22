@@ -34,31 +34,26 @@ def _parse_arguments():
         description="Iterate over a `dest` folder"
         " and create symlinks in directory "
         "`source`. If `source` is not provided use"
-        " current working directory."
-    )
+        " current working directory.")
 
-    parser.add_argument(
-        "destination",
-        metavar="destination",
-        nargs='?',
-        type=Path,
-        help="Files to symlink to."
-    )
+    parser.add_argument("destination",
+                        metavar="destination",
+                        nargs='?',
+                        type=Path,
+                        help="Files to symlink to.")
 
     parser.add_argument(
         "-s",
         "--source_directory",
         metavar="SOURCE_DIRECTORY",
         nargs='?',
-        help="Where to create the symlinks. Defaults to the cwd."
-    )
+        help="Where to create the symlinks. Defaults to the cwd.")
 
     parser.add_argument(
         '-g',
         '--glob-pattern',
         metavar='GLOB_PATTERN',
-        help='Filter files in the destination dir with a glob pattern.'
-    )
+        help='Filter files in the destination dir with a glob pattern.')
 
     parser.add_argument(
         '-r',
@@ -69,9 +64,10 @@ def _parse_arguments():
         "Whether to recursively symlink the child directories below the destination folder as well."
     )
 
-    parser.add_argument(
-        '-V', '--version', action='version', version='%(prog)s' + __version__
-    )
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -91,54 +87,23 @@ def generate_dest(dest, glob_pattern=None):
 
 
 def get_basenames(directory):
-    """This might be a good method in a dataclass if we wanted to try that."""
+    """Get the basenames of all the files in a directory."""
     return [i.stem + i.suffix for i in directory.iterdir()]
 
 
-def main(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
+def dlink(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
     """Symlink user provided files.
 
-    The module doesn't immediately check for correct permissions or operating system.
+    The module doesn't immediately check for correct permissions or
+    operating system.
 
-    As a result, the onus is put on the user to ensure that the necessary requirements
-    per OS are met. Namely on Windows 10, that if symlinks are allowed on the filesystem,
-    they can only be created by an administrator.
+    As a result, the onus is put on the user to ensure that the necessary
+    requirements per OS are met.
 
-    If we're refactoring for pathlib check out what we have to work with.::
-
-        :func:`pathlib.glob`
-        :func:`pathlib.iterdir`
-        :func:`pathlib.rglob`
-
-    Holy cow. I mean call that a wrap right? Let's spend some time dissecting
-    the information we're given via argparse and log it if necessary, but after
-    running a recursive glob on the destination then we should easily be able
-    to handle the rest.
-
-    That list comprehension is made and then iterated over. Should be a
-    smarter way to do this.
-
-    Ah poop. I think we need to combine the output from `generate_dest` and
-    the list comprehension.
-
-    Also gonna throw another function out that might help.
-
-    Jul 13, 2019: Found the problem.
-
-    .. code-block:: none
-
-    DEBUG: root:
-        full_source_files is
-        [PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'), .
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload')]
+    Namely on Windows 10, that if symlinks are allowed on the filesystem,
+    whether they can only be created by an administrator. Recent enough
+    versions of Windows 10 have introduced the ability for regular users
+    to create symlinks as well as admins.
 
     Parameters
     ----------
@@ -151,55 +116,56 @@ def main(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
         `destination_dir`. Defaults to False.
     glob_pattern : str
         Only symlink files that match a certain pattern.
+
     """
     base_destination_files = sorted(get_basenames(destination_dir))
 
     full_destination_files = sorted([j for j in destination_dir.iterdir()])
 
-    full_source_files = sorted(Path(source_dir).joinpath(i) for i in base_destination_files)
+    full_source_files = sorted(
+        Path(source_dir).joinpath(i) for i in base_destination_files)
 
     for idx, src_file in enumerate(full_source_files):
         logging.debug('\ni is {0!s}'.format(src_file))
         logging.debug(
-            '\nfull_destination_files is {!s}'.format(full_destination_files)
-        )
+            '\nfull_destination_files is {!s}'.format(full_destination_files))
         logging.debug('\nfull_source_files is {!s}'.format(full_source_files))
         logging.debug('\nsource_dir is {}'.format(source_dir))
         logging.debug(
-            '\nbase_destination_files: {!r}'.format(base_destination_files)
-        )
-        logging.debug("idx: {}\nsrc_file: {}\n".format(idx, src_file))
-        try:
-            src_file.symlink_to(full_destination_files[idx])
-        except FileExistsError:
-            pass
-        except OSError:
-            # let's be a little more specific
-            # except WindowsError: breaks linux
-            raise RuntimeError(
-                'Ensure that you are running this script as an admin'
-                ' when running on Windows!'
-            )
+            '\nbase_destination_files: {!r}'.format(base_destination_files))
+        logging.info("idx: {}\tsrc_file: {}\t".format(idx, src_file))
+        if full_destination_files[idx].isdir():
+            Path().mkdir(src_file)
 
-        # then call it recursively
-        if src_file.is_dir():
-            main(
-                destination_dir=src_file,
-                source_dir=source_dir.joinpath(src_file),
-                is_recursive=recursive,
-                glob_pattern=glob_pattern
-            )
+            # then call it recursively
+            if src_file.is_dir():
+                dlink(destination_dir=src_file,
+                      source_dir=source_dir.joinpath(src_file),
+                      is_recursive=is_recursive,
+                      glob_pattern=glob_pattern)
+
+        else:
+            symlink(src_file, full_destination_files[idx])
 
 
-if __name__ == "__main__":
-    # uh you have to do something about this because it doesn't substitute
-    # parameters correctly.
-    # logging.basicConfig(level=logging.DEBUG,
-    #                     format='{filename} : {asctime} : {levelno}\t{msg}')
-    logging.basicConfig(level=logging.DEBUG)
+def symlink(src, dest):
+    """Execute the symlinking part of this."""
+    try:
+        src.symlink_to(dest)
+    except FileExistsError:
+        pass
+    except OSError:
+        # let's be a little more specific
+        # except WindowsError: breaks linux
+        raise RuntimeError(
+            'Ensure that you are running this script as an admin'
+            ' when running on Windows!')
+
+
+def main():
+    """Set up the module."""
+    logging.basicConfig(level=logging.INFO)
     user_arguments = _parse_arguments()
-    # Moved this up and out of _parse_arguments so you can introspect...and we can kill
-    # that unnecessary logging call
     args = user_arguments.parse_args()
 
     dest = args.destination
@@ -222,4 +188,8 @@ if __name__ == "__main__":
     except AttributeError:
         recursive = False
 
-    main(dest, src, recursive, glob_pattern)
+    dlink(dest, src, recursive, glob_pattern)
+
+
+if __name__ == "__main__":
+    main()

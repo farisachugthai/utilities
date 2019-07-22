@@ -1,29 +1,23 @@
-# packages in environment at C:\Users\faris\Miniconda3\envs\utilities:
-#
-# Name                    Version                   Build  Channel
-ca-certificates           2019.3.9             hecc5488_0    conda-forge
-certifi                   2019.3.9                 py37_0    conda-forge
-docutils                  0.14                  py37_1001    conda-forge
-entrypoints               0.3                   py37_1000    conda-forge
-flake8                    3.7.7                    py37_0    conda-forge
-ipython                   7.4.0            py37h39e3cac_0    conda-forge
-ipython_genutils          0.2.0                      py_1    conda-forge
-requests                  2.21.0                py37_1000    conda-forge
-requests-toolbelt         0.9.1                      py_0    conda-forge
-setuptools                41.0.1                   py37_0    conda-forge
-six                       1.12.0                py37_1000    conda-forge
-snowballstemmer           1.2.1                      py_1    conda-forge
-sphinx                    2.0.1                      py_0    conda-forge
-sqlite                    3.26.0            hfa6e2cd_1001    conda-forge
-traitlets                 4.3.2                 py37_1000    conda-forge
-twine                     1.13.0                     py_1    conda-forge
-urllib3                   1.24.2                   py37_0    conda-forge
-vc                        14                            0    conda-forge
-vs2015_runtime            14.0.25420                    0    conda-forge
-wcwidth                   0.1.7                      py_1    conda-forge
-webencodings              0.5.1                      py_1    conda-forge
-wheel                     0.33.1                   py37_0    conda-forge
-win_inet_pton             1.1.0                    py37_0    conda-forge
-wincertstore              0.2                   py37_1002    conda-forge
-yapf                      0.27.0                     py_0    conda-forge
-
+# Vim: set ft=requirements:
+certifi>=2019.05
+coverage>=4.5.2
+docutils>=0.14
+flake8>=3.7.5
+flake8-rst>=0.7.1
+# git-lint>=0.1.2
+IPython>=7.6.0
+numpydoc>=0.8.0
+packaging>=19.0
+prompt_toolkit>=2.0.9
+pycodestyle>=2.5.0
+pydocstyle>=3.0.0
+pyflakes>=2.1.0
+Pygments>=2.3.1
+python-language-server>=0.26.0
+requests>=2.21.0
+# restructuredtext-lint>=1.2.2
+# rstcheck>=3.3.1
+Sphinx>=2.1.2
+twine>=1.13.0
+yapf>=0.27.0
+youtube-dl

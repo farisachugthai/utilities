@@ -48,10 +48,10 @@ One can install the python modules by:
 .. _`setup.py`: setup.py
 
 If you are on a Unix-like system, the following will ensure everything
-below `pyutil/`_ is in the environment variable :envvar:`$PATH`
+below pyutil_ is in the environment variable :envvar:`$PATH`
 and give you the ability to modify the source code in place.
 
-.. _`pyutil`: ./pyutil/
+.. _pyutil: ./pyutil/
 
 
 .. code-block:: sh
@@ -62,9 +62,9 @@ and give you the ability to modify the source code in place.
     python3 setup.py build && python3 -m pip install -U -e .
 
 * After which point, the only necessary step will be ensuring that the scripts
-  in `sh/`_ are in your environment variable :envvar:`$PATH`.
+  in sh_ are in your environment variable :envvar:`$PATH`.
 
-.. _`sh`: ./sh/
+.. _sh: ./sh/
 
 .. code-block:: sh
 
@@ -75,7 +75,7 @@ and give you the ability to modify the source code in place.
     echo $PATH
 
     # Then link the scripts in sh/ to a directory in your path!
-    python3 pyutil/dlink.py "$PWD/sh" ~/bin
+    python3 pyutil/dlink.py "$PWD/sh" "$HOME/bin"
 
 For anyone using Windows 10, the PowerShell installation will be slightly
 different; however, not tremendously.

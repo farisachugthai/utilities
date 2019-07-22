@@ -5,71 +5,26 @@
 .. module:: make
     :synopsis: Expedite documentation builds.
 
-We, in addition to automatic documentation builds, attempt to automate
-installation of the package with subcommands.
-
-.. sourcecode:: shell
-
-    python make.py --install
-
-Utilizing IPython's Sphinx plugin
----------------------------------
-This never occured to me to do this...
-
-.. code-block:: python3
-
-    from IPython.sphinxext import ipython_directive, ipython_console_highlighting
-    # Then initialize a sphinx instance to pass to the console one
-    ipython_console_highlighting.setup(app)
-
-
-.. todo::
-
-    Document initializing a Sphinx instance. Off the top of my head, it
-    requires setting src_dir and conf_dir so possibly gonna be easier
-    to do in :ref:`conf.py`, but that file exports some constants
-    so maybe we'll just scoop them up?
-
-.. todo::
-
-    Check that the f string syntax is correct.
-    Possibly now need to import sys_checks and ensure that we have python > 3.6
-
-.. todo::
-
-    Copy the sources over to the right spot.
-    And that static dir I guess. :func:`shutil.copytree()`
-
-.. todo:: Fix the way logging is set up here.
-
-
-Attributes
------------
-builder : str
-    The filetype :command:`make` invokes :command:`sphinx-build` to create
-
+We attempt to automate documentation builds with this module.
 
 """
 import argparse
 import logging
 import os
 import shutil
+import subprocess
 import sys
 import webbrowser
 
 from pyutil.__about__ import __version__
-from pyutil.shell import BaseCommand
 
 DOC_PATH = os.path.dirname(os.path.abspath(__file__))
-SOURCE_PATH = os.path.join(DOC_PATH, '_source')
 BUILD_PATH = os.path.join(DOC_PATH, '_build')
 LOGGER = logging.getLogger(name=__name__)
 
 
 def _parse_arguments(cmds=None):
     """Parse user arguments.
-
-    .. todo:: Add a ton of arguments this isn't close to done.
 
     Parameters
     ----------
@@ -85,21 +40,6 @@ def _parse_arguments(cmds=None):
     --------
     :mod:`docutils.core`
         Shows a few good methods on how to programatically publish docs.
-
-    Examples
-    --------
-    .. code-block:: python3
-
-        from docutils.core import *
-        help(publish_string)
-        help(publish_file)
-        help(publish_programatically)
-
-    Should give some inspiration on easy ways to invoke docutils from
-    within python. In addition we can use :mod:`runpy` to run
-    :command:`sphinx-build` directly.
-
-    Or we can invoke the :mod:`sphinx` API to maximize customization.
 
     """
     cmds = [method for method in dir(DocBuilder) if not method.startswith('_')]
@@ -158,16 +98,23 @@ def _parse_arguments(cmds=None):
     return user_args
 
 
-class DocBuilder(BaseCommand):
+class DocBuilder:
     """Class to wrap the different commands of this script.
 
     All public methods of this class can be called as parameters of the
     script.
+
+    Attributes
+    -----------
+    builder : str
+        The filetype :command:`make` invokes :command:`sphinx-build` to create.
+
     """
 
-    def __init__(self, cmd):
-        """Initialize self."""
-        super().__init__(cmd)
+    def __init__(self, num_jobs=1, verbosity=0, warnings_are_errors=False):
+        self.num_jobs = num_jobs
+        self.verbosity = verbosity
+        self.warnings_are_errors = warnings_are_errors
 
     def sphinx_build(self, kind='html'):
         """Build docs.
@@ -185,14 +132,24 @@ class DocBuilder(BaseCommand):
         if kind not in ('html', 'latex'):
             raise ValueError('kind must be html or latex, '
                              'not {}'.format(kind))
+        cmd = ['sphinx-build', '-b', kind, '-c', '.']
+        if self.num_jobs:
+            cmd += ['-j', str(self.num_jobs)]
+        if self.warnings_are_errors:
+            cmd += ['-W', '--keep-going']
+        if self.verbosity:
+            cmd.append('-{}'.format('v' * self.verbosity))
+        cmd += ['-d', os.path.join(BUILD_PATH, 'doctrees'),
+                DOC_PATH, os.path.join(BUILD_PATH, kind)]
+        return subprocess.call(cmd)
 
-        cmd = ['sphinx-build', '-b', kind]
-        cmd += [
-            '-d',
-            os.path.join(BUILD_PATH, 'doctrees'), SOURCE_PATH,
-            os.path.join(BUILD_PATH, kind)
-        ]
-        return self.run(cmd)
+    def _open_browser(self, single_doc_html):
+        """
+        Open a browser tab showing single
+        """
+        url = os.path.join('file://', DOC_PATH, 'build', 'html',
+                           single_doc_html)
+        webbrowser.open(url, new=2)
 
 
 def termux_hack():
@@ -211,7 +168,8 @@ def termux_hack():
         logging.error("The build directory currently doesn't exist. Exiting.")
 
 
-if __name__ == "__main__":
+def main():
+    """Set everything up."""
     args = _parse_arguments()
 
     try:
@@ -224,13 +182,25 @@ if __name__ == "__main__":
     try:
         jobs = args.jobs
     except AttributeError:
-        logging.error('No jobs attribute in jobs.')
+        logging.info('No jobs attribute in jobs.')
         jobs = f'{os.cpu_count()}'
+
+    try:
+        verbosity = args.verbosity
+    except AttributeError:
+        verbosity = None
 
     logging.debug(jobs)
     builder = args.builder
 
+    if builder is None:
+        argparse.ArgumentParser().print_help()
+
+    DocBuilder(num_jobs=jobs, verbosity=verbosity).sphinx_build(kind=builder)
+
     if os.environ.get('ANDROID_ROOT'):
         termux_hack()
-    else:
-        DocBuilder(f'make -j{jobs} {builder}').sphinx_build(kind=builder)
+
+
+if __name__ == "__main__":
+    main()

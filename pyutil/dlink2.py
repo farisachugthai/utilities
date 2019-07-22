@@ -129,15 +129,15 @@ def main(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
 
     DEBUG: root:
         full_source_files is
-        [PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'), 
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'), 
+        [PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
+        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
         PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'), .
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'), 
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'), 
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'), 
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'), 
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'), 
-        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'), 
+        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
+        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
+        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
+        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
+        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
+        PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload'),
         PosixPath('/data/data/com.termux/files/home/.config/nvim/autoload')]
 
     Parameters

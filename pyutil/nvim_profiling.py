@@ -2,6 +2,14 @@
 # -*- coding: utf-8 -*-
 """Automate profiling nvim.
 
+=============
+Nvim Profiler
+=============
+
+.. highlight:: ipython
+
+The below code displays how to attach to a remote neovim instance.
+
 .. code-block:: python3
 
     >>> if not os.environ.get('NVIM_LISTEN_ADDRESS'):  # we have no running nvim
@@ -11,11 +19,6 @@
     >>> vim.command('edit $MYVIMRC')
     >>> vim_root = vim.current.buffer
 
-Or something to that effect.
-
-Feb 28, 2019:
-
-Nice intuition man. Look what I found today.:
 
 .. code-block:: vim
 
@@ -126,9 +129,6 @@ def find_init_files():
     """Locate the initialization files used for nvim.
 
     Should theoretically work on both Windows and Unix systems.
-
-    .. todo:: Alright so if :envvar:`XDG_CONFIG_HOME` isn't set we need to
-        check <~/.config/nvim> and check whether we're on Windows or not
 
     Returns
     --------

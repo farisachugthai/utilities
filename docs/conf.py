@@ -2,34 +2,34 @@
 # -*- coding: utf-8 -*-
 """Configuration file for the Sphinx documentation builder.
 
+=========================
 Sphinx Configuration File
 =========================
 
-This file does only contain a selection of the most common options. For a
-full list see the documentation:
+.. highlight:: ipython
+
+This file does only contain a selection of the most common options.
+For a full list see the documentation:
 
 :URL: `<http://www.sphinx-doc.org/en/master/config>`_
 
 Path Setup
 ----------
 If extensions (or modules to document with autodoc) are in another
-directory, add these directories to `sys.path` here.
+directory, add these directories to :data:`sys.path` here.
 
 If the directory is relative to the documentation root, use
-:func:`os.path.abspath()` to make it absolute, like shown `here`_.
-
-.. code-block:: python3
+:func:`os.path.abspath()` to make it absolute, like shown `here`_.::
 
     sys.path.insert(0, os.path.abspath('.'))
 
-As stated at:
-
 .. _here: `https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix`
 
-However, the filetype mapping came about in 1.8 so make sure to add that
-``needs-sphinx=version`` bit
+However, the filetype mapping came about in 1.8 so make sure to add
+that ``needs-sphinx=version`` bit
 
-Also note the :ref:`setup()` function modeled off of parameters described in the `official documentation`_.
+Also note the setup() function modeled off of parameters described in
+the `official documentation`_.
 
 .. _official documentation: http://www.sphinx-doc.org/en/master/extdev/appapi.html
 
@@ -44,20 +44,19 @@ import sys
 from numpydoc import numpydoc  # noqa
 import flake8_rst  # noqa
 
-from pyutil.__about__ import __version__
-
-logging.basicConfig(level=logging.WARNING)
-
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
 SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 SOURCE_CODE = os.path.join('..', 'pyutil')
 
+sys.path.insert(0, os.path.abspath(SOURCE_CODE))
+from pyutil.__about__ import __version__
+
+logging.basicConfig(level=logging.WARNING)
+
 sys.path.insert(0, os.path.abspath('.'))
 
-sys.path.insert(0, os.path.abspath('sphinxext'))
-
-sys.path.insert(0, os.path.abspath(SOURCE_CODE))
+from docs.sphinxext import magics  # noqa
 
 sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'numerical')))
 
@@ -93,23 +92,23 @@ extensions = [
     'sphinx.ext.githubpages',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
-    'numpydoc', 'flake8_rst.sphinxext.custom_roles', 'pygmentsdoc'
+    'numpydoc', 'flake8_rst.sphinxext.custom_roles',
 ]
 
 try:
-    from docs.sphinxext import magics  # noqa
+    from docs.sphinxext import magics  # noqa F401
 except ImportError:
     logging.debug('Magics was not imported.')
 else:
     logging.debug('Magics was imported.')
-    extensions.append('magics')
+    extensions.append('docs.sphinxext.magics')
 
-try:
-    import matplotlib
-except (ImportError,ModuleNotFoundError):
+try:  # noqa F401
+    import matplotlib  # noqa F401
+except (ImportError, ModuleNotFoundError):
     pass
 else:
-    'matplotlib.sphinxext.plot_directive', 'matplotlib.sphinxext.mathmpl',
+    extensions.extend(['matplotlib.sphinxext.plot_directive', 'matplotlib.sphinxext.mathmpl'])
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -335,9 +334,13 @@ numpydoc_class_members_toctree = False
 def setup(app):
     """Add custom css styling.
 
-    .. admonition::
+    .. admonition:: Warning for path names.
 
         Don't use :func:`os.path.abspath()` if you need to extend this.
+        Pathmames that have a :kbd:`.` in them will be interpreted as packages
+        and crash the build. I.E. the following won't work.:
+
+            */data/data/com.termux/*
 
     """
     custom_css = os.path.join('_static', '', 'custom.css')

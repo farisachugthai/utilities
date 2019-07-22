@@ -51,7 +51,7 @@ If you are on a Unix-like system, the following will ensure everything
 below `pyutil/`_ is in the environment variable :envvar:`$PATH`
 and give you the ability to modify the source code in place.
 
-.. _`pyutil`: ./pyutil
+.. _`pyutil`: ./pyutil/
 
 
 .. code-block:: sh
@@ -64,7 +64,7 @@ and give you the ability to modify the source code in place.
 * After which point, the only necessary step will be ensuring that the scripts
   in `sh/`_ are in your environment variable :envvar:`$PATH`.
 
-.. _`sh`: ./sh
+.. _`sh`: ./sh/
 
 .. code-block:: sh
 

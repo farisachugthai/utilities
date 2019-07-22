@@ -22,19 +22,10 @@ directories with only month old sockets.
 In addition, it felt like a good way to get more familiar with the new
 :mod:`pathlib` module.
 
-Well it will be after rewriting it all.
-
-May 24, 2019:
-
-    Holy cow this is gonna be rough. However if you combine this with the
-    :ref:`~pyutil.find_pics` module we might be able to get something pretty
-    comprehensive.
-
-    Also get to figure out to what extent you wanna learn regular expressions
-    OR object-oriented programming depending on how we set this up.
 
 Concrete Roadmap
 ----------------
+
 Up until now this has been fairly general and quite abstract.
 
 Let's come up with a few pre-planned and clear endpoints.

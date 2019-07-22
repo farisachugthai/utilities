@@ -38,8 +38,8 @@
   <div class="section" id="welcome-to-utilities-s-documentation">
 <span id="index"></span><h1>Welcome to utilities’s documentation!<a class="headerlink" href="#welcome-to-utilities-s-documentation" title="Permalink to this headline">¶</a></h1>
 </div>
-<div class="section" id="pyutil">
-<span id="root-readme"></span><h1>pyutil<a class="headerlink" href="#pyutil" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-readme">
+<span id="pyutil"></span><span id="root-readme"></span><h1>pyutil<a class="headerlink" href="#module-readme" title="Permalink to this headline">¶</a></h1>
 <p>This repository houses a number of functional scripts I utilize to
 administer multiple workstations.</p>
 <div class="section" id="installation">
@@ -65,8 +65,8 @@ pip install .
 <li><p>As an alternative to a pip install, obtain the source code and run the <a class="reference external" href="setup.py">setup.py</a> file.</p></li>
 </ul>
 <p>If you are on a Unix-like system, the following will ensure everything
-below <a href="#id2"><span class="problematic" id="id3">`pyutil/`_</span></a> is in your <span class="target" id="index-0"></span><a class="reference external" href="https://matplotlib.org/faq/environment_variables_faq.html#envvar-PATH" title="(in Matplotlib v3.1.1)"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PATH</span></code></a> and give you the ability to modify the source
-code in place.</p>
+below <a class="reference external" href="./pyutil/">pyutil</a> is in the environment variable <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">$PATH</span></code>
+and give you the ability to modify the source code in place.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/farisachugthai/utilities
 <span class="nb">cd</span> utilities
 
@@ -75,7 +75,7 @@ python3 setup.py build <span class="o">&amp;&amp;</span> python3 -m pip install 
 </div>
 <ul class="simple">
 <li><p>After which point, the only necessary step will be ensuring that the scripts
-in <a href="#id4"><span class="problematic" id="id5">`sh/`_</span></a> are in your environment variable <span class="target" id="index-1"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">$PATH</span></code>.</p></li>
+in <a class="reference external" href="./sh/">sh</a> are in your environment variable <span class="target" id="index-1"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">$PATH</span></code>.</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># The script at pyutil/dlink.py is useful for creating symlinks for every</span>
 <span class="c1"># file in a directory. If the directory ~/bin is in your path...</span>
@@ -84,7 +84,7 @@ in <a href="#id4"><span class="problematic" id="id5">`sh/`_</span></a> are in yo
 <span class="nb">echo</span> <span class="nv">$PATH</span>
 
 <span class="c1"># Then link the scripts in sh/ to a directory in your path!</span>
-python3 pyutil/dlink.py <span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/sh&quot;</span> ~/bin
+python3 pyutil/dlink.py <span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/sh&quot;</span> <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/bin&quot;</span>
 </pre></div>
 </div>
 <p>For anyone using Windows 10, the PowerShell installation will be slightly
@@ -98,18 +98,18 @@ different; however, not tremendously.</p>
 <span class="go">python3 setup.py build; python3 -m pip install -U -e .</span>
 
 <span class="gp">#</span> to view the environment variable path, run:
-<span class="go">Get-ChildItem -path $env:path</span>
+<span class="go">Get-ChildItem -Path $Env:PATH</span>
 
 <span class="gp">#</span> <span class="k">then</span> ensure that the directory you pick is in your path, and run
-<span class="go">python3 pyutil\dlink.py &quot;$pwd\sh&quot; C:\users\path\to\directory</span>
+<span class="go">python3 pyutil\dlink.py &quot;$pwd\sh&quot; C:\Users\path\to\directory</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When creating symbolic links on Windows, it’s necessary to run the
-command as an administrator.
+<p>When creating symbolic links on Windows, it’s necessary to start the
+console as an administrator.
 In addition, be aware that symlinks created in a bash subshell
-won’t be recognized as valid by the Windows OS!</p>
+won’t be recognized as valid by Windows OS!</p>
 </div>
 </div>
 <div class="section" id="building-documentation-from-source">
@@ -123,18 +123,22 @@ make html
 </div>
 <p>Then, direct your browser to <code class="docutils literal notranslate"><span class="pre">_build/html/index.html</span></code>.</p>
 <p>To do so in a more direct manner, a <em>htmlview</em> target has been created as a
-convenience in the <a class="reference external" href="./docs/Makefile">docs/Makefile</a></p>
+convenience in the <a class="reference external" href="./docs/Makefile">docs/Makefile</a>.</p>
 <p>This target will build the documentation and open up your default web browser
 automatically.</p>
 </div>
 <div class="section" id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
-<p>To run the tests with the interpreter available as <code class="docutils literal notranslate"><span class="pre">python</span></code>, use</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make <span class="nb">test</span>
+<p>To run the tests with the interpreter available as <code class="docutils literal notranslate"><span class="pre">python</span></code>, use:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make test</span>
 </pre></div>
 </div>
-<p>If you want to explicitly define which interpreter, e.g. <code class="docutils literal notranslate"><span class="pre">python3</span></code>, use</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">PYTHON</span><span class="o">=</span>python3 make <span class="nb">test</span>
+<p>If you want to explicitly define which interpreter, e.g. <code class="docutils literal notranslate"><span class="pre">python3</span></code>, use:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">PYTHON=python3 make test</span>
+</pre></div>
+</div>
+<p>Alternatively, one can use <a class="reference external" href="https://docs.python.org/3/library/distutils.html#module-distutils" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">distutils</span></code></a> and the <a class="reference external" href="setup.py">setup.py</a> file like so:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python setup.py <span class="nb">test</span>
 </pre></div>
 </div>
 </div>
@@ -206,7 +210,7 @@ to fork or create an issue.</p>
 <h3><a href="#">Local Table of Contents</a></h3>
 <ul>
 <li><a class="reference internal" href="#">Welcome to utilities’s documentation!</a></li>
-<li><a class="reference internal" href="#pyutil">pyutil</a><ul>
+<li><a class="reference internal" href="#module-readme">pyutil</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#building-documentation-from-source">Building Documentation From Source</a></li>
 <li><a class="reference internal" href="#testing">Testing</a></li>

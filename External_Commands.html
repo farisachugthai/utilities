@@ -39,23 +39,24 @@
   <div class="section" id="external-commands">
 <h1>External Commands<a class="headerlink" href="#external-commands" title="Permalink to this headline">¶</a></h1>
 <p>All commands in this section rely on another tool or piece of software.</p>
-<p>The scripts therein collectively automate use of Git, Neovim, conda, and IPython.</p>
-<div class="section" id="module-pyutil.g">
-<span id="g"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code><a class="headerlink" href="#module-pyutil.g" title="Permalink to this headline">¶</a></h2>
+<p>The scripts therein collectively automate use of <strong class="command">git</strong>,
+<strong class="command">Neovim</strong>, <strong class="command">conda</strong>, and <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.6.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
+<div class="section" id="g">
+<h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code><a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h2>
 <p>Programmatically work with subprocess’ and Git.</p>
-<div class="section" id="subprocess-and-git">
-<h3>Subprocess and Git<a class="headerlink" href="#subprocess-and-git" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-pyutil.g"></span><div class="section" id="id1">
+<h3>g<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>This module intends to build a base class through subprocesses in order to
 build up a trimmed-down, and more importantly <em>safer</em> Git object.</p>
+<div class="section" id="subprocess-and-git">
+<h4>Subprocess and Git<a class="headerlink" href="#subprocess-and-git" title="Permalink to this headline">¶</a></h4>
 <p>05/03/2019:</p>
-<blockquote>
-<div><p>Currently we need to move some module functions into our BaseCommand class.
+<p>Currently we need to move some module functions into our BaseCommand class.
 I don’t want it to attempt implementing too much however. But it should have
 a method that checks output in the way that our module function does for the
 <strong class="command">git rev-parse</strong> expression that sets up the git root.</p>
-<p>Also we need some module wide logging. I mean all across <a class="reference internal" href="index.html#pyutil"><span class="std std-ref">pyutil</span></a> it’s nuts
-how poorly spread out and inconsistent it is.</p>
-</div></blockquote>
+<p>Also we need some module wide logging. I mean all across <a class="reference internal" href="index.html#module-readme"><span class="std std-ref">pyutil</span></a>
+it’s nuts how poorly spread out and inconsistent it is.</p>
 <p>06/01/2019:</p>
 <p>Should changing the module functions so that they use
 <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.check_call" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_call()</span></code></a>.</p>
@@ -77,50 +78,50 @@ hesistant because that’s exclusively a python3.7 feature.</p>
 <p>All you need to do is check if the branch exists both locally and
 remotely and kill everything.</p>
 <dl class="class">
-<dt id="pyutil.g.Git">
-<em class="property">class </em><code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">Git</code><span class="sig-paren">(</span><em class="sig-param">root=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git" title="Permalink to this definition">¶</a></dt>
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">Git</code><span class="sig-paren">(</span><em class="sig-param">root=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyutil.shell.BaseCommand</span></code></p>
 <p>Create a base class for working with Git in Python.</p>
 <p>For the time being we only really need to run the <code class="xref py py-func docutils literal notranslate"><span class="pre">g.BaseCommand.run()</span></code>
 What other parameters do we need to pay attention to?
 State that would be useful to grab?
-Silencing the warnings about <a class="reference internal" href="#pyutil.g.Git.version" title="pyutil.g.Git.version"><code class="xref py py-attr docutils literal notranslate"><span class="pre">version</span></code></a> is a start. So I guess
+Silencing the warnings about <code class="xref py py-attr docutils literal notranslate"><span class="pre">version</span></code> is a start. So I guess
 learning how to properly initialize a class.</p>
 <dl class="method">
-<dt id="pyutil.g.Git._quote_cmd">
-<code class="sig-name descname">_quote_cmd</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._quote_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git._quote_cmd" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="sig-name descname">_get_git_root</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._get_git_root"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Show the root of a repo.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">_quote_cmd</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._quote_cmd"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Maybe this should be in the parent class?</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyutil.g.Git._static_quote_cmd">
-<em class="property">static </em><code class="sig-name descname">_static_quote_cmd</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._static_quote_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git._static_quote_cmd" title="Permalink to this definition">¶</a></dt>
+<dt>
+<em class="property">static </em><code class="sig-name descname">_static_quote_cmd</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._static_quote_cmd"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Which one of these two is preferable?</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyutil.g.Git.version">
-<em class="property">property </em><code class="sig-name descname">version</code><a class="reference internal" href="_modules/pyutil/g.html#Git.version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.Git.version" title="Permalink to this definition">¶</a></dt>
+<dt>
+<em class="property">property </em><code class="sig-name descname">version</code><a class="reference internal" href="_modules/pyutil/g.html#Git.version"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Return the version of Git we have.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
-<dt id="pyutil.g.get_git_branch">
-<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">get_git_branch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_branch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_branch" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">get_git_branch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_branch"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Get the symbolic name for the current git branch.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pyutil.g.get_git_root">
-<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">get_git_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_root" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show the root of a repo.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.g.get_git_upstream_remote">
-<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">get_git_upstream_remote</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_upstream_remote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.get_git_upstream_remote" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">get_git_upstream_remote</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_upstream_remote"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Get the remote name to use for upstream branches.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -133,8 +134,8 @@ learning how to properly initialize a class.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pyutil.g.touch">
-<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">touch</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#touch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.g.touch" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">touch</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#touch"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Create a file and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -145,12 +146,13 @@ learning how to properly initialize a class.</p>
 
 </div>
 </div>
-<div class="section" id="magic-aid">
-<h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code><a class="headerlink" href="#magic-aid" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pyutil.nvim_profiling">
 <span id="nvim-profiling"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code><a class="headerlink" href="#module-pyutil.nvim_profiling" title="Permalink to this headline">¶</a></h2>
 <p>Automate profiling nvim.</p>
+<div class="section" id="nvim-profiler">
+<h3>Nvim Profiler<a class="headerlink" href="#nvim-profiler" title="Permalink to this headline">¶</a></h3>
+<p>The below code displays how to attach to a remote neovim instance.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;NVIM_LISTEN_ADDRESS&#39;</span><span class="p">):</span>  <span class="c1"># we have no running nvim</span>
 <span class="go">    &gt;&gt;&gt; subprocess.run([&#39;nvim&amp;&#39;])  # are we allowed to do this?</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pynvim</span>
@@ -159,9 +161,6 @@ learning how to properly initialize a class.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vim_root</span> <span class="o">=</span> <span class="n">vim</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">buffer</span>
 </pre></div>
 </div>
-<p>Or something to that effect.</p>
-<p>Feb 28, 2019:</p>
-<p>Nice intuition man. Look what I found today.:</p>
 <div class="highlight-vim notranslate"><div class="highlight"><pre><span></span>stdpath<span class="p">(</span>{what}<span class="p">)</span>                 *stdpath<span class="p">()</span>* *E6100*
 Returns <span class="p">|</span>standard<span class="p">-</span><span class="nb">path</span><span class="p">|</span> locations of various default <span class="k">files</span> and directories.
 
@@ -183,6 +182,8 @@ Example:
 <p>In the future this module is going to move towards implementing a command
 that will behave similarly to the following command run in the shell:</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nvim --startuptime test.txt test.py test.txt -c&quot;bn&quot;</span>
+<span class="gp">#</span> Also we could make the base <span class="nb">command</span>
+<span class="go">nvim --clean --startuptime foo.log example_module.py foo.log -c&#39;bn&#39;</span>
 </pre></div>
 </div>
 <dl class="function">
@@ -196,11 +197,6 @@ that will behave similarly to the following command run in the shell:</p>
 <code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">find_init_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#find_init_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.find_init_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Locate the initialization files used for nvim.</p>
 <p>Should theoretically work on both Windows and Unix systems.</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Alright so if <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">XDG_CONFIG_HOME</span></code> isn’t set we need to
-check &lt;~/.config/nvim&gt; and check whether we’re on Windows or not</p>
-</div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><strong>nvim_root</strong> – The directory where nvim’s configuration files are found</p>
@@ -236,7 +232,7 @@ check &lt;~/.config/nvim&gt; and check whether we’re on Windows or not</p>
 <dt id="pyutil.nvim_profiling.output_results">
 <code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">output_results</code><span class="sig-paren">(</span><em class="sig-param">output_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#output_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.output_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks that an directory named profiling exists.</p>
-<p>IPython has a function in <span class="xref std std-ref">IPython.utils</span> that I believe is called
+<p>IPython has a function in <code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython.utils</span></code> that I believe is called
 ensure_dir_exists. Do we provide anything that doesn’t?</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -271,6 +267,7 @@ ensure_dir_exists. Do we provide anything that doesn’t?</p>
 </dl>
 </dd></dl>
 
+</div>
 </div>
 </div>
 
@@ -319,12 +316,17 @@ ensure_dir_exists. Do we provide anything that doesn’t?</p>
 <h3><a href="index.html">Local Table of Contents</a></h3>
 <ul>
 <li><a class="reference internal" href="#">External Commands</a><ul>
-<li><a class="reference internal" href="#module-pyutil.g"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><ul>
+<li><a class="reference internal" href="#g"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><ul>
+<li><a class="reference internal" href="#id1">g</a><ul>
 <li><a class="reference internal" href="#subprocess-and-git">Subprocess and Git</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#magic-aid"><code class="xref py py-mod docutils literal notranslate"><span class="pre">magic_aid</span></code></a></li>
-<li><a class="reference internal" href="#module-pyutil.nvim_profiling"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyutil.nvim_profiling"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a><ul>
+<li><a class="reference internal" href="#nvim-profiler">Nvim Profiler</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -86,20 +86,23 @@
 <div class="section" id="module-pyutil.lazy_downloader">
 <span id="lazy-downloader"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code><a class="headerlink" href="#module-pyutil.lazy_downloader" title="Permalink to this headline">¶</a></h2>
 <p>Automates downloading plain text files from the Web.</p>
+<div class="section" id="id1">
+<h3>Lazy Downloader<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>As implemented currently, it will only correctly handle plain text;
 however, there are plans to implement the <code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetype</span></code> module and
 properly handle a much wider range of files.</p>
 <p>Both parameters, <a class="reference internal" href="#pyutil.lazy_downloader.url" title="pyutil.lazy_downloader.url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">url</span></code></a> and <a class="reference internal" href="#pyutil.lazy_downloader.output_fname" title="pyutil.lazy_downloader.output_fname"><code class="xref py py-obj docutils literal notranslate"><span class="pre">output_fname</span></code></a> are required parameters.</p>
 <div class="section" id="safety-features">
-<h3>Safety Features<a class="headerlink" href="#safety-features" title="Permalink to this headline">¶</a></h3>
+<h4>Safety Features<a class="headerlink" href="#safety-features" title="Permalink to this headline">¶</a></h4>
 <p>If the filename already exists on the system it will NOT be overwritten,
 and the script will safely exit.</p>
 </div>
 <div class="section" id="setting-user-options">
-<h3>Setting User Options<a class="headerlink" href="#setting-user-options" title="Permalink to this headline">¶</a></h3>
-<p>This module is a perfect candidate for <span class="xref std std-ref">collections.ChainMap</span>.
-We could check env vars, config files, command line args and user provided parameters
-and rank them in that order of importance when configuring the download.</p>
+<h4>Setting User Options<a class="headerlink" href="#setting-user-options" title="Permalink to this headline">¶</a></h4>
+<p>This module is a perfect candidate for <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.ChainMap()</span></code>.
+We could check env vars, config files, command line args and user
+provided parameters and rank them in that order of importance when
+configuring the download.</p>
 <dl class="attribute">
 <dt id="pyutil.lazy_downloader.url">
 <code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">url</code><a class="headerlink" href="#pyutil.lazy_downloader.url" title="Permalink to this definition">¶</a></dt>
@@ -159,12 +162,24 @@ section of the URL when split by forward slashes, or <kbd class="kbd docutils li
 <code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">_parse_url</code><span class="sig-paren">(</span><em class="sig-param">URL</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#_parse_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader._parse_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the url in order to get something usable if we don’t get a fname.</p>
 <p>If no output filename is given don’t crash!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>URL</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – A live URL to download a page from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>stripped_url</strong> – A URL that’s been split on the <kbd class="kbd docutils literal notranslate">/</kbd> symbols.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyutil.lazy_downloader.check_response">
 <code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">check_response</code><span class="sig-paren">(</span><em class="sig-param">server_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#check_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader.check_response" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Check that the headers sent by the server exist and are <em>200</em>.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="pyutil.lazy_downloader.find_links">
@@ -187,16 +202,9 @@ section of the URL when split by forward slashes, or <kbd class="kbd docutils li
 <dt id="pyutil.lazy_downloader.main">
 <code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download URL and write to disk.</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Add headers.</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">]:</span>
-     <span class="k">pass</span>
-</pre></div>
-</div>
-</div>
 </dd></dl>
 
+</div>
 </div>
 </div>
 </div>
@@ -248,8 +256,11 @@ section of the URL when split by forward slashes, or <kbd class="kbd docutils li
 <li><a class="reference internal" href="#">Internet Utilities</a><ul>
 <li><a class="reference internal" href="#module-pyutil.check_IP"><code class="xref py py-mod docutils literal notranslate"><span class="pre">check_IP</span></code></a></li>
 <li><a class="reference internal" href="#module-pyutil.lazy_downloader"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a><ul>
+<li><a class="reference internal" href="#id1">Lazy Downloader</a><ul>
 <li><a class="reference internal" href="#safety-features">Safety Features</a></li>
 <li><a class="reference internal" href="#setting-user-options">Setting User Options</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

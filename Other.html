@@ -176,15 +176,6 @@ remind the user for credentials. <a class="reference external" href="https://doc
 </div>
 <p>In addition, it felt like a good way to get more familiar with the new
 <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#module-pathlib" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code></a> module.</p>
-<p>Well it will be after rewriting it all.</p>
-<p>May 24, 2019:</p>
-<blockquote>
-<div><p>Holy cow this is gonna be rough. However if you combine this with the
-<span class="xref std std-ref">~pyutil.find_pics</span> module we might be able to get something pretty
-comprehensive.</p>
-<p>Also get to figure out to what extent you wanna learn regular expressions
-OR object-oriented programming depending on how we set this up.</p>
-</div></blockquote>
 <div class="section" id="concrete-roadmap">
 <h3><a class="toc-backref" href="#id5">Concrete Roadmap</a><a class="headerlink" href="#concrete-roadmap" title="Permalink to this headline">¶</a></h3>
 <p>Up until now this has been fairly general and quite abstract.</p>
@@ -298,40 +289,17 @@ and beyond.</p>
 </dl>
 </div>
 <dl class="function">
-<dt id="pyutil.dlink2.generate_dest">
-<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">generate_dest</code><span class="sig-paren">(</span><em class="sig-param">dest</em>, <em class="sig-param">glob_pattern=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#generate_dest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.generate_dest" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a generator for all the files in the destination directory.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.dlink2.get_basenames">
-<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">get_basenames</code><span class="sig-paren">(</span><em class="sig-param">directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#get_basenames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.get_basenames" title="Permalink to this definition">¶</a></dt>
-<dd><p>This might be a good method in a dataclass if we wanted to try that.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.dlink2.main">
-<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><em class="sig-param">destination_dir</em>, <em class="sig-param">source_dir</em>, <em class="sig-param">is_recursive=False</em>, <em class="sig-param">glob_pattern=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.main" title="Permalink to this definition">¶</a></dt>
+<dt id="pyutil.dlink2.dlink">
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">dlink</code><span class="sig-paren">(</span><em class="sig-param">destination_dir</em>, <em class="sig-param">source_dir</em>, <em class="sig-param">is_recursive=False</em>, <em class="sig-param">glob_pattern=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#dlink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.dlink" title="Permalink to this definition">¶</a></dt>
 <dd><p>Symlink user provided files.</p>
-<p>The module doesn’t immediately check for correct permissions or operating system.</p>
-<p>As a result, the onus is put on the user to ensure that the necessary requirements
-per OS are met. Namely on Windows 10, that if symlinks are allowed on the filesystem,
-they can only be created by an administrator.</p>
-<p>If we’re refactoring for pathlib check out what we have to work with.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>:func:`pathlib.glob`
-:func:`pathlib.iterdir`
-:func:`pathlib.rglob`
-</pre></div>
-</div>
-<p>Holy cow. I mean call that a wrap right? Let’s spend some time dissecting
-the information we’re given via argparse and log it if necessary, but after
-running a recursive glob on the destination then we should easily be able
-to handle the rest.</p>
-<p>That list comprehension is made and then iterated over. Should be a
-smarter way to do this.</p>
-<p>Ah poop. I think we need to combine the output from <a class="reference internal" href="#pyutil.dlink2.generate_dest" title="pyutil.dlink2.generate_dest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_dest</span></code></a> and
-the list comprehension.</p>
-<p>Also gonna throw another function out that might help.</p>
+<p>The module doesn’t immediately check for correct permissions or
+operating system.</p>
+<p>As a result, the onus is put on the user to ensure that the necessary
+requirements per OS are met.</p>
+<p>Namely on Windows 10, that if symlinks are allowed on the filesystem,
+whether they can only be created by an administrator. Recent enough
+versions of Windows 10 have introduced the ability for regular users
+to create symlinks as well as admins.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -343,6 +311,30 @@ the list comprehension.</p>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.dlink2.generate_dest">
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">generate_dest</code><span class="sig-paren">(</span><em class="sig-param">dest</em>, <em class="sig-param">glob_pattern=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#generate_dest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.generate_dest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a generator for all the files in the destination directory.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.dlink2.get_basenames">
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">get_basenames</code><span class="sig-paren">(</span><em class="sig-param">directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#get_basenames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.get_basenames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the basenames of all the files in a directory.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.dlink2.main">
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up the module.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyutil.dlink2.symlink">
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">symlink</code><span class="sig-paren">(</span><em class="sig-param">src</em>, <em class="sig-param">dest</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#symlink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.symlink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the symlinking part of this.</p>
 </dd></dl>
 
 </div>

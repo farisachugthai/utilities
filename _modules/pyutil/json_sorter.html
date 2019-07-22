@@ -82,11 +82,22 @@
 <span class="kn">from</span> <span class="nn">pyutil.__about__</span> <span class="k">import</span> <span class="n">__version__</span>
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
-<span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s1">&#39;logging.WARNING&#39;</span>
 
 
 <div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../Text.html#pyutil.json_sorter._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Parse arguments given by the user.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Parse arguments given by the user.</span>
+
+<span class="sd">    This implementation still, somehow isn&#39;t done. An option for *inplace*</span>
+<span class="sd">    modifications needs to be added.</span>
+
+<span class="sd">    Unfortunately this will be mutually exclusive to the output file option.</span>
+<span class="sd">    So we&#39;ll need to work on learning argparse.mutually_exclusive_groups.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    args : :class:`argparse.NameSpace()`</span>
+<span class="sd">        Arguments provided by the user and handled by argparse.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s2">&quot;JSON sorter&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">,</span>
@@ -112,6 +123,7 @@
                         <span class="s1">&#39;--log&#39;</span><span class="p">,</span>
                         <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
                         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;Enable logging&quot;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Turn logging on and print to console.&#39;</span><span class="p">)</span>
 
@@ -207,6 +219,10 @@
         <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">log_level</span>
     <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s1">&#39;WARNING&#39;</span>
+
+    <span class="k">if</span> <span class="n">LOG_LEVEL</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s1">&#39;WARNING&#39;</span>
 
     <span class="n">LOGGER</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
 

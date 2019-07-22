@@ -124,37 +124,23 @@
 
 
 <div class="viewcode-block" id="get_basenames"><a class="viewcode-back" href="../../Other.html#pyutil.dlink2.get_basenames">[docs]</a><span class="k">def</span> <span class="nf">get_basenames</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This might be a good method in a dataclass if we wanted to try that.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Get the basenames of all the files in a directory.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">stem</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="n">suffix</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">directory</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()]</span></div>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../Other.html#pyutil.dlink2.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">,</span> <span class="n">source_dir</span><span class="p">,</span> <span class="n">is_recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="dlink"><a class="viewcode-back" href="../../Other.html#pyutil.dlink2.dlink">[docs]</a><span class="k">def</span> <span class="nf">dlink</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">,</span> <span class="n">source_dir</span><span class="p">,</span> <span class="n">is_recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Symlink user provided files.</span>
 
-<span class="sd">    The module doesn&#39;t immediately check for correct permissions or operating system.</span>
+<span class="sd">    The module doesn&#39;t immediately check for correct permissions or</span>
+<span class="sd">    operating system.</span>
 
-<span class="sd">    As a result, the onus is put on the user to ensure that the necessary requirements</span>
-<span class="sd">    per OS are met. Namely on Windows 10, that if symlinks are allowed on the filesystem,</span>
-<span class="sd">    they can only be created by an administrator.</span>
+<span class="sd">    As a result, the onus is put on the user to ensure that the necessary</span>
+<span class="sd">    requirements per OS are met.</span>
 
-<span class="sd">    If we&#39;re refactoring for pathlib check out what we have to work with.::</span>
-
-<span class="sd">        :func:`pathlib.glob`</span>
-<span class="sd">        :func:`pathlib.iterdir`</span>
-<span class="sd">        :func:`pathlib.rglob`</span>
-
-<span class="sd">    Holy cow. I mean call that a wrap right? Let&#39;s spend some time dissecting</span>
-<span class="sd">    the information we&#39;re given via argparse and log it if necessary, but after</span>
-<span class="sd">    running a recursive glob on the destination then we should easily be able</span>
-<span class="sd">    to handle the rest.</span>
-
-<span class="sd">    That list comprehension is made and then iterated over. Should be a</span>
-<span class="sd">    smarter way to do this.</span>
-
-<span class="sd">    Ah poop. I think we need to combine the output from `generate_dest` and</span>
-<span class="sd">    the list comprehension.</span>
-
-<span class="sd">    Also gonna throw another function out that might help.</span>
+<span class="sd">    Namely on Windows 10, that if symlinks are allowed on the filesystem,</span>
+<span class="sd">    whether they can only be created by an administrator. Recent enough</span>
+<span class="sd">    versions of Windows 10 have introduced the ability for regular users</span>
+<span class="sd">    to create symlinks as well as admins.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -167,47 +153,56 @@
 <span class="sd">        `destination_dir`. Defaults to False.</span>
 <span class="sd">    glob_pattern : str</span>
 <span class="sd">        Only symlink files that match a certain pattern.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">base_destination_files</span> <span class="o">=</span> <span class="n">get_basenames</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">)</span>
+    <span class="n">base_destination_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">get_basenames</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">))</span>
 
-    <span class="n">full_destination_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">destination_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()]</span>
+    <span class="n">full_destination_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">destination_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()])</span>
 
-    <span class="n">full_source_files</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">Path</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">source_dir</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">base_destination_files</span>
-    <span class="p">]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">full_source_files</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">i is </span><span class="si">{0!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">full_destination_files is </span><span class="si">{!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">full_destination_files</span><span class="p">))</span>
+    <span class="n">full_source_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">source_dir</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">base_destination_files</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">src_file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">full_source_files</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">i is </span><span class="si">{0!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">src_file</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">full_destination_files is </span><span class="si">{!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">full_destination_files</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">full_source_files is </span><span class="si">{!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">full_source_files</span><span class="p">))</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">source_dir is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_dir</span><span class="p">))</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">base_destination_files: </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_destination_files</span><span class="p">))</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">i</span><span class="o">.</span><span class="n">symlink_to</span><span class="p">(</span><span class="n">full_destination_files</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">FileExistsError</span><span class="p">:</span>
-            <span class="k">pass</span>
-        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-            <span class="c1"># let&#39;s be a little more specific</span>
-            <span class="c1"># except WindowsError: breaks linux</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s1">&#39;Ensure that you are running this script as an admin&#39;</span>
-                <span class="s1">&#39; when running on Windows!&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">base_destination_files: </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_destination_files</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;idx: </span><span class="si">{}</span><span class="se">\t</span><span class="s2">src_file: </span><span class="si">{}</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">src_file</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">full_destination_files</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">isdir</span><span class="p">():</span>
+            <span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">src_file</span><span class="p">)</span>
 
-        <span class="c1"># then call it recursively</span>
-        <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-            <span class="n">main</span><span class="p">(</span><span class="n">destination_dir</span><span class="o">=</span><span class="n">i</span><span class="p">,</span>
-                 <span class="n">source_dir</span><span class="o">=</span><span class="n">source_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
-                 <span class="n">recursive</span><span class="o">=</span><span class="n">recursive</span><span class="p">,</span>
-                 <span class="n">glob_pattern</span><span class="o">=</span><span class="n">glob_pattern</span><span class="p">)</span></div>
+            <span class="c1"># then call it recursively</span>
+            <span class="k">if</span> <span class="n">src_file</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="n">dlink</span><span class="p">(</span><span class="n">destination_dir</span><span class="o">=</span><span class="n">src_file</span><span class="p">,</span>
+                      <span class="n">source_dir</span><span class="o">=</span><span class="n">source_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">src_file</span><span class="p">),</span>
+                      <span class="n">is_recursive</span><span class="o">=</span><span class="n">is_recursive</span><span class="p">,</span>
+                      <span class="n">glob_pattern</span><span class="o">=</span><span class="n">glob_pattern</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">symlink</span><span class="p">(</span><span class="n">src_file</span><span class="p">,</span> <span class="n">full_destination_files</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span></div>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="c1"># uh you have to do something about this because it doesn&#39;t substitute</span>
-    <span class="c1"># parameters correctly.</span>
-    <span class="c1"># logging.basicConfig(level=logging.DEBUG,</span>
-    <span class="c1">#                     format=&#39;{filename} : {asctime} : {levelno}\t{msg}&#39;)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<div class="viewcode-block" id="symlink"><a class="viewcode-back" href="../../Other.html#pyutil.dlink2.symlink">[docs]</a><span class="k">def</span> <span class="nf">symlink</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Execute the symlinking part of this.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">src</span><span class="o">.</span><span class="n">symlink_to</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileExistsError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="c1"># let&#39;s be a little more specific</span>
+        <span class="c1"># except WindowsError: breaks linux</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="s1">&#39;Ensure that you are running this script as an admin&#39;</span>
+            <span class="s1">&#39; when running on Windows!&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../Other.html#pyutil.dlink2.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Set up the module.&quot;&quot;&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
     <span class="n">user_arguments</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
-    <span class="c1"># Moved this up and out of _parse_arguments so you can introspect...and we can kill</span>
-    <span class="c1"># that unnecessary logging call</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">user_arguments</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
     <span class="n">dest</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">destination</span>
@@ -230,7 +225,11 @@
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="n">recursive</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="n">main</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">recursive</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="p">)</span>
+    <span class="n">dlink</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">recursive</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 
           </div>

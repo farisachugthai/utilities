@@ -39,6 +39,10 @@
 <span class="c1"># Maintainer: Faris Chugthai</span>
 <span class="sd">&quot;&quot;&quot;Automates downloading plain text files from the Web.</span>
 
+<span class="sd">===============</span>
+<span class="sd">Lazy Downloader</span>
+<span class="sd">===============</span>
+
 <span class="sd">As implemented currently, it will only correctly handle plain text;</span>
 <span class="sd">however, there are plans to implement the :mod:`mimetype` module and</span>
 <span class="sd">properly handle a much wider range of files.</span>
@@ -48,21 +52,24 @@
 
 <span class="sd">Safety Features</span>
 <span class="sd">---------------</span>
+
 <span class="sd">If the filename already exists on the system it will NOT be overwritten,</span>
 <span class="sd">and the script will safely exit.</span>
 
+
 <span class="sd">Setting User Options</span>
 <span class="sd">--------------------</span>
-<span class="sd">This module is a perfect candidate for :ref:`collections.ChainMap`.</span>
-<span class="sd">We could check env vars, config files, command line args and user provided parameters</span>
-<span class="sd">and rank them in that order of importance when configuring the download.</span>
+
+<span class="sd">This module is a perfect candidate for :class:`collections.ChainMap()`.</span>
+<span class="sd">We could check env vars, config files, command line args and user</span>
+<span class="sd">provided parameters and rank them in that order of importance when</span>
+<span class="sd">configuring the download.</span>
 
 
 <span class="sd">Attributes</span>
 <span class="sd">----------</span>
 <span class="sd">url : str</span>
 <span class="sd">    A url to download</span>
-
 <span class="sd">output_fname : str, optional</span>
 <span class="sd">    A path to write the downloaded content to. Defaults to the last</span>
 <span class="sd">    section of the URL when split by forward slashes, or :kbd:`/`.</span>
@@ -119,6 +126,16 @@
     <span class="sd">&quot;&quot;&quot;Parse the url in order to get something usable if we don&#39;t get a fname.</span>
 
 <span class="sd">    If no output filename is given don&#39;t crash!</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    URL : str</span>
+<span class="sd">        A live URL to download a page from</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    stripped_url : list</span>
+<span class="sd">        A URL that&#39;s been split on the :kbd:`/` symbols.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">stripped_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">URL</span><span class="p">)[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">stripped_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
@@ -142,6 +159,7 @@
 
 
 <div class="viewcode-block" id="check_response"><a class="viewcode-back" href="../../Internet.html#pyutil.lazy_downloader.check_response">[docs]</a><span class="k">def</span> <span class="nf">check_response</span><span class="p">(</span><span class="n">server_response</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check that the headers sent by the server exist and are *200*.&quot;&quot;&quot;</span>
     <span class="n">content</span> <span class="o">=</span> <span class="n">server_response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">server_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span> <span class="ow">and</span> <span class="n">content</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
@@ -192,16 +210,7 @@
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../Internet.html#pyutil.lazy_downloader.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Download URL and write to disk.</span>
-
-<span class="sd">    .. todo:: Add headers.</span>
-
-<span class="sd">        .. code-block:: python3</span>
-
-<span class="sd">            if res.headers[&#39;Content-Type&#39;]:</span>
-<span class="sd">                 pass</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Download URL and write to disk.&quot;&quot;&quot;</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
     <span class="c1"># With xt permissions the script crashes so just bail</span>
     <span class="k">try</span><span class="p">:</span>
@@ -228,7 +237,7 @@
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">headers</span>
-    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="n">std_headers</span>
 
     <span class="c1"># try:</span>

@@ -3,7 +3,8 @@ External Commands
 
 All commands in this section rely on another tool or piece of software.
 
-The scripts therein collectively automate use of Git, Neovim, conda, and IPython.
+The scripts therein collectively automate use of :command:`git`,
+:command:`Neovim`, :command:`conda`, and :mod:`IPython`.
 
 
 :mod:`g`
@@ -11,16 +12,7 @@ The scripts therein collectively automate use of Git, Neovim, conda, and IPython
 
 .. automodule:: pyutil.g
     :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-
-:mod:`magic_aid`
-----------------
-
-.. automodule:: pyutil.magic_aid
-    :members:
+    :noindex:
     :undoc-members:
     :show-inheritance:
 

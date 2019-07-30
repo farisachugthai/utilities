@@ -3,17 +3,8 @@
 """Common functionality when working with paths.
 
 Adds in logging functionality at initialization.
-Assumes Python3.4 as it utilizes pathlib heavily.
+Assumes Python3.4 as it utilizes :mod:`pathlib` heavily.
 
-Roadmap
--------
-
-* Read through :mod:`pathlib`.
-* Figure out what slots are. They're initialized in :class:`pathlib.PurePath()` but I
-  don't get what they're doing
-* Determine how we want to define ``__repr__`` and ``__str__`` because we should
-  probably override at least ``__repr__``
-  * ``__str__`` follows ``__repr__``
 
 """
 import logging
@@ -41,7 +32,7 @@ class PathTools:
     """
 
     def __init__(self, log_level=logging.WARNING, **kwargs):
-        """Initialize the PathTools object with an optional argument for logging."""
+        """Initialize PathTools with an optional argument for logging."""
         self.log_level = log_level
         self._Path = Path('.')
 
@@ -50,13 +41,13 @@ class PathTools:
         return "{}({!r})".format(self.__class__.__name__,
                                  self._Path.as_posix())
 
-    def logger(self):
+    def logger(self, log_name='root'):
         """Initialize a named logger for the PathTools object."""
-        self.log = logging.getLogger(name=__name__)
+        self.log = logging.getLogger(name=log_name)
         self.log.setLevel(self.log_level)
         return self.log
 
-    def output_results(self, output_dir):
+    def dir_exists(self, output_dir):
         """Checks that an directory exists and create it if not.
 
         Parameters

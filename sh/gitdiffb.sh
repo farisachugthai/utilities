@@ -15,3 +15,12 @@ gitdiffb() {
     --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' \
     --abbrev-commit --date=relative $1..$2;
 }
+
+if [[ -n "$(command -v fzf)" ]]; then
+    gitdiffb "$*"
+else
+    gitdiffb $* | fzf -
+fi
+
+
+exit 0

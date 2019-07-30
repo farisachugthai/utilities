@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/data/data/com.termux/files/usr/bin/python
 # -*- coding: utf-8 -*-
 """Utilize argparse, pathlib and IPython to generate symlinks.
 
@@ -23,6 +23,7 @@ import logging
 import sys
 from pathlib import Path
 
+from IPython.core.error import UsageError
 from IPython.utils.path import ensure_dir_exists
 
 from pyutil.__about__ import __version__
@@ -46,7 +47,9 @@ def _parse_arguments():
         "-s",
         "--source_directory",
         metavar="SOURCE_DIRECTORY",
+        dest='source',
         nargs='?',
+        default=Path().cwd(),
         help="Where to create the symlinks. Defaults to the cwd.")
 
     parser.add_argument(
@@ -134,7 +137,7 @@ def dlink(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
         logging.debug(
             '\nbase_destination_files: {!r}'.format(base_destination_files))
         logging.info("idx: {}\tsrc_file: {}\t".format(idx, src_file))
-        if full_destination_files[idx].isdir():
+        if full_destination_files[idx].is_dir():
             Path().mkdir(src_file)
 
             # then call it recursively
@@ -175,8 +178,8 @@ def main():
 
     try:
         src = args.source
-    except (IndexError, AttributeError):
-        src = Path().cwd()
+    except (IndexError, AttributeError) as e:
+        raise UsageError(e)
 
     try:
         glob_pattern = args.glob_pattern

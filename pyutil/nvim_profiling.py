@@ -6,11 +6,16 @@
 Nvim Profiler
 =============
 
+.. module:: nvim_profiling
+    :synopsis: Automate the process of profiling neovim.
+
 .. highlight:: ipython
 
-The below code displays how to attach to a remote neovim instance.
 
-.. code-block:: python3
+Attaching to a remote instance from the REPL
+============================================
+
+The below code displays how to attach to a remote neovim instance.::
 
     >>> if not os.environ.get('NVIM_LISTEN_ADDRESS'):  # we have no running nvim
         >>> subprocess.run(['nvim&'])  # are we allowed to do this?
@@ -19,6 +24,12 @@ The below code displays how to attach to a remote neovim instance.
     >>> vim.command('edit $MYVIMRC')
     >>> vim_root = vim.current.buffer
 
+
+Finding the initialization file to profile
+==========================================
+
+Here's the help documentation on how to find an ``init.vim`` file assuming it's placed
+in the standard location I.E. ``~/.config/nvim`` or :envvar:`USERPROFILE`\\AppData\\Local\\nvim.
 
 .. code-block:: vim
 
@@ -38,7 +49,9 @@ The below code displays how to attach to a remote neovim instance.
     Example:
         :echo stdpath("config")
 
-Outputs <~/.config/nvim>. So that should work.
+
+Roadmap
+========
 
 In the future this module is going to move towards implementing a command
 that will behave similarly to the following command run in the shell:
@@ -49,6 +62,7 @@ that will behave similarly to the following command run in the shell:
     # Also we could make the base command
     nvim --clean --startuptime foo.log example_module.py foo.log -c'bn'
 
+-------------------------
 
 """
 import argparse
@@ -56,8 +70,12 @@ import datetime
 import logging
 import os
 from platform import system
+from shutil import which
 import subprocess
 import sys
+from typing import AnyStr
+
+import pynvim
 
 from pyutil.__about__ import __version__
 from pyutil.env_checks import check_xdg_config_home
@@ -75,7 +93,6 @@ def _parse_arguments():
         "-p",
         "--path",
         dest="path",
-        metavar="path",
         help="Path to the location of the temporary buffer for Nvim.")
 
     parser.add_argument(
@@ -98,11 +115,52 @@ def _parse_arguments():
         return parser.parse_args()
 
 
+class Neovim:
+    """Instantiate a connection to neovim if it's running, establish the path if not.
+
+    Got to the point where I thought:
+
+    *Let's just rewrite this module.*
+    """
+
+    def __init__(self, exe=None):
+        if exe:
+            self.exe = exe
+        else:
+            self.exe = self._get_instance()
+
+    @property
+    def running_instance(self):
+        """Is neovim running?"""
+        try:
+            remote = os.environ.get('NVIM_LISTEN_ADDRESS')
+        except OSError:
+            return None
+        else:
+            return remote
+
+    def _get_instance(self):
+        """Determine if neovim is running."""
+        if self.running_instance:
+            vim = pynvim.attach('socket', path=self.running_instance)
+            return vim
+        else:
+            return None
+
+    @property
+    def _exe_path(self):
+        """Where is neovim located?"""
+        return which('nvim')
+
+    def __repr__(self) -> str:
+        return f'<Nvim: {self.__class__.__name__}, {self.exe}>'
+
+
 def output_results(output_dir):
     """Checks that an directory named profiling exists.
 
     IPython has a function in :mod:`IPython.utils` that I believe is called
-    ensure_dir_exists. Do we provide anything that doesn't?
+    ensure_dir_exists. Do we provide anything that that implementation doesn't?
 
     Parameters
     ----------
@@ -117,64 +175,12 @@ def output_results(output_dir):
     if os.path.isdir(os.path.join(output_dir, 'profiling')) is False:
         try:
             os.mkdir(os.path.join(output_dir, 'profiling'))
-        except OSError:
-            raise SystemExit  # is this how we do this?
+        except OSError as e:
+            sys.exit(e)
         else:
             return True
     else:
         return True
-
-
-def find_init_files():
-    """Locate the initialization files used for nvim.
-
-    Should theoretically work on both Windows and Unix systems.
-
-    Returns
-    --------
-    nvim_root : str
-        The directory where nvim's configuration files are found
-
-    """
-    global OS
-    OS = system()
-    if check_xdg_config_home():
-        nvim_root = os.path.join(os.environ.get('XDG_CONFIG_HOME'), '', 'nvim')
-        if not os.path.isdir(nvim_root):
-            LOGGER.error(
-                "XDG_CONFIG_HOME set but $XDG_CONFIG_HOME/nvim doesn't exist.")
-        else:
-            return nvim_root
-    else:
-        userConfFile = os.path.join(os.path.expanduser('~'), '.config', 'nvim',
-                                    'init.vim')
-
-        # Handle windows
-        if not os.path.isfile(userConfFile):
-            appdata_dir = os.getenv('appdata')
-
-        if userConf is None:
-            userConf = []
-
-        return userConf
-
-
-def temporary_buffer(buffer=None, path=None):
-    """TODO: Docstring for temporary_buffer.
-
-    Parameters
-    ----------
-    buffer : TODO, optional
-    path : TODO, optional
-
-    Returns
-    -------
-    TODO
-
-    """
-    if path is None:
-        path = os.path.join(os.environ.get('PREFIX'), '', 'tmp')
-    os.environ.putenv('NVIM_LISTEN_ADDRESS', path)
 
 
 def main(nvim_root):
@@ -207,6 +213,7 @@ def main(nvim_root):
 
 
 if __name__ == "__main__":
+    from pdb import set_trace; set_trace()
     user_args = _parse_arguments()
 
     try:
@@ -214,6 +221,5 @@ if __name__ == "__main__":
     except Exception as e:
         LOGGER.error(e, exc_info=True)
 
-    nvim_root = find_init_files()
-
-    main(nvim_root)
+    nvim_root = None  # Define it temporarily we need to refactor
+    # main(nvim_root)

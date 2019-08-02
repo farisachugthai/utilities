@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-r"""Take a :mod:`json` file and sort the keys and insert 4 spaces for indents.
+r"""Take a :mod:`json` file, sort the keys and insert 4 spaces for indents.
 
 ==================
 :mod:`json` sorter
 ==================
 
-This module was originally used to fix my settings.json from VSCode.
+.. module:: json_sorter
+    :synopsis: Sort a JSON file by key without losing organization for nested elements.
 
 One Line Solution
 =================
@@ -30,6 +31,11 @@ script with.
 
 The problem is already solved. Let's see what we can't squeeze out of our tools
 along the way.
+
+Interestingly enough, this display of excessiveness started as a simple
+quick fix.
+
+Originally, this module was used to fix my `<../.vscode/settings.json>`_ from VSCode.
 
 ----------
 
@@ -60,8 +66,13 @@ def _parse_arguments():
     -------
     args : :class:`argparse.NameSpace()`
         Arguments provided by the user and handled by argparse.
+
     """
-    parser = argparse.ArgumentParser(prog="JSON sorter", description=__doc__)
+    parser = argparse.ArgumentParser(
+        prog="JSON sorter",
+        description=
+        'Take a :mod:`json` file, sort the keys and insert 4 spaces for indents.'
+    )
 
     parser.add_argument('input',
                         type=argparse.FileType('r'),
@@ -86,7 +97,6 @@ def _parse_arguments():
                         '--log',
                         action='store_true',
                         dest="log",
-                        metavar="Enable logging",
                         default=False,
                         help='Turn logging on and print to console.')
 
@@ -94,7 +104,6 @@ def _parse_arguments():
         '-ll',
         '--log_level',
         dest='log_level',
-        metavar='log level',
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         help='Set the logging level')
 
@@ -102,6 +111,10 @@ def _parse_arguments():
                         '--version',
                         action='version',
                         version='%(prog)s' + __version__)
+
+    if len(sys.argv[1:]) == 0:
+        parser.print_help()
+        sys.exit()
 
     args = parser.parse_args()
 
@@ -180,9 +193,8 @@ def main():
 
     try:
         LOG_LEVEL = args.log_level
-    except AttributeError as e:
-        print(e)
-        LOG_LEVEL = 'WARNING'
+    except AttributeError:
+        pass
 
     if LOG_LEVEL is None:
         LOG_LEVEL = 'WARNING'
@@ -197,7 +209,7 @@ def main():
     else:
         try:
             yaml = args.yaml
-        except Exception:
+        except AttributeError:
             plaintext = sort_json(fobj)
         else:
             plaintext = convert_to_yaml(yaml)

@@ -7,6 +7,15 @@
 
 We attempt to automate documentation builds with this module.
 
+Still need to add an option to recursively move the html files out of the
+currently git-ignored directory `_build/html/` into this directory.
+
+Update the options you can give to the parser:
+
+#) remove python path
+#) Add open in browser as an option
+#) Fix the output for the `commands` argument when this is run with :data:`sys.argv` == 0
+
 """
 import argparse
 import logging
@@ -56,15 +65,11 @@ def _parse_arguments(cmds=None):
 
     parser.add_argument('-j',
                         '--num-jobs',
+                        metavar='num-jobs',
+                        dest='jobs',
                         type=int,
                         default=os.cpu_count(),
-                        help='number of jobs used by sphinx-build')
-
-    parser.add_argument('-n',
-                        '--no-api',
-                        default=False,
-                        help='Omit api and autosummary',
-                        action='store_true')
+                        help='Number of parallel jobs used by `sphinx-build`.')
 
     parser.add_argument('-s',
                         '--single',
@@ -91,9 +96,21 @@ def _parse_arguments(cmds=None):
                         default='INFO',
                         help='Log level. Defaults to INFO. Implies logging.')
 
+    parser.add_argument(
+        '-V',
+        '--verbose',
+        default=False,
+        help='Enable verbose logging and increase level to `debug`.')
+
     parser.add_argument('--version', action='version', version=__version__)
 
     user_args = parser.parse_args()
+
+    if len(sys.argv[1:]) == 0:
+        parser.print_help()
+        sys.exit()
+    # from ipdb import set_trace
+    # set_trace()
 
     return user_args
 
@@ -139,14 +156,15 @@ class DocBuilder:
             cmd += ['-W', '--keep-going']
         if self.verbosity:
             cmd.append('-{}'.format('v' * self.verbosity))
-        cmd += ['-d', os.path.join(BUILD_PATH, 'doctrees'),
-                DOC_PATH, os.path.join(BUILD_PATH, kind)]
+        cmd += [
+            '-d',
+            os.path.join(BUILD_PATH, 'doctrees'), DOC_PATH,
+            os.path.join(BUILD_PATH, kind)
+        ]
         return subprocess.call(cmd)
 
     def _open_browser(self, single_doc_html):
-        """
-        Open a browser tab showing single
-        """
+        """Open a browser tab showing the single doc html option."""
         url = os.path.join('file://', DOC_PATH, 'build', 'html',
                            single_doc_html)
         webbrowser.open(url, new=2)
@@ -174,27 +192,19 @@ def main():
 
     try:
         log_level = args.log_level.upper()
-    except Exception:
+    except AttributeError:
         logging.basicConfig(level=logging.WARNING)
     else:
         logging.basicConfig(level=log_level)
 
-    try:
-        jobs = args.jobs
-    except AttributeError:
-        logging.info('No jobs attribute in jobs.')
-        jobs = f'{os.cpu_count()}'
+    jobs = args.jobs  # there's a default for the argument so no need for try/ excepts
 
     try:
         verbosity = args.verbosity
     except AttributeError:
         verbosity = None
 
-    logging.debug(jobs)
     builder = args.builder
-
-    if builder is None:
-        argparse.ArgumentParser().print_help()
 
     DocBuilder(num_jobs=jobs, verbosity=verbosity).sphinx_build(kind=builder)
 

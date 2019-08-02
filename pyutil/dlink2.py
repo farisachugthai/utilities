@@ -29,6 +29,11 @@ from IPython.utils.path import ensure_dir_exists
 from pyutil.__about__ import __version__
 
 
+class PermissionsError(OSError):
+    """Symlinking error typically from Windows."""
+    pass
+
+
 def _parse_arguments():
     parser = argparse.ArgumentParser(
         prog='Directory Linker 2.0',
@@ -138,7 +143,9 @@ def dlink(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
             '\nbase_destination_files: {!r}'.format(base_destination_files))
         logging.info("idx: {}\tsrc_file: {}\t".format(idx, src_file))
         if full_destination_files[idx].is_dir():
-            Path().mkdir(src_file)
+            src_dir = Path(src_file)
+            if not src_dir.exists():
+                src_dir.mkdir(755)
 
             # then call it recursively
             if src_file.is_dir():
@@ -160,7 +167,7 @@ def symlink(src, dest):
     except OSError:
         # let's be a little more specific
         # except WindowsError: breaks linux
-        raise RuntimeError(
+        raise PermissionsError(
             'Ensure that you are running this script as an admin'
             ' when running on Windows!')
 
@@ -182,16 +189,16 @@ def main():
         raise UsageError(e)
 
     try:
-        glob_pattern = args.glob_pattern
+        glob_search = args.glob_pattern
     except (AttributeError):
-        glob_pattern = None
+        glob_search = None
 
     try:
         recursive = args.recursive
     except AttributeError:
         recursive = False
 
-    dlink(dest, src, recursive, glob_pattern)
+    dlink(dest, src, is_recursive=recursive, glob_pattern=glob_search)
 
 
 if __name__ == "__main__":

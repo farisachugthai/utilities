@@ -6,6 +6,8 @@
 Sphinx Configuration File
 =========================
 
+.. currentmodule:: conf
+
 .. highlight:: ipython
 
 This file does only contain a selection of the most common options.
@@ -56,7 +58,7 @@ logging.basicConfig(level=logging.WARNING)
 
 sys.path.insert(0, os.path.abspath('.'))
 
-from docs.sphinxext import magics  # noqa
+# from .sphinxext import magics  # noqa
 
 sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'numerical')))
 
@@ -85,14 +87,20 @@ needs_sphinx = '1.8'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc', 'sphinx.ext.autosectionlabel',
-    'sphinx.ext.autosummary', 'sphinx.ext.doctest',
-    'sphinx.ext.inheritance_diagram', 'sphinx.ext.intersphinx',
-    'sphinx.ext.napoleon', 'sphinx.ext.todo', 'sphinx.ext.viewcode',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.autosectionlabel',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.doctest',
+    'sphinx.ext.inheritance_diagram',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.todo',
+    'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
-    'numpydoc', 'flake8_rst.sphinxext.custom_roles',
+    'numpydoc',
+    'flake8_rst.sphinxext.custom_roles',
 ]
 
 try:
@@ -108,7 +116,12 @@ try:  # noqa F401
 except (ImportError, ModuleNotFoundError):
     pass
 else:
-    extensions.extend(['matplotlib.sphinxext.plot_directive', 'matplotlib.sphinxext.mathmpl'])
+    extensions.extend(
+        [
+            'matplotlib.sphinxext.plot_directive',
+            'matplotlib.sphinxext.mathmpl'
+        ]
+    )
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -193,14 +206,15 @@ html_static_path = ['_static']
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
 html_sidebars = {
-    '**': [
-        'about.html',
-        'relations.html',
-        'globaltoc.html',
-        'localtoc.html',
-        'searchbox.html',
-        'sourcelink.html',
-    ]
+    '**':
+        [
+            'about.html',
+            'relations.html',
+            'globaltoc.html',
+            'localtoc.html',
+            'searchbox.html',
+            'sourcelink.html',
+        ]
 }
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
@@ -235,8 +249,10 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pyutil.tex', 'Pyutil Documentation', 'Faris A Chugthai',
-     'manual'),
+    (
+        master_doc, 'pyutil.tex', 'Pyutil Documentation', 'Faris A Chugthai',
+        'manual'
+    ),
 ]
 
 # -- Options for manual page output ---------------------------------
@@ -253,8 +269,10 @@ manpages_url = 'https://linux.die.net/man/'
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Pyutil', 'Pyutil Documentation', author, 'Pyutil',
-     'One line description of project.', 'Miscellaneous'),
+    (
+        master_doc, 'Pyutil', 'Pyutil Documentation', author, 'Pyutil',
+        'One line description of project.', 'Miscellaneous'
+    ),
 ]
 
 # -- Options for Epub output ----------------------------------------
@@ -279,10 +297,10 @@ epub_exclude_files = ['search.html']
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
     'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
-    'matplotlib': ('https://matplotlib.org', None),
-    'python': ('https://docs.python.org/3/', None),
-    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
-    'ipython': ('https://ipython.readthedocs.io/en/stable/', None)
+    'matplotlib': ('https://matplotlib.org', None), 'python':
+        ('https://docs.python.org/3/', None), 'numpy':
+            ('https://docs.scipy.org/doc/numpy/', None), 'ipython':
+                ('https://ipython.readthedocs.io/en/stable/', None)
 }
 
 # -- Options for todo extension -------------------------------------

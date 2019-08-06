@@ -1,25 +1,25 @@
+# Vim: set ft=ini:
+
 [[source]]
 name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-numpydoc = "*"
-python-language-server = "*"
-matplotlib = "*"
-yapf = "*"
-utilities = {editable = true,path = "."}
-pynvim = "*"
-flake8-rst = "*"
-bandit = "*"
 flake8 = "*"
+flake8-rst = "*"
+matplotlib = "*"
+nose = "*"
+numpydoc = "*"
 pydocstyle = "*"
+pynvim = "*"
+python-language-server = "*"
 sphinx = "*"
+yapf = "*"
 
 [packages]
+ipython = "*"
 utilities = {editable = true,path = "."}
-nose = "*"
-flake8-rst = "*"
 youtube-dl = "*"
 
 [requires]

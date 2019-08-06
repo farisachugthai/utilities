@@ -1,10 +1,14 @@
-#!/data/data/com.termux/files/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """Utilize argparse, pathlib and IPython to generate symlinks.
 
 =========================
 Directory Linker Rewrite
 =========================
+
+.. module:: dlink2
+
+.. highlight:: python
 
 .. versionchanged:: Added argparse
 
@@ -14,7 +18,7 @@ and beyond.
 
 See Also
 ---------
-:func:`~IPython.utils.path.ensure_dir_exists()` : function
+:func:`IPython.utils.path.ensure_dir_exists()` : function
     Check for a dir and create it if it doesn't exist.
 
 """
@@ -40,13 +44,16 @@ def _parse_arguments():
         description="Iterate over a `dest` folder"
         " and create symlinks in directory "
         "`source`. If `source` is not provided use"
-        " current working directory.")
+        " current working directory."
+    )
 
-    parser.add_argument("destination",
-                        metavar="destination",
-                        nargs='?',
-                        type=Path,
-                        help="Files to symlink to.")
+    parser.add_argument(
+        "destination",
+        metavar="destination",
+        nargs='?',
+        type=Path,
+        help="Files to symlink to."
+    )
 
     parser.add_argument(
         "-s",
@@ -55,13 +62,15 @@ def _parse_arguments():
         dest='source',
         nargs='?',
         default=Path().cwd(),
-        help="Where to create the symlinks. Defaults to the cwd.")
+        help="Where to create the symlinks. Defaults to the cwd."
+    )
 
     parser.add_argument(
         '-g',
         '--glob-pattern',
         metavar='GLOB_PATTERN',
-        help='Filter files in the destination dir with a glob pattern.')
+        help='Filter files in the destination dir with a glob pattern.'
+    )
 
     parser.add_argument(
         '-r',
@@ -72,10 +81,9 @@ def _parse_arguments():
         "Whether to recursively symlink the child directories below the destination folder as well."
     )
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    parser.add_argument(
+        '-V', '--version', action='version', version='%(prog)s' + __version__
+    )
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -131,16 +139,19 @@ def dlink(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
     full_destination_files = sorted([j for j in destination_dir.iterdir()])
 
     full_source_files = sorted(
-        Path(source_dir).joinpath(i) for i in base_destination_files)
+        Path(source_dir).joinpath(i) for i in base_destination_files
+    )
 
     for idx, src_file in enumerate(full_source_files):
         logging.debug('\ni is {0!s}'.format(src_file))
         logging.debug(
-            '\nfull_destination_files is {!s}'.format(full_destination_files))
+            '\nfull_destination_files is {!s}'.format(full_destination_files)
+        )
         logging.debug('\nfull_source_files is {!s}'.format(full_source_files))
         logging.debug('\nsource_dir is {}'.format(source_dir))
         logging.debug(
-            '\nbase_destination_files: {!r}'.format(base_destination_files))
+            '\nbase_destination_files: {!r}'.format(base_destination_files)
+        )
         logging.info("idx: {}\tsrc_file: {}\t".format(idx, src_file))
         if full_destination_files[idx].is_dir():
             src_dir = Path(src_file)
@@ -149,10 +160,12 @@ def dlink(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
 
             # then call it recursively
             if src_file.is_dir():
-                dlink(destination_dir=src_file,
-                      source_dir=source_dir.joinpath(src_file),
-                      is_recursive=is_recursive,
-                      glob_pattern=glob_pattern)
+                dlink(
+                    destination_dir=src_file,
+                    source_dir=source_dir.joinpath(src_file),
+                    is_recursive=is_recursive,
+                    glob_pattern=glob_pattern
+                )
 
         else:
             symlink(src_file, full_destination_files[idx])
@@ -169,7 +182,8 @@ def symlink(src, dest):
         # except WindowsError: breaks linux
         raise PermissionsError(
             'Ensure that you are running this script as an admin'
-            ' when running on Windows!')
+            ' when running on Windows!'
+        )
 
 
 def main():

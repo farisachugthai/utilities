@@ -4,7 +4,15 @@
 
 text=auto
 
+* crlf=text crlf=input
+*.txt text
+*.yml text
+*.html text
+
 *.png       binary
 *.doctree   binary
 *.pickle    binary
-*.jpg       binary
+*.ttf binary
+*.svg binary
+*.pdf binary
+*.jp[e]?g binary

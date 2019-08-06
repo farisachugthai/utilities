@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/_static\graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script type="text/javascript" src="../_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="../_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -43,6 +43,15 @@
 <span class="sd">    :synopsis: Expedite documentation builds.</span>
 
 <span class="sd">We attempt to automate documentation builds with this module.</span>
+
+<span class="sd">Still need to add an option to recursively move the html files out of the</span>
+<span class="sd">currently git-ignored directory `_build/html/` into this directory.</span>
+
+<span class="sd">Update the options you can give to the parser:</span>
+
+<span class="sd">#) remove python path</span>
+<span class="sd">#) Add open in browser as an option</span>
+<span class="sd">#) Fix the output for the `commands` argument when this is run with :data:`sys.argv` == 0</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -93,15 +102,11 @@
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-j&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;--num-jobs&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;num-jobs&#39;</span><span class="p">,</span>
+                        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;jobs&#39;</span><span class="p">,</span>
                         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">(),</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of jobs used by sphinx-build&#39;</span><span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-n&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;--no-api&#39;</span><span class="p">,</span>
-                        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Omit api and autosummary&#39;</span><span class="p">,</span>
-                        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Number of parallel jobs used by `sphinx-build`.&#39;</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-s&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;--single&#39;</span><span class="p">,</span>
@@ -128,9 +133,21 @@
                         <span class="n">default</span><span class="o">=</span><span class="s1">&#39;INFO&#39;</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Log level. Defaults to INFO. Implies logging.&#39;</span><span class="p">)</span>
 
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-V&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--verbose&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Enable verbose logging and increase level to `debug`.&#39;</span><span class="p">)</span>
+
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">)</span>
 
     <span class="n">user_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+    <span class="c1"># from ipdb import set_trace</span>
+    <span class="c1"># set_trace()</span>
 
     <span class="k">return</span> <span class="n">user_args</span></div>
 
@@ -176,14 +193,15 @@
             <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;-W&#39;</span><span class="p">,</span> <span class="s1">&#39;--keep-going&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbosity</span><span class="p">:</span>
             <span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;v&#39;</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbosity</span><span class="p">))</span>
-        <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;-d&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BUILD_PATH</span><span class="p">,</span> <span class="s1">&#39;doctrees&#39;</span><span class="p">),</span>
-                <span class="n">DOC_PATH</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BUILD_PATH</span><span class="p">,</span> <span class="n">kind</span><span class="p">)]</span>
+        <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span>
+            <span class="s1">&#39;-d&#39;</span><span class="p">,</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BUILD_PATH</span><span class="p">,</span> <span class="s1">&#39;doctrees&#39;</span><span class="p">),</span> <span class="n">DOC_PATH</span><span class="p">,</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BUILD_PATH</span><span class="p">,</span> <span class="n">kind</span><span class="p">)</span>
+        <span class="p">]</span>
         <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DocBuilder._open_browser"><a class="viewcode-back" href="../tutorial.html#make.DocBuilder._open_browser">[docs]</a>    <span class="k">def</span> <span class="nf">_open_browser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">single_doc_html</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Open a browser tab showing single</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Open a browser tab showing the single doc html option.&quot;&quot;&quot;</span>
         <span class="n">url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;file://&#39;</span><span class="p">,</span> <span class="n">DOC_PATH</span><span class="p">,</span> <span class="s1">&#39;build&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">,</span>
                            <span class="n">single_doc_html</span><span class="p">)</span>
         <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">new</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div></div>
@@ -211,27 +229,19 @@
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">log_level</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">log_level</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">log_level</span><span class="p">)</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">jobs</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">jobs</span>
-    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;No jobs attribute in jobs.&#39;</span><span class="p">)</span>
-        <span class="n">jobs</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;{os.cpu_count()}&#39;</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">jobs</span>  <span class="c1"># there&#39;s a default for the argument so no need for try/ excepts</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">verbosity</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">verbosity</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="n">verbosity</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">jobs</span><span class="p">)</span>
     <span class="n">builder</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">builder</span>
-
-    <span class="k">if</span> <span class="n">builder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
 
     <span class="n">DocBuilder</span><span class="p">(</span><span class="n">num_jobs</span><span class="o">=</span><span class="n">jobs</span><span class="p">,</span> <span class="n">verbosity</span><span class="o">=</span><span class="n">verbosity</span><span class="p">)</span><span class="o">.</span><span class="n">sphinx_build</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="n">builder</span><span class="p">)</span>
 

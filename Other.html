@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="todo" href="todo.html" />
@@ -53,9 +53,9 @@
 <li><p><a class="reference internal" href="#inspiration" id="id9">Inspiration</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#module-pyutil.dlink2" id="id10"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink2</span></code></a></p>
+<li><p><a class="reference internal" href="#module-pyutil.dlink2" id="id10"><a class="reference internal" href="#module-dlink2" title="dlink2"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink2</span></code></a></a></p>
 <ul>
-<li><p><a class="reference internal" href="#directory-linker-rewrite" id="id11">Directory Linker Rewrite</a></p></li>
+<li><p><a class="reference internal" href="#module-dlink2" id="id11">Directory Linker Rewrite</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#module-pyutil.env" id="id12"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env</span></code></a></p></li>
@@ -272,10 +272,10 @@ working directory is the <code class="xref py py-obj docutils literal notranslat
 </div>
 </div>
 <div class="section" id="module-pyutil.dlink2">
-<span id="dlink2"></span><h2><a class="toc-backref" href="#id10"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink2</span></code></a><a class="headerlink" href="#module-pyutil.dlink2" title="Permalink to this headline">¶</a></h2>
+<span id="dlink2"></span><h2><a class="toc-backref" href="#id10"><a class="reference internal" href="#module-dlink2" title="dlink2"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink2</span></code></a></a><a class="headerlink" href="#module-pyutil.dlink2" title="Permalink to this headline">¶</a></h2>
 <p>Utilize argparse, pathlib and IPython to generate symlinks.</p>
-<div class="section" id="directory-linker-rewrite">
-<h3><a class="toc-backref" href="#id11">Directory Linker Rewrite</a><a class="headerlink" href="#directory-linker-rewrite" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-dlink2">
+<span id="directory-linker-rewrite"></span><h3><a class="toc-backref" href="#id11">Directory Linker Rewrite</a><a class="headerlink" href="#module-dlink2" title="Permalink to this headline">¶</a></h3>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version Added: </span>argparse</p>
 </div>
@@ -284,10 +284,17 @@ and beyond.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.path.html#IPython.utils.path.ensure_dir_exists" title="(in IPython v7.6.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">ensure_dir_exists()</span></code></a><span class="classifier">function</span></dt><dd><p>Check for a dir and create it if it doesn’t exist.</p>
+<dt><a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.path.html#IPython.utils.path.ensure_dir_exists" title="(in IPython v7.7.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">IPython.utils.path.ensure_dir_exists()</span></code></a><span class="classifier">function</span></dt><dd><p>Check for a dir and create it if it doesn’t exist.</p>
 </dd>
 </dl>
 </div>
+<dl class="exception">
+<dt id="pyutil.dlink2.PermissionsError">
+<em class="property">exception </em><code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">PermissionsError</code><a class="reference internal" href="_modules/pyutil/dlink2.html#PermissionsError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.PermissionsError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OSError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OSError</span></code></a></p>
+<p>Symlinking error typically from Windows.</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="pyutil.dlink2.dlink">
 <code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">dlink</code><span class="sig-paren">(</span><em class="sig-param">destination_dir</em>, <em class="sig-param">source_dir</em>, <em class="sig-param">is_recursive=False</em>, <em class="sig-param">glob_pattern=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#dlink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.dlink" title="Permalink to this definition">¶</a></dt>
@@ -370,8 +377,8 @@ defined configurations.</p>
 <h3><a class="toc-backref" href="#id14">Matplotlib Env Checks</a><a class="headerlink" href="#matplotlib-env-checks" title="Permalink to this headline">¶</a></h3>
 <p>Mar 08, 2019</p>
 <p>Just noticed today the following functions:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="k">pass</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">get_home</span><span class="p">()</span>
@@ -381,7 +388,7 @@ defined configurations.</p>
 </pre></div>
 </div>
 <p>Here’s an interesting way to memoize return values.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_logged_cached</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_logged_cached</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Decorator that logs a function&#39;s return value, and memoizes that value.</span>
 
@@ -394,18 +401,18 @@ defined configurations.</p>
 <span class="sd">    %-format string *fmt*, and memoize it; later calls to *func* will directly</span>
 <span class="sd">    return that value.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Return the actual decorator.</span>
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>  <span class="c1"># Return the actual decorator.</span>
         <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">_logged_cached</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
 
-    <span class="n">called</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">called</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="bp">None</span>
 
-    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
-        <span class="k">nonlocal</span> <span class="n">called</span><span class="p">,</span> <span class="n">ret</span>
+        <span class="n">nonlocal</span> <span class="n">called</span><span class="p">,</span> <span class="n">ret</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">called</span><span class="p">:</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
-            <span class="n">called</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">called</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span>
 
@@ -775,7 +782,7 @@ with a try statement.</p>
 <code class="sig-prename descclassname">pyutil.sys_checks.</code><code class="sig-name descname">is_file</code><span class="sig-paren">(</span><em class="sig-param">file_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#is_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.is_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check a file exists on the system.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyutil.sys_checks</span> <span class="k">import</span> <span class="n">is_file</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyutil.sys_checks</span> <span class="kn">import</span> <span class="n">is_file</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">is_file</span><span class="p">(</span><span class="s1">&#39;path/to/file&#39;</span><span class="p">):</span>
 <span class="go">    &gt;&gt;&gt; pass</span>
 </pre></div>
@@ -877,7 +884,7 @@ with a try statement.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-pyutil.dlink2"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink2</span></code></a><ul>
-<li><a class="reference internal" href="#directory-linker-rewrite">Directory Linker Rewrite</a></li>
+<li><a class="reference internal" href="#module-dlink2">Directory Linker Rewrite</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-pyutil.env"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env</span></code></a></li>

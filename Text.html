@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="External Commands" href="External_Commands.html" />
@@ -39,11 +39,10 @@
   <div class="section" id="text-utilities">
 <h1>Text Utilities<a class="headerlink" href="#text-utilities" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-pyutil.json_sorter">
-<span id="json-sorter"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code><a class="headerlink" href="#module-pyutil.json_sorter" title="Permalink to this headline">¶</a></h2>
-<p>Take a <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> file and sort the keys and insert 4 spaces for indents.</p>
-<div class="section" id="id1">
-<h3><a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> sorter<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>This module was originally used to fix my settings.json from VSCode.</p>
+<span id="json-sorter"></span><h2><a class="reference internal" href="#module-json_sorter" title="json_sorter: Sort a JSON file by key without losing organization for nested elements."><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><a class="headerlink" href="#module-pyutil.json_sorter" title="Permalink to this headline">¶</a></h2>
+<p>Take a <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> file, sort the keys and insert 4 spaces for indents.</p>
+<div class="section" id="module-json_sorter">
+<span id="id1"></span><h3><a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> sorter<a class="headerlink" href="#module-json_sorter" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="one-line-solution">
 <h4>One Line Solution<a class="headerlink" href="#one-line-solution" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">((</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;settings.json&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">getitemattr</span><span class="p">)</span>
@@ -61,6 +60,9 @@ take more than a few lines to deserialize and work with.</p>
 script with.</p>
 <p>The problem is already solved. Let’s see what we can’t squeeze out of our tools
 along the way.</p>
+<p>Interestingly enough, this display of excessiveness started as a simple
+quick fix.</p>
+<p>Originally, this module was used to fix my <a class="reference external" href="../.vscode/settings.json">../.vscode/settings.json</a> from VSCode.</p>
 <hr class="docutils" />
 <dl class="function">
 <dt id="pyutil.json_sorter._parse_arguments">
@@ -124,7 +126,7 @@ the file and ensure that the desired results have been achieved.</p>
 
 <dl class="function">
 <dt id="pyutil.json_sorter.text_writer">
-<code class="sig-prename descclassname">pyutil.json_sorter.</code><code class="sig-name descname">text_writer</code><span class="sig-paren">(</span><em class="sig-param">plaintext</em>, <em class="sig-param">output_file=&lt;colorama.ansitowin32.StreamWrapper object at 0x000001E2A3D92518&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#text_writer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.text_writer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyutil.json_sorter.</code><code class="sig-name descname">text_writer</code><span class="sig-paren">(</span><em class="sig-param">plaintext</em>, <em class="sig-param">output_file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='utf-8'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#text_writer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.text_writer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write the previously inputted text to a file.</p>
 <p>This function could easily be utilized over the whole package though.</p>
 <dl class="field-list simple">
@@ -150,7 +152,7 @@ It will only write to the file if the filename currently doesn’t exist.</p></l
 prettified text.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.text.html#module-IPython.utils.text" title="(in IPython v7.6.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython.utils.text</span></code></a></p>
+<p><a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.text.html#module-IPython.utils.text" title="(in IPython v7.7.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython.utils.text</span></code></a></p>
 </div>
 <p>Just dropped string2lines down there thanks to docutils and the
 <code class="xref py py-mod docutils literal notranslate"><span class="pre">docutils.state_machine</span></code>.</p>
@@ -269,7 +271,7 @@ paragraphs, as separated by empty lines.</p>
 <ul>
 <li><a class="reference internal" href="#">Text Utilities</a><ul>
 <li><a class="reference internal" href="#module-pyutil.json_sorter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><ul>
-<li><a class="reference internal" href="#id1"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> sorter</a><ul>
+<li><a class="reference internal" href="#module-json_sorter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> sorter</a><ul>
 <li><a class="reference internal" href="#one-line-solution">One Line Solution</a></li>
 </ul>
 </li>

@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/_static\graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script type="text/javascript" src="../../_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="../../_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -35,13 +35,17 @@
           <div class="body" role="main">
             
   <h1>Source code for pyutil.dlink2</h1><div class="highlight"><pre>
-<span></span><span class="ch">#!/usr/bin/env python</span>
+<span></span><span class="ch">#!/usr/bin/python3</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Utilize argparse, pathlib and IPython to generate symlinks.</span>
 
 <span class="sd">=========================</span>
 <span class="sd">Directory Linker Rewrite</span>
 <span class="sd">=========================</span>
+
+<span class="sd">.. module:: dlink2</span>
+
+<span class="sd">.. highlight:: python</span>
 
 <span class="sd">.. versionchanged:: Added argparse</span>
 
@@ -51,7 +55,7 @@
 
 <span class="sd">See Also</span>
 <span class="sd">---------</span>
-<span class="sd">:func:`~IPython.utils.path.ensure_dir_exists()` : function</span>
+<span class="sd">:func:`IPython.utils.path.ensure_dir_exists()` : function</span>
 <span class="sd">    Check for a dir and create it if it doesn&#39;t exist.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -60,9 +64,15 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
 
+<span class="kn">from</span> <span class="nn">IPython.core.error</span> <span class="k">import</span> <span class="n">UsageError</span>
 <span class="kn">from</span> <span class="nn">IPython.utils.path</span> <span class="k">import</span> <span class="n">ensure_dir_exists</span>
 
 <span class="kn">from</span> <span class="nn">pyutil.__about__</span> <span class="k">import</span> <span class="n">__version__</span>
+
+
+<div class="viewcode-block" id="PermissionsError"><a class="viewcode-back" href="../../Other.html#pyutil.dlink2.PermissionsError">[docs]</a><span class="k">class</span> <span class="nc">PermissionsError</span><span class="p">(</span><span class="ne">OSError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Symlinking error typically from Windows.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
 
 
 <span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">():</span>
@@ -71,26 +81,33 @@
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Iterate over a `dest` folder&quot;</span>
         <span class="s2">&quot; and create symlinks in directory &quot;</span>
         <span class="s2">&quot;`source`. If `source` is not provided use&quot;</span>
-        <span class="s2">&quot; current working directory.&quot;</span><span class="p">)</span>
+        <span class="s2">&quot; current working directory.&quot;</span>
+    <span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;destination&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;destination&quot;</span><span class="p">,</span>
-                        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
-                        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Files to symlink to.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;destination&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;destination&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Files to symlink to.&quot;</span>
+    <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;-s&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--source_directory&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;SOURCE_DIRECTORY&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Where to create the symlinks. Defaults to the cwd.&quot;</span><span class="p">)</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Where to create the symlinks. Defaults to the cwd.&quot;</span>
+    <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s1">&#39;-g&#39;</span><span class="p">,</span>
         <span class="s1">&#39;--glob-pattern&#39;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;GLOB_PATTERN&#39;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Filter files in the destination dir with a glob pattern.&#39;</span><span class="p">)</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Filter files in the destination dir with a glob pattern.&#39;</span>
+    <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s1">&#39;-r&#39;</span><span class="p">,</span>
@@ -101,10 +118,9 @@
         <span class="s2">&quot;Whether to recursively symlink the child directories below the destination folder as well.&quot;</span>
     <span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-V&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;--version&#39;</span><span class="p">,</span>
-                        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
-                        <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-V&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">__version__</span>
+    <span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
@@ -160,26 +176,33 @@
     <span class="n">full_destination_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">destination_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()])</span>
 
     <span class="n">full_source_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
-        <span class="n">Path</span><span class="p">(</span><span class="n">source_dir</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">base_destination_files</span><span class="p">)</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">source_dir</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">base_destination_files</span>
+    <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">src_file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">full_source_files</span><span class="p">):</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">i is </span><span class="si">{0!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">src_file</span><span class="p">))</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">full_destination_files is </span><span class="si">{!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">full_destination_files</span><span class="p">))</span>
+            <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">full_destination_files is </span><span class="si">{!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">full_destination_files</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">full_source_files is </span><span class="si">{!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">full_source_files</span><span class="p">))</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">source_dir is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_dir</span><span class="p">))</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">base_destination_files: </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_destination_files</span><span class="p">))</span>
+            <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">base_destination_files: </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_destination_files</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;idx: </span><span class="si">{}</span><span class="se">\t</span><span class="s2">src_file: </span><span class="si">{}</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">src_file</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">full_destination_files</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">isdir</span><span class="p">():</span>
-            <span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">src_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">full_destination_files</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="n">src_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">src_file</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">src_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="n">src_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="mi">755</span><span class="p">)</span>
 
             <span class="c1"># then call it recursively</span>
             <span class="k">if</span> <span class="n">src_file</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-                <span class="n">dlink</span><span class="p">(</span><span class="n">destination_dir</span><span class="o">=</span><span class="n">src_file</span><span class="p">,</span>
-                      <span class="n">source_dir</span><span class="o">=</span><span class="n">source_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">src_file</span><span class="p">),</span>
-                      <span class="n">is_recursive</span><span class="o">=</span><span class="n">is_recursive</span><span class="p">,</span>
-                      <span class="n">glob_pattern</span><span class="o">=</span><span class="n">glob_pattern</span><span class="p">)</span>
+                <span class="n">dlink</span><span class="p">(</span>
+                    <span class="n">destination_dir</span><span class="o">=</span><span class="n">src_file</span><span class="p">,</span>
+                    <span class="n">source_dir</span><span class="o">=</span><span class="n">source_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">src_file</span><span class="p">),</span>
+                    <span class="n">is_recursive</span><span class="o">=</span><span class="n">is_recursive</span><span class="p">,</span>
+                    <span class="n">glob_pattern</span><span class="o">=</span><span class="n">glob_pattern</span>
+                <span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="n">symlink</span><span class="p">(</span><span class="n">src_file</span><span class="p">,</span> <span class="n">full_destination_files</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span></div>
@@ -194,9 +217,10 @@
     <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
         <span class="c1"># let&#39;s be a little more specific</span>
         <span class="c1"># except WindowsError: breaks linux</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="k">raise</span> <span class="n">PermissionsError</span><span class="p">(</span>
             <span class="s1">&#39;Ensure that you are running this script as an admin&#39;</span>
-            <span class="s1">&#39; when running on Windows!&#39;</span><span class="p">)</span></div>
+            <span class="s1">&#39; when running on Windows!&#39;</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../Other.html#pyutil.dlink2.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
@@ -212,20 +236,20 @@
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">src</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">source</span>
-    <span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
-        <span class="n">src</span> <span class="o">=</span> <span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UsageError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">glob_pattern</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">glob_pattern</span>
+        <span class="n">glob_search</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">glob_pattern</span>
     <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">):</span>
-        <span class="n">glob_pattern</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">glob_search</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">recursive</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">recursive</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="n">recursive</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="n">dlink</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">recursive</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="p">)</span></div>
+    <span class="n">dlink</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">is_recursive</span><span class="o">=</span><span class="n">recursive</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="o">=</span><span class="n">glob_search</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/_static\graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script type="text/javascript" src="../_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="../_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -42,6 +42,8 @@
 <span class="sd">=========================</span>
 <span class="sd">Sphinx Configuration File</span>
 <span class="sd">=========================</span>
+
+<span class="sd">.. currentmodule:: conf</span>
 
 <span class="sd">.. highlight:: ipython</span>
 
@@ -93,7 +95,7 @@
 
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
 
-<span class="kn">from</span> <span class="nn">docs.sphinxext</span> <span class="k">import</span> <span class="n">magics</span>  <span class="c1"># noqa</span>
+<span class="c1"># from .sphinxext import magics  # noqa</span>
 
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SOURCE_CODE</span><span class="p">,</span> <span class="s1">&#39;numerical&#39;</span><span class="p">)))</span>
 
@@ -122,14 +124,20 @@
 <span class="c1"># extensions coming with Sphinx (named &#39;sphinx.ext.*&#39;) or your custom</span>
 <span class="c1"># ones.</span>
 <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;sphinx.ext.autodoc&#39;</span><span class="p">,</span> <span class="s1">&#39;sphinx.ext.autosectionlabel&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;sphinx.ext.autosummary&#39;</span><span class="p">,</span> <span class="s1">&#39;sphinx.ext.doctest&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;sphinx.ext.inheritance_diagram&#39;</span><span class="p">,</span> <span class="s1">&#39;sphinx.ext.intersphinx&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;sphinx.ext.napoleon&#39;</span><span class="p">,</span> <span class="s1">&#39;sphinx.ext.todo&#39;</span><span class="p">,</span> <span class="s1">&#39;sphinx.ext.viewcode&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sphinx.ext.autodoc&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sphinx.ext.autosectionlabel&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sphinx.ext.autosummary&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sphinx.ext.doctest&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sphinx.ext.inheritance_diagram&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sphinx.ext.intersphinx&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sphinx.ext.napoleon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sphinx.ext.todo&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sphinx.ext.viewcode&#39;</span><span class="p">,</span>
     <span class="s1">&#39;sphinx.ext.githubpages&#39;</span><span class="p">,</span>
     <span class="s1">&#39;IPython.sphinxext.ipython_console_highlighting&#39;</span><span class="p">,</span>
     <span class="s1">&#39;IPython.sphinxext.ipython_directive&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;numpydoc&#39;</span><span class="p">,</span> <span class="s1">&#39;flake8_rst.sphinxext.custom_roles&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;numpydoc&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;flake8_rst.sphinxext.custom_roles&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="k">try</span><span class="p">:</span>
@@ -145,7 +153,12 @@
 <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="n">ModuleNotFoundError</span><span class="p">):</span>
     <span class="k">pass</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="n">extensions</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;matplotlib.sphinxext.plot_directive&#39;</span><span class="p">,</span> <span class="s1">&#39;matplotlib.sphinxext.mathmpl&#39;</span><span class="p">])</span>
+    <span class="n">extensions</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="s1">&#39;matplotlib.sphinxext.plot_directive&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;matplotlib.sphinxext.mathmpl&#39;</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
 
 <span class="c1"># Add any paths that contain templates here, relative to this directory.</span>
 <span class="n">templates_path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_templates&#39;</span><span class="p">]</span>
@@ -230,14 +243,15 @@
 <span class="c1"># default: ``[&#39;localtoc.html&#39;, &#39;relations.html&#39;, &#39;sourcelink.html&#39;,</span>
 <span class="c1"># &#39;searchbox.html&#39;]``.</span>
 <span class="n">html_sidebars</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;**&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s1">&#39;about.html&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;relations.html&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;globaltoc.html&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;localtoc.html&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;searchbox.html&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;sourcelink.html&#39;</span><span class="p">,</span>
-    <span class="p">]</span>
+    <span class="s1">&#39;**&#39;</span><span class="p">:</span>
+        <span class="p">[</span>
+            <span class="s1">&#39;about.html&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;relations.html&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;globaltoc.html&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;localtoc.html&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;searchbox.html&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;sourcelink.html&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
 <span class="p">}</span>
 
 <span class="c1"># If true, &quot;Created using Sphinx&quot; is shown in the HTML footer. Default is True.</span>
@@ -272,8 +286,10 @@
 <span class="c1"># (source start file, target name, title,</span>
 <span class="c1">#  author, documentclass [howto, manual, or own class]).</span>
 <span class="n">latex_documents</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="n">master_doc</span><span class="p">,</span> <span class="s1">&#39;pyutil.tex&#39;</span><span class="p">,</span> <span class="s1">&#39;Pyutil Documentation&#39;</span><span class="p">,</span> <span class="s1">&#39;Faris A Chugthai&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;manual&#39;</span><span class="p">),</span>
+    <span class="p">(</span>
+        <span class="n">master_doc</span><span class="p">,</span> <span class="s1">&#39;pyutil.tex&#39;</span><span class="p">,</span> <span class="s1">&#39;Pyutil Documentation&#39;</span><span class="p">,</span> <span class="s1">&#39;Faris A Chugthai&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;manual&#39;</span>
+    <span class="p">),</span>
 <span class="p">]</span>
 
 <span class="c1"># -- Options for manual page output ---------------------------------</span>
@@ -290,8 +306,10 @@
 <span class="c1"># (source start file, target name, title, author,</span>
 <span class="c1">#  dir menu entry, description, category)</span>
 <span class="n">texinfo_documents</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="n">master_doc</span><span class="p">,</span> <span class="s1">&#39;Pyutil&#39;</span><span class="p">,</span> <span class="s1">&#39;Pyutil Documentation&#39;</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="s1">&#39;Pyutil&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;One line description of project.&#39;</span><span class="p">,</span> <span class="s1">&#39;Miscellaneous&#39;</span><span class="p">),</span>
+    <span class="p">(</span>
+        <span class="n">master_doc</span><span class="p">,</span> <span class="s1">&#39;Pyutil&#39;</span><span class="p">,</span> <span class="s1">&#39;Pyutil Documentation&#39;</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="s1">&#39;Pyutil&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;One line description of project.&#39;</span><span class="p">,</span> <span class="s1">&#39;Miscellaneous&#39;</span>
+    <span class="p">),</span>
 <span class="p">]</span>
 
 <span class="c1"># -- Options for Epub output ----------------------------------------</span>
@@ -316,10 +334,10 @@
 <span class="c1"># Example configuration for intersphinx: refer to the Python standard library.</span>
 <span class="n">intersphinx_mapping</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;scipy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;https://docs.scipy.org/doc/scipy/reference&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-    <span class="s1">&#39;matplotlib&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;https://matplotlib.org&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-    <span class="s1">&#39;python&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;https://docs.python.org/3/&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-    <span class="s1">&#39;numpy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;https://docs.scipy.org/doc/numpy/&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-    <span class="s1">&#39;ipython&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;https://ipython.readthedocs.io/en/stable/&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="s1">&#39;matplotlib&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;https://matplotlib.org&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="s1">&#39;python&#39;</span><span class="p">:</span>
+        <span class="p">(</span><span class="s1">&#39;https://docs.python.org/3/&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="s1">&#39;numpy&#39;</span><span class="p">:</span>
+            <span class="p">(</span><span class="s1">&#39;https://docs.scipy.org/doc/numpy/&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="s1">&#39;ipython&#39;</span><span class="p">:</span>
+                <span class="p">(</span><span class="s1">&#39;https://ipython.readthedocs.io/en/stable/&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="c1"># -- Options for todo extension -------------------------------------</span>

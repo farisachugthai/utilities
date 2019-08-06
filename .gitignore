@@ -1,6 +1,7 @@
 # Git Ignore
 
 # Sphinx build files: From pandas-website
+.tox
 searchindex.js
 robots.txt
 _build

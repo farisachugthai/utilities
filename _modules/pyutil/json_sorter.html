@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/_static\graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script type="text/javascript" src="../../_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="../../_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -37,13 +37,14 @@
   <h1>Source code for pyutil.json_sorter</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Take a :mod:`json` file and sort the keys and insert 4 spaces for indents.</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Take a :mod:`json` file, sort the keys and insert 4 spaces for indents.</span>
 
 <span class="sd">==================</span>
 <span class="sd">:mod:`json` sorter</span>
 <span class="sd">==================</span>
 
-<span class="sd">This module was originally used to fix my settings.json from VSCode.</span>
+<span class="sd">.. module:: json_sorter</span>
+<span class="sd">    :synopsis: Sort a JSON file by key without losing organization for nested elements.</span>
 
 <span class="sd">One Line Solution</span>
 <span class="sd">=================</span>
@@ -67,6 +68,11 @@
 
 <span class="sd">The problem is already solved. Let&#39;s see what we can&#39;t squeeze out of our tools</span>
 <span class="sd">along the way.</span>
+
+<span class="sd">Interestingly enough, this display of excessiveness started as a simple</span>
+<span class="sd">quick fix.</span>
+
+<span class="sd">Originally, this module was used to fix my `&lt;../.vscode/settings.json&gt;`_ from VSCode.</span>
 
 <span class="sd">----------</span>
 
@@ -97,8 +103,13 @@
 <span class="sd">    -------</span>
 <span class="sd">    args : :class:`argparse.NameSpace()`</span>
 <span class="sd">        Arguments provided by the user and handled by argparse.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s2">&quot;JSON sorter&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">prog</span><span class="o">=</span><span class="s2">&quot;JSON sorter&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span>
+        <span class="s1">&#39;Take a :mod:`json` file, sort the keys and insert 4 spaces for indents.&#39;</span>
+    <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">,</span>
                         <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">),</span>
@@ -123,7 +134,6 @@
                         <span class="s1">&#39;--log&#39;</span><span class="p">,</span>
                         <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
                         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;Enable logging&quot;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Turn logging on and print to console.&#39;</span><span class="p">)</span>
 
@@ -131,7 +141,6 @@
         <span class="s1">&#39;-ll&#39;</span><span class="p">,</span>
         <span class="s1">&#39;--log_level&#39;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;log_level&#39;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;log level&#39;</span><span class="p">,</span>
         <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="s1">&#39;INFO&#39;</span><span class="p">,</span> <span class="s1">&#39;WARNING&#39;</span><span class="p">,</span> <span class="s1">&#39;ERROR&#39;</span><span class="p">,</span> <span class="s1">&#39;CRITICAL&#39;</span><span class="p">],</span>
         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set the logging level&#39;</span><span class="p">)</span>
 
@@ -139,6 +148,10 @@
                         <span class="s1">&#39;--version&#39;</span><span class="p">,</span>
                         <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
                         <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
@@ -217,9 +230,8 @@
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">log_level</span>
-    <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-        <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s1">&#39;WARNING&#39;</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">pass</span>
 
     <span class="k">if</span> <span class="n">LOG_LEVEL</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s1">&#39;WARNING&#39;</span>
@@ -234,7 +246,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">yaml</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">yaml</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="n">plaintext</span> <span class="o">=</span> <span class="n">sort_json</span><span class="p">(</span><span class="n">fobj</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">plaintext</span> <span class="o">=</span> <span class="n">convert_to_yaml</span><span class="p">(</span><span class="n">yaml</span><span class="p">)</span>

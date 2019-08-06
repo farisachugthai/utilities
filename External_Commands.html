@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Remaining Modules" href="Other.html" />
@@ -40,7 +40,7 @@
 <h1>External Commands<a class="headerlink" href="#external-commands" title="Permalink to this headline">¶</a></h1>
 <p>All commands in this section rely on another tool or piece of software.</p>
 <p>The scripts therein collectively automate use of <strong class="command">git</strong>,
-<strong class="command">Neovim</strong>, <strong class="command">conda</strong>, and <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.6.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
+<strong class="command">Neovim</strong>, <strong class="command">conda</strong>, and <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.7.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
 <div class="section" id="g">
 <h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code><a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h2>
 <p>Programmatically work with subprocess’ and Git.</p>
@@ -148,19 +148,26 @@ learning how to properly initialize a class.</p>
 </div>
 </div>
 <div class="section" id="module-pyutil.nvim_profiling">
-<span id="nvim-profiling"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code><a class="headerlink" href="#module-pyutil.nvim_profiling" title="Permalink to this headline">¶</a></h2>
+<span id="nvim-profiling"></span><h2><a class="reference internal" href="#module-nvim_profiling" title="nvim_profiling: Automate the process of profiling neovim."><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a><a class="headerlink" href="#module-pyutil.nvim_profiling" title="Permalink to this headline">¶</a></h2>
 <p>Automate profiling nvim.</p>
-<div class="section" id="nvim-profiler">
-<h3>Nvim Profiler<a class="headerlink" href="#nvim-profiler" title="Permalink to this headline">¶</a></h3>
-<p>The below code displays how to attach to a remote neovim instance.</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;NVIM_LISTEN_ADDRESS&#39;</span><span class="p">):</span>  <span class="c1"># we have no running nvim</span>
-<span class="go">    &gt;&gt;&gt; subprocess.run([&#39;nvim&amp;&#39;])  # are we allowed to do this?</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pynvim</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vim</span> <span class="o">=</span> <span class="n">pynvim</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="s1">&#39;socket&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;NVIM_LISTEN_ADDRESS&#39;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vim</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;edit $MYVIMRC&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vim_root</span> <span class="o">=</span> <span class="n">vim</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">buffer</span>
+<div class="section" id="module-nvim_profiling">
+<span id="nvim-profiler"></span><h3>Nvim Profiler<a class="headerlink" href="#module-nvim_profiling" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="attaching-to-a-remote-instance-from-the-repl">
+<h4>Attaching to a remote instance from the REPL<a class="headerlink" href="#attaching-to-a-remote-instance-from-the-repl" title="Permalink to this headline">¶</a></h4>
+<p>The below code displays how to attach to a remote neovim instance.:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;NVIM_LISTEN_ADDRESS&#39;</span><span class="p">):</span>  <span class="c1"># we have no running nvim</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;nvim&amp;&#39;</span><span class="p">])</span>  <span class="c1"># are we allowed to do this?</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">pynvim</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">vim</span> <span class="o">=</span> <span class="n">pynvim</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="s1">&#39;socket&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;NVIM_LISTEN_ADDRESS&#39;</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">vim</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;edit $MYVIMRC&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">vim_root</span> <span class="o">=</span> <span class="n">vim</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">buffer</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="finding-the-initialization-file-to-profile">
+<h4>Finding the initialization file to profile<a class="headerlink" href="#finding-the-initialization-file-to-profile" title="Permalink to this headline">¶</a></h4>
+<p>Here’s the help documentation on how to find an <code class="docutils literal notranslate"><span class="pre">init.vim</span></code> file assuming it’s placed
+in the standard location I.E. <code class="docutils literal notranslate"><span class="pre">~/.config/nvim</span></code> or <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">USERPROFILE</span></code>AppDataLocalnvim.</p>
 <div class="highlight-vim notranslate"><div class="highlight"><pre><span></span>stdpath<span class="p">(</span>{what}<span class="p">)</span>                 *stdpath<span class="p">()</span>* *E6100*
 Returns <span class="p">|</span>standard<span class="p">-</span><span class="nb">path</span><span class="p">|</span> locations of various default <span class="k">files</span> and directories.
 
@@ -178,7 +185,9 @@ Example:
     :echo stdpath<span class="p">(</span><span class="s2">&quot;config&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Outputs &lt;~/.config/nvim&gt;. So that should work.</p>
+</div>
+<div class="section" id="roadmap">
+<h4>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this headline">¶</a></h4>
 <p>In the future this module is going to move towards implementing a command
 that will behave similarly to the following command run in the shell:</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nvim --startuptime test.txt test.py test.txt -c&quot;bn&quot;</span>
@@ -186,25 +195,32 @@ that will behave similarly to the following command run in the shell:</p>
 <span class="go">nvim --clean --startuptime foo.log example_module.py foo.log -c&#39;bn&#39;</span>
 </pre></div>
 </div>
+<hr class="docutils" />
+<dl class="class">
+<dt id="pyutil.nvim_profiling.Neovim">
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">Neovim</code><span class="sig-paren">(</span><em class="sig-param">exe=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Instantiate a connection to neovim if it’s running, establish the path if not.</p>
+<p>Got to the point where I thought:</p>
+<p><em>Let’s just rewrite this module.</em></p>
+<dl class="method">
+<dt id="pyutil.nvim_profiling.Neovim._get_instance">
+<code class="sig-name descname">_get_instance</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim._get_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim._get_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if neovim is running.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyutil.nvim_profiling.Neovim.running_instance">
+<em class="property">property </em><code class="sig-name descname">running_instance</code><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim.running_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim.running_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is neovim running?</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="function">
 <dt id="pyutil.nvim_profiling._parse_arguments">
 <code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling._parse_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse arguments given by the user.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyutil.nvim_profiling.find_init_files">
-<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">find_init_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#find_init_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.find_init_files" title="Permalink to this definition">¶</a></dt>
-<dd><p>Locate the initialization files used for nvim.</p>
-<p>Should theoretically work on both Windows and Unix systems.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>nvim_root</strong> – The directory where nvim’s configuration files are found</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="function">
@@ -233,7 +249,7 @@ that will behave similarly to the following command run in the shell:</p>
 <code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">output_results</code><span class="sig-paren">(</span><em class="sig-param">output_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#output_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.output_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks that an directory named profiling exists.</p>
 <p>IPython has a function in <code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython.utils</span></code> that I believe is called
-ensure_dir_exists. Do we provide anything that doesn’t?</p>
+ensure_dir_exists. Do we provide anything that that implementation doesn’t?</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Directory to store profiling results in.</p>
@@ -247,26 +263,7 @@ ensure_dir_exists. Do we provide anything that doesn’t?</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="pyutil.nvim_profiling.temporary_buffer">
-<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">temporary_buffer</code><span class="sig-paren">(</span><em class="sig-param">buffer=None</em>, <em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#temporary_buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.temporary_buffer" title="Permalink to this definition">¶</a></dt>
-<dd><p>TODO: Docstring for temporary_buffer.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>buffer</strong> (<em>TODO</em><em>, </em><em>optional</em>) – </p></li>
-<li><p><strong>path</strong> (<em>TODO</em><em>, </em><em>optional</em>) – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>TODO</p>
-</dd>
-</dl>
-</dd></dl>
-
+</div>
 </div>
 </div>
 </div>
@@ -324,7 +321,12 @@ ensure_dir_exists. Do we provide anything that doesn’t?</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-pyutil.nvim_profiling"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a><ul>
-<li><a class="reference internal" href="#nvim-profiler">Nvim Profiler</a></li>
+<li><a class="reference internal" href="#module-nvim_profiling">Nvim Profiler</a><ul>
+<li><a class="reference internal" href="#attaching-to-a-remote-instance-from-the-repl">Attaching to a remote instance from the REPL</a></li>
+<li><a class="reference internal" href="#finding-the-initialization-file-to-profile">Finding the initialization file to profile</a></li>
+<li><a class="reference internal" href="#roadmap">Roadmap</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API" href="api.html" />
@@ -92,6 +92,14 @@ and crash the build. I.E. the following won’t work.:</p>
 <h3>Make<a class="headerlink" href="#make" title="Permalink to this headline">¶</a></h3>
 <p>Expedite documentation builds.</p>
 <span class="target" id="module-make"></span><p>We attempt to automate documentation builds with this module.</p>
+<p>Still need to add an option to recursively move the html files out of the
+currently git-ignored directory <code class="xref py py-obj docutils literal notranslate"><span class="pre">_build/html/</span></code> into this directory.</p>
+<p>Update the options you can give to the parser:</p>
+<ol class="arabic simple">
+<li><p>remove python path</p></li>
+<li><p>Add open in browser as an option</p></li>
+<li><p>Fix the output for the <code class="xref py py-obj docutils literal notranslate"><span class="pre">commands</span></code> argument when this is run with <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.argv" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.argv</span></code></a> == 0</p></li>
+</ol>
 <dl class="class">
 <dt>
 <em class="property">class </em><code class="sig-prename descclassname">make.</code><code class="sig-name descname">DocBuilder</code><span class="sig-paren">(</span><em class="sig-param">num_jobs=1</em>, <em class="sig-param">verbosity=0</em>, <em class="sig-param">warnings_are_errors=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make.html#DocBuilder"><span class="viewcode-link">[source]</span></a></dt>
@@ -113,7 +121,7 @@ script.</p>
 <dl class="method">
 <dt>
 <code class="sig-name descname">_open_browser</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">single_doc_html</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make.html#DocBuilder._open_browser"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Open a browser tab showing single</p>
+<dd><p>Open a browser tab showing the single doc html option.</p>
 </dd></dl>
 
 <dl class="method">

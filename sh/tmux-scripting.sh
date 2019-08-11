@@ -43,6 +43,26 @@ fi
 # P means print window info after
 tmux new-window -aP -n nvim -t default
 
+# Some useful tmux functions
+
+# byobu_prompt_status: From byobu: {{{1
+byobu_prompt_status() { local e=$?; [ $e != 0 ] && echo -e "$e "; }
+
+# tm - create new tmux session, or switch to existing one. {{{1
+# Works from within tmux too.
+
+# NOTE: Requires fzf
+
+# `tm` will allow you to select your tmux session via fzf.
+# `tm irc` will attach to the irc session (if it exists), else it will create it.
+tm() {
+  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+  if [ $1 ]; then
+    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+  fi
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+}
+
 exit 0
 
 # Vim: set foldmethod=marker :

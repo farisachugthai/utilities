@@ -4,13 +4,13 @@
 .tox/**
 
 # Sphinx build files: From pandas-website
-searchindex.js
-robots.txt
-_build
-*.html
+# searchindex.js
+# robots.txt
+# _build
+# *.html
 !docs/_templates/*.html
-objects.inv
-.buildinfo
+# objects.inv
+# .buildinfo
 /docs/_build/*
 
 # Local files
@@ -384,7 +384,6 @@ FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
-node_modules/
 
 # Visual Studio 6 build log
 *.plg

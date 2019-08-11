@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Programmatically work with subprocess' and Git.
+"""
+=====================================================
+g --- Programmatically work with subprocess' and Git.
+=====================================================
 
 .. highlight:: ipython
 
-.. module:: pyutil.g
-
-===
-g
-===
+.. module:: g
+    :synopsis: Make working with Git safer and easier.
 
 This module intends to build a base class through subprocesses in order to
 build up a trimmed-down, and more importantly *safer* Git object.
@@ -57,6 +57,7 @@ remotely and kill everything.
 
 """
 import logging
+from pathlib import Path
 import shlex
 import subprocess
 import sys
@@ -99,6 +100,55 @@ class Git(BaseCommand):
         """Maybe this should be in the parent class?"""
         cmd = shlex.quote(cmd)
         return self.run(cmd)
+
+    def _get_git_root(self):
+        """Show the root of a repo."""
+        cmd = "git rev-parse --show-toplevel".split()
+        try:
+            return subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError:
+            return None
+
+
+class Other:
+    """Toy code always refers to other I.E. self != other. Let's write other!
+
+    Haha just kidding. I'm testing out Git but one that doesn't subclass anything
+    because the parent class is having problems
+    """
+
+    def __init__(self, root=None, version=None):
+        """Initialize Git all by its lonesome."""
+        if root is not None:
+            self.root = root
+        else:
+            self.root = self._get_git_root()
+        if version is not None:
+            self.version = version
+        else:
+            self.version = self._get_version()
+
+        self.Path = Path
+
+        def __call__(self):
+            """Got an error that the object isn't callable TODO"""
+            if self._validate_dir(self.root):
+                return repr(Path(self.root))
+
+        def __repr__(self):
+            return '{!r}'.format(self.root)
+
+        def _validate_dir(self, dir=None):
+            real_dir = self.Path(dir).is_dir()
+            return real_root
+
+    def _get_version(self):
+        try:
+            output = subprocess.check_output(['git', '--version'], text=True)
+        except CalledProcessError as e:
+            return e
+        else:
+            return output
 
     def _get_git_root(self):
         """Show the root of a repo."""

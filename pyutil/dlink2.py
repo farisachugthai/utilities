@@ -27,8 +27,16 @@ import logging
 import sys
 from pathlib import Path
 
-from IPython.core.error import UsageError
-from IPython.utils.path import ensure_dir_exists
+try:
+    from IPython.core.error import UsageError
+    from IPython.utils.path import ensure_dir_exists
+except (ImportError, ModuleNotFoundError):
+
+    class UsageError(Exception):
+        pass
+
+    # TODO
+    # def ensure_dir_exists(dir):
 
 from pyutil.__about__ import __version__
 

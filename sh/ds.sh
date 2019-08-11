@@ -8,3 +8,5 @@
 
 # Could add in support for CLAs
 du -hbs
+
+exit 0

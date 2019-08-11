@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Remaining Modules" href="Other.html" />
@@ -42,11 +42,10 @@
 <p>The scripts therein collectively automate use of <strong class="command">git</strong>,
 <strong class="command">Neovim</strong>, <strong class="command">conda</strong>, and <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.7.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
 <div class="section" id="g">
-<h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code><a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h2>
-<p>Programmatically work with subprocess’ and Git.</p>
-<span class="target" id="module-pyutil.g"></span><div class="section" id="id1">
-<h3>g<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>This module intends to build a base class through subprocesses in order to
+<h2><a class="reference internal" href="#module-g" title="g: Make working with Git safer and easier."><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="g-programmatically-work-with-subprocess-and-git">
+<h3>g — Programmatically work with subprocess’ and Git.<a class="headerlink" href="#g-programmatically-work-with-subprocess-and-git" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-g"></span><p>This module intends to build a base class through subprocesses in order to
 build up a trimmed-down, and more importantly <em>safer</em> Git object.</p>
 <div class="section" id="subprocess-and-git">
 <h4>Subprocess and Git<a class="headerlink" href="#subprocess-and-git" title="Permalink to this headline">¶</a></h4>
@@ -109,6 +108,21 @@ learning how to properly initialize a class.</p>
 <dt>
 <em class="property">property </em><code class="sig-name descname">version</code><a class="reference internal" href="_modules/pyutil/g.html#Git.version"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Return the version of Git we have.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">Other</code><span class="sig-paren">(</span><em class="sig-param">root=None</em>, <em class="sig-param">version=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Other"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Toy code always refers to other I.E. self != other. Let’s write other!</p>
+<p>Haha just kidding. I’m testing out Git but one that doesn’t subclass anything
+because the parent class is having problems</p>
+<dl class="method">
+<dt>
+<code class="sig-name descname">_get_git_root</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Other._get_git_root"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Show the root of a repo.</p>
 </dd></dl>
 
 </dd></dl>
@@ -238,7 +252,7 @@ that will behave similarly to the following command run in the shell:</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
 </dd>
 </dl>
-<div class="admonition-todo admonition" id="id2">
+<div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>Allow the <code class="docutils literal notranslate"><span class="pre">test.py</span></code> file that we use for startup to be configured.</p>
 </div>
@@ -314,7 +328,7 @@ ensure_dir_exists. Do we provide anything that that implementation doesn’t?</p
 <ul>
 <li><a class="reference internal" href="#">External Commands</a><ul>
 <li><a class="reference internal" href="#g"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><ul>
-<li><a class="reference internal" href="#id1">g</a><ul>
+<li><a class="reference internal" href="#g-programmatically-work-with-subprocess-and-git">g — Programmatically work with subprocess’ and Git.</a><ul>
 <li><a class="reference internal" href="#subprocess-and-git">Subprocess and Git</a></li>
 </ul>
 </li>

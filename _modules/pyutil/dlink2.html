@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script type="text/javascript" src="../../_static/_static/sidebar.js"></script>
+    <script type="text/javascript" src="../../_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -64,8 +64,16 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">IPython.core.error</span> <span class="k">import</span> <span class="n">UsageError</span>
-<span class="kn">from</span> <span class="nn">IPython.utils.path</span> <span class="k">import</span> <span class="n">ensure_dir_exists</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">IPython.core.error</span> <span class="k">import</span> <span class="n">UsageError</span>
+    <span class="kn">from</span> <span class="nn">IPython.utils.path</span> <span class="k">import</span> <span class="n">ensure_dir_exists</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="n">ModuleNotFoundError</span><span class="p">):</span>
+
+    <span class="k">class</span> <span class="nc">UsageError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># TODO</span>
+    <span class="c1"># def ensure_dir_exists(dir):</span>
 
 <span class="kn">from</span> <span class="nn">pyutil.__about__</span> <span class="k">import</span> <span class="n">__version__</span>
 

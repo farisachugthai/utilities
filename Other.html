@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="todo" href="todo.html" />
@@ -353,6 +353,25 @@ to create symlinks as well as admins.</p>
 to use in a typical Python REPL it’s also implemented here.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">name</span> <span class="pre">==</span> <span class="pre">'__main__'</span></code> is left off so that it can be run directly
 or sourced.</p>
+<dl class="class">
+<dt id="pyutil.env.Env">
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.env.</code><code class="sig-name descname">Env</code><span class="sig-paren">(</span><em class="sig-param">env=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env.html#Env"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env.Env" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Memoize the user’s current environment variable settings.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyutil.env.WindowsEnv">
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.env.</code><code class="sig-name descname">WindowsEnv</code><span class="sig-paren">(</span><em class="sig-param">admin=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env.html#WindowsEnv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env.WindowsEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyutil.env.Env" title="pyutil.env.Env"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyutil.env.Env</span></code></a></p>
+<p>Windows specific things.</p>
+<dl class="method">
+<dt id="pyutil.env.WindowsEnv.get_registry">
+<code class="sig-name descname">get_registry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env.html#WindowsEnv.get_registry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env.WindowsEnv.get_registry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="function">
 <dt id="pyutil.env.current">
 <code class="sig-prename descclassname">pyutil.env.</code><code class="sig-name descname">current</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env.html#current"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env.current" title="Permalink to this definition">¶</a></dt>

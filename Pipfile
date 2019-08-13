@@ -16,6 +16,7 @@ pynvim = "*"
 python-language-server = "*"
 sphinx = "*"
 yapf = "*"
+utilities = {editable = true,path = "."}
 
 [packages]
 ipython = "*"

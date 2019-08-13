@@ -7,6 +7,7 @@ Directory Linker Rewrite
 =========================
 
 .. module:: dlink2
+    :synopsis: Update the directory linker.
 
 .. highlight:: python
 
@@ -15,6 +16,8 @@ Directory Linker Rewrite
 This is a rewrite of a script I've had for years, so I decided to go above
 and beyond.
 
+The idea behind it was to create something that would easily allow for
+creating arbitrarily nested trees of symlinks.
 
 See Also
 ---------
@@ -43,7 +46,10 @@ from pyutil.__about__ import __version__
 
 class PermissionsError(OSError):
     """Symlinking error typically from Windows."""
-    pass
+
+    def __call__(self, tb=None):
+        if tb:
+            return '{}'.format(tb)
 
 
 def _parse_arguments():
@@ -52,16 +58,13 @@ def _parse_arguments():
         description="Iterate over a `dest` folder"
         " and create symlinks in directory "
         "`source`. If `source` is not provided use"
-        " current working directory."
-    )
+        " current working directory.")
 
-    parser.add_argument(
-        "destination",
-        metavar="destination",
-        nargs='?',
-        type=Path,
-        help="Files to symlink to."
-    )
+    parser.add_argument("destination",
+                        metavar="destination",
+                        nargs='?',
+                        type=Path,
+                        help="Files to symlink to.")
 
     parser.add_argument(
         "-s",
@@ -70,28 +73,34 @@ def _parse_arguments():
         dest='source',
         nargs='?',
         default=Path().cwd(),
-        help="Where to create the symlinks. Defaults to the cwd."
-    )
+        help="Where to create the symlinks. Defaults to the cwd.")
 
     parser.add_argument(
         '-g',
         '--glob-pattern',
         metavar='GLOB_PATTERN',
-        help='Filter files in the destination dir with a glob pattern.'
-    )
+        default=None,
+        help=('Filter files in the destination dir with a glob pattern.'
+              ' This ensures that only files that match GLOB_PATTERN in `dst`'
+              ' are symlinked in `src`.'))
 
+    # so apparently without the metavar argument, args won't show their var
+    # name in the help message?
     parser.add_argument(
         '-r',
         '--recursive',
-        action='store_true',
+        action='store_const',
+        # nargs='?',
         default=False,
-        help=
-        "Whether to recursively symlink the child directories below the destination folder as well."
-    )
+        const=True,
+        metavar='RECURSIVE',  # and it causes an error too!
+        help=('Whether to recursively symlink the files in'
+              ' child directories below the destination folder as well.'))
 
-    parser.add_argument(
-        '-V', '--version', action='version', version='%(prog)s' + __version__
-    )
+    parser.add_argument('-V',
+                        '--version',
+                        action='version',
+                        version='%(prog)s' + __version__)
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -147,19 +156,16 @@ def dlink(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
     full_destination_files = sorted([j for j in destination_dir.iterdir()])
 
     full_source_files = sorted(
-        Path(source_dir).joinpath(i) for i in base_destination_files
-    )
+        Path(source_dir).joinpath(i) for i in base_destination_files)
 
     for idx, src_file in enumerate(full_source_files):
         logging.debug('\ni is {0!s}'.format(src_file))
         logging.debug(
-            '\nfull_destination_files is {!s}'.format(full_destination_files)
-        )
+            '\nfull_destination_files is {!s}'.format(full_destination_files))
         logging.debug('\nfull_source_files is {!s}'.format(full_source_files))
         logging.debug('\nsource_dir is {}'.format(source_dir))
         logging.debug(
-            '\nbase_destination_files: {!r}'.format(base_destination_files)
-        )
+            '\nbase_destination_files: {!r}'.format(base_destination_files))
         logging.info("idx: {}\tsrc_file: {}\t".format(idx, src_file))
         if full_destination_files[idx].is_dir():
             src_dir = Path(src_file)
@@ -168,12 +174,10 @@ def dlink(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
 
             # then call it recursively
             if src_file.is_dir():
-                dlink(
-                    destination_dir=src_file,
-                    source_dir=source_dir.joinpath(src_file),
-                    is_recursive=is_recursive,
-                    glob_pattern=glob_pattern
-                )
+                dlink(destination_dir=src_file,
+                      source_dir=source_dir.joinpath(src_file),
+                      is_recursive=is_recursive,
+                      glob_pattern=glob_pattern)
 
         else:
             symlink(src_file, full_destination_files[idx])
@@ -185,13 +189,13 @@ def symlink(src, dest):
         src.symlink_to(dest)
     except FileExistsError:
         pass
-    except OSError:
+    except OSError as e:
         # let's be a little more specific
         # except WindowsError: breaks linux
         raise PermissionsError(
+            '{}'.format(e) +
             'Ensure that you are running this script as an admin'
-            ' when running on Windows!'
-        )
+            ' when running on Windows!')
 
 
 def main():

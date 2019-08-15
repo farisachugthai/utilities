@@ -104,7 +104,7 @@ extensions = [
 ]
 
 try:
-    from docs.sphinxext import magics  # noqa F401
+    from utilities.docs.sphinxext import magics  # noqa F401
 except ImportError:
     logging.debug('Magics was not imported.')
 else:

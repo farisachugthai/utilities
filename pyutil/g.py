@@ -15,32 +15,10 @@ build up a trimmed-down, and more importantly *safer* Git object.
 
 Subprocess and Git
 ====================
-
-05/03/2019:
-
 Currently we need to move some module functions into our BaseCommand class.
 I don't want it to attempt implementing too much however. But it should have
 a method that checks output in the way that our module function does for the
 :command:`git rev-parse` expression that sets up the git root.
-
-Also we need some module wide logging. I mean all across :ref:`pyutil`
-it's nuts how poorly spread out and inconsistent it is.
-
-06/01/2019:
-
-Should changing the module functions so that they use
-:func:`subprocess.check_call()`.
-
-:command:`git-touch` uses :func:`subprocess.run()` which is fine, and the
-commands that we're implementing for the sake of information gathering
-(I.E. the one :command:`git rev-parse` already use
-:attr:`~subprocess.check_output` because we need the return values.
-
-The only point in changing them would be to use :func:`subprocess.run()`
-and give it the parameter :attr:`subprocess.capture_output`....but I'm
-hesistant because that's exclusively a python3.7 feature.
-
-Jun 03, 2019
 
 You know what would be nice? Run the following commands in one.
 
@@ -86,20 +64,23 @@ class Git(BaseCommand):
             self.root = root
         super().__init__(self, **kwargs)
 
+    def __repr__(self):
+        return '{!r}\t{!r}'.format(self.__class__.__name__, self.root)
+
     @property
     def version(self):
         """Return the version of Git we have."""
         return self.run('git --version')
 
     @staticmethod
-    def _static_quote_cmd(self, cmd):
+    def _quote(self, cmd):
         """Which one of these two is preferable?"""
         return shlex.quote(cmd)
 
     def _quote_cmd(self, cmd):
         """Maybe this should be in the parent class?"""
-        cmd = shlex.quote(cmd)
-        return self.run(cmd)
+        cmd = shlex.split(shlex.quote(cmd))
+        return self.run(cmd))
 
     def _get_git_root(self):
         """Show the root of a repo."""
@@ -108,6 +89,29 @@ class Git(BaseCommand):
             return subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError:
             return None
+
+    def _check_output(self, cmd, **kwargs=None):
+        """Checks output from a subprocess call."""
+        try:
+            output = subprocess.check_output(
+                    [self._quote(cmd), **kwargs],
+                    universal_newlines=True,
+                    stderr=subprocess.PIPE)
+        except subprocess.CalledProcessError as e:
+            return e
+        return output
+
+    def get_git_upstream_remote(self):
+        """Get the remote name to use for upstream branches.
+
+        Returns
+        -------
+        str : Remote git server
+            Uses "upstream" if it exists, "origin" otherwise
+
+        """
+        cmd = "git remote get-url upstream"
+        return self._check_output(cmd)
 
 
 class Other:
@@ -190,22 +194,6 @@ def get_git_branch():
     else:
         return output
 
-
-def get_git_upstream_remote():
-    """Get the remote name to use for upstream branches.
-
-    Returns
-    -------
-    str : Remote git server
-        Uses "upstream" if it exists, "origin" otherwise
-
-    """
-    cmd = "git remote get-url upstream".split()
-    try:
-        subprocess.check_output(cmd, stderr=subprocess.DEVNULL)
-    except subprocess.CalledProcessError:
-        return "origin"
-    return "upstream"
 
 
 if __name__ == "__main__":

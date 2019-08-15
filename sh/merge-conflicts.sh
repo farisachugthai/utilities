@@ -5,6 +5,11 @@
 
 # set -euo pipefail
 
+# TODO: Just ran this and it stated 1 file matched. It was this file.
+# If you add a bracket in the first letter of `ps aux | grep [s]shd `
+# it removes grep from output. How do we doo the same here?
+
+
 echo -e "Here are all the merge conflicts starting in this directory.\n"
 
 ag --recurse --nofollow --hidden -l "<<<<<<< HEAD" .

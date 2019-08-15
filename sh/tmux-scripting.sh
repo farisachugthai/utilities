@@ -43,6 +43,7 @@ fi
 # P means print window info after
 tmux new-window -aP -n nvim -t default
 
+<<<<<<< Updated upstream
 # Some useful tmux functions
 
 # byobu_prompt_status: From byobu: {{{1
@@ -64,5 +65,4 @@ tm() {
 }
 
 exit 0
-
 # Vim: set foldmethod=marker :

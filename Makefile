@@ -44,6 +44,10 @@ clean-generated:
 	rm -rf .eggs/
 	rm -rf html/
 
+.PHONY: clean-git
+clean-git:
+	git clean -fdx
+
 
 .PHONY: clean-ghpages
 clean-ghpages:
@@ -51,9 +55,12 @@ clean-ghpages:
 	rm yarn-error.log
 	rm objects.inv
 
+# Fail if any of these files have warnings
 .PHONY: lint
 lint:
-	@flake8
+	@$(PYTHON) -m flake8
+	shellcheck sh/*.sh
+
 
 .PHONY: test
 test:
@@ -62,12 +69,12 @@ test:
 
 .PHONY: build
 build:
-	@$(PYTHON) setup.py bdist_wheel
-	@$(PYTHON) setup.py install
+	@$(PYTHON) setup.py build
+	@$(PYTHON) setup.py develop
 
 .PHONY: develop
 develop:
-	@$(PYTHON) -m pip install -e .
+	@$(PYTHON) -m pip install -U -e .
 
 .PHONY: whoa
 whoa:

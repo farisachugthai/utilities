@@ -41,7 +41,10 @@ except (ImportError, ModuleNotFoundError):
     # TODO
     # def ensure_dir_exists(dir):
 
-from pyutil.__about__ import __version__
+try:
+    from pyutil.__about__ import __version__
+except (ImportError, ModuleNotFoundError):
+    __version__ = None
 
 
 class PermissionsError(OSError):
@@ -97,10 +100,11 @@ def _parse_arguments():
         help=('Whether to recursively symlink the files in'
               ' child directories below the destination folder as well.'))
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    if __version__:
+        parser.add_argument('-V',
+                            '--version',
+                            action='version',
+                            version='%(prog)s' + __version__)
 
     if len(sys.argv) == 1:
         parser.print_help()

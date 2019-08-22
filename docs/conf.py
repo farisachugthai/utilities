@@ -44,7 +44,10 @@ import sys
 # So even though it sets off the linters this is needed to recognize numpydoc
 # as a package
 from numpydoc import numpydoc  # noqa
-import flake8_rst  # noqa
+try:
+    import flake8_rst  # noqa
+except (ImportError, ModuleNotFoundError):
+    flake8_rst = None
 
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(CONF_PATH, 'build')
@@ -100,8 +103,10 @@ extensions = [
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
     'numpydoc',
-    'flake8_rst.sphinxext.custom_roles',
 ]
+
+if flake8_rst:
+    extensions.append('flake8_rst.sphinxext.custom_roles')
 
 try:
     from utilities.docs.sphinxext import magics  # noqa F401

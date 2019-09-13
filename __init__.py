@@ -10,11 +10,7 @@ import pkg_resources
 
 import pyutil  # noqa F401
 from pyutil.__about__ import (  # noqa F401
-    __author__,
-    __copyright__,
-    __description__,
-    __docformat__,
-    __license__,
+    __author__, __copyright__, __description__, __docformat__, __license__,
 )
 
 logging.getLogger(__name__).addHandler(NullHandler())

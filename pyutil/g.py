@@ -15,6 +15,7 @@ build up a trimmed-down, and more importantly *safer* Git object.
 
 Subprocess and Git
 ====================
+
 Currently we need to move some module functions into our BaseCommand class.
 I don't want it to attempt implementing too much however. But it should have
 a method that checks output in the way that our module function does for the

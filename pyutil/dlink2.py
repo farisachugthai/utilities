@@ -1,17 +1,14 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Utilize argparse, pathlib and IPython to generate symlinks.
-
+"""
 =========================
 Directory Linker Rewrite
 =========================
 
 .. module:: dlink2
-    :synopsis: Update the directory linker.
+    :synopsis: Utilize argparse, pathlib and IPython to generate symlinks.
 
-.. highlight:: python
-
-.. versionchanged:: Added argparse
+.. highlight:: ipython
 
 This is a rewrite of a script I've had for years, so I decided to go above
 and beyond.
@@ -213,10 +210,7 @@ def main():
     if not dest.is_dir():
         sys.exit("Provided target not a directory. Exiting.")
 
-    try:
-        src = args.source
-    except (IndexError, AttributeError) as e:
-        raise UsageError(e)
+    src = args.source or Path().cwd
 
     try:
         glob_search = args.glob_pattern

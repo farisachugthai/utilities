@@ -81,7 +81,7 @@ class Git(BaseCommand):
     def _quote_cmd(self, cmd):
         """Maybe this should be in the parent class?"""
         cmd = shlex.split(shlex.quote(cmd))
-        return self.run(cmd))
+        return self.run(cmd)
 
     def _get_git_root(self):
         """Show the root of a repo."""
@@ -91,11 +91,11 @@ class Git(BaseCommand):
         except subprocess.CalledProcessError:
             return None
 
-    def _check_output(self, cmd, **kwargs=None):
+    def _check_output(self, cmd, **kwargs):
         """Checks output from a subprocess call."""
         try:
             output = subprocess.check_output(
-                    [self._quote(cmd), **kwargs],
+                    [self._quote(cmd), kwargs],
                     universal_newlines=True,
                     stderr=subprocess.PIPE)
         except subprocess.CalledProcessError as e:

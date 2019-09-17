@@ -183,3 +183,19 @@ def _set_debugging():
     ch.setFormatter(formatter)
     root.addHandler(ch)
     return root
+
+
+def basic_log(logger=None):
+    """Set up some basic logging."""
+    if not logger:
+        logger = logging.getLogger()
+
+    logger.setLevel(logging.WARNING)
+
+    file_handler = logging.FileHandler(log_name, encoding='utf-8')
+    formatter = logging.Formatter(
+        '%(asctime)s : %(levelname)s : %(module)s : %(name)s : %(message)s')
+    file_handler.setFormatter(formatter)
+
+    logger.addHandler(file_handler)
+    return logger

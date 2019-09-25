@@ -205,15 +205,6 @@ fgr() { # {{{1 git remote
   cut -d$'\t' -f1
 }
 # }}}
-# Key bindings for each. {{{1
-# Definitely go through everything and optimize
-bind '"\er": redraw-current-line'
-bind '"\C-g\C-f": "$(fgf)\e\C-e\er"'
-bind '"\C-g\C-b": "$(fgb)\e\C-e\er"'
-bind '"\C-g\C-t": "$(fgt)\e\C-e\er"'
-bind '"\C-g\C-h": "$(fgh)\e\C-e\er"'
-bind '"\C-g\C-r": "$(fgr)\e\C-e\er"'
-
 # Different gist
 fgstash() { # {{{1 preview window for git stashes
   local out k reflog
@@ -236,7 +227,7 @@ fgstash() { # {{{1 preview window for git stashes
 
 # Updated versions of the above. From Choi's bashrc.
 
-fgs() {  # git status through fzf
+fgs() {  # git status through fzf: {{{1
   is_in_git_repo || return
   git -c color.status=always status --short |
   fzf-down -m --ansi --nth 2..,.. \
@@ -244,7 +235,7 @@ fgs() {  # git status through fzf
   cut -c4- | sed 's/.* -> //'
 }
 
-fgb() {  # git branch
+fgb() {  # git branch: {{{1
   is_in_git_repo || return
   git branch -a --color=always | grep -v '/HEAD\s' | sort |
   fzf-down --ansi --multi --tac --preview-window right:70% \
@@ -253,7 +244,7 @@ fgb() {  # git branch
   sed 's#^remotes/##'
 }
 
-fgt() {  # tags
+fgt() {  # tags: lp
   is_in_git_repo || return
   git tag --sort -version:refname |
   fzf-down --multi --preview-window right:70% \

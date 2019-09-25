@@ -1,0 +1,26 @@
+#!/bin/bash
+# Maintainer: Faris Chugthai 
+
+# set -euo pipefail
+
+man_maker() {
+
+makewhatis "$PREFIX/share/man" \
+    # Use termuxs configuration files \
+    -C "$PREFIX/etc/man.conf" \
+    # utf-8 obviously \
+    -T utf8 \
+    # print warnings, display the changed files \
+    -pD
+
+}
+
+if [[ -n "$MANPATH" ]]; then
+    echo "Env var MANPATH set. Current value: "
+    echo "$MANPATH"
+fi
+
+
+man_maker
+
+exit 0

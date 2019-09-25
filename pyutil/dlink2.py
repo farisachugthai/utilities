@@ -16,6 +16,22 @@ and beyond.
 The idea behind it was to create something that would easily allow for
 creating arbitrarily nested trees of symlinks.
 
+.. todo:: Sep 17, 2019: Recursive option
+
+    Currently doesnt work.
+
+.. todo:: literally what
+
+::
+
+    $: dlink2.py  ~/projects/viconf/.config/nvim/rplugin/python3
+    Traceback (most recent call last):
+    File "/data/data/com.termux/files/home/bin/dlink2.py", line 233, in <module>
+    main()
+    File "/data/data/com.termux/files/home/bin/dlink2.py", line 210, in main
+    args = user_arguments.parse_args()
+    AttributeError: 'NoneType' object has no attribute 'parse_args'
+
 See Also
 ---------
 :func:`IPython.utils.path.ensure_dir_exists()` : function
@@ -103,9 +119,9 @@ def _parse_arguments():
                             action='version',
                             version='%(prog)s' + __version__)
 
-    if len(sys.argv) == 1:
-        parser.print_help()
-        sys.exit()
+        if len(sys.argv) == 1:
+            parser.print_help()
+            sys.exit()
     else:
         return parser
 

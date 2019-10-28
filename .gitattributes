@@ -1,10 +1,10 @@
 # Git Attributes
 
-*.py        diff=python
-
 text=auto
 
-* crlf=text crlf=input
+*.py        diff=python
+
+* crlf=text
 *.txt text
 *.yml text
 *.html text

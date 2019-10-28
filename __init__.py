@@ -13,8 +13,6 @@ from pyutil.__about__ import (  # noqa F401
     __author__, __copyright__, __description__, __docformat__, __license__,
 )
 
-logging.getLogger(__name__).addHandler(NullHandler())
+pyutil = logging.getLogger(__name__)
 
 pkg_resources.declare_namespace(__name__)
-
-sys.path = extend_path(sys.path, __file__)

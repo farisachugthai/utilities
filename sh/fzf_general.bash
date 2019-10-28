@@ -6,7 +6,8 @@
 # Feb 26, 2019: Idea on how to decide to use fzf or fzf-tmux: {{{1
 
 # [[ -n $TMUX ]] means not in tmux
-[[ -z $TMUX ]] && comm=fzf-tmux || comm=fzf
+
+# [[ -z $TMUX ]] && comm=fzf-tmux || comm=fzf
 # or something to that effect
 # Then you could easily go $comm in the place of fzf in different commands
 
@@ -39,7 +40,7 @@ fzf_apropos() {
 
 # fzf_env: View EVERYTHING set in your env: {{{1
 fzf_env() {
-    set | tr = "\t" | fzf | cut -f 1
+    set | fzf | cut -f 1
 }
 
 # fzf_nvim: Needs more binds: {{{1

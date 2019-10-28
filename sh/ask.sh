@@ -27,7 +27,7 @@ ask() {
         echo -n "$1 [$prompt] "
 
         # Read the answer (use /dev/tty in case stdin is redirected from somewhere else)
-        read reply </dev/tty
+        read -r reply </dev/tty
 
         # Default?
         if [ -z "$reply" ]; then

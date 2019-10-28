@@ -44,15 +44,16 @@ fbr() { # checkout git branch {{{1
 # }}}
 fbr() { # {{{1 checkout git branch (including remote branches). Uses fzf-tmux
   local branches branch
-  branches=$(git branch --all | grep -v HEAD) &&
-  branch=$(echo "$branches" |
+  branches="$(git branch --all | grep -v HEAD)" &&
+  branch="$(echo $branches |
            fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
   git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
 }
 # }}}
+
 fbr() { # {{{1 checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
   local branches branch
-  branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
+  branches="$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)')" &&
   branch=$(echo "$branches" |
            fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
   git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
@@ -151,11 +152,15 @@ fgst() { # {{{ pick files from git status -s
 # }}}
 ftags() { # {{{ search ctags
   local line
-  [ -e tags ] &&
+
+  # Let's first check that theres a tag file in the dir lol
+  test -e ./tags || ctags -R .
+
+  [[ -e tags ]] &&
   line=$(
     awk 'BEGIN { FS="\t" } !/^!/ {print toupper($4)"\t"$1"\t"$2"\t"$3}' tags |
     cut -c1-80 | fzf --nth=1,2
-  ) && ${EDITOR:-vim} $(cut -f3 <<< "$line") -c "set nocst" \
+  ) && ${EDITOR:-nvim} "$(cut -f3 <<< $line)" -c "set nocst" \
                                       -c "silent tag $(cut -f2 <<< "$line")"
 }
 # }}}
@@ -219,9 +224,9 @@ fgstash() { # {{{1 preview window for git stashes
   k=${out[0]}
   reflog=${out[1]}
   [ -n "$reflog" ] && case "$k" in
-    ctrl-o) git stash pop $reflog ;;
-    ctrl-y) git stash apply $reflog ;;
-    ctrl-x) git stash drop $reflog ;;
+    ctrl-o) "git stash pop $reflog" ;;
+    ctrl-y) "git stash apply $reflog" ;;
+    ctrl-x) "git stash drop $reflog" ;;
   esac
 }
 
@@ -238,8 +243,8 @@ fgs() {  # git status through fzf: {{{1
 fgb() {  # git branch: {{{1
   is_in_git_repo || return
   git branch -a --color=always | grep -v '/HEAD\s' | sort |
-  fzf-down --ansi --multi --tac --preview-window right:70% \
-    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -200' |
+  fzf-down "--ansi --multi --tac --preview-window right:70%" \
+    --preview "git log --oneline --graph --date=short --pretty='format:%C(auto)%cd %h%d %s'" $("sed s/^..// <<< {} | cut -d' ' -f1") | head -200 |
   sed 's/^..//' | cut -d' ' -f1 |
   sed 's#^remotes/##'
 }

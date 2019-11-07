@@ -39,7 +39,7 @@ fbr() { # checkout git branch {{{1
   local branches branch
   branches=$(git branch -vv) &&
   branch=$(echo "$branches" | fzf +m) &&
-  git checkout "$(echo "$branch" | awk '{print $1}' | sed "s/.* //")"
+  git checkout "$(echo $branch | awk '{print $1}' | sed s/.* //)"
 }
 # }}}
 fbr() { # {{{1 checkout git branch (including remote branches). Uses fzf-tmux
@@ -47,7 +47,7 @@ fbr() { # {{{1 checkout git branch (including remote branches). Uses fzf-tmux
   branches="$(git branch --all | grep -v HEAD)" &&
   branch="$(echo $branches |
            fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
+  git checkout "$(echo $branch | sed s/.* // | sed s#remotes/[^/]*/##)"
 }
 # }}}
 
@@ -85,20 +85,19 @@ sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
 (echo "$tags"; echo "$branches") |
     fzf --no-hscroll --no-multi --delimiter="\t" -n 2 \
         --ansi --preview="git log -200 --pretty=format:%s $(echo {+2..} |  sed 's/$/../' )" ) || return
-  git checkout "$(echo "$target" | awk '{print $2}')"
+  git checkout "$(echo $target | awk '{print $2}')"
 }
 # }}}
 fcoc() { # {{{1 checkout git commit
   local commits commit
   commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
   commit=$(echo "$commits" | fzf --tac +s +m -e) &&
-  git checkout "$(echo "$commit" | sed "s/ .*//")"
+  git checkout "$(echo $commit | sed s/ .*//)"
 }
 # }}}
 fshow() { # {{{1 git commit browser
-
     git log --graph --color=always \
-        --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+        --format=%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
     fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
         --no-multi --header="Ctrl-s to toggle sort. C-m to execute." \
         --bind "ctrl-m:execute:

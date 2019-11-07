@@ -6,17 +6,31 @@
 .. _index:
 
 =====================================
-Welcome to utilities's documentation!
+Welcome to utilities' documentation!
 =====================================
 
 .. include:: ../README.rst
 
-.. toctree::
-    :name: mastertoc
-    :maxdepth: 1
 
-    Usage and Contributing <tutorial>
-    API <api>
+.. toctree::
+   :name: mastertoc
+   :maxdepth: 2
+
+   Usage and Contributing <tutorial>
+   Backups
+   filesystem
+   Internet
+   Numerical Analysis <numerical>
+   Text
+   External Commands <External_Commands>
+   Other
+
+.. toctree::
+   :maxdepth: 1
+
+   Todo <todo>
+
+First we'll start with the :doc:`Backups`.
 
 
 Indices and tables

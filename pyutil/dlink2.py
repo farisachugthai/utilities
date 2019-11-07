@@ -5,11 +5,6 @@
 Directory Linker Rewrite
 =========================
 
-.. module:: dlink2
-    :synopsis: Utilize argparse, pathlib and IPython to generate symlinks.
-
-.. highlight:: ipython
-
 This is a rewrite of a script I've had for years, so I decided to go above
 and beyond.
 
@@ -62,7 +57,6 @@ except (ImportError, ModuleNotFoundError):
 
 class PermissionsError(OSError):
     """Symlinking error typically from Windows."""
-
     def __call__(self, tb=None):
         if tb:
             return '{}'.format(tb)
@@ -97,8 +91,8 @@ def _parse_arguments():
         metavar='GLOB_PATTERN',
         default=None,
         help='Filter files in the destination dir with a glob pattern.'
-             ' This ensures that only files that match GLOB_PATTERN in `dst`'
-             ' are symlinked in `src`.')
+        ' This ensures that only files that match GLOB_PATTERN in `dst`'
+        ' are symlinked in `src`.')
 
     # so apparently without the metavar argument, args won't show their var
     # name in the help message?
@@ -111,7 +105,7 @@ def _parse_arguments():
         const=True,
         metavar='RECURSIVE',  # and it causes an error too!
         help='Whether to recursively symlink the files in'
-              ' child directories below the destination folder as well.')
+        ' child directories below the destination folder as well.')
 
     if __version__:
         parser.add_argument('-V',
@@ -122,8 +116,8 @@ def _parse_arguments():
         if len(sys.argv) == 1:
             parser.print_help()
             sys.exit()
-    else:
-        return parser
+
+    return parser
 
 
 def generate_dest(dest, glob_pattern=None):

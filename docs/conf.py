@@ -36,6 +36,7 @@ the `official documentation`_.
 .. _official documentation: http://www.sphinx-doc.org/en/master/extdev/appapi.html
 
 """
+from pyutil.__about__ import __version__
 from datetime import datetime
 import logging
 import os
@@ -55,7 +56,6 @@ SOURCE_PATH = os.path.join(CONF_PATH, '_source')
 SOURCE_CODE = os.path.join('..', 'pyutil')
 
 sys.path.insert(0, os.path.abspath(SOURCE_CODE))
-from pyutil.__about__ import __version__
 
 logging.basicConfig(level=logging.WARNING)
 
@@ -318,7 +318,7 @@ todo_include_todos = True
 # -------------------------------------------------------------------
 
 # import glob  # noqa F402
-autosummary_generate = False
+autosummary_generate = True
 
 # -------------------------------------------------------------------
 # Napoleon settings
@@ -366,10 +366,6 @@ def setup(app):
             */data/data/com.termux/*
 
     """
-    custom_css = os.path.join('_static', '', 'custom.css')
-    graphviz_css = os.path.join('_static', '', 'graphviz.css')
-    app.add_stylesheet(custom_css)
-    app.add_stylesheet(graphviz_css)
     app.add_js_file(os.path.join('_static', '', 'sidebar.js'))
 
     return {

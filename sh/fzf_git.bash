@@ -35,30 +35,6 @@ git_log() { # {{{1 log piped into less and displays show
     --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@")
 }
 # }}}
-fbr() { # checkout git branch {{{1
-  local branches branch
-  branches=$(git branch -vv) &&
-  branch=$(echo "$branches" | fzf +m) &&
-  git checkout "$(echo $branch | awk '{print $1}' | sed s/.* //)"
-}
-# }}}
-fbr() { # {{{1 checkout git branch (including remote branches). Uses fzf-tmux
-  local branches branch
-  branches="$(git branch --all | grep -v HEAD)" &&
-  branch="$(echo $branches |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout "$(echo $branch | sed s/.* // | sed s#remotes/[^/]*/##)"
-}
-# }}}
-
-fbr() { # {{{1 checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
-  local branches branch
-  branches="$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)')" &&
-  branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
-}
-# }}}
 fco() { # {{{1 checkout git branch/tag
   local tags branches target
   tags=$(
@@ -71,6 +47,25 @@ fco() { # {{{1 checkout git branch/tag
     (echo "$tags"; echo "$branches") |
     fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
   git checkout "$(echo "$target" | awk '{print $2}')"
+}
+# }}}
+
+fgbr() { # {{{1 checkout git branch (including remote branches). Uses fzf-tmux
+# honestly unsure if the quoting is right this got really wonky
+  local branches branch
+  branches="$(git branch --all | grep -v HEAD)" &&
+  branch="$(echo $branches" |
+           fzf-tmux -d $(( 2 + "$(wc -l <<< $branches) ))" +m) &&
+  git checkout $(echo "$branch | sed s/.* // | sed s#remotes/[^/]*/##)"
+}
+# }}}
+
+fgbr() { # {{{1 checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
+  local branches branch
+  branches="$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)')" &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
 }
 # }}}
 fco_preview() { # {{{1 checkout git branch/tag, with a preview showing the commits between the tag/branch and HEAD

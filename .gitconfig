@@ -2,3 +2,4 @@
 # and Vim could set fileformat=unix
 [core]
     eol = lf
+    autocrlf=false

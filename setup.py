@@ -131,7 +131,10 @@ setup(
     # },
     install_requires=REQUIRED,
     extras_require=EXTRAS,
+
+    # don't use setup_requires it's really not well supported
     # setup_requires=['nose>=1.0'],
+
     include_package_data=True,
     package_data={
         # If any package contains *.txt or *.rst files, include them:

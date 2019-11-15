@@ -193,13 +193,6 @@ i='' i_dev_rackspace=$i
 i='' i_dev_react=$i
 i='' i_dev_redhat=$i
 i='' i_dev_scriptcs=$i
-i=''
-i=''
-i=''
-i=''
-i=''
-i=''
-i=''
 i='' i_dev_sqllite=$i
 i='' i_dev_vim=$i
 unset i

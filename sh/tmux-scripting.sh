@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # First attempt at tmux scripting
 # Only realizing halfway through that sourcing a configuration file does the same thing.
 # Oh well I finally wrote this.
@@ -43,7 +43,6 @@ fi
 # P means print window info after
 tmux new-window -aP -n nvim -t default
 
-<<<<<<< Updated upstream
 # Some useful tmux functions
 
 # byobu_prompt_status: From byobu: {{{1
@@ -64,5 +63,4 @@ tm() {
   session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 }
 
-exit 0
 # Vim: set foldmethod=marker :

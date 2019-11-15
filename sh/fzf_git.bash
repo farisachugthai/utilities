@@ -20,12 +20,6 @@ fh() { # {{{1
 }
 
 # }}}
-
-# }}}
-######################################################################
-#                             fzf wiki                               #
-######################################################################
-
 git_log() { # {{{1 log piped into less and displays show
   local show="git show --color=always \"\$(grep -m1 -o \"[a-f0-9]\{7\}\" <<< {})\""
   fzf --prompt='log' -e --no-sort --tiebreak=index \
@@ -49,7 +43,6 @@ fco() { # {{{1 checkout git branch/tag
   git checkout "$(echo "$target" | awk '{print $2}')"
 }
 # }}}
-
 fgbr() { # {{{1 checkout git branch (including remote branches). Uses fzf-tmux
 # honestly unsure if the quoting is right this got really wonky
   local branches branch
@@ -63,9 +56,10 @@ fgbr() { # {{{1 checkout git branch (including remote branches). Uses fzf-tmux
 fgbr() { # {{{1 checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
   local branches branch
   branches="$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)')" &&
-  branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout "$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"
+  branch="$(echo $branches |
+           fzf-tmux -d $(( 2 + $(wc -l <<< $branches) )) +m)" # &&
+	   # Honestly the line below is fucked up somehow and is *I think* fucking the syntax of the whole file
+  # git checkout $(echo $branch | sed s/.* // | sed s/remotes/[^/]*/##)
 }
 # }}}
 fco_preview() { # {{{1 checkout git branch/tag, with a preview showing the commits between the tag/branch and HEAD

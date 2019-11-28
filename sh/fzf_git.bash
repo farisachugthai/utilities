@@ -1,44 +1,80 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Maintainer: Faris Chugthai
 
 # set -euo pipefail
 
-# A bunch of these are from the fzf wiki. I've added them to have
-# useful functions on $PATH but still want them visually separated
-
-##############
-#  Personal  #
-##############
-
-# fzf_commits: commits in a repo: {{{1
-# }}}
-fcoc() { # {{{1 checkout git commit
-  local commits commit
-  commits="$(git log --pretty=oneline --abbrev-commit --reverse)" &&
-  commit=$(echo "$commits" | fzf --tac +s +m -e) &&
-  git checkout "$(echo $commit | sed s/ .*//)"
-}
-# }}}
-fshow() { # {{{1 git commit browser
-    git log --graph --color=always \
-        --format=%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-    fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-        --no-multi --header="Ctrl-s to toggle sort. C-m to execute." \
-        --bind "ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | bat -R') << 'FZF-EOF'
-                {}
-FZF-EOF
-}
-# }}}
-glNoGraph(){  # An alias I converted into a function. cross your fingers
-    git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"
+fzf_commits() {  # fzf_commits: commits in a repo: {{{1
+  git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
 }
 
-# Wait are these backslashes necessary inside of a single quote?
-_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+fh() { # {{{1
+    git log --color=always --all --branches --abbrev --oneline | fzf --ansi --multi --preview "git show {+1}" --preview-window=down
+}
 
-_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
+git_log() { # {{{1 log piped into less and displays show
+  local show="git show --color=always \"\$(grep -m1 -o \"[a-f0-9]\{7\}\" <<< {})\""
+  fzf --prompt='log' -e --no-sort --tiebreak=index \
+    --bind="enter:execute:$show | less -R" \
+    --preview="$show" \
+  < <(git log --graph --color=always \
+    --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@")
+}
+# }}}
+fco() { # {{{1 checkout git branch/tag
+  local tags branches target
+  tags=$(
+    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+  branches=$(
+    git branch --all | grep -v HEAD             |
+    sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
+    sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+  target=$(
+    (echo "$tags"; echo "$branches") |
+    fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+  git checkout "$(echo "$target" | awk '{print $2}')"
+}
+# }}}
+
+fzf_commits() {
+  git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
+}
+
+fh() { # {{{1
+    git log --color=always --all --branches --abbrev --oneline | fzf --ansi --multi --preview "git show {+1}" --preview-window=down
+}
+
+# }}}
+git_log() { # {{{1 log piped into less and displays show
+  local show="git show --color=always \"\$(grep -m1 -o \"[a-f0-9]\{7\}\" <<< {})\""
+  fzf --prompt='log' -e --no-sort --tiebreak=index \
+    --bind="enter:execute:$show | less -R" \
+    --preview="$show" \
+  < <(git log --graph --color=always \
+    --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@")
+}
+# }}}
+fco() { # {{{1 checkout git branch/tag
+  local tags branches target
+  tags=$(
+    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+  branches=$(
+    git branch --all | grep -v HEAD             |
+    sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
+    sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+  target=$(
+    (echo "$tags"; echo "$branches") |
+    fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+  git checkout "$(echo "$target" | awk '{print $2}')"
+}
+# }}}
+fgbr() { # {{{1 checkout git branch (including remote branches). Uses fzf-tmux
+# honestly unsure if the quoting is right this got really wonky
+  local branches branch
+  branches="$(git branch --all | grep -v HEAD)" &&
+  branch="$(echo $branches" |
+           fzf-tmux -d $(( 2 + "$(wc -l <<< $branches) ))" +m) &&
+  git checkout $(echo "$branch | sed s/.* // | sed s#remotes/[^/]*/##)"
+}
 
 fcoc_preview() { # {{{ checkout git commit with previews. Probably won't work because we don't have diff-so-fancy
   local commit
@@ -46,17 +82,8 @@ fcoc_preview() { # {{{ checkout git commit with previews. Probably won't work be
     fzf --no-sort --reverse --tiebreak=index --no-multi \
         --ansi --preview="$_viewGitLogLine" ) &&
   git checkout "$(echo "$commit" | sed "s/ .*//")"
-}
-# }}}
-fshow_preview() { # {{{ fshow_preview - git commit browser with previews
-    glNoGraph "$@" |
-        fzf --no-sort --reverse --tiebreak=index --no-multi \
-            --ansi --preview="$_viewGitLogLine" \
-                --header "enter to view, alt-y to copy hash" \
-                --bind "enter:execute:$_viewGitLogLine   | bat - " \
-                --bind "alt-y:execute:$_gitLogLineToHash | xclip"
-}
-# }}}
+} # }}}
+
 is_in_git_repo() { # {{{
   git rev-parse HEAD > /dev/null 2>&1
 }
@@ -108,6 +135,7 @@ fgf() { # {{{ git status - preview diff
 #   sed 's#^remotes/##'
 # }
 # }}}
+
 fgt() { # {{{
   is_in_git_repo || return
   git tag --sort -version:refname |
@@ -169,13 +197,6 @@ fgb() {  # git branch: {{{1
     --preview "git log --oneline --graph --date=short --pretty='format:%C(auto)%cd %h%d %s'" $("sed s/^..// <<< {} | cut -d' ' -f1") | head -200 |
   sed 's/^..//' | cut -d' ' -f1 |
   sed 's#^remotes/##'
-}
-
-fgt() {  # tags: lp
-  is_in_git_repo || return
-  git tag --sort -version:refname |
-  fzf-down --multi --preview-window right:70% \
-    --preview 'git show --color=always {} | head -200'
 }
 
 fgh() {  # hist

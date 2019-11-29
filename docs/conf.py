@@ -109,7 +109,7 @@ if flake8_rst:
     extensions.append('flake8_rst.sphinxext.custom_roles')
 
 try:
-    from utilities.docs.sphinxext import magics  # noqa F401
+    from sphinxext import magics  # noqa F401
 except ImportError:
     logging.debug('Magics was not imported.')
 else:
@@ -295,9 +295,13 @@ epub_title = project
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
 
+# -------------------------------------------------------------------
 # -- Extension configuration ----------------------------------------
+# -------------------------------------------------------------------
 
+# -------------------------------------------------------------------
 # -- Options for intersphinx extension ------------------------------
+# -------------------------------------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
@@ -308,7 +312,9 @@ intersphinx_mapping = {
                 ('https://ipython.readthedocs.io/en/stable/', None)
 }
 
+# -------------------------------------------------------------------
 # -- Options for todo extension -------------------------------------
+# -------------------------------------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
@@ -324,31 +330,19 @@ autosummary_generate = True
 # Napoleon settings
 # -------------------------------------------------------------------
 
-# Honestly all the defaults are great so leave them. Just annoyed that it
-# doesn't seem to be working!
-# napoleon_google_docstring = True
-# napoleon_numpy_docstring = True
-# napoleon_include_init_with_doc = False
 napoleon_include_private_with_doc = True
 
-# napoleon_include_special_with_doc = True
-# napoleon_use_admonition_for_examples = False
-# napoleon_use_admonition_for_notes = False
-# napoleon_use_admonition_for_references = False
-# napoleon_use_ivar = False
-# napoleon_use_param = True
-# napoleon_use_rtype = True
-
-# RemovedInSphinx30Warning:
-# viewcode_import was renamed to viewcode_follow_imported_members.
-# Please update your configuration.
 viewcode_follow_imported_members = False
 
+# -------------------------------------------------------------------
 # Option for IPython directive
+# -------------------------------------------------------------------
 
 ipython_warning_is_error = False
 
+# -------------------------------------------------------------------
 # Numpydoc
+# -------------------------------------------------------------------
 
 numpydoc_show_class_members = False  # Otherwise Sphinx emits thousands of warnings
 numpydoc_class_members_toctree = False

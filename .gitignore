@@ -13,6 +13,7 @@
 # objects.inv
 # .buildinfo
 /docs/_build/*
+./docs/magics-generated.txt
 
 # Local files
 ###############

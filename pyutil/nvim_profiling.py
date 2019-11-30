@@ -122,7 +122,6 @@ class Neovim:
 
     *Let's just rewrite this module.*
     """
-
     def __init__(self, exe=None):
         if exe:
             self.exe = exe
@@ -213,7 +212,6 @@ def main(nvim_root):
 
 
 if __name__ == "__main__":
-    from pdb import set_trace; set_trace()
     user_args = _parse_arguments()
 
     try:

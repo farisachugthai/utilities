@@ -2,7 +2,7 @@
     "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false,
     "gitlens.advanced.telemetry.enabled": false,
-    "python.pythonPath": "C:\\tools\\miniconda3\\envs\\utilities\\python.exe",
+    "python.pythonPath": "C:\\Users\\faris\\.virtualenvs\\ipython\\Scripts\\python.exe",
     "python.dataScience.exportWithOutputEnabled": true,
     "python.dataScience.sendSelectionToInteractiveWindow": true,
     "python.formatting.provider": "yapf",

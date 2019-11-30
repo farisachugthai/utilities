@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Maintainer: Faris Chugthai 
+# Maintainer: Faris Chugthai
 # Script to show how many merge conflicts occurred in which files.
 # For the situations where it's really that bad.
 

@@ -8,18 +8,16 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API" href="api.html" />
-    <link rel="prev" title="Welcome to utilities’s documentation!" href="index.html" />
+    <link rel="next" title="Backup Utilities" href="Backups.html" />
+    <link rel="prev" title="Welcome to utilities’ documentation!" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -44,7 +42,7 @@ repetitive and error prone tasks.</p>
 <div class="section" id="building-documentation">
 <h2>Building Documentation<a class="headerlink" href="#building-documentation" title="Permalink to this headline">¶</a></h2>
 <p>The documentation for this repository has been extensively commented
-as well as the <a class="reference internal" href="api.html"><span class="doc">API</span></a>.</p>
+as well as the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/api.html" title="(in SciPy v1.3.3)"><span>API - importing from SciPy</span></a>.</p>
 <div class="section" id="module-conf">
 <span id="sphinx-configuration"></span><h3>Sphinx Configuration<a class="headerlink" href="#module-conf" title="Permalink to this headline">¶</a></h3>
 <p>Configuration file for the Sphinx documentation builder.</p>
@@ -60,9 +58,9 @@ For a full list see the documentation:</p>
 <div class="section" id="path-setup">
 <h5>Path Setup<a class="headerlink" href="#path-setup" title="Permalink to this headline">¶</a></h5>
 <p>If extensions (or modules to document with autodoc) are in another
-directory, add these directories to <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.path" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> here.</p>
+directory, add these directories to <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.path" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> here.</p>
 <p>If the directory is relative to the documentation root, use
-<a class="reference external" href="https://docs.python.org/3/library/os.path.html#os.path.abspath" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.path.abspath()</span></code></a> to make it absolute, like shown <a class="reference external" href="`https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix`">here</a>.:</p>
+<a class="reference external" href="https://docs.python.org/3/library/os.path.html#os.path.abspath" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.path.abspath()</span></code></a> to make it absolute, like shown <a class="reference external" href="`https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix`">here</a>.:</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -76,7 +74,7 @@ the <a class="reference external" href="http://www.sphinx-doc.org/en/master/extd
 <dd><p>Add custom css styling.</p>
 <div class="admonition-warning-for-path-names admonition">
 <p class="admonition-title">Warning for path names.</p>
-<p>Don’t use <a class="reference external" href="https://docs.python.org/3/library/os.path.html#os.path.abspath" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.path.abspath()</span></code></a> if you need to extend this.
+<p>Don’t use <a class="reference external" href="https://docs.python.org/3/library/os.path.html#os.path.abspath" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.path.abspath()</span></code></a> if you need to extend this.
 Pathmames that have a <kbd class="kbd docutils literal notranslate">.</kbd> in them will be interpreted as packages
 and crash the build. I.E. the following won’t work.:</p>
 <blockquote>
@@ -98,12 +96,12 @@ currently git-ignored directory <code class="xref py py-obj docutils literal not
 <ol class="arabic simple">
 <li><p>remove python path</p></li>
 <li><p>Add open in browser as an option</p></li>
-<li><p>Fix the output for the <code class="xref py py-obj docutils literal notranslate"><span class="pre">commands</span></code> argument when this is run with <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.argv" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.argv</span></code></a> == 0</p></li>
+<li><p>Fix the output for the <code class="xref py py-obj docutils literal notranslate"><span class="pre">commands</span></code> argument when this is run with <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.argv" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.argv</span></code></a> == 0</p></li>
 </ol>
 <dl class="class">
 <dt>
 <em class="property">class </em><code class="sig-prename descclassname">make.</code><code class="sig-name descname">DocBuilder</code><span class="sig-paren">(</span><em class="sig-param">num_jobs=1</em>, <em class="sig-param">verbosity=0</em>, <em class="sig-param">warnings_are_errors=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make.html#DocBuilder"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class to wrap the different commands of this script.</p>
 <p>All public methods of this class can be called as parameters of the
 script.</p>
@@ -113,7 +111,7 @@ script.</p>
 <dd><p>The filetype <strong class="command">make</strong> invokes <strong class="command">sphinx-build</strong> to create.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -147,10 +145,10 @@ script.</p>
 <dd><p>Parse user arguments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Arguments provided by the user.</p>
+<dd class="field-odd"><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Arguments provided by the user.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>user_args</strong> – Argumemts as they’ve been interpreted by <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a>.</p>
+<dd class="field-even"><p><strong>user_args</strong> – Argumemts as they’ve been interpreted by <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a>.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.NameSpace</span></code></p>
@@ -208,15 +206,27 @@ script.</p>
 <ul>
   <li><a href="index.html">Documentation overview</a>
     <ul>
-          <li>Previous: <a href="index.html" title="previous chapter">Welcome to utilities’s documentation!</a></li>
-          <li>Next: <a href="api.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a></li>
+          <li>Previous: <a href="index.html" title="previous chapter">Welcome to utilities’ documentation!</a></li>
+          <li>Next: <a href="Backups.html" title="next chapter">Backup Utilities</a></li>
     </ul>
   </li>
 </ul>
 <h3><a href="index.html">Global Table of Contents</a></h3>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage and Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage and Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-documentation">Building Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Text.html">Text Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="External_Commands.html">External Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
 </ul>
 
 <h3><a href="index.html">Local Table of Contents</a></h3>
@@ -262,7 +272,7 @@ script.</p>
       &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

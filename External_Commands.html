@@ -8,14 +8,12 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Remaining Modules" href="Other.html" />
@@ -40,7 +38,7 @@
 <h1>External Commands<a class="headerlink" href="#external-commands" title="Permalink to this headline">¶</a></h1>
 <p>All commands in this section rely on another tool or piece of software.</p>
 <p>The scripts therein collectively automate use of <strong class="command">git</strong>,
-<strong class="command">Neovim</strong>, <strong class="command">conda</strong>, and <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.7.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
+<strong class="command">Neovim</strong>, <strong class="command">conda</strong>, and <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.10.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
 <div class="section" id="g">
 <h2><a class="reference internal" href="#module-g" title="g: Make working with Git safer and easier."><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="g-programmatically-work-with-subprocess-and-git">
@@ -49,24 +47,10 @@
 build up a trimmed-down, and more importantly <em>safer</em> Git object.</p>
 <div class="section" id="subprocess-and-git">
 <h4>Subprocess and Git<a class="headerlink" href="#subprocess-and-git" title="Permalink to this headline">¶</a></h4>
-<p>05/03/2019:</p>
 <p>Currently we need to move some module functions into our BaseCommand class.
 I don’t want it to attempt implementing too much however. But it should have
 a method that checks output in the way that our module function does for the
 <strong class="command">git rev-parse</strong> expression that sets up the git root.</p>
-<p>Also we need some module wide logging. I mean all across <a class="reference internal" href="index.html#module-readme"><span class="std std-ref">pyutil</span></a>
-it’s nuts how poorly spread out and inconsistent it is.</p>
-<p>06/01/2019:</p>
-<p>Should changing the module functions so that they use
-<a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.check_call" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_call()</span></code></a>.</p>
-<p><strong class="command">git-touch</strong> uses <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.run" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.run()</span></code></a> which is fine, and the
-commands that we’re implementing for the sake of information gathering
-(I.E. the one <strong class="command">git rev-parse</strong> already use
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">check_output</span></code> because we need the return values.</p>
-<p>The only point in changing them would be to use <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.run" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.run()</span></code></a>
-and give it the parameter <code class="xref py py-attr docutils literal notranslate"><span class="pre">subprocess.capture_output</span></code>….but I’m
-hesistant because that’s exclusively a python3.7 feature.</p>
-<p>Jun 03, 2019</p>
 <p>You know what would be nice? Run the following commands in one.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git branch -d foo</span>
 <span class="go">git branch -rd origin/foo</span>
@@ -88,8 +72,20 @@ Silencing the warnings about <code class="xref py py-attr docutils literal notra
 learning how to properly initialize a class.</p>
 <dl class="method">
 <dt>
+<code class="sig-name descname">_check_output</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">cmd</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._check_output"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Checks output from a subprocess call.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
 <code class="sig-name descname">_get_git_root</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._get_git_root"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Show the root of a repo.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">static </em><code class="sig-name descname">_quote</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._quote"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Which one of these two is preferable?</p>
 </dd></dl>
 
 <dl class="method">
@@ -100,8 +96,16 @@ learning how to properly initialize a class.</p>
 
 <dl class="method">
 <dt>
-<em class="property">static </em><code class="sig-name descname">_static_quote_cmd</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._static_quote_cmd"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Which one of these two is preferable?</p>
+<code class="sig-name descname">get_git_upstream_remote</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git.get_git_upstream_remote"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Get the remote name to use for upstream branches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>str</strong> – Uses “upstream” if it exists, “origin” otherwise</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Remote git server</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -115,7 +119,7 @@ learning how to properly initialize a class.</p>
 <dl class="class">
 <dt>
 <em class="property">class </em><code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">Other</code><span class="sig-paren">(</span><em class="sig-param">root=None</em>, <em class="sig-param">version=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Other"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Toy code always refers to other I.E. self != other. Let’s write other!</p>
 <p>Haha just kidding. I’m testing out Git but one that doesn’t subclass anything
 because the parent class is having problems</p>
@@ -135,25 +139,11 @@ because the parent class is having problems</p>
 
 <dl class="function">
 <dt>
-<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">get_git_upstream_remote</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_upstream_remote"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Get the remote name to use for upstream branches.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>str</strong> – Uses “upstream” if it exists, “origin” otherwise</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Remote git server</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt>
 <code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">touch</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#touch"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Create a file and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> (</em><em>path-like object</em><em>)</em>) – Path to a file that’s needs to be staged and added to the Git index.</p>
+<dd class="field-odd"><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> (</em><em>path-like object</em><em>)</em>) – Path to a file that’s needs to be staged and added to the Git index.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -213,7 +203,7 @@ that will behave similarly to the following command run in the shell:</p>
 <dl class="class">
 <dt id="pyutil.nvim_profiling.Neovim">
 <em class="property">class </em><code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">Neovim</code><span class="sig-paren">(</span><em class="sig-param">exe=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Instantiate a connection to neovim if it’s running, establish the path if not.</p>
 <p>Got to the point where I thought:</p>
 <p><em>Let’s just rewrite this module.</em></p>
@@ -243,13 +233,13 @@ that will behave similarly to the following command run in the shell:</p>
 <dd><p>Profile nvim.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>nvim_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The directory where nvim’s configuration files are found.</p>
+<dd class="field-odd"><p><strong>nvim_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The directory where nvim’s configuration files are found.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>profiling_log_file</strong> – Creates file based on the current time in ISO format profiling nvim.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 <div class="admonition-todo admonition" id="id1">
@@ -266,7 +256,7 @@ that will behave similarly to the following command run in the shell:</p>
 ensure_dir_exists. Do we provide anything that that implementation doesn’t?</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Directory to store profiling results in.</p>
+<dd class="field-odd"><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Directory to store profiling results in.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p></p>
@@ -309,19 +299,28 @@ ensure_dir_exists. Do we provide anything that that implementation doesn’t?</p
 <ul>
   <li><a href="index.html">Documentation overview</a>
     <ul>
-      <li><a href="api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a>
-        <ul>
           <li>Previous: <a href="Text.html" title="previous chapter">Text Utilities</a></li>
           <li>Next: <a href="Other.html" title="next chapter">Remaining Modules</a></li>
-        </ul>
-      </li>
     </ul>
   </li>
 </ul>
 <h3><a href="index.html">Global Table of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Text.html">Text Utilities</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">External Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#g"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.nvim_profiling"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nvim_profiling</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
 </ul>
 
 <h3><a href="index.html">Local Table of Contents</a></h3>
@@ -372,7 +371,7 @@ ensure_dir_exists. Do we provide anything that that implementation doesn’t?</p
       &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

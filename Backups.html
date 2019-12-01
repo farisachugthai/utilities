@@ -8,18 +8,16 @@
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/_static\graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/_static\sidebar.js"></script>
+    <script type="text/javascript" src="_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Internet Utilities" href="Internet.html" />
-    <link rel="prev" title="API" href="api.html" />
+    <link rel="next" title="Filesystem Scripts" href="filesystem.html" />
+    <link rel="prev" title="Tutorial" href="tutorial.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -55,13 +53,13 @@ Windows, Linux, Mac and Android systems.</p>
 <dd><p>Create a backup of a directory. Append date and time to new dir name.</p>
 <div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
-<p>Change this so that it utilizes <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.check_call" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_call()</span></code></a> so we handle return codes in a better way.</p>
+<p>Change this so that it utilizes <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.check_call" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_call()</span></code></a> so we handle return codes in a better way.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>backup_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Directory to backup</p></li>
-<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – Directory to back up to. Defaults to cwd.</p></li>
+<li><p><strong>backup_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Directory to backup</p></li>
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Directory to back up to. Defaults to cwd.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -92,18 +90,18 @@ Windows, Linux, Mac and Android systems.</p>
 </dd>
 </dl>
 </li>
-<li><p>However if it’s not, then we could make a <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.defaultdict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.defaultdict</span></code></a>
+<li><p>However if it’s not, then we could make a <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.defaultdict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.defaultdict</span></code></a>
 that holds default values for each option.
-* Actually wouldn’t <a class="reference external" href="https://docs.python.org/3/library/configparser.html#configparser.ConfigParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">configparser.ConfigParser</span></code></a> make more sense?</p></li>
+* Actually wouldn’t <a class="reference external" href="https://docs.python.org/3/library/configparser.html#configparser.ConfigParser" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">configparser.ConfigParser</span></code></a> make more sense?</p></li>
 <li><p>In addition we could use <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.ChainMap()</span></code> to set
 precedence of <code class="xref py py-obj docutils literal notranslate"><span class="pre">backupdir</span></code>.</p></li>
-<li><p>Expand <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> usage with <code class="xref py py-func docutils literal notranslate"><span class="pre">argparse.fromfile_prefix_chars()</span></code>
+<li><p>Expand <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> usage with <code class="xref py py-func docutils literal notranslate"><span class="pre">argparse.fromfile_prefix_chars()</span></code>
 to emulate rsync’s file input.</p></li>
 </ul>
 <dl class="class">
 <dt id="pyutil.rclone.CloudProvider">
 <em class="property">class </em><code class="sig-prename descclassname">pyutil.rclone.</code><code class="sig-name descname">CloudProvider</code><a class="reference internal" href="_modules/pyutil/rclone.html#CloudProvider"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.rclone.CloudProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Emulate the provider rclone is syncing to.</p>
 <dl class="method">
 <dt id="pyutil.rclone.CloudProvider.url">
@@ -158,8 +156,8 @@ that they don’t.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – directory to clone files from</p></li>
-<li><p><strong>dst</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – destination to send files to. Can be configured as a local directory,
+<li><p><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – directory to clone files from</p></li>
+<li><p><strong>dst</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – destination to send files to. Can be configured as a local directory,
 a dropbox directory, a google drive folder or a google cloud storage
 bucket among many other things.</p></li>
 </ul>
@@ -174,8 +172,8 @@ bucket among many other things.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – directory to clone files from</p></li>
-<li><p><strong>dst</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – destination to send files to. Can be configured as a local directory,
+<li><p><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – directory to clone files from</p></li>
+<li><p><strong>dst</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – destination to send files to. Can be configured as a local directory,
 a dropbox directory, a google drive folder or a google cloud storage
 bucket among many other things.</p></li>
 </ul>
@@ -190,18 +188,18 @@ bucket among many other things.</p></li>
 <p>First the command is splited used typical shell grammer.</p>
 <p>A new process is created, and from the resulting subprocess object,
 the <code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.Popen().wait()</span></code>.</p>
-<p>This function returns the return code of split <a class="reference external" href="https://docs.python.org/3/library/cmd.html#module-cmd" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmd</span></code></a>, so any
+<p>This function returns the return code of split <a class="reference external" href="https://docs.python.org/3/library/cmd.html#module-cmd" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmd</span></code></a>, so any
 non-zero value will lead to a <code class="docutils literal notranslate"><span class="pre">SystemExit</span></code> with a passed value
 of <code class="docutils literal notranslate"><span class="pre">returncode</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The command to be called</p>
+<dd class="field-odd"><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The command to be called</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>process.returncode</strong> – The returncode from the process.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -237,19 +235,28 @@ of <code class="docutils literal notranslate"><span class="pre">returncode</span
 <ul>
   <li><a href="index.html">Documentation overview</a>
     <ul>
-      <li><a href="api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a>
-        <ul>
-          <li>Previous: <a href="api.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">API</span></code></a></li>
-          <li>Next: <a href="Internet.html" title="next chapter">Internet Utilities</a></li>
-        </ul>
-      </li>
+          <li>Previous: <a href="tutorial.html" title="previous chapter">Tutorial</a></li>
+          <li>Next: <a href="filesystem.html" title="next chapter">Filesystem Scripts</a></li>
     </ul>
   </li>
 </ul>
 <h3><a href="index.html">Global Table of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Backup Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.backup_nt_and_posix"><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.rclone"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Text.html">Text Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="External_Commands.html">External Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
 </ul>
 
 <h3><a href="index.html">Local Table of Contents</a></h3>
@@ -295,7 +302,7 @@ of <code class="docutils literal notranslate"><span class="pre">returncode</span
       &copy;2018-2019, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

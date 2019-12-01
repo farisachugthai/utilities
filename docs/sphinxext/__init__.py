@@ -10,11 +10,6 @@
     :copyright: Copyright 2007-2014 by the Sphinx team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
-from logging import NullHandler
-import os
-import sys
-import logging
-
 from pyutil.__about__ import (
     __author__,
     __copyright__,
@@ -22,7 +17,13 @@ from pyutil.__about__ import (
     __docformat__,
     __license__,
 )
+from logging import NullHandler
+import os
+import sys
+import logging
+import pkg_resources
+
+pkg_resources.declare_namespace('.')
+
 
 logging.getLogger(__name__).addHandler(NullHandler())
-
-sys.path.insert(0, os.path.dirname(os.path.abspath(__name__)))

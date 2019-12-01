@@ -13,12 +13,15 @@ This module intends to establish a few different things.
 NOQA F401
 
 """
+from alabaster import _version as alabaster_version
 import logging
 from logging import NullHandler
 import os
 import sys
+import pkg_resources
 
-from alabaster import _version as alabaster_version
+pkg_resources.declare_namespace('.')
+
 
 from pyutil.__about__ import (  # noqa F401
     __author__,

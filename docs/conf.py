@@ -59,7 +59,7 @@ sys.path.insert(0, os.path.abspath(SOURCE_CODE))
 
 logging.basicConfig(level=logging.WARNING)
 
-sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, CONF_PATH)
 
 # from .sphinxext import magics  # noqa
 
@@ -108,13 +108,6 @@ extensions = [
 if flake8_rst:
     extensions.append('flake8_rst.sphinxext.custom_roles')
 
-try:
-    from sphinxext import magics  # noqa F401
-except ImportError:
-    logging.debug('Magics was not imported.')
-else:
-    logging.debug('Magics was imported.')
-    extensions.append('docs.sphinxext.magics')
 
 try:  # noqa F401
     import matplotlib  # noqa F401

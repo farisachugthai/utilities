@@ -15,22 +15,7 @@ creating arbitrarily nested trees of symlinks.
 
     Currently doesnt work.
 
-.. todo:: literally what
-
-::
-
-    $: dlink2.py  ~/projects/viconf/.config/nvim/rplugin/python3
-    Traceback (most recent call last):
-    File "/data/data/com.termux/files/home/bin/dlink2.py", line 233, in <module>
-    main()
-    File "/data/data/com.termux/files/home/bin/dlink2.py", line 210, in main
-    args = user_arguments.parse_args()
-    AttributeError: 'NoneType' object has no attribute 'parse_args'
-
-See Also
----------
-:func:`IPython.utils.path.ensure_dir_exists()` : function
-    Check for a dir and create it if it doesn't exist.
+.. todo:: Logging doesnt log the right files.
 
 """
 import argparse
@@ -40,7 +25,6 @@ from pathlib import Path
 
 try:
     from IPython.core.error import UsageError
-    from IPython.utils.path import ensure_dir_exists
 except (ImportError, ModuleNotFoundError):
 
     class UsageError(Exception):
@@ -57,61 +41,67 @@ except (ImportError, ModuleNotFoundError):
 
 class PermissionsError(OSError):
     """Symlinking error typically from Windows."""
+
     def __call__(self, tb=None):
         if tb:
-            return '{}'.format(tb)
+            return "{}".format(tb)
 
 
 def _parse_arguments():
     parser = argparse.ArgumentParser(
-        prog='Directory Linker 2.0',
+        prog="Directory Linker 2.0",
         description="Iterate over a `dest` folder"
         " and create symlinks in directory "
         "`source`. If `source` is not provided use"
-        " current working directory.")
+        " current working directory.",
+    )
 
-    parser.add_argument("destination",
-                        metavar="destination",
-                        nargs='?',
-                        type=Path,
-                        help="Files to symlink to.")
+    parser.add_argument(
+        "destination",
+        metavar="destination",
+        nargs="?",
+        type=Path,
+        help="Files to symlink to.",
+    )
 
     parser.add_argument(
         "-s",
         "--source_directory",
         metavar="SOURCE_DIRECTORY",
-        dest='source',
-        nargs='?',
+        dest="source",
+        nargs="?",
         default=Path().cwd(),
-        help="Where to create the symlinks. Defaults to the cwd.")
+        help="Where to create the symlinks. Defaults to the cwd.",
+    )
 
     parser.add_argument(
-        '-g',
-        '--glob-pattern',
-        metavar='GLOB_PATTERN',
+        "-g",
+        "--glob-pattern",
+        metavar="GLOB_PATTERN",
         default=None,
-        help='Filter files in the destination dir with a glob pattern.'
-        ' This ensures that only files that match GLOB_PATTERN in `dst`'
-        ' are symlinked in `src`.')
+        help="Filter files in the destination dir with a glob pattern."
+        " This ensures that only files that match GLOB_PATTERN in `dst`"
+        " are symlinked in `src`.",
+    )
 
     # so apparently without the metavar argument, args won't show their var
     # name in the help message?
     parser.add_argument(
-        '-r',
-        '--recursive',
-        action='store_const',
+        "-r",
+        "--recursive",
+        action="store_const",
         # nargs='?',
         default=False,
         const=True,
-        metavar='RECURSIVE',  # and it causes an error too!
-        help='Whether to recursively symlink the files in'
-        ' child directories below the destination folder as well.')
+        metavar="RECURSIVE",  # and it causes an error too!
+        help="Whether to recursively symlink the files in"
+        " child directories below the destination folder as well.",
+    )
 
     if __version__:
-        parser.add_argument('-V',
-                            '--version',
-                            action='version',
-                            version='%(prog)s' + __version__)
+        parser.add_argument(
+            "-V", "--version", action="version", version="%(prog)s" + __version__
+        )
 
         if len(sys.argv) == 1:
             parser.print_help()
@@ -122,20 +112,30 @@ def _parse_arguments():
 
 def generate_dest(dest, glob_pattern=None):
     """Return a generator for all the files in the destination directory."""
-    if not ensure_dir_exists(dest):
-        logging.error('%s' % dest, exc_info=1)
+    if not hasattr(dest, "iterdir"):
+        dest = Path(dest)
+    if not dest.exists():
+        try:
+            dest.mkdir()
+        except PermissionsError:
+            logging.error("Permissions issue in source directory."
+                          "Can't create needed directories for recursive symlinks.")
+        except OSError:
+            logging.error("%s" % dest, exc_info=1)
     if glob_pattern:
         yield Path(dest).glob(glob_pattern)
     else:
-        yield Path(dest).glob('*')
+        yield Path(dest).glob("*")
 
 
 def get_basenames(directory):
     """Get the basenames of all the files in a directory."""
+    if not hasattr(directory, "iterdir"):
+        directory = Path(directory)
     return [i.stem + i.suffix for i in directory.iterdir()]
 
 
-def dlink(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
+def dlink(destination_dir, source_dir=None, is_recursive=False, glob_pattern=None):
     """Symlink user provided files.
 
     The module doesn't immediately check for correct permissions or
@@ -162,22 +162,27 @@ def dlink(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
         Only symlink files that match a certain pattern.
 
     """
+    if source_dir is None:
+        source_dir = Path.cwd()
     base_destination_files = sorted(get_basenames(destination_dir))
+
+    if not hasattr(destination_dir, "iterdir"):
+        destination_dir = Path(destination_dir)
 
     full_destination_files = sorted([j for j in destination_dir.iterdir()])
 
     full_source_files = sorted(
-        Path(source_dir).joinpath(i) for i in base_destination_files)
+        Path(source_dir).joinpath(i) for i in base_destination_files
+    )
 
     for idx, src_file in enumerate(full_source_files):
-        logging.debug('\ni is {0!s}'.format(src_file))
-        logging.debug(
-            '\nfull_destination_files is {!s}'.format(full_destination_files))
-        logging.debug('\nfull_source_files is {!s}'.format(full_source_files))
-        logging.debug('\nsource_dir is {}'.format(source_dir))
-        logging.debug(
-            '\nbase_destination_files: {!r}'.format(base_destination_files))
-        logging.info("idx: {}\tsrc_file: {}\t".format(idx, src_file))
+        logging.debug("\ni is {0!s}".format(src_file))
+        # moat useful but way too long
+        # logging.info("\nfull_destination_files is {!s}".format(full_destination_files))
+        logging.debug("\nfull_source_files is {!s}".format(full_source_files))
+        logging.debug("\nsource_dir is {}".format(source_dir))
+        logging.debug("\nbase_destination_files: {!r}".format(base_destination_files))
+        logging.debug("idx: {}\tsrc_file: {}\t".format(idx, src_file))
         if full_destination_files[idx].is_dir():
             src_dir = Path(src_file)
             if not src_dir.exists():
@@ -185,10 +190,12 @@ def dlink(destination_dir, source_dir, is_recursive=False, glob_pattern=None):
 
             # then call it recursively
             if src_file.is_dir():
-                dlink(destination_dir=src_file,
-                      source_dir=source_dir.joinpath(src_file),
-                      is_recursive=is_recursive,
-                      glob_pattern=glob_pattern)
+                dlink(
+                    destination_dir=src_file,
+                    source_dir=source_dir.joinpath(src_file),
+                    is_recursive=is_recursive,
+                    glob_pattern=glob_pattern,
+                )
 
         else:
             symlink(src_file, full_destination_files[idx])
@@ -204,13 +211,13 @@ def symlink(src, dest):
         # let's be a little more specific
         # except WindowsError: breaks linux
         raise PermissionsError(
-            '{}'.format(e) +
-            'Ensure that you are running this script as an admin'
-            ' when running on Windows!')
+            "{}".format(e) + "Ensure that you are running this script as an admin"
+            " when running on Windows!"
+        )
 
 
 def main():
-    """Set up the module."""
+    """Call :func:`_parse_arguments` and the :func:`dlink` function."""
     logging.basicConfig(level=logging.INFO)
     user_arguments = _parse_arguments()
     args = user_arguments.parse_args()
@@ -224,7 +231,7 @@ def main():
 
     try:
         glob_search = args.glob_pattern
-    except (AttributeError):
+    except AttributeError:
         glob_search = None
 
     try:
@@ -232,7 +239,7 @@ def main():
     except AttributeError:
         recursive = False
 
-    dlink(dest, src, is_recursive=recursive, glob_pattern=glob_search)
+    dlink(dest, source_dir=src, is_recursive=recursive, glob_pattern=glob_search)
 
 
 if __name__ == "__main__":

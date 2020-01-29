@@ -1,10 +1,6 @@
 #!/bin/bash
-# First attempt at tmux scripting
-# Only realizing halfway through that sourcing a configuration file does the same thing.
-# Oh well I finally wrote this.
 
-# Check if we're inside tmux: {{{1
-
+tmux_check() { # Check if we're inside tmux: {{{1
 if [[ -n $TMUX ]]; then
     echo "You're already in tmux."
     echo -e "Current tmux sessions: \n"
@@ -12,12 +8,10 @@ if [[ -n $TMUX ]]; then
 
     tmux detach
 fi
-
+}  # }}}
 
 tmux_new_session() {   # {{{1
-
-    tmux start-server
-
+    tmux start-server;
     if [[ -z $1 && $2 ]]; then
         "tmux new-session -s $1 -n $2"
 
@@ -28,11 +22,9 @@ tmux_new_session() {   # {{{1
         'tmux new-session "-s default" "-n ipython" -d';
         'tmux split-window "|" "-t default"'
     fi
-}
+}   # }}}
 
-tmux_new_session "$*"
-
-tmux_new_window(){
+tmux_new_window() {  # {{{
 
 # a means append the window number to the previous
 # P means print window info after
@@ -41,13 +33,12 @@ tmux_new_window(){
 # TODO: How to start running commands. I find that really confusing.
 # the new window command wont work with CLAs. assign it to a var.
 # do so before the loop and the whole thing simplifies
-}
-
-
-# Some useful tmux functions
+}  # }}}
 
 # byobu_prompt_status: From byobu: {{{1
 byobu_prompt_status() { local e=$?; [[ "$e" != 0 ]] && echo -e "$e "; }
+
+# }}}
 
 tm() {  #: {{{1
 
@@ -64,5 +55,7 @@ tm() {  #: {{{1
   fi
   session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 }
+
+complete -F _tmux -o default -o bashdefault -o nospace tm
 
 # Vim: set foldmethod=marker:

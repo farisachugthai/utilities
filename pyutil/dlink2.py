@@ -15,23 +15,15 @@ creating arbitrarily nested trees of symlinks.
 
     Currently doesnt work.
 
-.. todo:: Logging doesnt log the right files.
+.. todo::
+    Logging doesnt log the right files.
 
 """
 import argparse
 import logging
 import sys
+import traceback
 from pathlib import Path
-
-try:
-    from IPython.core.error import UsageError
-except (ImportError, ModuleNotFoundError):
-
-    class UsageError(Exception):
-        pass
-
-    # TODO
-    # def ensure_dir_exists(dir):
 
 try:
     from pyutil.__about__ import __version__
@@ -39,12 +31,12 @@ except (ImportError, ModuleNotFoundError):
     __version__ = None
 
 
-class PermissionsError(OSError):
+class UsageError(Exception):
     """Symlinking error typically from Windows."""
 
     def __call__(self, tb=None):
         if tb:
-            return "{}".format(tb)
+            return "{}".format(traceback.format_tb(tb))
 
 
 def _parse_arguments():
@@ -117,7 +109,7 @@ def generate_dest(dest, glob_pattern=None):
     if not dest.exists():
         try:
             dest.mkdir()
-        except PermissionsError:
+        except PermissionError:
             logging.error("Permissions issue in source directory."
                           "Can't create needed directories for recursive symlinks.")
         except OSError:
@@ -210,7 +202,8 @@ def symlink(src, dest):
     except OSError as e:
         # let's be a little more specific
         # except WindowsError: breaks linux
-        raise PermissionsError(
+        if hasattr(e, 'winerror'):
+            raise PermissionError(
             "{}".format(e) + "Ensure that you are running this script as an admin"
             " when running on Windows!"
         )
@@ -243,4 +236,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

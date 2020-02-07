@@ -5,6 +5,10 @@ is_in_git_repo() { # {{{1
   git rev-parse HEAD > /dev/null 2>&1
 } # }}}
 
+fzf-down() {  # {{{
+  fzf --height 50% "$@" --border
+}  # }}}
+
 fgco() { # {{{1 checkout git commit
   is_in_git_repo || return
   local commits commit
@@ -119,7 +123,7 @@ fghist() {  # Hist: {{{1
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
   fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
     --header 'Press CTRL-S to toggle sort' \
-    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -200' |
+    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head $LINES' |
   grep -o "[a-f0-9]\{7,\}"
 }  # }}}
 
@@ -131,7 +135,7 @@ fgr() {  # {{{1
   cut -d$'\t' -f1
 }  # }}}
 
-fgshs() {  # {{{1
+fgs() {  # {{{1
   is_in_git_repo || return
   git stash list | fzf-down --reverse -d: --preview 'git show --color=always {1}' |
   cut -d: -f1
@@ -143,15 +147,31 @@ fggrep() {  # {{{1
     fzf-down --tac --reverse --ansi
 }  # }}}
 
-fshow() { # {{{1 git commit browser
-  is_in_git_repo || return
-    git log --graph --color=always \
-        "--format=%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-    fzf "--ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-        --no-multi --header='Ctrl-s to toggle sort. C-m to execute.' \
-        --bind "ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % bash -c "git show --color=always %" | bat -R) << 'FZF-EOF'
-                {}
-FZF-EOF
-}  # }}}
+fgstash() {  # {{{ git stash list
+  local out k reflog
+  out=(
+    $(git stash list --pretty='%C(yellow)%gd %>(14)%Cgreen%cr %C(blue)%gs' |
+      fzf --ansi --no-sort --header='enter:show, ctrl-d:diff, ctrl-o:pop, ctrl-y:apply, ctrl-x:drop' \
+          --preview='git stash show --color=always -p $(cut -d" " -f1 <<< {}) | head -'$LINES \
+          --preview-window=down:50% --reverse \
+          --bind='enter:execute(git stash show --color=always -p $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
+          --bind='ctrl-d:execute(git diff --color=always $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
+          --expect=ctrl-o,ctrl-y,ctrl-x))
+  k=${out[0]}
+  reflog=${out[1]}
+  [ -n "$reflog" ] && case "$k" in
+    ctrl-o) git stash pop $reflog ;;
+    ctrl-y) git stash apply $reflog ;;
+    ctrl-x) git stash drop $reflog ;;
+  esac
+} # }}}
+
+# The bindings: {{{
+bind '"\er": redraw-current-line'
+bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
+bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
+bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
+bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
+bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
+
+# }}}

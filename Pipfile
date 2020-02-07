@@ -23,8 +23,5 @@ ipython = "*"
 utilities = {editable = true,path = "."}
 youtube-dl = "*"
 
-[requires]
-python_version = "3.7"
-
 [pipenv]
 allow_prereleases = true

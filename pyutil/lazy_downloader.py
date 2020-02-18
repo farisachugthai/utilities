@@ -55,30 +55,34 @@ logger = logging.getLogger(__name__)
 
 def _parse_arguments():
     """Parse user input."""
-    parser = argparse.ArgumentParser(prog='__name__', description=__doc__)
+    parser = argparse.ArgumentParser(prog="__name__", description=__doc__)
 
-    parser.add_argument("URL",
-                        nargs=1,
-                        type=str,
-                        metavar="URL",
-                        help="The URL to download. Must be plaintext.")
+    parser.add_argument(
+        "URL",
+        nargs=1,
+        type=str,
+        metavar="URL",
+        help="The URL to download. Must be plaintext.",
+    )
 
     parser.add_argument(
         "fname",
         metavar="Output filename",
-        help="The name of the file to write to. Must not exist already.")
+        help="The name of the file to write to. Must not exist already.",
+    )
 
-    parser.add_argument("-ha",
-                        "--headers",
-                        metavar="headers",
-                        nargs='?',
-                        type=dict,
-                        help="Headers to send to the web server.")
+    parser.add_argument(
+        "-ha",
+        "--headers",
+        metavar="headers",
+        nargs="?",
+        type=dict,
+        help="Headers to send to the web server.",
+    )
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    parser.add_argument(
+        "-V", "--version", action="version", version="%(prog)s" + __version__
+    )
 
     args = parser.parse_args()
 
@@ -100,8 +104,8 @@ def _parse_url(URL):
     stripped_url : list
         A URL that's been split on the :kbd:`/` symbols.
     """
-    stripped_url = urlparse(URL)['path']
-    return stripped_url.split('/')[-1]
+    stripped_url = urlparse(URL)["path"]
+    return stripped_url.split("/")[-1]
 
 
 def _get_page(URL):
@@ -123,7 +127,7 @@ def _get_page(URL):
 
 def check_response(server_response):
     """Check that the headers sent by the server exist and are *200*."""
-    content = server_response.headers['Content-Type'].lower()
+    content = server_response.headers["Content-Type"].lower()
     if server_response.status_code == 200 and content is not None:
         return True
     else:
@@ -189,13 +193,11 @@ def main():
         url = args.URL
 
     std_headers = {
-        'User-Agent':
-        'Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0',
-        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
-        'Accept':
-        'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate',
-        'Accept-Language': 'en-us,en;q=0.5',
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0",
+        "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "en-us,en;q=0.5",
     }
 
     try:

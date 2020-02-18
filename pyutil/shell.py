@@ -53,9 +53,9 @@ class BaseCommand:
 
     def __repr__(self):
         if self.cmd is None:
-            return 'BaseCommand: No cmd initialized'
+            return "BaseCommand: No cmd initialized"
         else:
-            return 'BaseCommand: {!r}'.format(self.cmd)
+            return "BaseCommand: {!r}".format(self.cmd)
 
     def run(self):
         """Run a safer subprocess.
@@ -79,7 +79,7 @@ class BaseCommand:
 
 
         """
-        shlexed_cmd = shlex.quote(' '.join(i for i in self.cmd if i))
+        shlexed_cmd = shlex.quote(" ".join(i for i in self.cmd if i))
         output = subprocess.run(shlexed_cmd, capture_output=True, text=True)
         # meth call should be something like reprlib.aRepr.repr_str(str, level)
         # aRepr isn't callable so don't worry about initializing

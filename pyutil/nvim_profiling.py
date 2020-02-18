@@ -87,26 +87,28 @@ LOG_LEVEL = "logging.WARNING"
 def _parse_arguments():
     """Parse arguments given by the user."""
     parser = argparse.ArgumentParser(
-        prog='Neovim Profiler', description='Automate profiling startuptime.')
+        prog="Neovim Profiler", description="Automate profiling startuptime."
+    )
 
     parser.add_argument(
         "-p",
         "--path",
         dest="path",
-        help="Path to the location of the temporary buffer for Nvim.")
+        help="Path to the location of the temporary buffer for Nvim.",
+    )
 
     parser.add_argument(
-        '-ll',
-        '--log_level',
-        dest='log_level',
-        metavar='Log Level.',
-        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
-        help='Set the logging level')
+        "-ll",
+        "--log_level",
+        dest="log_level",
+        metavar="Log Level.",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        help="Set the logging level",
+    )
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    parser.add_argument(
+        "-V", "--version", action="version", version="%(prog)s" + __version__
+    )
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -122,6 +124,7 @@ class Neovim:
 
     *Let's just rewrite this module.*
     """
+
     def __init__(self, exe=None):
         if exe:
             self.exe = exe
@@ -132,7 +135,7 @@ class Neovim:
     def running_instance(self):
         """Is neovim running?"""
         try:
-            remote = os.environ.get('NVIM_LISTEN_ADDRESS')
+            remote = os.environ.get("NVIM_LISTEN_ADDRESS")
         except OSError:
             return None
         else:
@@ -141,7 +144,7 @@ class Neovim:
     def _get_instance(self):
         """Determine if neovim is running."""
         if self.running_instance:
-            vim = pynvim.attach('socket', path=self.running_instance)
+            vim = pynvim.attach("socket", path=self.running_instance)
             return vim
         else:
             return None
@@ -149,10 +152,10 @@ class Neovim:
     @property
     def _exe_path(self):
         """Where is neovim located?"""
-        return which('nvim')
+        return which("nvim")
 
     def __repr__(self) -> str:
-        return f'<Nvim: {self.__class__.__name__}, {self.exe}>'
+        return f"<Nvim: {self.__class__.__name__}, {self.exe}>"
 
 
 def output_results(output_dir):
@@ -171,9 +174,9 @@ def output_results(output_dir):
     Bool
 
     """
-    if os.path.isdir(os.path.join(output_dir, 'profiling')) is False:
+    if os.path.isdir(os.path.join(output_dir, "profiling")) is False:
         try:
-            os.mkdir(os.path.join(output_dir, 'profiling'))
+            os.mkdir(os.path.join(output_dir, "profiling"))
         except OSError as e:
             sys.exit(e)
         else:
@@ -202,13 +205,13 @@ def main(nvim_root):
     now = datetime.date.isoformat(datetime.datetime.now())
 
     if output_results(nvim_root):
-        now = 'profiling' + os.path.sep + str(now)
+        now = "profiling" + os.path.sep + str(now)
 
-    profiling_log_file = os.path.join(nvim_root, '', now)
+    profiling_log_file = os.path.join(nvim_root, "", now)
 
-    subprocess.check_output([
-        'nvim', '--startuptime', profiling_log_file, 'test.py', '-c', ':qall'
-    ])
+    subprocess.check_output(
+        ["nvim", "--startuptime", profiling_log_file, "test.py", "-c", ":qall"]
+    )
 
 
 if __name__ == "__main__":

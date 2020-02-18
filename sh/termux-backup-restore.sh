@@ -1,12 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # generate installed package list
 dpkg --get-selections | cut -f1 > mypackages.txt
 
-echo -e 'Placing dpkg get-selections output into the file `mypackages.txt`.'
+echo -e "Placing dpkg get-selections output into the file 'mypackages.txt'."
 
 # install packages
-if [[ $EUID == 0 ]]; then
+if [[ "$EUID" == 0 ]]; then
     echo -e 'Installing now!'
     xargs -0 apt install -y < <(tr \\n \\0 < mypackages.txt)
 else

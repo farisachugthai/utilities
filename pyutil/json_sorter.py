@@ -70,47 +70,54 @@ def _parse_arguments():
     """
     parser = argparse.ArgumentParser(
         prog="JSON sorter",
-        description=
-        'Take a :mod:`json` file, sort the keys and insert 4 spaces for indents.'
+        description="Take a :mod:`json` file, sort the keys and insert 4 spaces for indents.",
     )
 
-    parser.add_argument('input',
-                        type=argparse.FileType('r'),
-                        default=sys.stdin,
-                        help="File to parse. Defaults to stdin.")
-
-    parser.add_argument('-o',
-                        '--output',
-                        default=sys.stdout,
-                        type=argparse.FileType(mode='w'),
-                        help="File to write to. Defaults to stdout.")
-
-    parser.add_argument('-y',
-                        '--yaml',
-                        dest='yaml',
-                        default=sys.stdout,
-                        type=argparse.FileType(mode='w'),
-                        help="YAML file to write to. Defaults to stdout.")
-
-    # is there a way to have info printed with this from argparse?
-    parser.add_argument('-l',
-                        '--log',
-                        action='store_true',
-                        dest="log",
-                        default=False,
-                        help='Turn logging on and print to console.')
+    parser.add_argument(
+        "input",
+        type=argparse.FileType("r"),
+        default=sys.stdin,
+        help="File to parse. Defaults to stdin.",
+    )
 
     parser.add_argument(
-        '-ll',
-        '--log_level',
-        dest='log_level',
-        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
-        help='Set the logging level')
+        "-o",
+        "--output",
+        default=sys.stdout,
+        type=argparse.FileType(mode="w"),
+        help="File to write to. Defaults to stdout.",
+    )
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    parser.add_argument(
+        "-y",
+        "--yaml",
+        dest="yaml",
+        default=sys.stdout,
+        type=argparse.FileType(mode="w"),
+        help="YAML file to write to. Defaults to stdout.",
+    )
+
+    # is there a way to have info printed with this from argparse?
+    parser.add_argument(
+        "-l",
+        "--log",
+        action="store_true",
+        dest="log",
+        default=False,
+        help="Turn logging on and print to console.",
+    )
+
+    parser.add_argument(
+        "-ll",
+        "--log_level",
+        dest="log_level",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        help="Set the logging level",
+    )
+
+    parser.add_argument(
+        "-V", "--version", action="version", version="%(prog)s" + __version__
+    )
 
     if len(sys.argv[1:]) == 0:
         parser.print_help()
@@ -137,8 +144,7 @@ def convert_to_yaml(file_obj):
     """
     converted_json_data = sort_json(file_obj)
     # output yaml
-    yaml_text = yaml.dump(yaml.load(converted_json_data),
-                          default_flow_style=False)
+    yaml_text = yaml.dump(yaml.load(converted_json_data), default_flow_style=False)
     return yaml_text
 
 
@@ -164,7 +170,7 @@ def sort_json(file_obj):
 
     json_str = sorted(json.dumps(settings, indent=4), key=operator.getitem())
 
-    logging.debug('Formatted json: %s\n' % str(json_str))
+    logging.debug("Formatted json: %s\n" % str(json_str))
     return json_str
 
 
@@ -182,9 +188,9 @@ def text_writer(plaintext, output_file=sys.stdout):
         It will only write to the file if the filename currently doesn't exist.
 
     """
-    with open(output_file, 'xt') as f:
+    with open(output_file, "xt") as f:
         f.write(plaintext)
-        logging.info('File written is: ' + str(output_file))
+        logging.info("File written is: " + str(output_file))
 
 
 def main():
@@ -197,7 +203,7 @@ def main():
         pass
 
     if LOG_LEVEL is None:
-        LOG_LEVEL = 'WARNING'
+        LOG_LEVEL = "WARNING"
 
     LOGGER.setLevel(level=LOG_LEVEL)
 

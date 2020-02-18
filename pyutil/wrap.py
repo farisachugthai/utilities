@@ -55,12 +55,14 @@ class ZimText(TextWrapper):
 
     """
 
-    def __init__(self,
-                 text=None,
-                 width=80,
-                 break_long_words=False,
-                 break_on_hyphens=False,
-                 **kwargs):
+    def __init__(
+        self,
+        text=None,
+        width=80,
+        break_long_words=False,
+        break_on_hyphens=False,
+        **kwargs
+    ):
         """Initialize the class. ``__init__().text`` defaults to None.
 
         However, it is still a required parameter. It's simply not enforced.
@@ -103,12 +105,11 @@ class ZimText(TextWrapper):
 
 
         """
-        paragraph_re = re.compile(r'\n(\s*\n)+', re.MULTILINE)
+        paragraph_re = re.compile(r"\n(\s*\n)+", re.MULTILINE)
         self.text = dedent(self.text).strip()
-        paragraphs = paragraph_re.split(
-            self.text)[::2]  # every other entry is space
+        paragraphs = paragraph_re.split(self.text)[::2]  # every other entry is space
         wrapped_text = []
-        indent_re = re.compile(r'\n\s+', re.MULTILINE)
+        indent_re = re.compile(r"\n\s+", re.MULTILINE)
         for p in paragraphs:
             # presume indentation that survives dedent is meaningful formatting,
             # so don't fill unless text is flush.
@@ -141,7 +142,7 @@ class ZimText(TextWrapper):
         return new_text
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     args = sys.argv[:]
     if len(args) < 2:
         raise RuntimeError("Needs a file to reformat as an argument.")

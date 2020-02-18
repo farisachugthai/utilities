@@ -41,23 +41,29 @@ fi
 # sources.list.d isn't a default folder
 echo "deb [trusted=yes] https://its-pointless.github.io/files/ termux extras" >> $PREFIX/etc/apt/sources.list.d/pointless.list
 
-# Download signing key from https://its-pointless.github.io/pointless.gpg 
+# Download signing key from https://its-pointless.github.io/pointless.gpg
 # TODO: Could this be a pipe and save the disk write?
-wget -O "pointless.gpg" https://its-pointless.github.io/pointless.gpg 
-apt-key add pointless.gpg 
+wget -O "pointless.gpg" https://its-pointless.github.io/pointless.gpg
+apt-key add pointless.gpg
 
 # Now lets install all the necessary dependecies
-pkg install -y clang fftw libzmq libzmq-dev freetype freetype-dev libpng libpng-dev pkg-conf   
+pkg install -y clang fftw libzmq libzmq-dev freetype freetype-dev libpng libpng-dev pkg-conf
 
 # Setup the compiler
+# shellcheck
 LDFLAGS=" -lm -lcompiler_rt"
 
 # Install pip packages
+install_pip_packages() {
+local pi
 pi="pip install -U"
-$pi numpy 
-$pi matplotlib 
-$pi pandas 
-$pi jupyter
+"$pi" numpy
+"$pi" matplotlib
+"$pi" pandas
+"$pi" jupyter
 unset pi
+}
+
+install_pip_packages
 
 exit 0

@@ -81,14 +81,16 @@ class QueueHandler(logging.Handler):
 
 
 QUEUE = deque(maxlen=1000)
-FMT_NORMAL = logging.Formatter(fmt='%(asctime)s %(levelname).4s %(message)s',
-                               datefmt='%H:%M:%S')
+FMT_NORMAL = logging.Formatter(
+    fmt="%(asctime)s %(levelname).4s %(message)s", datefmt="%H:%M:%S"
+)
 FMT_DEBUG = logging.Formatter(
-    fmt='%(asctime)s.%(msecs)03d %(levelname).4s [%(name)s] %(message)s',
-    datefmt='%H:%M:%S')
+    fmt="%(asctime)s.%(msecs)03d %(levelname).4s [%(name)s] %(message)s",
+    datefmt="%H:%M:%S",
+)
 
 
-def queued_logging(debug=True, logfile=None, name='__name__'):
+def queued_logging(debug=True, logfile=None, name="__name__"):
     """
     All the produced logs using the standard logging function
     will be collected in a queue by the `queue_handler` as well
@@ -130,7 +132,7 @@ def queued_logging(debug=True, logfile=None, name='__name__'):
     # In it's current implementation logfile=None and if it isn't specified there's no else...?
     # So shouldn't it just not do anything at all?
     if logfile:
-        if logfile == '-':
+        if logfile == "-":
             handlers.append(logging.StreamHandler())
         else:
             handlers.append(logging.FileHandler(logfile))
@@ -156,16 +158,18 @@ def setup_ipython_logger():
 
     """
     from IPython.paths import locate_profile
-    ipython_profile = Path(locate_profile())
-    log_title = '_log-' + time.strftime('%Y-%m-%d')
 
-    log_name = ipython_profile.joinpath('log', '_log-' + log_title + '.log')
+    ipython_profile = Path(locate_profile())
+    log_title = "_log-" + time.strftime("%Y-%m-%d")
+
+    log_name = ipython_profile.joinpath("log", "_log-" + log_title + ".log")
     logger = logging.getLogger(name=log_title)
     logger.setLevel(logging.WARNING)
 
-    file_handler = logging.FileHandler(log_name, encoding='utf-8')
+    file_handler = logging.FileHandler(log_name, encoding="utf-8")
     formatter = logging.Formatter(
-        '%(asctime)s : %(levelname)s : %(module)s : %(name)s : %(message)s')
+        "%(asctime)s : %(levelname)s : %(module)s : %(name)s : %(message)s"
+    )
     file_handler.setFormatter(formatter)
 
     logger.addHandler(file_handler)
@@ -179,7 +183,7 @@ def _set_debugging():
 
     ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
     ch.setFormatter(formatter)
     root.addHandler(ch)
     return root
@@ -192,9 +196,10 @@ def basic_log(logger=None):
 
     logger.setLevel(logging.WARNING)
 
-    file_handler = logging.FileHandler(log_name, encoding='utf-8')
+    file_handler = logging.FileHandler(log_name, encoding="utf-8")
     formatter = logging.Formatter(
-        '%(asctime)s : %(levelname)s : %(module)s : %(name)s : %(message)s')
+        "%(asctime)s : %(levelname)s : %(module)s : %(name)s : %(message)s"
+    )
     file_handler.setFormatter(formatter)
 
     logger.addHandler(file_handler)

@@ -95,7 +95,7 @@ def check_xdg_config_home():
                 >>> configs = f.readlines()
 
     """
-    if os.environ.get('XDG_CONFIG_HOME'):
+    if os.environ.get("XDG_CONFIG_HOME"):
         return True
 
 
@@ -192,15 +192,14 @@ def check_xdg_config_home_2(conf_file=None):
         be found.
 
     """
-    xdg_config_home = os.getenv('XDG_CONFIG_HOME')
+    xdg_config_home = os.getenv("XDG_CONFIG_HOME")
     if xdg_config_home:
         if conf_file:
             user_conf_file = os.path.join(xdg_config_home, conf_file)
             if os.path.isfile(user_conf_file):
                 return user_conf_file
     else:
-        xdg_config_dir = os.path.isdir(
-            os.path.join(os.path.expanduser('~'), '.config'))
+        xdg_config_dir = os.path.isdir(os.path.join(os.path.expanduser("~"), ".config"))
         if xdg_config_dir:
             if conf_file:
                 user_conf_file = os.path.join(xdg_config_dir, conf_file)

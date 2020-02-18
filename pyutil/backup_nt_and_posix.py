@@ -21,7 +21,7 @@ import sys
 from time import strftime
 
 
-def timestamped_dir(backup_dir, path='.'):
+def timestamped_dir(backup_dir, path="."):
     r"""Create a backup of a directory. Append date and time to new dir name.
 
     .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` so we handle return codes in a better way.
@@ -51,11 +51,13 @@ def timestamped_dir(backup_dir, path='.'):
     else:
         return [-1, "Not supported on %s platform" % os.name]
 
-    cmd = subprocess.Popen([shell_command, path, backup_dir],
-                           shell=True,
-                           stdout=subprocess.PIPE,
-                           stdin=subprocess.PIPE,
-                           stderr=subprocess.PIPE)
+    cmd = subprocess.Popen(
+        [shell_command, path, backup_dir],
+        shell=True,
+        stdout=subprocess.PIPE,
+        stdin=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
 
     (out, err) = cmd.communicate()
 
@@ -76,5 +78,5 @@ if __name__ == "__main__":
         path = args[directory]
 
         if os.path.exists(path):
-            backup_dir = path + strftime('-%Y-%m-%d-%Hh%Mm%Ss')
+            backup_dir = path + strftime("-%Y-%m-%d-%Hh%Mm%Ss")
             timestamped_dir(backup_dir)

@@ -34,14 +34,13 @@ class PathTools:
     def __init__(self, log_level=logging.WARNING, **kwargs):
         """Initialize PathTools with an optional argument for logging."""
         self.log_level = log_level
-        self._Path = Path('.')
+        self._Path = Path(".")
 
     def __repr__(self):
         """Stolen from the stdlib."""
-        return "{}({!r})".format(self.__class__.__name__,
-                                 self._Path.as_posix())
+        return "{}({!r})".format(self.__class__.__name__, self._Path.as_posix())
 
-    def logger(self, log_name='root'):
+    def logger(self, log_name="root"):
         """Initialize a named logger for the PathTools object."""
         self.log = logging.getLogger(name=log_name)
         self.log.setLevel(self.log_level)
@@ -65,14 +64,15 @@ class PathTools:
                 self._Path.mkdir(output_dir)
             except OSError as e:
                 self.logger.error(
-                    "The directory {} does not exist but we can't create it because: {}"
-                    .format(output_dir, e))
+                    "The directory {} does not exist but we can't create it because: {}".format(
+                        output_dir, e
+                    )
+                )
             else:
                 return True
         else:
             if self._Path.joinpath(output_dir).is_dir() is False:
-                self.logger.error(
-                    'The output directory exists but is not a directory.')
+                self.logger.error("The output directory exists but is not a directory.")
                 return False
             else:
                 return True

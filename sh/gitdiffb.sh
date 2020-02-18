@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Maintainer: Faris Chugthai
 
 # set -euo pipefail
 
 gitdiffb() {
-    if [ $# -ne 2 ]; then
+    if [[ "$@" -ne 2 ]]; then
         echo -e 'Usage: gitdiffb branch1 branch2'
         exit 127
         # if you care you can do man bash and search for exit codes to get the
@@ -14,13 +14,13 @@ gitdiffb() {
     git log --graph \
     --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' \
     --abbrev-commit --date=relative $1..$2;
+
 }
 
 if [[ -n "$(command -v fzf)" ]]; then
-    gitdiffb "$*"
+    gitdiffb "$@"
 else
-    gitdiffb $* | fzf -
+    gitdiffb "$@" | fzf -
 fi
-
 
 exit 0

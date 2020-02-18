@@ -42,10 +42,10 @@ def strip_space(src=sys.stdin):
     """
     logging.warning("Clearing whitespace...")
 
-    with src.open('rt') as f:
-        tmp = [line.rstrip() + '\n' for line in f if line != ""]
+    with src.open("rt") as f:
+        tmp = [line.rstrip() + "\n" for line in f if line != ""]
 
-    with src.open('wt') as f:
+    with src.open("wt") as f:
         f.writelines(tmp)
 
     logging.warning("Done!")
@@ -71,5 +71,5 @@ def main():
         strip_space(src)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

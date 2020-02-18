@@ -6,9 +6,10 @@ import json
 from pathlib import Path
 import sys
 
+
 def csv_to_json():
     if not Path(sys.argv[1:]).is_file():
-        sys.exit('Error. Please provide a path to the file(s) to edit.\n')
+        sys.exit("Error. Please provide a path to the file(s) to edit.\n")
 
     with open(sys.argv[1:]) as f:
         csv_file = list(csv.reader(f))

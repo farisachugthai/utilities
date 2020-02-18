@@ -79,7 +79,7 @@ def _parse_arguments():
     # so apparently without the metavar argument, args won't show their var
     # name in the help message?
     parser.add_argument(
-        "-r",
+        "-R",
         "--recursive",
         action="store_const",
         # nargs='?',
@@ -110,8 +110,10 @@ def generate_dest(dest, glob_pattern=None):
         try:
             dest.mkdir()
         except PermissionError:
-            logging.error("Permissions issue in source directory."
-                          "Can't create needed directories for recursive symlinks.")
+            logging.error(
+                "Permissions issue in source directory."
+                "Can't create needed directories for recursive symlinks."
+            )
         except OSError:
             logging.error("%s" % dest, exc_info=1)
     if glob_pattern:
@@ -202,11 +204,11 @@ def symlink(src, dest):
     except OSError as e:
         # let's be a little more specific
         # except WindowsError: breaks linux
-        if hasattr(e, 'winerror'):
+        if hasattr(e, "winerror"):
             raise PermissionError(
-            "{}".format(e) + "Ensure that you are running this script as an admin"
-            " when running on Windows!"
-        )
+                "{}".format(e) + "Ensure that you are running this script as an admin"
+                " when running on Windows!"
+            )
 
 
 def main():

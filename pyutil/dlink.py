@@ -84,8 +84,8 @@ def dlink(dest, src):
                     print(e)
 
 
-if __name__ == '__main__':
-    cwd = os.path.join(os.getcwd(), '')
+if __name__ == "__main__":
+    cwd = os.path.join(os.getcwd(), "")
 
     src = sys.argv[-1] if len(sys.argv) == 3 else cwd
 

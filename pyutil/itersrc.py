@@ -41,7 +41,7 @@ def iter_source_code(paths):
         if os.path.isdir(path):
             for dirpath, dirnames, filenames in os.walk(path):
                 for filename in filenames:
-                    if filename.ends_with('.py'):
+                    if filename.ends_with(".py"):
                         full_path = os.path.join(dirpath, filename)
                         yield full_path
         else:

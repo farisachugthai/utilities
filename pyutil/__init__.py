@@ -24,8 +24,14 @@ import pyutil
 from pyutil import dlink, dlink2, _paths, _logging
 
 from .__about__ import (  # noqa F401
-    __author__, __copyright__, __description__, __docformat__, __license__,
-    __title__, __version__)
+    __author__,
+    __copyright__,
+    __description__,
+    __docformat__,
+    __license__,
+    __title__,
+    __version__,
+)
 
 from . import dlink, dlink2, _logging, _paths, __about__
 from .env import Env

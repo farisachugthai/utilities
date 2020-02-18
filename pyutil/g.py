@@ -66,12 +66,12 @@ class Git(BaseCommand):
         super().__init__(self, **kwargs)
 
     def __repr__(self):
-        return '{!r}\t{!r}'.format(self.__class__.__name__, self.root)
+        return "{!r}\t{!r}".format(self.__class__.__name__, self.root)
 
     @property
     def version(self):
         """Return the version of Git we have."""
-        return self.run('git --version')
+        return self.run("git --version")
 
     @staticmethod
     def _quote(self, cmd):
@@ -95,9 +95,10 @@ class Git(BaseCommand):
         """Checks output from a subprocess call."""
         try:
             output = subprocess.check_output(
-                    [self._quote(cmd), kwargs],
-                    universal_newlines=True,
-                    stderr=subprocess.PIPE)
+                [self._quote(cmd), kwargs],
+                universal_newlines=True,
+                stderr=subprocess.PIPE,
+            )
         except subprocess.CalledProcessError as e:
             return e
         return output
@@ -141,7 +142,7 @@ class Other:
                 return repr(Path(self.root))
 
         def __repr__(self):
-            return '{!r}'.format(self.root)
+            return "{!r}".format(self.root)
 
         def _validate_dir(self, dir=None):
             real_dir = self.Path(dir).is_dir()
@@ -149,7 +150,7 @@ class Other:
 
     def _get_version(self):
         try:
-            output = subprocess.check_output(['git', '--version'], text=True)
+            output = subprocess.check_output(["git", "--version"], text=True)
         except CalledProcessError as e:
             return e
         else:
@@ -177,12 +178,12 @@ def touch(args):
         files = args.split()
         fname = files[0:]
         for element in fname:
-            subprocess.run(['git', 'add', fname])
+            subprocess.run(["git", "add", fname])
     elif len(args) < 1:
         sys.exit("No file provided. Exiting.")
     else:
         fname = args[1]
-        subprocess.run(['git', 'add', fname])
+        subprocess.run(["git", "add", fname])
 
 
 def get_git_branch():
@@ -194,7 +195,6 @@ def get_git_branch():
         return None
     else:
         return output
-
 
 
 if __name__ == "__main__":

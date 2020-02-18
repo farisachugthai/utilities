@@ -43,22 +43,25 @@ def _parse_arguments(cwd=None, **kwargs):
         cwd = os.getcwd()
 
     parser = argparse.ArgumentParser(
-        description="Automate usage of rclone for "
-        "simple backup creation.")
+        description="Automate usage of rclone for " "simple backup creation."
+    )
 
-    parser.add_argument(action='store',
-                        dest='src',
-                        default=cwd,
-                        metavar='source_dir',
-                        help="The source directory. Defaults to the cwd.")
+    parser.add_argument(
+        action="store",
+        dest="src",
+        default=cwd,
+        metavar="source_dir",
+        help="The source directory. Defaults to the cwd.",
+    )
 
     parser.add_argument(
         "dst",
-        action='store',
-        metavar='dest_directory',
+        action="store",
+        metavar="dest_directory",
         help="The folder that the files should be backed up to."
         "Can be a remote instance as well. See rclone.org for "
-        "all accepted values for this parameter")
+        "all accepted values for this parameter",
+    )
 
     # config = parser.add_subparsers(
     #     help="Configure rclone. Additional options can't be specified;"
@@ -66,23 +69,21 @@ def _parse_arguments(cwd=None, **kwargs):
     # )
 
     parser.add_argument(
-        '-ll',
-        '--log_level',
-        dest='log_level',
-        metavar='log_level',
-        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
-        help='Set the logging level')
+        "-ll",
+        "--log_level",
+        dest="log_level",
+        metavar="log_level",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        help="Set the logging level",
+    )
 
-    parser.add_argument('-f',
-                        '--follow',
-                        action='store_true',
-                        default=False,
-                        help="Follow symlinks.")
+    parser.add_argument(
+        "-f", "--follow", action="store_true", default=False, help="Follow symlinks."
+    )
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    parser.add_argument(
+        "-V", "--version", action="version", version="%(prog)s" + __version__
+    )
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -98,7 +99,7 @@ def _set_debugging():
 
     ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(message)s")
     ch.setFormatter(formatter)
     root.addHandler(ch)
 
@@ -149,7 +150,7 @@ def _dir_checker(dir_):
     if os.path.isdir(dir_):
         return True
     else:
-        sys.exit(str(dir_) + 'does not exist. Exiting.')
+        sys.exit(str(dir_) + "does not exist. Exiting.")
 
 
 def rclone_base_case(src, dst):
@@ -180,7 +181,7 @@ def rclone_base_case(src, dst):
         bucket among many other things.
 
     """
-    cmd = ['rclone', 'copy', '--update', '--track-renames', src, dst]
+    cmd = ["rclone", "copy", "--update", "--track-renames", src, dst]
     run(cmd)
 
 
@@ -203,15 +204,12 @@ def rclone_follow(dst, src):
     .. :ref:`pyutil.rclone.rclone_base_case()` for a more detailed explanation
 
     """
-    cmd = [
-        'rclone', 'copy', '--update', '--track-renames'
-        '--copy-links', src, dst
-    ]
+    cmd = ["rclone", "copy", "--update", "--track-renames" "--copy-links", src, dst]
     run(cmd)
 
 
 # uhhh how do we implememt this
-class CloudProvider():
+class CloudProvider:
     """Emulate the provider rclone is syncing to."""
 
     @property
@@ -250,7 +248,7 @@ def main():
 
 if __name__ == "__main__":
     # This feels like a necessary stop-gap
-    if not shutil.which('rclone'):
-        sys.exit('rclone not in $PATH. Exiting.')
+    if not shutil.which("rclone"):
+        sys.exit("rclone not in $PATH. Exiting.")
 
     sys.exit(main())

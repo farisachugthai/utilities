@@ -28,6 +28,7 @@ import argparse
 import os
 import logging
 from pathlib import Path
+
 # import shutil
 from string import Template
 
@@ -39,7 +40,7 @@ LOG_LEVEL = "logging.WARNING"
 class BatchRename(Template):
     """Delimiter for string substitutions."""
 
-    delimiter = '%'
+    delimiter = "%"
 
 
 def _parse_arguments():
@@ -52,32 +53,35 @@ def _parse_arguments():
         "--directory",
         nargs=1,
         default=Path.cwd(),
-        help="Directory containing only the files to be renamed.")
-
-    parser.add_argument('old_format',
-                        nargs=1,
-                        metavar='old_format',
-                        help=r'Enter old format to replace.')
+        help="Directory containing only the files to be renamed.",
+    )
 
     parser.add_argument(
-        'rename_format',
+        "old_format",
         nargs=1,
-        metavar='rename_format',
-        help=
-        r'Enter rename style (%d-date %n-seqnum %f-format I.E.  Ashley_%n%f)')
+        metavar="old_format",
+        help=r"Enter old format to replace.",
+    )
 
     parser.add_argument(
-        '-ll',
-        '--log_level',
-        dest='log_level',
-        metavar='log level',
-        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
-        help='Set the logging level')
+        "rename_format",
+        nargs=1,
+        metavar="rename_format",
+        help=r"Enter rename style (%d-date %n-seqnum %f-format I.E.  Ashley_%n%f)",
+    )
 
-    parser.add_argument('-V',
-                        '--version',
-                        action='version',
-                        version='%(prog)s' + __version__)
+    parser.add_argument(
+        "-ll",
+        "--log_level",
+        dest="log_level",
+        metavar="log level",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        help="Set the logging level",
+    )
+
+    parser.add_argument(
+        "-V", "--version", action="version", version="%(prog)s" + __version__
+    )
 
     args = parser.parse_args()
 
@@ -134,5 +138,5 @@ def main():
     batch_mover(pattern=old, new_pattern=fmt, directory=d)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

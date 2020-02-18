@@ -45,11 +45,12 @@ class WindowsEnv(Env):
 
     def __init__(self, admin=False):
         import winreg
+
         if admin:
-            self.key = 'HKEY_CURRENT_USER'
+            self.key = "HKEY_CURRENT_USER"
         else:
-            self.key = 'HKEY_LOCAL_MACHINE'
-        self.key.prepend('winreg.')
+            self.key = "HKEY_LOCAL_MACHINE"
+        self.key.prepend("winreg.")
 
     def get_registry(self):
         pass

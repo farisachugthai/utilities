@@ -71,8 +71,9 @@ def main():
     User runs the script from inside the folder of the file they want to move.
 
     """
-    inputted = sys.argv[1] if len(
-        sys.argv) >= 2 else sys.exit("Takes at least one filename.")
+    inputted = (
+        sys.argv[1] if len(sys.argv) >= 2 else sys.exit("Takes at least one filename.")
+    )
     src = Path(inputted)
 
     if src.is_file() is not True:
@@ -92,7 +93,7 @@ def main():
     src.symlink_to(dest_file)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     home = Path.home()
-    repo = Path.joinpath(home, 'projects', 'dotfiles', 'unix', '')
+    repo = Path.joinpath(home, "projects", "dotfiles", "unix", "")
     main()

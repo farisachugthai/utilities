@@ -21,6 +21,7 @@ with a try statement.
 
 """
 import sys
+
 try:
     from pathlib import Path
 except ImportError:
@@ -46,11 +47,11 @@ def is_file(file_obj):
 def py_gt_raise(min_py_version):
     """Raise an error if python interpreter is not above a certain version."""
     if sys.version_info < min_py_version:
-        print("Can not use python interpreter provided: " +
-              str(sys.version_info()))
+        print("Can not use python interpreter provided: " + str(sys.version_info()))
         raise RuntimeError(
-            "The following version of python and newer are required: " +
-            str(min_py_version))
+            "The following version of python and newer are required: "
+            + str(min_py_version)
+        )
 
 
 def py_gt_exit(min_py_version):
@@ -67,11 +68,11 @@ def py_gt_exit(min_py_version):
 
     """
     if sys.version_info < min_py_version:
-        print("Can not use python interpreter provided: " +
-              str(sys.version_info()))
+        print("Can not use python interpreter provided: " + str(sys.version_info()))
         raise RuntimeError(
-            "The following version of python and newer are required: " +
-            str(min_py_version))
+            "The following version of python and newer are required: "
+            + str(min_py_version)
+        )
 
 
 def py_lt_exit(max_py_version):
@@ -90,11 +91,12 @@ def py_lt_exit(max_py_version):
         tuple(max_py_version)
 
     if sys.version_info > max_py_version:
-        print("Can not use python interpreter provided: " +
-              str(sys.version_info()))
-        sys.exit("The following version of python and newer are required: " +
-                 str(max_py_version))
+        print("Can not use python interpreter provided: " + str(sys.version_info()))
+        sys.exit(
+            "The following version of python and newer are required: "
+            + str(max_py_version)
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit("Source this file don't run it directly!")

@@ -42,6 +42,7 @@ One way to implement this module would be:
 from glob import glob
 import logging
 import os
+
 # from pathlib import Path
 # import shlex
 import shutil
@@ -61,7 +62,7 @@ def dir_cleaner(i):
                 pass  # more than likely dir not empty.
 
 
-def clean(ftype='*.pyc', recursive=False):
+def clean(ftype="*.pyc", recursive=False):
     """Remove all pyc files. Add input for filetype later.
 
     Parameters
@@ -85,9 +86,9 @@ def main():
     """Directory cleaner."""
     # There are better ways to determine if Android. check :envvar:`ANDROIDROOT`?
     try:
-        tmp = os.environ.get('PREFIX') + '/tmp/'
+        tmp = os.environ.get("PREFIX") + "/tmp/"
     except (OSError, TypeError):
-        tmp = '/tmp/'
+        tmp = "/tmp/"
     tmpd = os.scandir(tmp)
     # Also let's start handling command line arguments please?
     # args = shlex.split(sys.argv[:])

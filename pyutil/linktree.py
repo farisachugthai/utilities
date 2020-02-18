@@ -35,18 +35,18 @@ def _parse_arguments():
     """Handle user inputs."""
     parser = argparse.ArgumentParser(description=__doc__)
 
-    parser.add_argument('oldtree',
-                        metavar='oldtree',
-                        type=Path,
-                        help='Starting directory tree to symlink'
-                        'from.')
+    parser.add_argument(
+        "oldtree",
+        metavar="oldtree",
+        type=Path,
+        help="Starting directory tree to symlink" "from.",
+    )
 
-    parser.add_argument('newtree',
-                        metavar='newtree',
-                        type=Path,
-                        help='Directory tree to symlink to ')
+    parser.add_argument(
+        "newtree", metavar="newtree", type=Path, help="Directory tree to symlink to "
+    )
 
-    parser.add_argument('-l', dest='linkto', metavar='linkto', help='Linkto')
+    parser.add_argument("-l", dest="linkto", metavar="linkto", help="Linkto")
 
     args = parser.parse_args()
 
@@ -73,23 +73,23 @@ def main():
         link_may_fail = 0
 
     if not os.path.isdir(oldtree):
-        logging.warning(oldtree + ': not a directory')
+        logging.warning(oldtree + ": not a directory")
         return 1
 
     try:
         os.mkdir(newtree, 0o777)
     except OSError as msg:
-        logging.warning(newtree + ': cannot mkdir:', msg)
+        logging.warning(newtree + ": cannot mkdir:", msg)
         return 1
     linkname = os.path.join(newtree, link)
     try:
         os.symlink(os.path.join(os.pardir, oldtree), linkname)
     except OSError as msg:
         if not link_may_fail:
-            logging.warning(linkname + ': cannot symlink:', msg)
+            logging.warning(linkname + ": cannot symlink:", msg)
             return 1
         else:
-            logging.warning(linkname + ': warning: cannot symlink:', msg)
+            logging.warning(linkname + ": warning: cannot symlink:", msg)
     linknames(oldtree, newtree, link)
     return 0
 
@@ -97,12 +97,12 @@ def main():
 def linknames(old, new, link):
     """Recursively symlink a directory tree."""
     if DEBUG:
-        logging.info('linknames', str(old, new, link))
+        logging.info("linknames", str(old, new, link))
 
     try:
         names = os.listdir(old)
     except OSError as msg:
-        logging.warning(old + ': warning: cannot listdir:', msg)
+        logging.warning(old + ": warning: cannot listdir:", msg)
 
     for name in names:
         if name not in (os.curdir, os.pardir):
@@ -111,13 +111,12 @@ def linknames(old, new, link):
             newname = os.path.join(new, name)
             if DEBUG > 1:
                 logging.debug(oldname, newname, linkname)
-            if os.path.isdir(oldname) and \
-               not os.path.islink(oldname):
+            if os.path.isdir(oldname) and not os.path.islink(oldname):
                 try:
                     os.mkdir(newname, 0o777)
                     ok = 1
                 except Exception as msg:
-                    logging.warning(newname + ': warning: cannot mkdir:', msg)
+                    logging.warning(newname + ": warning: cannot mkdir:", msg)
                     ok = 0
                 if ok:
                     linkname = os.path.join(os.pardir, linkname)
@@ -126,10 +125,10 @@ def linknames(old, new, link):
                 os.symlink(linkname, newname)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     logger.setLevel(logging.WARNING)
 
-    LINK = '.LINK'  # Name of special symlink at the top.
+    LINK = ".LINK"  # Name of special symlink at the top.
 
     DEBUG = 0
 

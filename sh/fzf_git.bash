@@ -1,4 +1,4 @@
-e!/bin/bash
+#!/bin/bash
 # Maintainer: Faris Chugthai
 
 is_in_git_repo() { # {{{1

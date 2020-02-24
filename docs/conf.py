@@ -1,59 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Configuration file for the Sphinx documentation builder.
-
-=========================
-Sphinx Configuration File
-=========================
-
-.. currentmodule:: conf
-
-.. highlight:: ipython
-
-This file does only contain a selection of the most common options.
-For a full list see the documentation:
-
-:URL: `<http://www.sphinx-doc.org/en/master/config>`_
-
-Path Setup
-----------
-If extensions (or modules to document with autodoc) are in another
-directory, add these directories to :data:`sys.path` here.
-
-If the directory is relative to the documentation root, use
-:func:`os.path.abspath()` to make it absolute, like shown `here`_.::
-
-    sys.path.insert(0, os.path.abspath('.'))
-
-.. _here: `https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-source_suffix`
-
-However, the filetype mapping came about in 1.8 so make sure to add
-that ``needs-sphinx=version`` bit
-
-Also note the setup() function modeled off of parameters described in
-the `official documentation`_.
-
-.. _official documentation: http://www.sphinx-doc.org/en/master/extdev/appapi.html
-
-"""
 from pyutil.__about__ import __version__
 from datetime import datetime
 import logging
 import os
 import sys
-
-# So even though it sets off the linters this is needed to recognize numpydoc
-# as a package
-from numpydoc import numpydoc  # noqa
-try:
-    import flake8_rst  # noqa
-except (ImportError, ModuleNotFoundError):
-    flake8_rst = None
-
 CONF_PATH = os.path.dirname(os.path.abspath(__file__))
-BUILD_PATH = os.path.join(CONF_PATH, 'build')
-SOURCE_PATH = os.path.join(CONF_PATH, '_source')
-SOURCE_CODE = os.path.join('..', 'pyutil')
+BUILD_PATH = os.path.join(CONF_PATH, "build")
+SOURCE_PATH = os.path.join(CONF_PATH, "_source")
+SOURCE_CODE = os.path.join("..", "pyutil")
 
 sys.path.insert(0, os.path.abspath(SOURCE_CODE))
 
@@ -63,7 +18,7 @@ sys.path.insert(0, CONF_PATH)
 
 # from .sphinxext import magics  # noqa
 
-sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, 'numerical')))
+sys.path.insert(0, os.path.abspath(os.path.join(SOURCE_CODE, "numerical")))
 
 logging.debug("Path is currently: " + str(sys.path))
 
@@ -71,9 +26,9 @@ logging.debug("Path is currently: " + str(sys.path))
 
 # Does Sphinx use this while building the docs? Appears so from
 # Sphinx.
-project = u'pyutil'
-copyright = u'2018-{}, Faris A Chugthai'.format(datetime.now().year)
-author = u'Faris A Chugthai'
+project = u"pyutil"
+copyright = u"2018-{}, Faris A Chugthai".format(datetime.now().year)
+author = u"Faris A Chugthai"
 
 # The short X.Y version
 version = __version__
@@ -84,29 +39,35 @@ release = version
 
 # If your documentation needs a minimal Sphinx version, state it here.
 # Just updated 1.8 because of app.add_js_fileg()
-needs_sphinx = '1.8'
+needs_sphinx = "1.8"
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosectionlabel',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.doctest',
-    'sphinx.ext.inheritance_diagram',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.napoleon',
-    'sphinx.ext.todo',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages',
-    'IPython.sphinxext.ipython_console_highlighting',
-    'IPython.sphinxext.ipython_directive',
-    'numpydoc',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosectionlabel",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.doctest",
+    "sphinx.ext.inheritance_diagram",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.todo",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.githubpages",
+    "IPython.sphinxext.ipython_console_highlighting",
+    "IPython.sphinxext.ipython_directive",
+    "numpydoc",
 ]
 
+try:
+    import flake8_rst  # noqa
+except (ImportError, ModuleNotFoundError):
+    flake8_rst = None
+
+
 if flake8_rst:
-    extensions.append('flake8_rst.sphinxext.custom_roles')
+    extensions.append("flake8_rst.sphinxext.custom_roles")
 
 
 try:  # noqa F401
@@ -115,19 +76,16 @@ except (ImportError, ModuleNotFoundError):
     pass
 else:
     extensions.extend(
-        [
-            'matplotlib.sphinxext.plot_directive',
-            'matplotlib.sphinxext.mathmpl'
-        ]
+        ["matplotlib.sphinxext.plot_directive", "matplotlib.sphinxext.mathmpl"]
     )
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 
-source_suffix = ['.rst']
+source_suffix = [".rst"]
 # source_suffix = ['.rst', '.md']
 # or:
 # source_suffix = {
@@ -137,16 +95,10 @@ source_suffix = ['.rst']
 # }
 
 # The encoding of source files.
-source_encoding = 'utf-8'
-
-# source_parsers = {
-#     '.md': 'recommonmark.parser.CommonMarkParser',
-#     '.rst': 'sphinx.parsers.Parser',
-#     '.txt': 'sphinx.parsers.Parser'
-# }
+source_encoding = "utf-8"
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = "index"
 
 rst_epilog = """
 .. |ip| replace:: :class:`IPython.core.interactiveshell.InteractiveShell`
@@ -161,16 +113,16 @@ rst_epilog = """
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
 # default_domain = 'python'
-default_role = 'py:obj'
+default_role = "py:obj"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 # The name of the Pygments (syntax highlighting) style to use.
 # So i overwrote the pygments.css file entirely so i wanna see what happens
-pygments_style = 'sphinx'
+pygments_style = "sphinx"
 
 # -- Options for HTML output ----------------------------------------
 
@@ -194,7 +146,7 @@ html_theme_options = {
 
 # Modify alabaster with custom.css in this dir. Keeping this param the same
 # is required.
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -204,15 +156,14 @@ html_static_path = ['_static']
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
 html_sidebars = {
-    '**':
-        [
-            'about.html',
-            'relations.html',
-            'globaltoc.html',
-            'localtoc.html',
-            'searchbox.html',
-            'sourcelink.html',
-        ]
+    "**": [
+        "about.html",
+        "relations.html",
+        "globaltoc.html",
+        "localtoc.html",
+        "searchbox.html",
+        "sourcelink.html",
+    ]
 }
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
@@ -221,7 +172,7 @@ html_show_sphinx = False
 # -- Options for HTMLHelp output ------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'pyutil'
+htmlhelp_basename = "pyutil"
 
 # -- Options for LaTeX output ---------------------------------------
 
@@ -229,15 +180,12 @@ latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
     # 'papersize': 'letterpaper',
-
     # The font size ('10pt', '11pt' or '12pt').
     #
     # 'pointsize': '10pt',
-
     # Additional stuff for the LaTeX preamble.
     #
     # 'preamble': '',
-
     # Latex figure (float) alignment
     #
     # 'figure_align': 'htbp',
@@ -247,19 +195,16 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (
-        master_doc, 'pyutil.tex', 'Pyutil Documentation', 'Faris A Chugthai',
-        'manual'
-    ),
+    (master_doc, "pyutil.tex", "Pyutil Documentation", "Faris A Chugthai", "manual"),
 ]
 
 # -- Options for manual page output ---------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, 'pyutil', 'Pyutil Documentation', [author], 1)]
+man_pages = [(master_doc, "pyutil", "Pyutil Documentation", [author], 1)]
 
-manpages_url = 'https://linux.die.net/man/'
+manpages_url = "https://linux.die.net/man/"
 
 # -- Options for Texinfo output -------------------------------------
 
@@ -268,8 +213,13 @@ manpages_url = 'https://linux.die.net/man/'
 #  dir menu entry, description, category)
 texinfo_documents = [
     (
-        master_doc, 'Pyutil', 'Pyutil Documentation', author, 'Pyutil',
-        'One line description of project.', 'Miscellaneous'
+        master_doc,
+        "Pyutil",
+        "Pyutil Documentation",
+        author,
+        "Pyutil",
+        "One line description of project.",
+        "Miscellaneous",
     ),
 ]
 
@@ -286,7 +236,7 @@ epub_title = project
 # epub_uid = ''
 
 # A list of files that should not be packed into the epub file.
-epub_exclude_files = ['search.html']
+epub_exclude_files = ["search.html"]
 
 # -------------------------------------------------------------------
 # -- Extension configuration ----------------------------------------
@@ -298,11 +248,11 @@ epub_exclude_files = ['search.html']
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
-    'matplotlib': ('https://matplotlib.org', None), 'python':
-        ('https://docs.python.org/3/', None), 'numpy':
-            ('https://docs.scipy.org/doc/numpy/', None), 'ipython':
-                ('https://ipython.readthedocs.io/en/stable/', None)
+    "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
+    "matplotlib": ("https://matplotlib.org", None),
+    "python": ("https://docs.python.org/3/", None),
+    "numpy": ("https://docs.scipy.org/doc/numpy/", None),
+    "ipython": ("https://ipython.readthedocs.io/en/stable/", None),
 }
 
 # -------------------------------------------------------------------
@@ -353,9 +303,9 @@ def setup(app):
             */data/data/com.termux/*
 
     """
-    app.add_js_file(os.path.join('_static', '', 'sidebar.js'))
+    app.add_js_file(os.path.join("_static", "", "sidebar.js"))
     return {
-        'version': 'builtin',
-        'parallel_read_safe': True,
-        'parallel_write_safe': True,
+        "version": "builtin",
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
     }

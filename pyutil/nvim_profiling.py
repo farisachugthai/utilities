@@ -5,14 +5,17 @@ import argparse
 import datetime
 import logging
 import os
-from platform import system
-from shutil import which
 import subprocess
 import sys
+from platform import system
+# from profile import run
+from shutil import which
+from timeit import Timer
 from typing import AnyStr
 
 import pynvim
-
+from pynvim.api.buffer import Buffer
+from pynvim.api.nvim import Nvim
 from pyutil.__about__ import __version__
 from pyutil.env_checks import check_xdg_config_home
 
@@ -46,9 +49,11 @@ def _parse_arguments():
         "-V", "--version", action="version", version="%(prog)s" + __version__
     )
 
-    if len(sys.argv) == 1:
+    # sys.argv by default when invoking python from inside of neovim.
+    if len(sys.argv) == 0 or if sys.argv == ['-c', 'script_host.py']:
+        # print help so we dont raise systemexit.
         parser.print_help()
-        sys.exit()
+        return
     else:
         return parser.parse_args()
 
@@ -62,10 +67,8 @@ class Neovim:
     """
 
     def __init__(self, exe=None):
-        if exe:
-            self.exe = exe
-        else:
-            self.exe = self._get_instance()
+        self.exe = self._get_instance() if exe is None else exe
+        self._buffer = Buffer()
 
     @property
     def running_instance(self):
@@ -76,6 +79,10 @@ class Neovim:
             return None
         else:
             return remote
+
+    @property
+    def buffer(self):
+        return _buffer()
 
     def _get_instance(self):
         """Determine if neovim is running."""
@@ -121,6 +128,11 @@ def output_results(output_dir):
         return True
 
 
+class Profiler:
+
+    def __init__(self):
+
+
 def main(nvim_root):
     """Profile nvim.
 
@@ -145,9 +157,10 @@ def main(nvim_root):
 
     profiling_log_file = os.path.join(nvim_root, "", now)
 
-    subprocess.check_output(
+    timer = Timer(subprocess.check_output(
         ["nvim", "--startuptime", profiling_log_file, "test.py", "-c", ":qall"]
-    )
+    ))
+    return timer
 
 
 if __name__ == "__main__":
@@ -155,8 +168,8 @@ if __name__ == "__main__":
 
     try:
         LOG_LEVEL = user_args.log_level
-    except Exception as e:
+    except Exception as e:  # attributeerror?
         LOGGER.error(e, exc_info=True)
 
     nvim_root = None  # Define it temporarily we need to refactor
-    # main(nvim_root)
+    main(nvim_root)

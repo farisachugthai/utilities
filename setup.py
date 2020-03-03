@@ -19,8 +19,7 @@ from setuptools import Command, find_packages, setup
 if sys.version_info[:2] < (3, 6):
     raise RuntimeError("Python version >= 3.6 required.")
 
-# Metadata: {{{1
-
+# Metadata: {{{
 NAME = "utilities"
 AUTHOR = ("Faris Chugthai",)
 EMAIL = ("farischugthai@gmail.com",)
@@ -68,10 +67,10 @@ except FileNotFoundError:
 
 # Load the package's __version__.py module as a dictionary.
 about = {"__version__": "0.0.1"}
-
-
 # }}}}
-class UploadCommand(Command):  # {{{1
+
+
+class UploadCommand(Command):  # {{{
     """Support setup.py upload."""
 
     description = "Build and publish the package."
@@ -109,10 +108,10 @@ class UploadCommand(Command):  # {{{1
         os.system("git push --tags")
 
         sys.exit()
-
-
 # }}}
-# Where the magic happens: {{{1
+
+
+# Where the magic happens: {{{
 setup(
     name=NAME,
     version=about["__version__"],
@@ -128,8 +127,7 @@ setup(
     # py_modules=['mypackage'],
     entry_points={
         "console_scripts": [
-            "dlink=pyutil.dlink:dlink",
-            "dlink2=pyutil.dlink2:main",
+            "dlink=pyutil.dlink2:main",
         ],
     },
     install_requires=REQUIRED,

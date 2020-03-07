@@ -128,8 +128,8 @@ def env_check(env_var):
     i : dict_key
         The environment variable searched for. Env vars are mapped as dicts.
 
-    Example
-    -------
+    Examples
+    --------
     .. code-block:: python3
 
         >>> from env_checks import env_check
@@ -220,16 +220,4 @@ def get_unix_username():
 
 
 def get_username():
-    """More cross-platform implementation of retrieving a username.
-
-
-   This function checks the environment variables :envvar:`LOGNAME`,
-   :envvar:`USER`, :envvar:`LNAME` and :envvar:`USERNAME`, in order, and
-   returns the value of the first one which is set to a non-empty string.  If
-   none are set, the login name from the password database is returned on
-   systems which support the :mod:`pwd` module, otherwise, an exception is
-   raised.
-
-    In general, this function should be preferred over :func:`os.getlogin()`.
-    """
     return getpass.getuser()

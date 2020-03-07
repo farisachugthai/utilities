@@ -217,7 +217,7 @@ def main():
     user_arguments = _parse_arguments()
     args = user_arguments.parse_args()
 
-    dest = args.destination
+    dest = args.destination.expanduser()
 
     if not dest.is_dir():
         sys.exit("Provided target not a directory. Exiting.")

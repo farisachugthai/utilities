@@ -66,8 +66,12 @@ class ZimText(TextWrapper):
         """Initialize the class. ``__init__().text`` defaults to None.
 
         However, it is still a required parameter. It's simply not enforced.
-
         We're all responsible users here right?
+
+        Parameters
+        ----------
+        text : str
+            A multi-line string.
 
         """
         self.width = width
@@ -120,12 +124,10 @@ class ZimText(TextWrapper):
         return wrapped_text
 
     def string2lines(self, convert_whitespace=True):
-        """
+        """Convert a string to a list of lines.
 
-        Parameters:
+        Parameters
         -----------
-        text : str
-            A multi-line string.
         convert_whitespace : bool
             convert form feeds and vertical tabs to spaces
 

@@ -39,15 +39,6 @@ Filesystem Scripts
     :show-inheritance:
 
 
-:mod:`linktree`
----------------
-
-.. automodule:: pyutil.linktree
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 :mod:`mv_to_repo`
 -----------------
 

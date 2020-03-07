@@ -1,10 +1,11 @@
 #!/bin/bash
 # Maintainer: Faris Chugthai
 
-# set -euo pipefail
+if [[ -z "$WSL_ENV" ]]; then
+    exit
+fi
 
-
-function bat() {
+bat() {
     # Gonna pat myself on the back because this works exactly how I want it to!
     local file
     if [[ -n "$1" ]]; then
@@ -19,5 +20,3 @@ function bat() {
         echo "Yo I can't find the bat executable"
     fi
 }
-
-

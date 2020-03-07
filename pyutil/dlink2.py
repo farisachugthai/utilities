@@ -25,6 +25,8 @@ import sys
 import traceback
 from pathlib import Path
 
+logging.basicConfig(level=logging.INFO)
+
 try:
     from pyutil.__about__ import __version__
 except (ImportError, ModuleNotFoundError):
@@ -103,7 +105,20 @@ def _parse_arguments():
 
 
 def generate_dest(dest, glob_pattern=None):
-    """Return a generator for all the files in the destination directory."""
+    """Return a generator for all the files in the destination directory.
+
+    Parameters
+    ----------
+    dest : str
+        Directory to find files in.
+    glob_pattern : str, optional
+
+    Yields
+    ------
+    `pathlib.Path`
+        File objects in dir.
+
+    """
     if not hasattr(dest, "iterdir"):
         dest = Path(dest)
     if not dest.exists():
@@ -132,6 +147,12 @@ def get_basenames(directory):
 def dlink(destination_dir, source_dir=None, is_recursive=False, glob_pattern=None):
     """Symlink user provided files.
 
+    Summary
+    --------
+    Generate symlinks to every file in the directory 'destination_dir'.
+
+    Extended Summary
+    ----------------
     The module doesn't immediately check for correct permissions or
     operating system.
 
@@ -145,7 +166,7 @@ def dlink(destination_dir, source_dir=None, is_recursive=False, glob_pattern=Non
 
     Parameters
     ----------
-    destination_dir : str
+    destination_dir : str-
          Directory where symlinks point to.
     source_dir : str, optional
         Directory where symlinks are created.
@@ -154,7 +175,7 @@ def dlink(destination_dir, source_dir=None, is_recursive=False, glob_pattern=Non
         `destination_dir`. Defaults to False.
     glob_pattern : str
         Only symlink files that match a certain pattern.
-
+h
     """
     if source_dir is None:
         source_dir = Path.cwd()
@@ -171,7 +192,7 @@ def dlink(destination_dir, source_dir=None, is_recursive=False, glob_pattern=Non
 
     for idx, src_file in enumerate(full_source_files):
         logging.debug("\ni is {0!s}".format(src_file))
-        # moat useful but way too long
+        # most useful but way too long
         # logging.info("\nfull_destination_files is {!s}".format(full_destination_files))
         logging.debug("\nfull_source_files is {!s}".format(full_source_files))
         logging.debug("\nsource_dir is {}".format(source_dir))
@@ -213,7 +234,6 @@ def symlink(src, dest):
 
 def main():
     """Call :func:`_parse_arguments` and the :func:`dlink` function."""
-    logging.basicConfig(level=logging.INFO)
     user_arguments = _parse_arguments()
     args = user_arguments.parse_args()
 

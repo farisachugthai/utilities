@@ -1,9 +1,17 @@
 #!/bin/bash
 # Maintainer: Faris Chugthai
 
-fzf-down() { # {{{ fzf --height and border
-# From Choi's Gist not the wiki.
-  fzf-tmux --height 50% "$@" --border
+fzf-down() { # {{{ fzf
+    # Integration with ripgrep
+    RG_PREFIX="rg --column --line-number --no-heading --color=always
+    --smart-case "
+    INITIAL_QUERY="."
+    FZF_DEFAULT_COMMAND="$RG_PREFIX $INITIAL_QUERY" |
+    fzf-tmux --prompt'FZF' --ansi --cycle --sort \
+        --bind 'ctrl-r:reload(ps -ef)' --header 'Press CTRL-R to reload' \
+        --header-lines=1 --layout=reverse --bind "change:reload:$RG_PREFIX {q} || true" \
+        --ansi --phony --query "$INITIAL_QUERY"
+
 }
 # }}}
 
@@ -40,18 +48,22 @@ __git_complete_refs ()
 		shift
 	done
 
-	__gitcomp_direct "$(__git_refs "$remote" "$track" "$pfx" "$cur_" "$sfx")"}  # }}}
+	__gitcomp_direct "$(__git_refs "$remote" "$track" "$pfx" "$cur_" "$sfx")"
+}  # }}}
 
 fz() {  # Not git relates but depends on fasd: {{{
   f | awk -F' ' '{print $2}' | fzf-down
 }  # }}}
 
+complete -o bashdefault -F _fzf_opts_completion -o default  -o filenames fz
+
 dz() {  # Not git relates but depends on fasd: {{{
   d | awk -F' ' '{print $2}' | fzf-down
 }  # }}}
 
-fgco() { # {{{1 checkout git commit
+complete -o bashdefault -F _fzf_opts_completion -o default  -o filenames dz
 
+fgco() { # {{{1 checkout git commit
   is_in_git_repo || return
   local commits commit
   commits="$(git log --pretty=oneline --abbrev-commit --reverse)" &&
@@ -63,30 +75,16 @@ fgco() { # {{{1 checkout git commit
 fshow_preview() { # {{{1 fshow_preview - git commit browser with previews
 
   is_in_git_repo || return
-    git log --graph --format:lo --decorate --oneline "$@" |
-        fzf --no-sort --reverse --tiebreak=index --no-multi \
-            --ansi --preview="$_viewGitLogLine" \
-            --header "enter to view, alt-y to copy hash" \
+    git log --graph --decorate --oneline "$@" |
+        fzf --reverse --tiebreak=index --no-multi \
+            --preview="git show --color=always {}" --preview-window right:80% \
+            --header "enter to view with nvim, alt-y to copy hash" \
             --bind "enter:execute:nvim {}" 
 } # }}}
 
 complete -F _git_log -F _fzf_opts_completion -o bashdefault -o default fshow_preview
 
-fgs() { # {{{1 pick files from git status -s
-  # doesn't work
-
-  # "Nothing to see here, move along"
-  is_in_git_repo || return
-
-  local cmd="${FZF_CTRL_T_COMMAND:-command git status -s}"
-
-  eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse " fzf -m "$@" | while read -r item; do
-    printf '%q ' "$item" | cut -d " " -f 2
-  done
-  echo
-} # }}}
-
-fgt() {  # {{{ preview tags
+fgzt() {  # {{{ preview tags
   is_in_git_repo || return
   git tag --sort -version:refname "$@" |
   fzf-down '--multi --preview-window right:70% '\
@@ -96,7 +94,7 @@ fgt() {  # {{{ preview tags
 
 } # }}}
 
-complete -F _git_tag -F _fzf_opts_completion -o bashdefault -o default fshow_preview
+complete -F _git_tag -o bashdefault -o default fgt
 
 fgl() { # {{{  Souped up git log with sort and preview
 
@@ -119,15 +117,6 @@ fgr() {  # {{{1 git remote
 } # }}}
 
 #   Updated versions of the above. From Choi's bashrc.:
-
-fgs() {  # git status through fzf: {{{1
-  is_in_git_repo || return
-  git -c color.status=always status --short |
-  fzf-down -m --ansi --nth 2..,.. \
-    --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
-  cut -c4- | sed 's/.* -> //'
-}  # }}}
-
 fghist() {  # Hist: {{{1
   is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
@@ -137,18 +126,9 @@ fghist() {  # Hist: {{{1
   grep -o "[a-f0-9]\{7,\}"
 }  # }}}
 
-fgr() {  # {{{1
-  is_in_git_repo || return
-  git remote -v | awk '{print $1 "\t" $2}' | uniq |
-  fzf-down --tac \
-    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
-  cut -d$'\t' -f1
-}  # }}}
-
 fgs() {  # {{{1
   is_in_git_repo || return
-  git stash list | fzf-down --reverse -d: --preview 'git show --color=always {1}' |
-  cut -d: -f1
+  git stash list | fzf-down --reverse -d: --preview 'git show --color=always {1}'
 }  # }}}
 
 fggrep() {  # {{{1
@@ -165,12 +145,16 @@ fgf() {  # {{{
     cut -c4- | sed 's/.* -> //'
 }  # }}}
 
+complete -o bashdefault -F _fzf_opts_completion -o default  -o filenames fgf
+
 fgt() {  # tags: {{{
   is_in_git_repo || return
   git tag --sort -version:refname |
   fzf-down --multi --preview-window right:70% \
     --preview 'git show --color=always {} | head -200'
 }  # }}}
+
+complete -o bashdefault -F _fzf_opts_completion -o default  -o filenames fgt
 
 fgb() {  # branches: {{{
   is_in_git_repo || return
@@ -197,25 +181,6 @@ fgr() {  # {{{
     --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
   cut -d$'\t' -f1
 }  # }}}
-
-fgstash() {  # {{{ git stash list
-  local out k reflog
-  out=(
-    $(git stash list --pretty='%C(yellow)%gd %>(14)%Cgreen%cr %C(blue)%gs' |
-      fzf --ansi --no-sort --header='enter:show, ctrl-d:diff, ctrl-o:pop, ctrl-y:apply, ctrl-x:drop' \
-          --preview='git stash show --color=always -p $(cut -d" " -f1 <<< {}) | head -'$LINES \
-          --preview-window=down:50% --reverse \
-          --bind='enter:execute(git stash show --color=always -p $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
-          --bind='ctrl-d:execute(git diff --color=always $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
-          --expect=ctrl-o,ctrl-y,ctrl-x))
-  k=${out[0]}
-  reflog=${out[1]}
-  [ -n "$reflog" ] && case "$k" in
-    ctrl-o) git stash pop $reflog ;;
-    ctrl-y) git stash apply $reflog ;;
-    ctrl-x) git stash drop $reflog ;;
-  esac
-} # }}}
 
 # The bindings: {{{
 bind -m emacs-standard '"\er": redraw-current-line'

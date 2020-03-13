@@ -1,5 +1,7 @@
 #!/bin/bash
 
+alias tmux="tmux -u"
+
 tmux_check() { # Check if we're inside tmux: {{{1
     if [[ -n $TMUX ]]; then
         echo "You're already in tmux."
@@ -48,7 +50,12 @@ tm() {  #: {{{
     # NOTE: Requires fzf
 
     # `tm` will allow you to select your tmux session via fzf.
+
+    # Parameters:
     # `tm irc` will attach to the irc session (if it exists), else it will create it.
+
+    # Generalized this mean that `tm arg` will open a named session as arg.
+    # additional arguments are currently ignored.
 
     # Jan 31, 2020: Checking if we're in tmux and starting a session first.
     [[ -z "$TMUX" ]] && tmux new-session -s tm && return
@@ -61,7 +68,8 @@ tm() {  #: {{{
 
     fi
   
-    session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+    # TODO: dude a preview window would be so cool.
+    session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --no-multi --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 
 }
 

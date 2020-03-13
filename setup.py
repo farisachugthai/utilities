@@ -60,6 +60,7 @@ EXTRAS = {
         # installed or upgraded on the target machine
         "docutils>=0.3",
         "numpydoc>=0.9.1",
+        "pyyaml",
     ],
 }
 

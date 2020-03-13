@@ -1,4 +1,4 @@
-e!/bin/bash
+#!/bin/bash
 # found on http://www.linux-magazine.com/Issues/2016/193/Workspace-Termux#article_l1
 # this script utilizes the termux api to take a picture and then annotate it in a csv file
 # i then modified the value of dir
@@ -10,16 +10,16 @@ dir="/data/data/com.termux/files/home/storage/pictures"
 dt="$(date +%Y%m%d-%H%M%S)"
 
 if [[ ! -d "$dir" ]]; then
-	mkdir -pv "$dir"
+        mkdir -pv "$dir"
 fi
 
 cd "$dir"  || exit 128
 
 if [[ -n "$(command -v termux-toast)" ]]; then
-	echo "Hold camera still..." | termux-toast
+        echo "Hold camera still..." | termux-toast
 else
-	echo 'No command named termux-toast found.'
-	exit 127
+        echo 'No command named termux-toast found.'
+        exit 127
 fi
 
 termux-camera-photo "$dt.jpg"
@@ -27,8 +27,8 @@ termux-camera-photo "$dt.jpg"
 echo "Done!" | termux-toast
 
 if [[ -z "$(command -v jq)" ]]; then
-	echo 'jq not found'
-	exit 127
+        echo 'jq not found'
+        exit 127
 fi
 
 lat="$(termux-location | jq '.latitude')"

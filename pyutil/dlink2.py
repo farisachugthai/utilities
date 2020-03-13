@@ -1,24 +1,5 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""
-=========================
-Directory Linker Rewrite
-=========================
-
-This is a rewrite of a script I've had for years, so I decided to go above
-and beyond.
-
-The idea behind it was to create something that would easily allow for
-creating arbitrarily nested trees of symlinks.
-
-.. todo:: Sep 17, 2019: Recursive option
-
-    Currently doesnt work.
-
-.. todo::
-    Logging doesnt log the right files.
-
-"""
 import argparse
 import logging
 import sys
@@ -147,27 +128,10 @@ def get_basenames(directory):
 def dlink(destination_dir, source_dir=None, is_recursive=False, glob_pattern=None):
     """Symlink user provided files.
 
-    Summary
-    --------
-    Generate symlinks to every file in the directory 'destination_dir'.
-
-    Extended Summary
-    ----------------
-    The module doesn't immediately check for correct permissions or
-    operating system.
-
-    As a result, the onus is put on the user to ensure that the necessary
-    requirements per OS are met.
-
-    Namely on Windows 10, that if symlinks are allowed on the filesystem,
-    whether they can only be created by an administrator. Recent enough
-    versions of Windows 10 have introduced the ability for regular users
-    to create symlinks as well as admins.
-
     Parameters
     ----------
-    destination_dir : str-
-         Directory where symlinks point to.
+    destination_dir : str
+        Directory where symlinks point to.
     source_dir : str, optional
         Directory where symlinks are created.
     recursive : bool, optional
@@ -175,7 +139,7 @@ def dlink(destination_dir, source_dir=None, is_recursive=False, glob_pattern=Non
         `destination_dir`. Defaults to False.
     glob_pattern : str
         Only symlink files that match a certain pattern.
-h
+
     """
     if source_dir is None:
         source_dir = Path.cwd()

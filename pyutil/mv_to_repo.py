@@ -1,25 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Move files from the home directory to the dotfiles repo.
-
-.. module:: mv_to_repo
-    :synopsis: Move files from the home directory to the dotfiles repo.
-
-This is a script I've been using for the better part of a year, so while
-the docstring formatting isn't consistent and there are a couple odd
-sections, this script has served a very utilitiarian purpose.
-
-May refactor one day. But it continues to work.
-
-.. note:: This module assumes a python interpreter above version 3.4.
-
-"""
 from pathlib import Path
 import shutil
 import sys
 
 
-def repo_dir_check(dest):
+def ensure_dir_exists(dest):
     """Check that the directory is in the repository and make one otherwise.
 
     `Useful info about mkdir <https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir>`_:
@@ -48,7 +34,7 @@ def backup_file(src):
         File to backup
 
     """
-    shutil.copy2(str(src), str(src) + ".bak")
+    shutil.copy2(src, src + ".bak")
 
 
 def main():
@@ -56,7 +42,7 @@ def main():
 
     Determine if a file name is in the current directory or absolute path.
 
-    Then set up a relative path from :envvar:`$HOME`. Use the root of the repo
+    Then set up a relative path from :envvar:`HOME`. Use the root of the repo
     as the new root and move the file there, all while creating
     directories and backups.
 
@@ -71,21 +57,20 @@ def main():
     User runs the script from inside the folder of the file they want to move.
 
     """
-    inputted = (
+    src = Path(
         sys.argv[1] if len(sys.argv) >= 2 else sys.exit("Takes at least one filename.")
     )
-    src = Path(inputted)
 
     if src.is_file() is not True:
-        sys.exit("This is not a file. Aborting.")
+        print("This is not a file. Aborting.")
+        return
 
-    cwd = Path.cwd()
-    rel_path = Path.relative_to(cwd, home)
+    rel_path = Path.relative_to(Path.cwd(), Path.home())
     # Setup the file we're moving to
     dest = sys.argv[2] if len(sys.argv) == 3 else Path.joinpath(repo, rel_path)
 
     dest_file = Path.joinpath(dest, inputted)
-    repo_dir_check(dest)
+    ensure_dir_exists(dest)
 
     backup_file(src)
 

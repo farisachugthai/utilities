@@ -18,71 +18,69 @@ Remaining Modules
 :mod:`env_checks`
 =================
 
-
 .. currentmodule:: pyutil.env_checks
 
-.. function:: get_username()
+.. function:: get_username
 
    More cross-platform implementation of retrieving a username.
 
-`env_checks` Summary
---------------------
+   This function checks the environment variables :envvar:`LOGNAME`,
+   :envvar:`USER`, :envvar:`LNAME` and :envvar:`USERNAME`, in order, and
+   returns the value of the first one which is set to a non-empty string.  If
+   none are set, the login name from the password database is returned on
+   systems which support the :mod:`pwd` module, otherwise, an exception is
+   raised.
 
-This function checks the environment variables :envvar:`LOGNAME`,
-:envvar:`USER`, :envvar:`LNAME` and :envvar:`USERNAME`, in order, and
-returns the value of the first one which is set to a non-empty string.  If
-none are set, the login name from the password database is returned on
-systems which support the :mod:`pwd` module, otherwise, an exception is
-raised.
-
-In general, this function should be preferred over :func:`os.getlogin()`.
+   In general, this function should be preferred over :func:`os.getlogin()`.
 
 .. automodule:: pyutil.env_checks
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :synopsis: Check user environment variables.
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 
 :mod:`itersrc`
 ===============
 
 .. automodule:: pyutil.itersrc
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 
 :mod:`ptags`
 ===================
 
 .. automodule:: pyutil.ptags
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 
 :mod:`strip_space`
 ==========================
 
 .. automodule:: pyutil.strip_space
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 
 :mod:`sys_checks`
 =========================
 
 .. automodule:: pyutil.sys_checks
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 
 :mod:`_logging`
 ===============
 
-Set up general logging parameters and write everything to separate files.
+.. currentmodule:: pyutil._logging
+
 
 Logger
 -------
@@ -115,31 +113,28 @@ formatted into a LogRecord's message attribute. Currently, the useful
 attributes in a LogRecord are described by:
 
    %(name)s            Name of the logger (logging channel)
-   %(levelno)s         Numeric logging level for the message (DEBUG, INFO,
-                       WARNING, ERROR, CRITICAL)
-   %(levelname)s       Text logging level for the message ("DEBUG", "INFO",
-                       "WARNING", "ERROR", "CRITICAL")
-   %(pathname)s        Full pathname of the source file where the logging
-                       call was issued (if available)
+   %(levelno)s         Numeric logging level for the message (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+   %(levelname)s       Text logging level for the message ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
+   %(pathname)s        Full pathname of the source file where the logging call was issued (if available)
    %(filename)s        Filename portion of pathname
    %(module)s          Module (name portion of filename)
-   %(lineno)d          Source line number where the logging call was issued
-                       (if available)
+   %(lineno)d          Source line number where the logging call was issued (if available)
    %(funcName)s        Function name
-   %(created)f         Time when the LogRecord was created (time.time()
-                       return value)
+   %(created)f         Time when the LogRecord was created (time.time() return value)
    %(asctime)s         Textual time when the LogRecord was created
    %(msecs)d           Millisecond portion of the creation time
-   %(relativeCreated)d Time in milliseconds when the LogRecord was created,
-                       relative to the time the logging module was loaded
-                       (typically at application startup time)
+   %(relativeCreated)d Time in milliseconds when the LogRecord was created, relative to the time the logging module was loaded (typically at application startup time)
    %(thread)d          Thread ID (if available)
    %(threadName)s      Thread name (if available)
    %(process)d         Process ID (if available)
-   %(message)s         The result of record.getMessage(), computed just as
-                       the record is emitted
+   %(message)s         The result of record.getMessage(), computed just as the record is emitted
+
+
+Logging API
+-----------
 
 .. automodule:: pyutil._logging
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :synopsis: Set up general logging parameters and write everything to separate files.
+   :members:
+   :undoc-members:
+   :show-inheritance:

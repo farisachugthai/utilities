@@ -1,6 +1,9 @@
 #!/bin/bash
 # Maintainer: Faris Chugthai
 
+# for the pyutil
+complete -o bashdefault -o default -F _fzf_path_completion -F _longopt dlink
+
 fzf-down() { # {{{ fzf
     # Integration with ripgrep
     RG_PREFIX="rg --column --line-number --no-heading --color=always

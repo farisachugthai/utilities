@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyutil.dlink &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyutil.dlink</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Symlink all of the files in one directory into another.</span>
+
+<span class="sd">.. module:: dlink</span>
+<span class="sd">    :synopsis: Symlinks a directory of files from another.</span>
+
+<span class="sd">Synopsis</span>
+<span class="sd">--------</span>
+<span class="sd">This module can be used to create individual symlinks to every file in a</span>
+<span class="sd">directory. This is a huge convenience wen symlinking dotfiles or configuration</span>
+<span class="sd">files held in a different location than where the software of interest expects</span>
+<span class="sd">it.</span>
+
+<span class="sd">This is quite easily one of my most frequently used scripts.</span>
+
+<span class="sd">Usage</span>
+<span class="sd">------</span>
+<span class="sd">.. code-block:: shell</span>
+
+<span class="sd">    ln -s path/to/dest/* [path/to/src]</span>
+
+
+<span class="sd">As an example, one can ``git clone dotfiles`` in a directory named `projects`</span>
+<span class="sd">or `src`. The location of the git repository is irrelevant, and as such, we&#39;ll</span>
+<span class="sd">refer to it as `src` from here, as `dest` as it&#39;s where the symlinks point to.</span>
+
+<span class="sd">For example if wants symlinks pointing to ``/home/User/dotfiles/.vim``,</span>
+<span class="sd">then running dlink.py in ``/home/User/.vim`` with ``$HOME/dotfiles/.vim`` as</span>
+<span class="sd">an argument will create symlinks in ``$HOME/.vim`` pointing to</span>
+<span class="sd">``$HOME/dotfiles/.vim``.</span>
+
+
+<span class="sd">Inspiration</span>
+<span class="sd">------------</span>
+<span class="sd">If the module is given 2 args, the intended response is for it to behave  similarly to the classic Unix idiom:</span>
+
+<span class="sd">.. code-block:: shell</span>
+
+<span class="sd">    ln -s path/to/dest/* [path/to/src]</span>
+
+<span class="sd">or treat it similarly to :func:`os.symlink()`.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<div class="viewcode-block" id="dlink"><a class="viewcode-back" href="../../filesystem.html#pyutil.dlink.dlink">[docs]</a><span class="k">def</span> <span class="nf">dlink</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Symlinks a directory from another one.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dest: str</span>
+<span class="sd">        The directory where the original files are located.</span>
+<span class="sd">    src : str</span>
+<span class="sd">        Optional argument indicating the directory where the symlinks</span>
+<span class="sd">        are to be created.</span>
+<span class="sd">        If the `src` argument isn&#39;t provided, it is assumed that the current</span>
+<span class="sd">        working directory is the `src` dir.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dest</span><span class="p">):</span>
+        <span class="c1"># First let&#39;s set up the relative paths for our destination and src</span>
+        <span class="n">dest_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">src_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dest_file</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">src_file</span><span class="p">):</span>
+            <span class="c1"># If the first item in dest is a dir, make sure it exists in src</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">src_file</span><span class="p">,</span> <span class="mo">0o777</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">IsADirectoryError</span><span class="p">:</span>
+                <span class="c1"># If that dir exists already, move along.</span>
+                <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dest_file</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">dest_file</span><span class="p">,</span> <span class="n">src_file</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">src_file</span><span class="p">):</span>
+                    <span class="c1"># If a symlink already exists, then we&#39;re okay</span>
+                    <span class="k">pass</span>
+                <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">src_file</span><span class="p">):</span>
+                    <span class="c1"># If there&#39;s a file, complain.</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">src</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="n">cwd</span>
+
+    <span class="c1"># If we don&#39;t get 2 args shut down.</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dest</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;What directory do you want to link to?&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dest</span><span class="p">):</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;Dir: &quot;</span> <span class="o">+</span> <span class="n">dest</span> <span class="o">+</span> <span class="s2">&quot; is not a recognized directory. Exiting.&quot;</span><span class="p">)</span>
+
+    <span class="n">dlink</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<h3><a href="../../index.html">Global Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Text.html">Text Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../External_Commands.html">External Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">Todo</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2020, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyutil.batch_renamer &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyutil.batch_renamer</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Renames a directory of files based on a template.</span>
+
+<span class="sd">.. module:: batch_renamer.py</span>
+
+<span class="sd">First we&#39;ll examine the contents of a directory and ensure it only contains</span>
+<span class="sd">files with names we want to rename.</span>
+
+
+<span class="sd">.. code-block:: python3</span>
+
+<span class="sd">    &gt;&gt;&gt; os.listdir(&quot;/path/to/dir&quot;)</span>
+<span class="sd">    [&#39;img_1074.jpg&#39;, &#39;img_1076.jpg&#39;, &#39;img_1077.jpg&#39;]</span>
+
+
+<span class="sd">As we can see it does we&#39;ll then invoke the script like so.</span>
+
+<span class="sd">.. code-block:: shell-session</span>
+
+<span class="sd">    python3 batch_renamer.py /path/to/dir</span>
+<span class="sd">    img_1074.jpg --&gt; Ashley_0.jpg</span>
+<span class="sd">    img_1076.jpg --&gt; Ashley_1.jpg</span>
+<span class="sd">    img_1077.jpg --&gt; Ashley_2.jpg</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># import shutil</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">Template</span>
+
+<span class="kn">from</span> <span class="nn">.__about__</span> <span class="kn">import</span> <span class="n">__version__</span>
+
+<span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s2">&quot;logging.WARNING&quot;</span>
+
+
+<div class="viewcode-block" id="BatchRename"><a class="viewcode-back" href="../../filesystem.html#pyutil.batch_renamer.BatchRename">[docs]</a><span class="k">class</span> <span class="nc">BatchRename</span><span class="p">(</span><span class="n">Template</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Delimiter for string substitutions.&quot;&quot;&quot;</span>
+
+    <span class="n">delimiter</span> <span class="o">=</span> <span class="s2">&quot;%&quot;</span></div>
+
+
+<div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../filesystem.html#pyutil.batch_renamer._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Parse user arguments.&quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
+
+    <span class="c1"># should add in either globbing or fnmatch capabilities</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--directory&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Directory containing only the files to be renamed.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;old_format&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;old_format&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Enter old format to replace.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;rename_format&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;rename_format&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Enter rename style (</span><span class="si">%d</span><span class="s2">-date %n-seqnum </span><span class="si">%f</span><span class="s2">-format I.E.  Ashley_%n</span><span class="si">%f</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-ll&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--log_level&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;log_level&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;log level&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span> <span class="s2">&quot;WARNING&quot;</span><span class="p">,</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="s2">&quot;CRITICAL&quot;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set the logging level&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-V&quot;</span><span class="p">,</span> <span class="s2">&quot;--version&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(prog)s</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">__version__</span>
+    <span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">args</span></div>
+
+
+<div class="viewcode-block" id="batch_mover"><a class="viewcode-back" href="../../filesystem.html#pyutil.batch_renamer.batch_mover">[docs]</a><span class="k">def</span> <span class="nf">batch_mover</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">new_pattern</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Move files in the current working directory that match a pattern.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pattern : str</span>
+<span class="sd">        Pattern to check filenames for. Functionally would be the old extension.</span>
+<span class="sd">    new_pattern : str</span>
+<span class="sd">        What to replace the old pattern with.</span>
+<span class="sd">    directory : str, optional</span>
+<span class="sd">        Directory where files that need to be renamed can be found.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Bool</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">directory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">directory</span> <span class="o">=</span> <span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">scandir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">file_check</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="k">pass</span></div>
+            <span class="c1"># shutil.move(i.name, yeah we gotta change a lot here</span>
+
+
+<div class="viewcode-block" id="file_check"><a class="viewcode-back" href="../../filesystem.html#pyutil.batch_renamer.file_check">[docs]</a><span class="k">def</span> <span class="nf">file_check</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">file_to_check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check that the file exists and matched the desired pattern.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">file_to_check</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="n">pattern</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../filesystem.html#pyutil.batch_renamer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Execute module.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">directory</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">rename_format</span>
+    <span class="n">old</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">old_pattern</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">log_level</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">log_level</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># IndexError?</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">log_level</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The directory that was chosen was: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+    <span class="n">batch_mover</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">old</span><span class="p">,</span> <span class="n">new_pattern</span><span class="o">=</span><span class="n">fmt</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="n">d</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<h3><a href="../../index.html">Global Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Text.html">Text Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../External_Commands.html">External Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">Todo</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2020, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

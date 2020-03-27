@@ -7,17 +7,11 @@ import logging
 import os
 import subprocess
 import sys
-from platform import system
-# from profile import run
 from shutil import which
 from timeit import Timer
-from typing import AnyStr
 
-import pynvim
 from pynvim.api.buffer import Buffer
 from pynvim.api.nvim import Nvim
-from pyutil.__about__ import __version__
-from pyutil.env_checks import check_xdg_config_home
 
 LOGGER = logging.getLogger(name=__name__)
 LOG_LEVEL = "logging.WARNING"
@@ -50,7 +44,7 @@ def _parse_arguments():
     )
 
     # sys.argv by default when invoking python from inside of neovim.
-    if len(sys.argv) == 0 or if sys.argv == ['-c', 'script_host.py']:
+    if len(sys.argv) == 0 or sys.argv == ['-c', 'script_host.py']:
         # print help so we dont raise systemexit.
         parser.print_help()
         return
@@ -126,11 +120,6 @@ def output_results(output_dir):
             return True
     else:
         return True
-
-
-class Profiler:
-
-    def __init__(self):
 
 
 def main(nvim_root):

@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyutil.json_sorter &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyutil.json_sorter</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Take a :mod:`json` file, sort the keys and insert 4 spaces for indents.</span>
+
+<span class="sd">==================</span>
+<span class="sd">:mod:`json` sorter</span>
+<span class="sd">==================</span>
+
+<span class="sd">.. module:: json_sorter</span>
+<span class="sd">    :synopsis: Sort a JSON file by key without losing organization for nested elements.</span>
+
+<span class="sd">One Line Solution</span>
+<span class="sd">=================</span>
+
+<span class="sd">&gt;&gt;&gt; sorted((json.loads(open(&#39;settings.json&#39;).read()).items()), key=operator.getitemattr)</span>
+
+<span class="sd">You definitely shouldn&#39;t implement it as a one liner, *as you can clearly see,*;</span>
+<span class="sd">however 5 functions and a handful of instantiated classes and debugging, and</span>
+<span class="sd">we&#39;re somehow barely closer to done.</span>
+
+<span class="sd">The functions for reading and writing files could be refactored and used over the</span>
+<span class="sd">entire package.</span>
+
+<span class="sd">The logger **should** be set up that way.</span>
+
+<span class="sd">This code is going to easily clear 100 lines when a JSON encoded object shouldn&#39;t</span>
+<span class="sd">take more than a few lines to deserialize and work with.</span>
+
+<span class="sd">This&#39;ll serve as a good template for testing out tools to build a simple</span>
+<span class="sd">script with.</span>
+
+<span class="sd">The problem is already solved. Let&#39;s see what we can&#39;t squeeze out of our tools</span>
+<span class="sd">along the way.</span>
+
+<span class="sd">Interestingly enough, this display of excessiveness started as a simple</span>
+<span class="sd">quick fix.</span>
+
+<span class="sd">Originally, this module was used to fix my `&lt;../.vscode/settings.json&gt;`_ from VSCode.</span>
+
+<span class="sd">----------</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="kn">from</span> <span class="nn">pyutil.__about__</span> <span class="kn">import</span> <span class="n">__version__</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="_parse_arguments"><a class="viewcode-back" href="../../Text.html#pyutil.json_sorter._parse_arguments">[docs]</a><span class="k">def</span> <span class="nf">_parse_arguments</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Parse arguments given by the user.</span>
+
+<span class="sd">    This implementation still, somehow isn&#39;t done. An option for *inplace*</span>
+<span class="sd">    modifications needs to be added.</span>
+
+<span class="sd">    Unfortunately this will be mutually exclusive to the output file option.</span>
+<span class="sd">    So we&#39;ll need to work on learning argparse.mutually_exclusive_groups.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    args : :class:`argparse.NameSpace()`</span>
+<span class="sd">        Arguments provided by the user and handled by argparse.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">prog</span><span class="o">=</span><span class="s2">&quot;JSON sorter&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Take a :mod:`json` file, sort the keys and insert 4 spaces for indents.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;input&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;File to parse. Defaults to stdin.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--output&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">),</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;File to write to. Defaults to stdout.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-y&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--yaml&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;yaml&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">),</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML file to write to. Defaults to stdout.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># is there a way to have info printed with this from argparse?</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-l&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--log&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Turn logging on and print to console.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-ll&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--log_level&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;log_level&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span> <span class="s2">&quot;WARNING&quot;</span><span class="p">,</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="s2">&quot;CRITICAL&quot;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set the logging level&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-V&quot;</span><span class="p">,</span> <span class="s2">&quot;--version&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(prog)s</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">__version__</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">args</span></div>
+
+
+<div class="viewcode-block" id="convert_to_yaml"><a class="viewcode-back" href="../../Text.html#pyutil.json_sorter.convert_to_yaml">[docs]</a><span class="k">def</span> <span class="nf">convert_to_yaml</span><span class="p">(</span><span class="n">file_obj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert a :mod:`json` to YAML.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file_obj : str</span>
+<span class="sd">        The file to read in</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    yaml_object : str</span>
+<span class="sd">        Converted :mod:`PyYAML` text.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">converted_json_data</span> <span class="o">=</span> <span class="n">sort_json</span><span class="p">(</span><span class="n">file_obj</span><span class="p">)</span>
+    <span class="c1"># output yaml</span>
+    <span class="n">yaml_text</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">converted_json_data</span><span class="p">),</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">yaml_text</span></div>
+
+
+<div class="viewcode-block" id="sort_json"><a class="viewcode-back" href="../../Text.html#pyutil.json_sorter.sort_json">[docs]</a><span class="k">def</span> <span class="nf">sort_json</span><span class="p">(</span><span class="n">file_obj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read in a :mod:`json` object, sort it and write it back to a new file.</span>
+
+<span class="sd">    By writing to a new file, the user is allowed the opportunity to inspect</span>
+<span class="sd">    the file and ensure that the desired results have been achieved.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file_obj : str</span>
+<span class="sd">        The file to read in</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    json_text : str</span>
+<span class="sd">        Correctly formmated :mod:`json` text.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_obj</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="n">json_str</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">getitem</span><span class="p">())</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Formatted json: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">json_str</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">json_str</span></div>
+
+
+<div class="viewcode-block" id="text_writer"><a class="viewcode-back" href="../../Text.html#pyutil.json_sorter.text_writer">[docs]</a><span class="k">def</span> <span class="nf">text_writer</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Write the previously inputted text to a file.</span>
+
+<span class="sd">    This function could easily be utilized over the whole package though.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    plaintext : str</span>
+<span class="sd">        The file to read in</span>
+<span class="sd">    output_file : str</span>
+<span class="sd">        Text file to write formatted :mod:`json` to.</span>
+<span class="sd">        It will only write to the file if the filename currently doesn&#39;t exist.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;xt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;File written is: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">output_file</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../Text.html#pyutil.json_sorter.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Handles user args, sets up logging and calls other functions.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">log_level</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="n">LOG_LEVEL</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s2">&quot;WARNING&quot;</span>
+
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+
+    <span class="n">fobj</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">input</span>
+    <span class="n">o_file</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">o_file</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileExistsError</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">yaml</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">yaml</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">plaintext</span> <span class="o">=</span> <span class="n">sort_json</span><span class="p">(</span><span class="n">fobj</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plaintext</span> <span class="o">=</span> <span class="n">convert_to_yaml</span><span class="p">(</span><span class="n">yaml</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Plaintext is: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">plaintext</span><span class="p">))</span>
+    <span class="n">text_writer</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="n">o_file</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<h3><a href="../../index.html">Global Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Text.html">Text Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../External_Commands.html">External Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">Todo</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2020, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyutil.env_checks &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyutil.env_checks</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Run simple checks to ensure that a user&#39;s environment has been set up.</span>
+
+<span class="sd">Easier to group similar methods in one mod then have them scattered around.</span>
+
+<span class="sd">Below is a generic example of using the public methods to read in user</span>
+<span class="sd">defined configurations.</span>
+
+<span class="sd">.. rubric:: Example</span>
+
+<span class="sd">.. code-block:: python3</span>
+
+<span class="sd">    &gt;&gt;&gt; from env_checks import check_xdg_config_home</span>
+<span class="sd">    &gt;&gt;&gt; if check_xdg_config_home():</span>
+<span class="sd">        &gt;&gt;&gt; with open(&#39;module.conf&#39;, &#39;rt&#39;) as f:</span>
+<span class="sd">            &gt;&gt;&gt; configs = f.readlines()</span>
+
+
+<span class="sd">Matplotlib Env Checks</span>
+<span class="sd">---------------------</span>
+<span class="sd">Mar 08, 2019</span>
+
+<span class="sd">Just noticed today the following functions::</span>
+
+<span class="sd">    try:</span>
+<span class="sd">        import matplotlib as mpl</span>
+<span class="sd">    except ImportError:</span>
+<span class="sd">        pass</span>
+<span class="sd">    mpl.get_home()</span>
+<span class="sd">    mpl._get_xdg_cache_dir()</span>
+<span class="sd">    mpl._get_xdg_config_dir()</span>
+<span class="sd">    mpl._get_data_path()</span>
+
+
+<span class="sd">Here&#39;s an interesting way to memoize return values.::</span>
+
+<span class="sd">    def _logged_cached(fmt, func=None):</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        Decorator that logs a function&#39;s return value, and memoizes that value.</span>
+
+<span class="sd">        After ::</span>
+
+<span class="sd">            @_logged_cached(fmt)</span>
+<span class="sd">            def func(): ...</span>
+
+<span class="sd">        the first call to *func* will log its return value at the DEBUG level using</span>
+<span class="sd">        %-format string *fmt*, and memoize it; later calls to *func* will directly</span>
+<span class="sd">        return that value.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        if func is None:  # Return the actual decorator.</span>
+<span class="sd">            return functools.partial(_logged_cached, fmt)</span>
+
+<span class="sd">        called = False</span>
+<span class="sd">        ret = None</span>
+
+<span class="sd">        @functools.wraps(func)</span>
+<span class="sd">        def wrapper():</span>
+<span class="sd">            nonlocal called, ret</span>
+<span class="sd">            if not called:</span>
+<span class="sd">                ret = func()</span>
+<span class="sd">                called = True</span>
+<span class="sd">                _log.debug(fmt, ret)</span>
+<span class="sd">            return ret</span>
+
+<span class="sd">        return wrapper</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">getpass</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># unix only</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pwd</span> <span class="k">as</span> <span class="nn">_pwd</span>
+<span class="k">except</span> <span class="n">ModuleNotFoundError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+
+<div class="viewcode-block" id="check_xdg_config_home"><a class="viewcode-back" href="../../Other.html#pyutil.env_checks.check_xdg_config_home">[docs]</a><span class="k">def</span> <span class="nf">check_xdg_config_home</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Check to see if :envvar:`$XDG_CONFIG_HOME` has been defined.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Bool</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    .. code-block:: python3</span>
+
+<span class="sd">        &gt;&gt;&gt; from env_checks import check_xdg_config_home</span>
+<span class="sd">        &gt;&gt;&gt; if check_xdg_config_home():</span>
+<span class="sd">            &gt;&gt;&gt; with open(&#39;module.conf&#39;, &#39;rt&#39;) as f:</span>
+<span class="sd">                &gt;&gt;&gt; configs = f.readlines()</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;XDG_CONFIG_HOME&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="get_script_dir"><a class="viewcode-back" href="../../Other.html#pyutil.env_checks.get_script_dir">[docs]</a><span class="k">def</span> <span class="nf">get_script_dir</span><span class="p">(</span><span class="n">fobj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Determine the directory the script is in.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fobj : str</span>
+<span class="sd">        Path to file to check</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Directory the file is in : str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">fobj</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="env_check"><a class="viewcode-back" href="../../Other.html#pyutil.env_checks.env_check">[docs]</a><span class="k">def</span> <span class="nf">env_check</span><span class="p">(</span><span class="n">env_var</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Search the current namescope for variable `env_var`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    env_var : str</span>
+<span class="sd">        Environment variable to search for. Currently case-sensitive.</span>
+
+<span class="sd">    Yields</span>
+<span class="sd">    ------</span>
+<span class="sd">    i : dict_key</span>
+<span class="sd">        The environment variable searched for. Env vars are mapped as dicts.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    .. code-block:: python3</span>
+
+<span class="sd">        &gt;&gt;&gt; from env_checks import env_check</span>
+<span class="sd">        &gt;&gt;&gt; fzf = list(env_check(&#39;fzf&#39;))</span>
+<span class="sd">        [</span>
+<span class="sd">                &#39;_fzf_orig_completion_awk&#39;, &#39;_fzf_orig_completion_cat&#39;,</span>
+<span class="sd">                &#39;_fzf_orig_completion_cd&#39;, &#39;_fzf_orig_completion_cp&#39;,</span>
+<span class="sd">                &#39;_fzf_orig_completion_diff&#39;, &#39;_fzf_orig_completion_du&#39;,</span>
+<span class="sd">                &#39;_fzf_orig_completion_ftp&#39;, &#39;_fzf_orig_completion_grep&#39;,</span>
+<span class="sd">                &#39;_fzf_orig_completion_head&#39;, &#39;_fzf_orig_completion_ld&#39;,</span>
+<span class="sd">                &#39;_fzf_orig_completion_less&#39;, &#39;_fzf_orig_completion_ln&#39;,</span>
+<span class="sd">                &#39;_fzf_orig_completion_ls&#39;, &#39;_fzf_orig_completion_mv&#39;,</span>
+<span class="sd">                &#39;_fzf_orig_completion_pushd&#39;, &#39;_fzf_orig_completion_rm&#39;,</span>
+<span class="sd">                &#39;_fzf_orig_completion_rmdir&#39;, &#39;_fzf_orig_completion_sed&#39;,</span>
+<span class="sd">                &#39;_fzf_orig_completion_sort&#39;, &#39;_fzf_orig_completion_tail&#39;,</span>
+<span class="sd">                &#39;_fzf_orig_completion_tee&#39;, &#39;_fzf_orig_completion_telnet&#39;,</span>
+<span class="sd">                &#39;_fzf_orig_completion_uniq&#39;, &#39;_fzf_orig_completion_wc&#39;</span>
+<span class="sd">                ]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">env_var</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">i</span></div>
+
+
+<div class="viewcode-block" id="get_home_3"><a class="viewcode-back" href="../../Other.html#pyutil.env_checks.get_home_3">[docs]</a><span class="k">def</span> <span class="nf">get_home_3</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return the user&#39;s home directory. Python3 only!</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    home : :class:`pathlib.Path`</span>
+<span class="sd">        The user&#39;s home directory. Utilizes pathlib so requires Python 3.</span>
+<span class="sd">        Returns `None` if the home directory isn&#39;t found.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="check_xdg_config_home_2"><a class="viewcode-back" href="../../Other.html#pyutil.env_checks.check_xdg_config_home_2">[docs]</a><span class="k">def</span> <span class="nf">check_xdg_config_home_2</span><span class="p">(</span><span class="n">conf_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An implementation of check_xdg_config_home that works with Python2!</span>
+
+<span class="sd">    Unfortunately the code is quite repetitive as it stands and needs refactoring.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        Has not been tested on Python2.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    conf_file : str, optional</span>
+<span class="sd">        Path to a configuration file needed by another module.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    user_conf_file : str</span>
+<span class="sd">        Path to desired user configuration file. Returns None if the file can&#39;t</span>
+<span class="sd">        be found.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xdg_config_home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;XDG_CONFIG_HOME&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">xdg_config_home</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">conf_file</span><span class="p">:</span>
+            <span class="n">user_conf_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xdg_config_home</span><span class="p">,</span> <span class="n">conf_file</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">user_conf_file</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">user_conf_file</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">xdg_config_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span> <span class="s2">&quot;.config&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">xdg_config_dir</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">conf_file</span><span class="p">:</span>
+                <span class="n">user_conf_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xdg_config_dir</span><span class="p">,</span> <span class="n">conf_file</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">user_conf_file</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">user_conf_file</span></div>
+
+
+<div class="viewcode-block" id="get_unix_username"><a class="viewcode-back" href="../../Other.html#pyutil.env_checks.get_unix_username">[docs]</a><span class="k">def</span> <span class="nf">get_unix_username</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get username. Unix only!</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    username : str</span>
+<span class="sd">        User username</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_pwd</span><span class="o">.</span><span class="n">getpwuid</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">())</span><span class="o">.</span><span class="n">pw_name</span></div>
+
+
+<div class="viewcode-block" id="get_username"><a class="viewcode-back" href="../../Other.html#pyutil.env_checks.get_username">[docs]</a><span class="k">def</span> <span class="nf">get_username</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getuser</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<h3><a href="../../index.html">Global Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Text.html">Text Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../External_Commands.html">External Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">Todo</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2020, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

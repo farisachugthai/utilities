@@ -2,16 +2,21 @@
 # -*- coding: utf-8 -*-
 """Automate profiling nvim."""
 import argparse
+import codecs
 import datetime
 import logging
 import os
 import subprocess
 import sys
+from pathlib import Path
 from shutil import which
 from timeit import Timer
 
 from pynvim.api.buffer import Buffer
 from pynvim.api.nvim import Nvim
+
+from pyutil.__about__ import __version__
+
 
 LOGGER = logging.getLogger(name=__name__)
 LOG_LEVEL = "logging.WARNING"
@@ -44,12 +49,11 @@ def _parse_arguments():
     )
 
     # sys.argv by default when invoking python from inside of neovim.
-    if len(sys.argv) == 0 or sys.argv == ['-c', 'script_host.py']:
+    if len(sys.argv) == 1 or sys.argv == ['-c', 'script_host.py']:
         # print help so we dont raise systemexit.
-        parser.print_help()
-        return
+        sys.exit(parser.print_help())
     else:
-        return parser.parse_args()
+        return parser
 
 
 class Neovim:
@@ -146,19 +150,26 @@ def main(nvim_root):
 
     profiling_log_file = os.path.join(nvim_root, "", now)
 
-    timer = Timer(subprocess.check_output(
-        ["nvim", "--startuptime", profiling_log_file, "test.py", "-c", ":qall"]
-    ))
+    timer = Timer(nvim_process)
     return timer
 
 
-if __name__ == "__main__":
-    user_args = _parse_arguments()
+def nvim_process():
+    try:
+        return codecs.decode(subprocess.check_output(
+        ["nvim", "--startuptime", profiling_log_file, "test.py", "-c", ":qall"]
+    ).stdout, "utf-8")
+    except subprocess.CalledProcessError:
+        pass
 
+
+if __name__ == "__main__":
+    args = _parse_arguments()
+    user_args = args.parse_args()
     try:
         LOG_LEVEL = user_args.log_level
     except Exception as e:  # attributeerror?
         LOGGER.error(e, exc_info=True)
 
-    nvim_root = None  # Define it temporarily we need to refactor
+    nvim_root = Path.cwd()  # Define it temporarily we need to refactor
     main(nvim_root)

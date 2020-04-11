@@ -6,15 +6,21 @@ complete -o bashdefault -o default -F _fzf_path_completion -F _longopt dlink
 
 fzf-down() { # {{{ fzf
     # Integration with ripgrep
-    RG_PREFIX="rg --column --line-number --no-heading --color=always
-    --smart-case "
-    INITIAL_QUERY="."
-    FZF_DEFAULT_COMMAND="$RG_PREFIX $INITIAL_QUERY" |
-    fzf-tmux --prompt'FZF' --ansi --cycle --sort \
-        --bind 'ctrl-r:reload(ps -ef)' --header 'Press CTRL-R to reload' \
-        --header-lines=1 --layout=reverse --bind "change:reload:$RG_PREFIX {q} || true" \
-        --ansi --phony --query "$INITIAL_QUERY"
+    if [[ "$1" ]]; then
+        INITIAL_QUERY="$1"
+    else
+        INITIAL_QUERY=""
+    fi
 
+    FZF_DEFAULT_COMMAND="rg --column --line-number --no-heading --color=always --smart-case "
+    FZF_DEFAULT_OPTS=" --prompt 'FZF $: ' --ansi --cycle --sort \
+        --header 'Press CTRL-R to reload' \
+        --header-lines=1 --layout=reverse \
+        --ansi --phony"
+
+        # --bind 'ctrl-r:reload(ps -ef)' \
+
+    fzf-tmux --query "$INITIAL_QUERY"
 }
 # }}}
 
@@ -56,12 +62,17 @@ __git_complete_refs ()
 # }}}
 
 fz() {  # Not git relates but depends on fasd: {{{
+
+  test "$(command -v fasd)" || return
+  f='fasd -f'
   f | awk -F' ' '{print $2}' | fzf-down
 }  # }}}
 
 complete -o bashdefault -F _fzf_opts_completion -o default  -o filenames fz
 
 dz() {  # Not git relates but depends on fasd: {{{
+  test "$(command -v fasd)" || return
+  d='fasd -d'
   d | awk -F' ' '{print $2}' | fzf-down
 }  # }}}
 

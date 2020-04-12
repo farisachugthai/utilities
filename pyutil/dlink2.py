@@ -54,6 +54,7 @@ def _parse_arguments():
         "--glob-pattern",
         metavar="GLOB_PATTERN",
         default=None,
+        nargs=1,
         help="Filter files in the destination dir with a glob pattern."
         " This ensures that only files that match GLOB_PATTERN in `dst`"
         " are symlinked in `src`.",
@@ -112,17 +113,20 @@ def generate_dest(dest, glob_pattern=None):
             )
         except OSError:
             logging.error("%s" % dest, exc_info=1)
-    if glob_pattern:
-        yield Path(dest).glob(glob_pattern)
-    else:
-        yield Path(dest).glob("*")
+    if glob_pattern is None:
+        glob_pattern = '*'
+    ret = [i for i in directory.glob(glob_pattern)]
+    return ret
 
 
-def get_basenames(directory):
+def get_basenames(directory, glob_pattern=None):
     """Get the basenames of all the files in a directory."""
     if not hasattr(directory, "iterdir"):
         directory = Path(directory)
-    return [i.stem + i.suffix for i in directory.iterdir()]
+    if glob_pattern is None:
+        glob_pattern = '*'
+    ret = [i for i in directory.glob(glob_pattern)]
+    return ret
 
 
 def dlink(destination_dir, source_dir=None, is_recursive=False, glob_pattern=None):
@@ -143,12 +147,12 @@ def dlink(destination_dir, source_dir=None, is_recursive=False, glob_pattern=Non
     """
     if source_dir is None:
         source_dir = Path.cwd()
-    base_destination_files = sorted(get_basenames(destination_dir))
+    base_destination_files = sorted(get_basenames(destination_dir, glob_pattern))
 
     if not hasattr(destination_dir, "iterdir"):
         destination_dir = Path(destination_dir)
 
-    full_destination_files = sorted([j for j in destination_dir.iterdir()])
+    full_destination_files = sorted([j for j in generate_dest(destination_dir, glob_pattern)])
 
     full_source_files = sorted(
         Path(source_dir).joinpath(i) for i in base_destination_files
@@ -201,7 +205,10 @@ def main():
     user_arguments = _parse_arguments()
     args = user_arguments.parse_args()
 
-    dest = args.destination.expanduser()
+    if args.destination is None:
+        raise UsageError("No destination given")
+    # yeah we also need to resolve or else relative paths dont work
+    dest = args.destination.expanduser().resolve()
 
     if not dest.is_dir():
         sys.exit("Provided target not a directory. Exiting.")

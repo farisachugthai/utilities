@@ -87,3 +87,29 @@ Nvim API Docs
     :members:
     :undoc-members:
     :show-inheritance:
+
+
+Shell
+------
+
+.. currentmodule:: pyutil.shell
+
+Base class for shell commands.
+
+Aug 11, 2019:
+
+To make the interface more consistent it may help a lot to
+check out the link `here <https://realpython.com/inheritance-composition-python/#an-overview-of-inheritance-in-python>`_.
+
+The lead into the explanation for abstract base classes
+particularly was really informative.
+
+In it's current state the Command class is unusable but the 
+`BaseCommand` class is interesting and a good starting point.
+
+.. automodule:: pyutil.shell
+    :synopsis: Create a base class that other commands can subclass.
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

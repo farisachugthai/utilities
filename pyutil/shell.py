@@ -1,38 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Base class for shell commands.
-
-========
-shell
-========
-
-.. module:: shell
-    :synopsis: Create a base class that other commands can subclass.
-
-Aug 11, 2019:
-
-To make the interface more consistent it may help a lot to check out the link
-here:
-
-`<https://realpython.com/inheritance-composition-python/#an-overview-of-inheritance-in-python>`_
-
-The lead into the explanation for abstract base classes particularly was
-really informative.
-
-05/14/2019
-In it's current state the Command class is unusable but the BaseCommand class
-is interesting and a good starting point.
-
-
-Moved the _validate function on its own. It doesn't entirely make sense to have
-it with an instance or class because if the class is instantiated and _validate
-is invoked by the user it doesn't really make sense.
-
-It's better to leave it in the module for consistency and then have the class
-simply utilize it.
-
-
-"""
 import codecs
 import logging
 import reprlib

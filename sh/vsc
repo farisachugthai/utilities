@@ -2,6 +2,11 @@
 
 SESSION="vscode $(pwd | md5) "
 
+vsc() {
+    # https://code.visualstudio.com/docs/remote/wsl#_getting-started
+    code --remote wsl+arch ~/
+}
+
 # Either attach to the session I'm already running or start a new one
 tmux attach-session -d -t "$SESSION" || tmux new-session -s "$SESSION"
 

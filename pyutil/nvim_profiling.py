@@ -9,6 +9,8 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from platform import system
+# from profile import run
 from shutil import which
 from timeit import Timer
 
@@ -16,7 +18,7 @@ from pynvim.api.buffer import Buffer
 from pynvim.api.nvim import Nvim
 
 from pyutil.__about__ import __version__
-
+from pyutil.env_checks import check_xdg_config_home
 
 LOGGER = logging.getLogger(name=__name__)
 LOG_LEVEL = "logging.WARNING"
@@ -70,7 +72,13 @@ class Neovim:
 
     @property
     def running_instance(self):
-        """Is neovim running?"""
+        """Is neovim running?
+
+        Returns
+        -------
+        str or None
+            str if running None if not.
+        """
         try:
             remote = os.environ.get("NVIM_LISTEN_ADDRESS")
         except OSError:
@@ -80,7 +88,7 @@ class Neovim:
 
     @property
     def buffer(self):
-        return _buffer()
+        return self._buffer()
 
     def _get_instance(self):
         """Determine if neovim is running."""

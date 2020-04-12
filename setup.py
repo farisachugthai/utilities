@@ -62,6 +62,8 @@ EXTRAS = {
         "numpydoc>=0.9.1",
         "pyyaml",
     ],
+
+    "test": ["pytest"],
 }
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -140,6 +142,7 @@ try:
         },
         install_requires=REQUIRED,
         extras_require=EXTRAS,
+        test_suite="test",
         # don't use setup_requires it's really not well supported
         # setup_requires=['nose>=1.0'],
         include_package_data=True,

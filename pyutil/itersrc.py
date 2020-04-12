@@ -12,9 +12,10 @@
 """
 import os
 import sys
+from typing import List
 
 
-def iter_source_code(paths):
+def iter_source_code(paths: List) -> str:
     """Iterate over all Python source files in C{paths}.
 
     Taken with almost no modifications from :mod:`pyflakes`.
@@ -46,8 +47,3 @@ def iter_source_code(paths):
                         yield full_path
         else:
             yield path
-
-
-if __name__ == "__main__":
-    paths = sys.argv[1:]
-    iter_source_code(paths)

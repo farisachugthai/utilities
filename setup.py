@@ -134,10 +134,11 @@ try:
         url=URL,
         packages=find_packages(exclude=("tests",)),
         # If your package is a single module, use this instead of 'packages':
-        # py_modules=['mypackage'],
+        py_modules=find_packages(exclude=("test")),
         entry_points={
             "console_scripts": [
                 "dlink=pyutil.dlink2:main",
+                "jp=pyutil.json_sorter:main",
             ],
         },
         install_requires=REQUIRED,

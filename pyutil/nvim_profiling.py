@@ -9,16 +9,17 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-from platform import system
+# from platform import system
 # from profile import run
 from shutil import which
 from timeit import Timer
 
+import pynvim
 from pynvim.api.buffer import Buffer
-from pynvim.api.nvim import Nvim
+# from pynvim.api.nvim import Nvim
 
 from pyutil.__about__ import __version__
-from pyutil.env_checks import check_xdg_config_home
+# from pyutil.env_checks import check_xdg_config_home
 
 LOGGER = logging.getLogger(name=__name__)
 LOG_LEVEL = "logging.WARNING"
@@ -134,7 +135,7 @@ def output_results(output_dir):
         return True
 
 
-def main(nvim_root):
+def get_log_file(nvim_root):
     """Profile nvim.
 
     Parameters
@@ -156,17 +157,22 @@ def main(nvim_root):
     if output_results(nvim_root):
         now = "profiling" + os.path.sep + str(now)
 
-    profiling_log_file = os.path.join(nvim_root, "", now)
-
-    timer = Timer(nvim_process)
-    return timer
+    return os.path.join(nvim_root, "", now)
 
 
-def nvim_process():
+def main():
+    # id probably do as well to refactor and make this a general decorator
+    # ugh this fell apart. todo. there was a programmatic way i found to find nvim config dir.
+    return Timer(nvim_process(get_log_file(Path.cwd())))
+
+
+def nvim_process(profiling_log_file=None):
+    if profiling_log_file is None:
+        profiling_log_file = get_log_file()
     try:
         return codecs.decode(subprocess.check_output(
-        ["nvim", "--startuptime", profiling_log_file, "test.py", "-c", ":qall"]
-    ).stdout, "utf-8")
+            ["nvim", "--startuptime", profiling_log_file, "test.py", "-c", ":qall"]
+        ).stdout, "utf-8")
     except subprocess.CalledProcessError:
         pass
 
@@ -179,5 +185,4 @@ if __name__ == "__main__":
     except Exception as e:  # attributeerror?
         LOGGER.error(e, exc_info=True)
 
-    nvim_root = Path.cwd()  # Define it temporarily we need to refactor
-    main(nvim_root)
+    sys.exit(main())

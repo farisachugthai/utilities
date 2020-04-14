@@ -15,12 +15,12 @@ from pyutil.sys_checks import is_file
 class ZimText(TextWrapper):
 
     def __init__(
-        self,
-        text=None,
-        width=80,
-        break_long_words=False,
-        break_on_hyphens=False,
-        **kwargs
+            self,
+            text=None,
+            width=80,
+            break_long_words=False,
+            break_on_hyphens=False,
+            **kwargs
     ):
         self.width = width
         self.break_long_words = break_long_words
@@ -62,6 +62,7 @@ class ZimText(TextWrapper):
         new_text = [s for s in self.text.splitlines()]
         return new_text
 
+
 def main():
     args = sys.argv[:]
     if len(args) < 2:
@@ -71,7 +72,7 @@ def main():
         for i in args[1:]:
             if is_file(i):
                 print("Rewrapping " + i)
-                wrapper.wrap_paragraphs(args[1:])
+                wrapper.wrap_paragraphs()
 
 
 if __name__ == "__main__":

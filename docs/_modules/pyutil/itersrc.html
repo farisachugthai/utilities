@@ -13,7 +13,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/language_data.js"></script>
-    <script src="../../_static/_static/sidebar.js"></script>
+    <script src="../../_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -46,10 +46,10 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 
-<div class="viewcode-block" id="iter_source_code"><a class="viewcode-back" href="../../Other.html#pyutil.itersrc.iter_source_code">[docs]</a><span class="k">def</span> <span class="nf">iter_source_code</span><span class="p">(</span><span class="n">paths</span><span class="p">):</span>
+<div class="viewcode-block" id="iter_source_code"><a class="viewcode-back" href="../../Other.html#pyutil.itersrc.iter_source_code">[docs]</a><span class="k">def</span> <span class="nf">iter_source_code</span><span class="p">(</span><span class="n">paths</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Iterate over all Python source files in C{paths}.</span>
 
 <span class="sd">    Taken with almost no modifications from :mod:`pyflakes`.</span>
@@ -76,16 +76,11 @@
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">ends_with</span><span class="p">(</span><span class="s2">&quot;.py&quot;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.py&quot;</span><span class="p">):</span>
                         <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
                         <span class="k">yield</span> <span class="n">full_path</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">path</span></div>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">paths</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-    <span class="n">iter_source_code</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -154,7 +149,7 @@
       &copy;2018-2020, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

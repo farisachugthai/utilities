@@ -76,7 +76,7 @@ def _parse_arguments(cmds=None):
                         metavar='FILENAME',
                         type=str,
                         default=None,
-                        help=('filename of section or method name to build.'))
+                        help='filename of section or method name to build.')
 
     parser.add_argument('-p',
                         '--python-path',

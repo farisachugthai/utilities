@@ -13,7 +13,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/language_data.js"></script>
-    <script src="../../_static/_static/sidebar.js"></script>
+    <script src="../../_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -37,16 +37,24 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Automate profiling nvim.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="c1"># from platform import system</span>
+<span class="c1"># from profile import run</span>
 <span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">which</span>
 <span class="kn">from</span> <span class="nn">timeit</span> <span class="kn">import</span> <span class="n">Timer</span>
 
+<span class="kn">import</span> <span class="nn">pynvim</span>
 <span class="kn">from</span> <span class="nn">pynvim.api.buffer</span> <span class="kn">import</span> <span class="n">Buffer</span>
-<span class="kn">from</span> <span class="nn">pynvim.api.nvim</span> <span class="kn">import</span> <span class="n">Nvim</span>
+<span class="c1"># from pynvim.api.nvim import Nvim</span>
+
+<span class="kn">from</span> <span class="nn">pyutil.__about__</span> <span class="kn">import</span> <span class="n">__version__</span>
+<span class="c1"># from pyutil.env_checks import check_xdg_config_home</span>
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s2">&quot;logging.WARNING&quot;</span>
@@ -79,12 +87,11 @@
     <span class="p">)</span>
 
     <span class="c1"># sys.argv by default when invoking python from inside of neovim.</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;script_host.py&#39;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;script_host.py&#39;</span><span class="p">]:</span>
         <span class="c1"># print help so we dont raise systemexit.</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
-        <span class="k">return</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">())</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">parser</span></div>
 
 
 <div class="viewcode-block" id="Neovim"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.Neovim">[docs]</a><span class="k">class</span> <span class="nc">Neovim</span><span class="p">:</span>
@@ -101,7 +108,13 @@
 
 <div class="viewcode-block" id="Neovim.running_instance"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.Neovim.running_instance">[docs]</a>    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">running_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Is neovim running?&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Is neovim running?</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str or None</span>
+<span class="sd">            str if running None if not.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">remote</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NVIM_LISTEN_ADDRESS&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
@@ -111,7 +124,7 @@
 
 <div class="viewcode-block" id="Neovim.buffer"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.Neovim.buffer">[docs]</a>    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_buffer</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Neovim._get_instance"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.Neovim._get_instance">[docs]</a>    <span class="k">def</span> <span class="nf">_get_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Determine if neovim is running.&quot;&quot;&quot;</span>
@@ -127,7 +140,7 @@
         <span class="k">return</span> <span class="n">which</span><span class="p">(</span><span class="s2">&quot;nvim&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;Nvim: </span><span class="si">{self.__class__.__name__}</span><span class="s2">, </span><span class="si">{self.exe}</span><span class="s2">&gt;&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;Nvim: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">exe</span><span class="si">}</span><span class="s2">&gt;&quot;</span></div>
 
 
 <div class="viewcode-block" id="output_results"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.output_results">[docs]</a><span class="k">def</span> <span class="nf">output_results</span><span class="p">(</span><span class="n">output_dir</span><span class="p">):</span>
@@ -157,7 +170,7 @@
         <span class="k">return</span> <span class="kc">True</span></div>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">):</span>
+<div class="viewcode-block" id="get_log_file"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.get_log_file">[docs]</a><span class="k">def</span> <span class="nf">get_log_file</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Profile nvim.</span>
 
 <span class="sd">    Parameters</span>
@@ -179,24 +192,35 @@
     <span class="k">if</span> <span class="n">output_results</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">):</span>
         <span class="n">now</span> <span class="o">=</span> <span class="s2">&quot;profiling&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
 
-    <span class="n">profiling_log_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span></div>
 
-    <span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
-        <span class="p">[</span><span class="s2">&quot;nvim&quot;</span><span class="p">,</span> <span class="s2">&quot;--startuptime&quot;</span><span class="p">,</span> <span class="n">profiling_log_file</span><span class="p">,</span> <span class="s2">&quot;test.py&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;:qall&quot;</span><span class="p">]</span>
-    <span class="p">))</span>
-    <span class="k">return</span> <span class="n">timer</span></div>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># id probably do as well to refactor and make this a general decorator</span>
+    <span class="c1"># ugh this fell apart. todo. there was a programmatic way i found to find nvim config dir.</span>
+    <span class="k">return</span> <span class="n">Timer</span><span class="p">(</span><span class="n">nvim_process</span><span class="p">(</span><span class="n">get_log_file</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">())))</span></div>
+
+
+<div class="viewcode-block" id="nvim_process"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.nvim_process">[docs]</a><span class="k">def</span> <span class="nf">nvim_process</span><span class="p">(</span><span class="n">profiling_log_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">profiling_log_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">profiling_log_file</span> <span class="o">=</span> <span class="n">get_log_file</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">codecs</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;nvim&quot;</span><span class="p">,</span> <span class="s2">&quot;--startuptime&quot;</span><span class="p">,</span> <span class="n">profiling_log_file</span><span class="p">,</span> <span class="s2">&quot;test.py&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;:qall&quot;</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
+        <span class="k">pass</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">user_args</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
-
+    <span class="n">args</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
+    <span class="n">user_args</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="n">user_args</span><span class="o">.</span><span class="n">log_level</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># attributeerror?</span>
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">nvim_root</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Define it temporarily we need to refactor</span>
-    <span class="n">main</span><span class="p">(</span><span class="n">nvim_root</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </pre></div>
 
           </div>
@@ -265,7 +289,7 @@
       &copy;2018-2020, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

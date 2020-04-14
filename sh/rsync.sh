@@ -3,12 +3,10 @@
 
 set -euo pipefail
 
-
 configured_rsync() {
 
     local log
-    #
-    if [[ -r /var/log ]]; then
+    if [[ -d /var/log ]]; then
         log="/var/log/$(date)"
     # TODO:
     # elseif
@@ -23,14 +21,14 @@ configured_rsync() {
         --recursive \
         --$log \
         --preallocate \
+        --protect-args
+        # -l --links means symlinks are symlinks
+        --links"
 
         # If you need to transfer a filename that contains whitespace, you can
         # either specify the --protect-args (-s) option, or you'll need to escape
         # the whitespace in a way that the remote shell will understand.  For
         # instance:
-        --protect-args
-        # -l --links means symlinks are symlinks
-        --links"
         # TODO:1
         # -L or --copy-links means transform symlinks into the file they refer to
 
@@ -44,3 +42,4 @@ configured_rsync() {
 configured_rsync argv[:]
 
 exit 0
+

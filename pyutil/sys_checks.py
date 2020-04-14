@@ -25,7 +25,7 @@ import sys
 try:
     from pathlib import Path
 except ImportError:
-    pass
+    Path = None
 
 
 def is_file(file_obj):

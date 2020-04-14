@@ -81,10 +81,12 @@ class BaseCommand:
             If there is an error in the command.
 
         """
-        if self.cmd:
-            self.cmd = shlex.split(self.cmd)
-            logging.debug("Cmd is: " + str(self.cmd))
-            process = subprocess.Popen([self.cmd])
+        if not self.cmd:
+            return
+
+        self.cmd = shlex.split(self.cmd)
+        logging.debug("Cmd is: " + str(self.cmd))
+        process = subprocess.Popen([self.cmd])
 
         if process.wait():
             raise subprocess.CalledProcessError(process.returncode)

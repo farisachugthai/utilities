@@ -9,6 +9,7 @@ import sphinx
 
 from matplotlib import rcParams
 from matplotlib.mathtext import MathTextParser
+
 rcParams['mathtext.fontset'] = 'cm'
 mathtext_parser = MathTextParser("Bitmap")
 
@@ -25,7 +26,11 @@ def fontset_choice(arg):
 options_spec = {'fontset': fontset_choice}
 
 
-def math_role(role, rawtext, text, lineno, inliner, options={}, content=[]):
+def math_role(role, rawtext, text, lineno, inliner, options=None, content=None):
+    if options is None:
+        options = {}
+    if content is None:
+        content = []
     i = rawtext.find('`')
     latex = rawtext[i + 1:-1]
     node = latex_math(rawtext)

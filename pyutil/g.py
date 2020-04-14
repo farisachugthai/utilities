@@ -63,7 +63,7 @@ class Git(BaseCommand):
             self.root = self._get_git_root()
         else:
             self.root = root
-        super().__init__(self, **kwargs)
+        super().__init__(self)
 
     def __repr__(self):
         return "{!r}\t{!r}".format(self.__class__.__name__, self.root)
@@ -71,7 +71,7 @@ class Git(BaseCommand):
     @property
     def version(self):
         """Return the version of Git we have."""
-        return self.run("git --version")
+        return self.run()
 
     @staticmethod
     def _quote(self, cmd):
@@ -81,7 +81,7 @@ class Git(BaseCommand):
     def _quote_cmd(self, cmd):
         """Maybe this should be in the parent class?"""
         cmd = shlex.split(shlex.quote(cmd))
-        return self.run(cmd)
+        return self.run()
 
     def _get_git_root(self):
         """Show the root of a repo."""

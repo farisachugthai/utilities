@@ -63,12 +63,14 @@ def main():
 
     elif len(sys.argv) == 2:
         src = Path(sys.argv[1])
-        backup(i)
+        backup(src)
         strip_space(src)
 
     else:
-        src = sys.stdin
-        strip_space(src)
+        try:
+            strip_space(sys.stdin)
+        except (KeyboardInterrupt, EOFError):
+            sys.exit('Exiting!')
 
 
 if __name__ == "__main__":

@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script type="text/javascript" src="../../_static/_static/sidebar.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/_static\sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -70,18 +70,18 @@
     <span class="sd">&quot;&quot;&quot;Handle user inputs.&quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;oldtree&#39;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;oldtree&#39;</span><span class="p">,</span>
-                        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Starting directory tree to symlink&#39;</span>
-                        <span class="s1">&#39;from.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;oldtree&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;oldtree&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Starting directory tree to symlink&quot;</span> <span class="s2">&quot;from.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;newtree&#39;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;newtree&#39;</span><span class="p">,</span>
-                        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Directory tree to symlink to &#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;newtree&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;newtree&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Directory tree to symlink to &quot;</span>
+    <span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-l&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;linkto&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;linkto&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Linkto&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-l&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;linkto&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;linkto&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Linkto&quot;</span><span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
@@ -108,23 +108,23 @@
         <span class="n">link_may_fail</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">oldtree</span><span class="p">):</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">oldtree</span> <span class="o">+</span> <span class="s1">&#39;: not a directory&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">oldtree</span> <span class="o">+</span> <span class="s2">&quot;: not a directory&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="mi">1</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">newtree</span><span class="p">,</span> <span class="mo">0o777</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">newtree</span> <span class="o">+</span> <span class="s1">&#39;: cannot mkdir:&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">newtree</span> <span class="o">+</span> <span class="s2">&quot;: cannot mkdir:&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="mi">1</span>
     <span class="n">linkname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">newtree</span><span class="p">,</span> <span class="n">link</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">,</span> <span class="n">oldtree</span><span class="p">),</span> <span class="n">linkname</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">link_may_fail</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">linkname</span> <span class="o">+</span> <span class="s1">&#39;: cannot symlink:&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">linkname</span> <span class="o">+</span> <span class="s2">&quot;: cannot symlink:&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
             <span class="k">return</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">linkname</span> <span class="o">+</span> <span class="s1">&#39;: warning: cannot symlink:&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">linkname</span> <span class="o">+</span> <span class="s2">&quot;: warning: cannot symlink:&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
     <span class="n">linknames</span><span class="p">(</span><span class="n">oldtree</span><span class="p">,</span> <span class="n">newtree</span><span class="p">,</span> <span class="n">link</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">0</span></div>
 
@@ -132,12 +132,12 @@
 <div class="viewcode-block" id="linknames"><a class="viewcode-back" href="../../filesystem.html#pyutil.linktree.linknames">[docs]</a><span class="k">def</span> <span class="nf">linknames</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">link</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Recursively symlink a directory tree.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;linknames&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">link</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;linknames&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">link</span><span class="p">))</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">names</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">old</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">old</span> <span class="o">+</span> <span class="s1">&#39;: warning: cannot listdir:&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">old</span> <span class="o">+</span> <span class="s2">&quot;: warning: cannot listdir:&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">):</span>
@@ -146,13 +146,12 @@
             <span class="n">newname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">DEBUG</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">oldname</span><span class="p">,</span> <span class="n">newname</span><span class="p">,</span> <span class="n">linkname</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">oldname</span><span class="p">)</span> <span class="ow">and</span> \
-               <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">oldname</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">oldname</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">oldname</span><span class="p">):</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">newname</span><span class="p">,</span> <span class="mo">0o777</span><span class="p">)</span>
                     <span class="n">ok</span> <span class="o">=</span> <span class="mi">1</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">newname</span> <span class="o">+</span> <span class="s1">&#39;: warning: cannot mkdir:&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">newname</span> <span class="o">+</span> <span class="s2">&quot;: warning: cannot mkdir:&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
                     <span class="n">ok</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="k">if</span> <span class="n">ok</span><span class="p">:</span>
                     <span class="n">linkname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">,</span> <span class="n">linkname</span><span class="p">)</span>
@@ -161,10 +160,10 @@
                 <span class="n">os</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">linkname</span><span class="p">,</span> <span class="n">newname</span><span class="p">)</span></div>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
 
-    <span class="n">LINK</span> <span class="o">=</span> <span class="s1">&#39;.LINK&#39;</span>  <span class="c1"># Name of special symlink at the top.</span>
+    <span class="n">LINK</span> <span class="o">=</span> <span class="s2">&quot;.LINK&quot;</span>  <span class="c1"># Name of special symlink at the top.</span>
 
     <span class="n">DEBUG</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -228,16 +227,16 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018-2019, Faris A Chugthai.
+      &copy;2018-2020, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

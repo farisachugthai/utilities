@@ -17,10 +17,9 @@ from numpydoc.docscrape import (
     ParseError
 )
 from numpydoc.docscrape_sphinx import (SphinxDocString, SphinxClassDoc,
-                                        SphinxFunctionDoc, get_doc_object)
+                                       SphinxFunctionDoc, get_doc_object)
 from pytest import raises as assert_raises
 from pytest import warns as assert_warns
-
 
 if sys.version_info[0] >= 3:
     sixu = lambda s: s
@@ -138,7 +137,6 @@ doc_txt = '''\
 
 doc = NumpyDocString(doc_txt)
 
-
 doc_yields_txt = """
 Test generator
 
@@ -153,7 +151,6 @@ int
 """
 
 doc_yields = NumpyDocString(doc_yields_txt)
-
 
 doc_sent_txt = """
 Test generator
@@ -347,14 +344,14 @@ That should break...
     except ValueError as e:
         # python 3 version or python 2 version
         assert ("test_section_twice.<locals>.Dummy" in str(e)
-                    or 'test_docscrape.Dummy' in str(e))
+                or 'test_docscrape.Dummy' in str(e))
 
     try:
         SphinxFunctionDoc(dummy_func)
     except ValueError as e:
         # python 3 version or python 2 version
         assert ("test_section_twice.<locals>.dummy_func" in str(e)
-                    or 'function dummy_func' in str(e))
+                or 'function dummy_func' in str(e))
 
 
 def test_notes():
@@ -380,7 +377,7 @@ def test_index():
 
 
 def _strip_blank_lines(s):
-    "Remove leading, trailing and multiple blank lines"
+    """Remove leading, trailing and multiple blank lines"""
     s = re.sub(r'^\s*\n', '', s)
     s = re.sub(r'\n\s*$', '', s)
     s = re.sub(r'\n\s*\n', r'\n\n', s)
@@ -402,7 +399,7 @@ def test_str():
     # This should be handled automatically, and so, one thing this test does
     # is to make sure that See Also precedes Notes in the output.
     line_by_line_compare(str(doc),
-"""numpy.multivariate_normal(mean, cov, shape=None, spam=None)
+                         """numpy.multivariate_normal(mean, cov, shape=None, spam=None)
 
 Draw values from a multivariate normal distribution with specified
 mean and covariance.
@@ -513,7 +510,7 @@ standard deviation:
 
 def test_yield_str():
     line_by_line_compare(str(doc_yields),
-"""Test generator
+                         """Test generator
 
 Yields
 ------
@@ -528,7 +525,7 @@ int
 
 def test_receives_str():
     line_by_line_compare(str(doc_sent),
-"""Test generator
+                         """Test generator
 
 Yields
 ------
@@ -560,10 +557,11 @@ def test_no_index_in_str():
         foo
     """))
 
+
 def test_sphinx_str():
     sphinx_doc = SphinxDocString(doc_txt)
     line_by_line_compare(str(sphinx_doc),
-"""
+                         """
 .. index:: random
    single: random;distributions, random;gauss
 
@@ -683,7 +681,7 @@ standard deviation:
 def test_sphinx_yields_str():
     sphinx_doc = SphinxDocString(doc_yields_txt)
     line_by_line_compare(str(sphinx_doc),
-"""Test generator
+                         """Test generator
 
 :Yields:
 
@@ -776,7 +774,7 @@ def test_warns():
 
 def test_see_also():
     doc6 = NumpyDocString(
-    """
+        """
     z(x,theta)
 
     See Also
@@ -806,7 +804,7 @@ def test_see_also():
             elif func in ('func_f2', 'func_g2', 'func_h2', 'func_j2'):
                 assert desc, str([func, desc])
         else:
-                assert desc, str([func, desc])
+            assert desc, str([func, desc])
 
         if func == 'func_h':
             assert role == 'meth'
@@ -817,7 +815,7 @@ def test_see_also():
         elif func in ['func_h1', 'func_h2']:
             assert role == 'meth'
         else:
-                assert role is None, str([func, role])
+            assert role is None, str([func, role])
 
         if func == 'func_d':
             assert desc == ['some equivalent func']
@@ -831,7 +829,7 @@ def test_see_also():
 
 def test_see_also_parse_error():
     text = (
-    """
+        """
     z(x,theta)
 
     See Also
@@ -841,13 +839,13 @@ def test_see_also_parse_error():
     with assert_raises(ParseError) as err:
         NumpyDocString(text)
 
-    s1 = str(r":func:`~foo` is not a item name in '\n    z(x,theta)\n\n    See Also\n    --------\n    :func:`~foo`\n    '")
+    s1 = str(
+        r":func:`~foo` is not a item name in '\n    z(x,theta)\n\n    See Also\n    --------\n    :func:`~foo`\n    '")
     s2 = str(err.value)
     assert s1 == s2
 
 
 def test_see_also_print():
-
     class Dummy(object):
         """
         See Also
@@ -861,9 +859,9 @@ def test_see_also_print():
 
     obj = Dummy()
     s = str(FunctionDoc(obj, role='func'))
-    assert(':func:`func_a`, :func:`func_b`' in s)
-    assert('    some relationship' in s)
-    assert(':func:`func_d`' in s)
+    assert (':func:`func_a`, :func:`func_b`' in s)
+    assert ('    some relationship' in s)
+    assert (':func:`func_d`' in s)
 
 
 def test_see_also_trailing_comma_warning():
@@ -909,9 +907,9 @@ This should be ignored and warned about
         warnings.filterwarnings('always', '', UserWarning)
         SphinxClassDoc(BadSection)
         assert len(w) == 1
-        assert('test_docscrape.test_unknown_section.<locals>.BadSection'
-               in str(w[0].message)
-            or 'test_docscrape.BadSection' in str(w[0].message))
+        assert ('test_docscrape.test_unknown_section.<locals>.BadSection'
+                in str(w[0].message)
+                or 'test_docscrape.BadSection' in str(w[0].message))
 
 
 doc7 = NumpyDocString("""
@@ -1026,7 +1024,6 @@ def test_use_blockquotes():
 
 
 def test_class_members():
-
     class Dummy(object):
         """
         Dummy class.
@@ -1074,6 +1071,7 @@ def test_class_members():
         Subclass of Dummy class.
 
         """
+
         def ham(self, c, d):
             """Cheese\n\nNo cheese.\nOverloaded Dummy.ham"""
             pass
@@ -1116,7 +1114,7 @@ def test_duplicate_signature():
     # docstring itself.
 
     doc = NumpyDocString(
-    """
+        """
     z(x1, x2)
 
     z(a, theta)
@@ -1169,7 +1167,7 @@ class_doc_txt = """
 def test_class_members_doc():
     doc = ClassDoc(None, class_doc_txt)
     line_by_line_compare(str(doc),
-    """
+                         """
     Foo
 
     Parameters
@@ -1211,7 +1209,6 @@ def test_class_members_doc():
 
 
 def test_class_members_doc_sphinx():
-
     class Foo:
 
         @property
@@ -1249,7 +1246,7 @@ def test_class_members_doc_sphinx():
 
     doc = SphinxClassDoc(Foo, class_doc_txt)
     line_by_line_compare(str(doc),
-    """
+                         """
     Foo
 
     :Parameters:
@@ -1305,7 +1302,6 @@ def test_class_members_doc_sphinx():
 
 
 def test_class_attributes_as_member_list():
-
     class Foo:
         """
         Class docstring.
@@ -1316,6 +1312,7 @@ def test_class_attributes_as_member_list():
             Another description that is not used.
 
         """
+
         @property
         def an_attribute(self):
             """Test attribute"""
@@ -1343,9 +1340,9 @@ def test_class_attributes_as_member_list():
 
 def test_templated_sections():
     doc = SphinxClassDoc(None, class_doc_txt,
-        config={'template': jinja2.Template('{{examples}}\n{{parameters}}')})
+                         config={'template': jinja2.Template('{{examples}}\n{{parameters}}')})
     line_by_line_compare(str(doc),
-    """
+                         """
     .. rubric:: Examples
 
     For usage examples, see `ode`.
@@ -1413,9 +1410,10 @@ def test_args_and_kwargs():
         Keyword arguments
     """)
 
+
 def test_autoclass():
-    cfg=dict(show_class_members=True,
-             show_inherited_class_members=True)
+    cfg = dict(show_class_members=True,
+               show_inherited_class_members=True)
     doc = SphinxClassDoc(str, '''
 A top section before
 
@@ -1457,7 +1455,6 @@ Returns
 out : array
     Numerical return value
 """
-
 
 xref_doc_txt_expected = r"""
 Test xref in Parameters, Other Parameters and Returns
@@ -1515,4 +1512,5 @@ def test_xref():
 
 if __name__ == "__main__":
     import pytest
+
     pytest.main()

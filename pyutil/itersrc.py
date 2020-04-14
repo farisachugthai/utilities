@@ -11,7 +11,6 @@
 
 """
 import os
-import sys
 from typing import List
 
 
@@ -42,7 +41,7 @@ def iter_source_code(paths: List) -> str:
         if os.path.isdir(path):
             for dirpath, dirnames, filenames in os.walk(path):
                 for filename in filenames:
-                    if filename.ends_with(".py"):
+                    if filename.endswith(".py"):
                         full_path = os.path.join(dirpath, filename)
                         yield full_path
         else:

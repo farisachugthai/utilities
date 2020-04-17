@@ -16,6 +16,7 @@ from shutil import rmtree
 
 from distutils.errors import DistutilsArgError
 from setuptools import Command, find_packages, setup
+from setuptools.dist import Distribution  # the powerhouse of the cell
 
 try:
     import pyutil
@@ -91,8 +92,8 @@ class UploadCommand(Command):  # {{{
         print("\033[1m{0}\033[0m".format(s))
 
     def initialize_options(self):
-        pass
         """Initialize upload options."""
+        self.install_dir = None
 
     def finalize_options(self):
         """Finalize upload options."""
@@ -100,6 +101,8 @@ class UploadCommand(Command):  # {{{
 
     def run(self):
         """Upload package."""
+        # if not self.dry_run:
+        #     pkg_resources.ensure_directory(self.target)
         try:
             self.status("Removing previous builds…")
             rmtree(os.path.join(here, "dist"))
@@ -134,11 +137,10 @@ try:
         url=URL,
         packages=find_packages(exclude=("tests",)),
         # If your package is a single module, use this instead of 'packages':
-        py_modules=find_packages(exclude=("test")),
         entry_points={
             "console_scripts": [
-                "dlink=pyutil.dlink2:main",
                 "jp=pyutil.json_sorter:main",
+                "dlink=pyutil.dlink2:main",
             ],
         },
         install_requires=REQUIRED,

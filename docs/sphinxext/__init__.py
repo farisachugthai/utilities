@@ -21,9 +21,5 @@ from logging import NullHandler
 import os
 import sys
 import logging
-import pkg_resources
-
-pkg_resources.declare_namespace('.')
-
 
 logging.getLogger(__name__).addHandler(NullHandler())

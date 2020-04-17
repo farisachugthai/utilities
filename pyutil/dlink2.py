@@ -115,7 +115,7 @@ def generate_dest(dest, glob_pattern=None):
             logging.error("%s" % dest, exc_info=1)
     if glob_pattern is None:
         glob_pattern = '*'
-    ret = [i for i in directory.glob(glob_pattern)]
+    ret = [i for i in dest.glob(glob_pattern)]
     return ret
 
 

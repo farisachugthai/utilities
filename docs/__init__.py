@@ -5,10 +5,8 @@
 This module intends to establish a few different things.
 
     - Initialize logging in a general manner.
-    - Use :mod:`pkg_resources` provided by :mod:`setuptools` in order to create the directory as a namespace package
     - Define generic dunder methods.
     - Extend the user's ``$PATH `` to include this directory even if it != os.cwd
-
 
 NOQA F401
 
@@ -18,10 +16,6 @@ import logging
 from logging import NullHandler
 import os
 import sys
-import pkg_resources
-
-pkg_resources.declare_namespace('.')
-
 
 from pyutil.__about__ import (  # noqa F401
     __author__,

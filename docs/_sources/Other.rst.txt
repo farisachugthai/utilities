@@ -21,6 +21,7 @@ Remaining Modules
 .. currentmodule:: pyutil.env_checks
 
 .. function:: get_username
+   :noindex:
 
    More cross-platform implementation of retrieving a username.
 

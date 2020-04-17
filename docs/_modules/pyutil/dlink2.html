@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>pyutil.dlink2 &#8212; pyutil 0.0.1 documentation</title>
@@ -13,7 +13,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/language_data.js"></script>
-    <script src="../../_static/_static\sidebar.js"></script>
+    <script src="../../_static/_static/sidebar.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -45,7 +45,7 @@
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">pyutil.__about__</span> <span class="kn">import</span> <span class="n">__version__</span>
-<span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">):</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="n">ModuleNotFoundError</span><span class="p">):</span>
     <span class="n">__version__</span> <span class="o">=</span> <span class="kc">None</span>
 
 
@@ -89,6 +89,7 @@
         <span class="s2">&quot;--glob-pattern&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;GLOB_PATTERN&quot;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Filter files in the destination dir with a glob pattern.&quot;</span>
         <span class="s2">&quot; This ensures that only files that match GLOB_PATTERN in `dst`&quot;</span>
         <span class="s2">&quot; are symlinked in `src`.&quot;</span><span class="p">,</span>
@@ -147,17 +148,20 @@
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dest</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">glob_pattern</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">Path</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">glob_pattern</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">Path</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">glob_pattern</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">glob_pattern</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dest</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">glob_pattern</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
 
 
-<div class="viewcode-block" id="get_basenames"><a class="viewcode-back" href="../../filesystem.html#pyutil.dlink2.get_basenames">[docs]</a><span class="k">def</span> <span class="nf">get_basenames</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+<div class="viewcode-block" id="get_basenames"><a class="viewcode-back" href="../../filesystem.html#pyutil.dlink2.get_basenames">[docs]</a><span class="k">def</span> <span class="nf">get_basenames</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get the basenames of all the files in a directory.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s2">&quot;iterdir&quot;</span><span class="p">):</span>
         <span class="n">directory</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">stem</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="n">suffix</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">directory</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()]</span></div>
+    <span class="k">if</span> <span class="n">glob_pattern</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">glob_pattern</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">directory</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">glob_pattern</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
 
 
 <div class="viewcode-block" id="dlink"><a class="viewcode-back" href="../../filesystem.html#pyutil.dlink2.dlink">[docs]</a><span class="k">def</span> <span class="nf">dlink</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">,</span> <span class="n">source_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">is_recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -178,12 +182,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">source_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">source_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
-    <span class="n">base_destination_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">get_basenames</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">))</span>
+    <span class="n">base_destination_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">get_basenames</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="p">))</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">,</span> <span class="s2">&quot;iterdir&quot;</span><span class="p">):</span>
         <span class="n">destination_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">)</span>
 
-    <span class="n">full_destination_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">destination_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()])</span>
+    <span class="n">full_destination_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">generate_dest</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">,</span> <span class="n">glob_pattern</span><span class="p">)])</span>
 
     <span class="n">full_source_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
         <span class="n">Path</span><span class="p">(</span><span class="n">source_dir</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">base_destination_files</span>
@@ -236,7 +240,10 @@
     <span class="n">user_arguments</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">()</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">user_arguments</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
-    <span class="n">dest</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">destination</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">destination</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UsageError</span><span class="p">(</span><span class="s2">&quot;No destination given&quot;</span><span class="p">)</span>
+    <span class="c1"># yeah we also need to resolve or else relative paths dont work</span>
+    <span class="n">dest</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">destination</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">dest</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;Provided target not a directory. Exiting.&quot;</span><span class="p">)</span>
@@ -326,7 +333,7 @@
       &copy;2018-2020, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

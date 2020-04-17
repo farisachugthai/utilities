@@ -63,17 +63,12 @@ Allow the user to input any parameters that are accepted by
       This is equivalent to :func:`textwrap.wrap()`, but with support for multiple
       paragraphs, as separated by empty lines.
 
-      Parameters
-      ----------
-      text : str
-          text to wrap using :mod:`re` and :func:`textwrap.dedent()`
-      ncols : int
-          column to wrap text at
-
-      Returns
-      -------
-      wrapped_text : list of str
-          list of complete paragraphs, wrapped to fill `ncols` columns.
+      :param text: text to wrap using :mod:`re` and :func:`textwrap.dedent()`
+      :type text: str
+      :param ncols: column to wrap text at
+      :type ncols: int
+      :returns wrapped_text: list of complete paragraphs, wrapped to fill `ncols` columns.
+      :rtype: list of str
 
 
 Examples
@@ -86,8 +81,6 @@ Examples
 >>> wrapped = wrapper.wrap(text)
 >>> with open('unix-ide-editing.txt', 'wt') as f:
 ...     f.write(text)
-
-
 
 .. seealso::
    :mod:`IPython.utils.text`

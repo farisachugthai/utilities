@@ -3,14 +3,9 @@
 import logging
 from logging import NullHandler
 import os
-from pkgutil import extend_path
 import sys
 
-import pkg_resources
-
 logging.getLogger(__name__).addHandler(NullHandler())
-
-pkg_resources.declare_namespace(__name__)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__name__)))
 

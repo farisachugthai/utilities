@@ -58,7 +58,7 @@ tm() {  #: {{{
     # additional arguments are currently ignored.
 
     # Jan 31, 2020: Checking if we're in tmux and starting a session first.
-    [[ -z "$TMUX" ]] && tmux new-session -s tm && return
+    [[ -z "$TMUX" ]] && test -x byobu  && byobu-tmux -s tm || tmux new-session -s tm && return
     
     [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
 

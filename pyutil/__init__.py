@@ -14,14 +14,10 @@ Let it doctest!
 >>> from pyutil import g
 
 """
-import argparse
 import logging
 from logging import NullHandler
 import os
 import sys
-
-import pyutil
-from pyutil import dlink, dlink2, _paths, _logging
 
 from .__about__ import (  # noqa F401
     __author__,
@@ -33,11 +29,3 @@ from .__about__ import (  # noqa F401
     __version__,
 )
 
-from . import dlink, dlink2, _logging, _paths, __about__
-from .env import Env
-from .itersrc import iter_source_code
-from .g import Git
-from .shell import BaseCommand
-from .sys_checks import py_gt_exit, py_gt_raise, py_lt_exit
-
-init_logger = logging.getLogger(__name__)

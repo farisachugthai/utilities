@@ -6,11 +6,6 @@ complete -o bashdefault -o default -F _fzf_path_completion -F _longopt dlink
 
 fzf-down() { # {{{ fzf
     # Integration with ripgrep
-    if [[ "$1" ]]; then
-        INITIAL_QUERY="$1"
-    else
-        INITIAL_QUERY=""
-    fi
 
     FZF_DEFAULT_COMMAND="rg --column --line-number --no-heading --color=always --smart-case "
     FZF_DEFAULT_OPTS=" --prompt 'FZF $: ' --ansi --cycle --sort \
@@ -18,18 +13,14 @@ fzf-down() { # {{{ fzf
         --header-lines=1 --layout=reverse \
         --ansi --phony"
 
-        # --bind 'ctrl-r:reload(ps -ef)' \
-
     fzf-tmux --query "$INITIAL_QUERY"
 }
-# }}}
 
 complete -F _fzf_opts_completion -o bashdefault -o default fzf-down
 
-is_in_git_repo() { # {{{
+is_in_git_repo() {
   git rev-parse HEAD > /dev/null 2>&1  || echo -e "Not in a git repo!\n"
 }
-# }}}
 
 # __git_complete_refs [<option>]...  {{{
 # Completes refs, short and long, local and remote, symbolic and pseudo.
@@ -59,9 +50,9 @@ __git_complete_refs ()
 
 	__gitcomp_direct "$(__git_refs "$remote" "$track" "$pfx" "$cur_" "$sfx")"
 }
-# }}}
 
-fz() {  # Not git relates but depends on fasd: {{{
+
+fz() {  # Not git relates but depends on fasd:
 
   test "$(command -v fasd)" || return
   f='fasd -f'
@@ -70,7 +61,7 @@ fz() {  # Not git relates but depends on fasd: {{{
 
 complete -o bashdefault -F _fzf_opts_completion -o default  -o filenames fz
 
-dz() {  # Not git relates but depends on fasd: {{{
+dz() {  # Not git relates but depends on fasd:
   test "$(command -v fasd)" || return
   d='fasd -d'
   d | awk -F' ' '{print $2}' | fzf-down
@@ -94,7 +85,7 @@ fgshow_preview() { # {{{1 fshow_preview - git commit browser with previews
         fzf --no-sort --reverse --tiebreak=index --no-multi \
             --preview="git show --color=always {}" --preview-window right:80% \
             --header "enter to view with nvim, alt-y to copy hash" \
-            --bind "enter:execute:nvim {}" 
+            --bind "enter:execute:nvim {}"
 } # }}}
 
 complete -F _git_log -F _fzf_opts_completion -o bashdefault -o default fgshow_preview
@@ -172,7 +163,7 @@ fghist() {  # Hist: {{{1
   grep -o "[a-f0-9]\{7,\}"
 }  # }}}
 
-fgr() {  # {{{1
+fgr() {  # {{{
   is_in_git_repo || return
   git remote -v | awk '{print $1 "\t" $2}' | uniq |
   fzf-down --tac \
@@ -180,13 +171,13 @@ fgr() {  # {{{1
   cut -d$'\t' -f1
 }  # }}}
 
-fgshl() {  # {{{1
+fgshl() {  # {{{
   is_in_git_repo || return
   git stash list | fzf-down --reverse -d: --preview 'git show --color=always {1}' |
   cut -d: -f1
 }  # }}}
 
-fggrep() {  # {{{1
+fggrep() {  # {{{
   is_in_git_repo || return
     git grep -C 0 --heading --break --word-regex --no-line-number |
     fzf-down --tac --reverse --ansi
@@ -214,10 +205,8 @@ complete -o bashdefault -F _fzf_opts_completion -o default  -o filenames fgt
 fgb() {  # branches: {{{
   is_in_git_repo || return
   git branch -a --color=always | grep -v '/HEAD\s' | sort |
-  fzf-down --ansi --multi --tac --preview-window right:70% \
-    --preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
-  sed 's/^..//' | cut -d' ' -f1 |
-  sed 's#^remotes/##'
+  fzf-down "--multi --tac --preview-window right:70% \
+    --preview 'git log --oneline --graph --date=short --color=always '" | head -$LINES | sed 's/^..//' | cut -d' ' -f1 | sed 's#^remotes/##'
 }  # }}}
 
 fgh() {  # {{{ git hist
@@ -238,7 +227,8 @@ fgstash() {  # {{{ git stash list
           --preview-window=down:50% --reverse \
           --bind='enter:execute(git stash show --color=always -p $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
           --bind='ctrl-d:execute(git diff --color=always $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
-          --expect=ctrl-o,ctrl-y,ctrl-x))
+          --expect=ctrl-o,ctrl-y,ctrl-x \
+          --header-lines=3))
   k=${out[0]}
   reflog=${out[1]}
   [ -n "$reflog" ] && case "$k" in
@@ -252,6 +242,8 @@ fgstash() {  # {{{ git stash list
 # The bindings: {{{
 
 # TODO: add the vim-insert ones
+# so this raises if we execute instead of sourcing.
+# figure out how to determine if we're in a subshell
 bind -m emacs-standard '"\er": redraw-current-line'
 bind -m emacs-standard '"\C-g\C-f": "$(fgf)\e\C-e\er"'
 bind -m emacs-standard '"\C-g\C-b": "$(fgb)\e\C-e\er"'

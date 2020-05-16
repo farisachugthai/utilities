@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tutorial &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Backup Utilities" href="Backups.html" />
+    <link rel="prev" title="Welcome to utilities’ documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-tutorial">
+<span id="tutorial"></span><h1>Tutorial<a class="headerlink" href="#module-tutorial" title="Permalink to this headline">¶</a></h1>
+<p>This package combines different scripts that aide in working with computers
+ranging from Windows 10 to Linux to Ubuntu to automate regular,
+repetitive and error prone tasks.</p>
+<div class="section" id="building-documentation">
+<h2>Building Documentation<a class="headerlink" href="#building-documentation" title="Permalink to this headline">¶</a></h2>
+<p>The documentation for this repository has been extensively commented
+as well as the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/api.html" title="(in SciPy v1.4.1)"><span>SciPy API</span></a>.</p>
+<div class="section" id="module-conf">
+<span id="sphinx-configuration"></span><h3>Sphinx Configuration<a class="headerlink" href="#module-conf" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="conf.setup">
+<code class="sig-prename descclassname">conf.</code><code class="sig-name descname">setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">app</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/conf.html#setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conf.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add custom css styling.</p>
+<div class="admonition-warning-for-path-names admonition">
+<p class="admonition-title">Warning for path names.</p>
+<p>Don’t use <a class="reference external" href="https://docs.python.org/3/library/os.path.html#os.path.abspath" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.path.abspath()</span></code></a> if you need to extend this.
+Pathmames that have a <kbd class="kbd docutils literal notranslate">.</kbd> in them will be interpreted as packages
+and crash the build. I.E. the following won’t work.:</p>
+<blockquote>
+<div><p><em>/data/data/com.termux/</em></p>
+</div></blockquote>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="make">
+<h3>Make<a class="headerlink" href="#make" title="Permalink to this headline">¶</a></h3>
+<p>Expedite documentation builds.</p>
+<span class="target" id="module-make"></span><p>We attempt to automate documentation builds with this module.</p>
+<p>Still need to add an option to recursively move the html files out of the
+currently git-ignored directory <code class="xref py py-obj docutils literal notranslate"><span class="pre">_build/html/</span></code> into this directory.</p>
+<p>Update the options you can give to the parser:</p>
+<ol class="arabic simple">
+<li><p>remove python path</p></li>
+<li><p>Add open in browser as an option</p></li>
+<li><p>Fix the output for the <code class="xref py py-obj docutils literal notranslate"><span class="pre">commands</span></code> argument when this is run with <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.argv" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.argv</span></code></a> == 0</p></li>
+</ol>
+<dl class="py class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">make.</code><code class="sig-name descname">DocBuilder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_jobs</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">verbosity</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">warnings_are_errors</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make.html#DocBuilder"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class to wrap the different commands of this script.</p>
+<p>All public methods of this class can be called as parameters of the
+script.</p>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">builder</code></dt>
+<dd><p>The filetype <strong class="command">make</strong> invokes <strong class="command">sphinx-build</strong> to create.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt>
+<code class="sig-name descname">_open_browser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">single_doc_html</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make.html#DocBuilder._open_browser"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Open a browser tab showing the single doc html option.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt>
+<code class="sig-name descname">sphinx_build</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">kind</span><span class="o">=</span><span class="default_value">'html'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make.html#DocBuilder.sphinx_build"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Build docs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kind</strong> (<em>{'html'</em><em>, </em><em>'latex'}</em>) – Kind of docs to build.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">DocBuilder</span><span class="p">(</span><span class="n">num_jobs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">sphinx_build</span><span class="p">(</span><span class="s1">&#39;html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">make.</code><code class="sig-name descname">_parse_arguments</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cmds</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make.html#_parse_arguments"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Parse user arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Arguments provided by the user.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>user_args</strong> – Argumemts as they’ve been interpreted by <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.NameSpace</span></code></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-mod docutils literal notranslate"><span class="pre">docutils.core</span></code></dt><dd><p>Shows a few good methods on how to programatically publish docs.</p>
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">make.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/make.html#main"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Set everything up.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">make.</code><code class="sig-name descname">termux_hack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/make.html#termux_hack"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Android permissions don’t allow viewing files in app specific files.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a>
+    <ul>
+          <li>Previous: <a href="index.html" title="previous chapter">Welcome to utilities’ documentation!</a></li>
+          <li>Next: <a href="Backups.html" title="next chapter">Backup Utilities</a></li>
+    </ul>
+  </li>
+</ul>
+<h3><a href="index.html">Global Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage and Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-documentation">Building Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Text.html">Text Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="External_Commands.html">External Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
+</ul>
+
+<h3><a href="index.html">Local Table of Contents</a></h3>
+<ul>
+<li><a class="reference internal" href="#">Tutorial</a><ul>
+<li><a class="reference internal" href="#building-documentation">Building Documentation</a><ul>
+<li><a class="reference internal" href="#module-conf">Sphinx Configuration</a></li>
+<li><a class="reference internal" href="#make">Make</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tutorial.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2020, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/tutorial.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

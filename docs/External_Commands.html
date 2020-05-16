@@ -1,0 +1,482 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>External Commands &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Remaining Modules" href="Other.html" />
+    <link rel="prev" title="Text Utilities" href="Text.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-external_commands">
+<span id="external-commands"></span><h1>External Commands<a class="headerlink" href="#module-external_commands" title="Permalink to this headline">¶</a></h1>
+<p>All commands in this section rely on another tool or piece of software.</p>
+<p>The scripts therein collectively automate use of <strong class="command">git</strong>,
+<strong class="command">Neovim</strong>, <strong class="command">conda</strong>, and <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.13.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
+<div class="section" id="g">
+<h2><a class="reference internal" href="#module-g" title="g: Make working with Git safer and easier."><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="g-programmatically-work-with-subprocess-and-git">
+<h3>g — Programmatically work with subprocess’ and Git.<a class="headerlink" href="#g-programmatically-work-with-subprocess-and-git" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-g"></span><p>This module intends to build a base class through subprocesses in order to
+build up a trimmed-down, and more importantly <em>safer</em> Git object.</p>
+<div class="section" id="subprocess-and-git">
+<h4>Subprocess and Git<a class="headerlink" href="#subprocess-and-git" title="Permalink to this headline">¶</a></h4>
+<p>Currently we need to move some module functions into our BaseCommand class.
+I don’t want it to attempt implementing too much however. But it should have
+a method that checks output in the way that our module function does for the
+<strong class="command">git rev-parse</strong> expression that sets up the git root.</p>
+<p>You know what would be nice? Run the following commands in one.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git branch -d foo</span>
+<span class="go">git branch -rd origin/foo</span>
+<span class="go">git push origin :foo</span>
+</pre></div>
+</div>
+<p>There’s no reason that that’s 3 commands with differing syntax.</p>
+<p>All you need to do is check if the branch exists both locally and
+remotely and kill everything.</p>
+<dl class="py class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">Git</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyutil.shell.BaseCommand" title="pyutil.shell.BaseCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyutil.shell.BaseCommand</span></code></a></p>
+<p>Create a base class for working with Git in Python.</p>
+<p>For the time being we only really need to run the <code class="xref py py-func docutils literal notranslate"><span class="pre">g.BaseCommand.run()</span></code>
+What other parameters do we need to pay attention to?
+State that would be useful to grab?
+Silencing the warnings about <code class="xref py py-attr docutils literal notranslate"><span class="pre">version</span></code> is a start. So I guess
+learning how to properly initialize a class.</p>
+<dl class="py method">
+<dt>
+<code class="sig-name descname">_check_output</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">cmd</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._check_output"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Checks output from a subprocess call.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt>
+<code class="sig-name descname">_get_git_root</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._get_git_root"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Show the root of a repo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt>
+<em class="property">static </em><code class="sig-name descname">_quote</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">cmd</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._quote"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Which one of these two is preferable?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt>
+<code class="sig-name descname">_quote_cmd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">cmd</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git._quote_cmd"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Maybe this should be in the parent class?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt>
+<code class="sig-name descname">get_git_upstream_remote</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Git.get_git_upstream_remote"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Get the remote name to use for upstream branches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>str</strong> – Uses “upstream” if it exists, “origin” otherwise</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Remote git server</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">version</code><a class="reference internal" href="_modules/pyutil/g.html#Git.version"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Return the version of Git we have.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">Other</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Other"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Toy code always refers to other I.E. self != other. Let’s write other!</p>
+<p>Haha just kidding. I’m testing out Git but one that doesn’t subclass anything
+because the parent class is having problems</p>
+<dl class="py method">
+<dt>
+<code class="sig-name descname">_get_git_root</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#Other._get_git_root"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Show the root of a repo.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">get_git_branch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#get_git_branch"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Get the symbolic name for the current git branch.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">pyutil.g.</code><code class="sig-name descname">touch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/g.html#touch"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Create a file and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> (</em><em>path-like object</em><em>)</em>) – Path to a file that’s needs to be staged and added to the Git index.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+<div class="section" id="nvim-profiler">
+<h2>Nvim Profiler<a class="headerlink" href="#nvim-profiler" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="attaching-to-a-remote-instance-from-the-repl">
+<h3>Attaching to a remote instance from the REPL<a class="headerlink" href="#attaching-to-a-remote-instance-from-the-repl" title="Permalink to this headline">¶</a></h3>
+<p>The below code displays how to attach to a remote neovim instance.:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;NVIM_LISTEN_ADDRESS&#39;</span><span class="p">):</span>  <span class="c1"># we have no running nvim</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;nvim&amp;&#39;</span><span class="p">])</span>  <span class="c1"># are we allowed to do this?</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">pynvim</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">vim</span> <span class="o">=</span> <span class="n">pynvim</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="s1">&#39;socket&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;NVIM_LISTEN_ADDRESS&#39;</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">vim</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;edit $MYVIMRC&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">vim_root</span> <span class="o">=</span> <span class="n">vim</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">buffer</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="finding-the-initialization-file-to-profile">
+<h3>Finding the initialization file to profile<a class="headerlink" href="#finding-the-initialization-file-to-profile" title="Permalink to this headline">¶</a></h3>
+<p>Here’s the help documentation on how to find an <code class="docutils literal notranslate"><span class="pre">init.vim</span></code> file
+assuming it’s placed in the standard location I.E. <code class="docutils literal notranslate"><span class="pre">~/.config/nvim</span></code> or
+<span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">USERPROFILE</span></code>\AppData\Local\nvim.</p>
+<div class="highlight-vim notranslate"><div class="highlight"><pre><span></span>stdpath<span class="p">(</span>{what}<span class="p">)</span>                 *stdpath<span class="p">()</span>* *E6100*
+Returns <span class="p">|</span>standard<span class="p">-</span><span class="nb">path</span><span class="p">|</span> locations of various default <span class="k">files</span> and directories.
+
+{what}       Type    Description <span class="p">~</span>
+cache        String  Cache <span class="nb">directory</span>. Arbitrary temporary
+                     storage <span class="k">for</span> plugins<span class="p">,</span> etc.
+config       String  <span class="nb">User</span> configuration <span class="nb">directory</span>. The
+                     <span class="p">|</span>init.<span class="k">vim</span><span class="p">|</span> <span class="k">is</span> stored here.
+config_dirs  List    Additional configuration directories.
+data         String  <span class="nb">User</span> data <span class="nb">directory</span>. The <span class="p">|</span>shada<span class="p">-</span><span class="k">file</span><span class="p">|</span>
+                     <span class="k">is</span> stored here.
+data_dirs    List    Additional data directories.
+
+Example:
+    :echo stdpath<span class="p">(</span><span class="s2">&quot;config&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="roadmap">
+<h3>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this headline">¶</a></h3>
+<p>In the future this module is going to move towards implementing a command
+that will behave similarly to the following command run in the shell:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nvim --startuptime test.txt test.py test.txt -c&quot;bn&quot;</span>
+<span class="gp">#</span> Also we could make the base <span class="nb">command</span>
+<span class="go">nvim --clean --startuptime foo.log example_module.py foo.log -c&#39;bn&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-pyutil.nvim_profiling">
+<span id="nvim-api-docs"></span><h3>Nvim API Docs<a class="headerlink" href="#module-pyutil.nvim_profiling" title="Permalink to this headline">¶</a></h3>
+<p>Automate profiling nvim.</p>
+<dl class="py class">
+<dt id="pyutil.nvim_profiling.Neovim">
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">Neovim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">exe</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Instantiate a connection to neovim if it’s running, establish the path if not.</p>
+<p>Got to the point where I thought:</p>
+<p><em>Let’s just rewrite this module.</em></p>
+<dl class="py method">
+<dt id="pyutil.nvim_profiling.Neovim._get_instance">
+<code class="sig-name descname">_get_instance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim._get_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim._get_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if neovim is running.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyutil.nvim_profiling.Neovim.buffer">
+<em class="property">property </em><code class="sig-name descname">buffer</code><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim.buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim.buffer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyutil.nvim_profiling.Neovim.running_instance">
+<em class="property">property </em><code class="sig-name descname">running_instance</code><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim.running_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim.running_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is neovim running?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>str if running None if not.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.nvim_profiling._parse_arguments">
+<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling._parse_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse arguments given by the user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.nvim_profiling.get_log_file">
+<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">get_log_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nvim_root</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#get_log_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.get_log_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Profile nvim.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nvim_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The directory where nvim’s configuration files are found.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>profiling_log_file</strong> – Creates file based on the current time in ISO format profiling nvim.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Allow the <code class="docutils literal notranslate"><span class="pre">test.py</span></code> file that we use for startup to be configured.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.nvim_profiling.main">
+<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.nvim_profiling.nvim_process">
+<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">nvim_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">profiling_log_file</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#nvim_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.nvim_process" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.nvim_profiling.output_results">
+<code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">output_results</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output_dir</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#output_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.output_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that an directory named profiling exists.</p>
+<p>IPython has a function in <code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython.utils</span></code> that I believe is called
+ensure_dir_exists. Do we provide anything that that implementation doesn’t?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Directory to store profiling results in.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="shell">
+<h3>Shell<a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h3>
+<p>Base class for shell commands.</p>
+<p>Aug 11, 2019:</p>
+<p>To make the interface more consistent it may help a lot to
+check out the link <a class="reference external" href="https://realpython.com/inheritance-composition-python/#an-overview-of-inheritance-in-python">here</a>.</p>
+<p>The lead into the explanation for abstract base classes
+particularly was really informative.</p>
+<p>In it’s current state the Command class is unusable but the
+<a class="reference internal" href="#pyutil.shell.BaseCommand" title="pyutil.shell.BaseCommand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseCommand</span></code></a> class is interesting and a good starting point.</p>
+<span class="target" id="module-pyutil.shell"></span><dl class="py class">
+<dt id="pyutil.shell.BaseCommand">
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.shell.</code><code class="sig-name descname">BaseCommand</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cmd</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/shell.html#BaseCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.shell.BaseCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Create a base command class.</p>
+<p>Pass <code class="docutils literal notranslate"><span class="pre">cmd</span></code> to <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#module-subprocess" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> and process output and build in logging.</p>
+<dl class="py method">
+<dt id="pyutil.shell.BaseCommand.popen">
+<code class="sig-name descname">popen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">cmd</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/shell.html#BaseCommand.popen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.shell.BaseCommand.popen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the required command in a subshell.</p>
+<p>First the command is split using <a class="reference external" href="https://docs.python.org/3/library/shlex.html#module-shlex" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code></a>.</p>
+<p>A new process is created, and from the resulting subprocess object
+the <code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.Popen().wait()</span></code> is invoked.</p>
+<p>When the subprocess returns, any non-zero value will lead to a
+<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#SystemExit" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SystemExit</span></code></a> with a passed value of <code class="xref py py-obj docutils literal notranslate"><span class="pre">returncode</span></code>.
+If we don’t need to capture output, check the return code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><em>optional</em>) – cmd to run in subprocess</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>process.returncode</strong> – Output from subprocess.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.CalledProcessError" title="(in Python v3.8)"><strong>subprocess.CalledProcessError</strong></a> – If there is an error in the command.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyutil.shell.BaseCommand.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/shell.html#BaseCommand.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.shell.BaseCommand.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a safer subprocess.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><em>optional</em>) – cmd to run in subprocess</p></li>
+<li><p><strong>*args</strong> (<em>list of str</em>) – Command and parameters to be executed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>output</strong> – Output from subprocess. Can return <code class="xref py py-obj docutils literal notranslate"><span class="pre">NoneType</span></code> if no <a class="reference external" href="https://docs.python.org/3/library/cmd.html#module-cmd" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmd</span></code></a>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">BaseCommand</span><span class="p">([</span><span class="s1">&#39;ls&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="gp">... </span><span class="n">CompletedProcess</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="s1">&#39;ls&#39;</span><span class="p">,</span> <span class="n">returncode</span><span class="o">=</span><span class="mf">0.</span><span class="o">..</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a>
+    <ul>
+          <li>Previous: <a href="Text.html" title="previous chapter">Text Utilities</a></li>
+          <li>Next: <a href="Other.html" title="next chapter">Remaining Modules</a></li>
+    </ul>
+  </li>
+</ul>
+<h3><a href="index.html">Global Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Text.html">Text Utilities</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">External Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#g"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nvim-profiler">Nvim Profiler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
+</ul>
+
+<h3><a href="index.html">Local Table of Contents</a></h3>
+<ul>
+<li><a class="reference internal" href="#">External Commands</a><ul>
+<li><a class="reference internal" href="#g"><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><ul>
+<li><a class="reference internal" href="#g-programmatically-work-with-subprocess-and-git">g — Programmatically work with subprocess’ and Git.</a><ul>
+<li><a class="reference internal" href="#subprocess-and-git">Subprocess and Git</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nvim-profiler">Nvim Profiler</a><ul>
+<li><a class="reference internal" href="#attaching-to-a-remote-instance-from-the-repl">Attaching to a remote instance from the REPL</a></li>
+<li><a class="reference internal" href="#finding-the-initialization-file-to-profile">Finding the initialization file to profile</a></li>
+<li><a class="reference internal" href="#roadmap">Roadmap</a></li>
+<li><a class="reference internal" href="#module-pyutil.nvim_profiling">Nvim API Docs</a></li>
+<li><a class="reference internal" href="#shell">Shell</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/External_Commands.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2020, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/External_Commands.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

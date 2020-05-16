@@ -1,0 +1,726 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Remaining Modules &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="todo" href="todo.html" />
+    <link rel="prev" title="External Commands" href="External_Commands.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="remaining-modules">
+<h1>Remaining Modules<a class="headerlink" href="#remaining-modules" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#module-pyutil.env" id="id3"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env</span></code></a></p></li>
+<li><p><a class="reference internal" href="#env-checks" id="id4"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env_checks</span></code></a></p>
+<ul>
+<li><p><a class="reference internal" href="#matplotlib-env-checks" id="id5">Matplotlib Env Checks</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#module-pyutil.itersrc" id="id6"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itersrc</span></code></a></p></li>
+<li><p><a class="reference internal" href="#module-pyutil.ptags" id="id7"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code></a></p>
+<ul>
+<li><p><a class="reference internal" href="#files-to-tag" id="id8">Files to tag</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#module-pyutil.strip_space" id="id9"><code class="xref py py-mod docutils literal notranslate"><span class="pre">strip_space</span></code></a></p></li>
+<li><p><a class="reference internal" href="#module-pyutil.sys_checks" id="id10"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code></a></p>
+<ul>
+<li><p><a class="reference internal" href="#expanding-to-paths" id="id11">Expanding to Paths</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#logging" id="id12"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_logging</span></code></a></p>
+<ul>
+<li><p><a class="reference internal" href="#logger" id="id13">Logger</a></p></li>
+<li><p><a class="reference internal" href="#formatter" id="id14">Formatter</a></p></li>
+<li><p><a class="reference internal" href="#module-pyutil._logging" id="id15">Logging API</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="module-pyutil.env">
+<span id="env"></span><h2><a class="toc-backref" href="#id3"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env</span></code></a><a class="headerlink" href="#module-pyutil.env" title="Permalink to this headline">¶</a></h2>
+<p>Simple module that pretty prints the user’s environment variables.</p>
+<p>This is actually implemented as an IPython magic but to make it easier
+to use in a typical Python REPL it’s also implemented here.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">name</span> <span class="pre">==</span> <span class="pre">'__main__'</span></code> is left off so that it can be run directly
+or sourced.</p>
+<dl class="py class">
+<dt id="pyutil.env.Env">
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.env.</code><code class="sig-name descname">Env</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">env</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env.html#Env"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env.Env" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Memoize the user’s current environment variable settings.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyutil.env.WindowsEnv">
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.env.</code><code class="sig-name descname">WindowsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">admin</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env.html#WindowsEnv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env.WindowsEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyutil.env.Env" title="pyutil.env.Env"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyutil.env.Env</span></code></a></p>
+<p>Windows specific things.</p>
+<dl class="py method">
+<dt id="pyutil.env.WindowsEnv.get_registry">
+<code class="sig-name descname">get_registry</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env.html#WindowsEnv.get_registry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env.WindowsEnv.get_registry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.env.current">
+<code class="sig-prename descclassname">pyutil.env.</code><code class="sig-name descname">current</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env.html#current"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env.current" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints all current environment variables.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="env-checks">
+<h2><a class="toc-backref" href="#id4"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env_checks</span></code></a><a class="headerlink" href="#env-checks" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">pyutil.env_checks.</code><code class="sig-name descname">get_username</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env_checks.html#get_username"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>More cross-platform implementation of retrieving a username.</p>
+<p>This function checks the environment variables <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LOGNAME</span></code>,
+<span class="target" id="index-1"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">USER</span></code>, <span class="target" id="index-2"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LNAME</span></code> and <span class="target" id="index-3"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">USERNAME</span></code>, in order, and
+returns the value of the first one which is set to a non-empty string.  If
+none are set, the login name from the password database is returned on
+systems which support the <a class="reference external" href="https://docs.python.org/3/library/pwd.html#module-pwd" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code></a> module, otherwise, an exception is
+raised.</p>
+<p>In general, this function should be preferred over <a class="reference external" href="https://docs.python.org/3/library/os.html#os.getlogin" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.getlogin()</span></code></a>.</p>
+</dd></dl>
+
+<span class="target" id="module-pyutil.env_checks"></span><p>Run simple checks to ensure that a user’s environment has been set up.</p>
+<p>Easier to group similar methods in one mod then have them scattered around.</p>
+<p>Below is a generic example of using the public methods to read in user
+defined configurations.</p>
+<p class="rubric">Example</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">env_checks</span> <span class="kn">import</span> <span class="n">check_xdg_config_home</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">check_xdg_config_home</span><span class="p">():</span>
+<span class="go">    &gt;&gt;&gt; with open(&#39;module.conf&#39;, &#39;rt&#39;) as f:</span>
+<span class="go">        &gt;&gt;&gt; configs = f.readlines()</span>
+</pre></div>
+</div>
+<div class="section" id="matplotlib-env-checks">
+<h3><a class="toc-backref" href="#id5">Matplotlib Env Checks</a><a class="headerlink" href="#matplotlib-env-checks" title="Permalink to this headline">¶</a></h3>
+<p>Mar 08, 2019</p>
+<p>Just noticed today the following functions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">get_home</span><span class="p">()</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">_get_xdg_cache_dir</span><span class="p">()</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">_get_xdg_config_dir</span><span class="p">()</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">_get_data_path</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here’s an interesting way to memoize return values.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_logged_cached</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Decorator that logs a function&#39;s return value, and memoizes that value.</span>
+
+<span class="sd">    After ::</span>
+
+<span class="sd">        @_logged_cached(fmt)</span>
+<span class="sd">        def func(): ...</span>
+
+<span class="sd">    the first call to *func* will log its return value at the DEBUG level using</span>
+<span class="sd">    %-format string *fmt*, and memoize it; later calls to *func* will directly</span>
+<span class="sd">    return that value.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Return the actual decorator.</span>
+        <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">_logged_cached</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
+
+    <span class="n">called</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+        <span class="k">nonlocal</span> <span class="n">called</span><span class="p">,</span> <span class="n">ret</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">called</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+            <span class="n">called</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt id="pyutil.env_checks.check_xdg_config_home">
+<code class="sig-prename descclassname">pyutil.env_checks.</code><code class="sig-name descname">check_xdg_config_home</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env_checks.html#check_xdg_config_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env_checks.check_xdg_config_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check to see if <span class="target" id="index-4"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">$XDG_CONFIG_HOME</span></code> has been defined.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Bool</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">env_checks</span> <span class="kn">import</span> <span class="n">check_xdg_config_home</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">check_xdg_config_home</span><span class="p">():</span>
+<span class="go">    &gt;&gt;&gt; with open(&#39;module.conf&#39;, &#39;rt&#39;) as f:</span>
+<span class="go">        &gt;&gt;&gt; configs = f.readlines()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.env_checks.check_xdg_config_home_2">
+<code class="sig-prename descclassname">pyutil.env_checks.</code><code class="sig-name descname">check_xdg_config_home_2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">conf_file</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env_checks.html#check_xdg_config_home_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env_checks.check_xdg_config_home_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>An implementation of check_xdg_config_home that works with Python2!</p>
+<p>Unfortunately the code is quite repetitive as it stands and needs refactoring.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Has not been tested on Python2.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>conf_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Path to a configuration file needed by another module.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>user_conf_file</strong> – Path to desired user configuration file. Returns None if the file can’t
+be found.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.env_checks.env_check">
+<code class="sig-prename descclassname">pyutil.env_checks.</code><code class="sig-name descname">env_check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">env_var</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env_checks.html#env_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env_checks.env_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search the current namescope for variable <code class="xref py py-obj docutils literal notranslate"><span class="pre">env_var</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>env_var</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Environment variable to search for. Currently case-sensitive.</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><strong>i</strong> (<em>dict_key</em>) – The environment variable searched for. Env vars are mapped as dicts.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">env_checks</span> <span class="kn">import</span> <span class="n">env_check</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fzf</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">env_check</span><span class="p">(</span><span class="s1">&#39;fzf&#39;</span><span class="p">))</span>
+<span class="go">[</span>
+<span class="go">        &#39;_fzf_orig_completion_awk&#39;, &#39;_fzf_orig_completion_cat&#39;,</span>
+<span class="go">        &#39;_fzf_orig_completion_cd&#39;, &#39;_fzf_orig_completion_cp&#39;,</span>
+<span class="go">        &#39;_fzf_orig_completion_diff&#39;, &#39;_fzf_orig_completion_du&#39;,</span>
+<span class="go">        &#39;_fzf_orig_completion_ftp&#39;, &#39;_fzf_orig_completion_grep&#39;,</span>
+<span class="go">        &#39;_fzf_orig_completion_head&#39;, &#39;_fzf_orig_completion_ld&#39;,</span>
+<span class="go">        &#39;_fzf_orig_completion_less&#39;, &#39;_fzf_orig_completion_ln&#39;,</span>
+<span class="go">        &#39;_fzf_orig_completion_ls&#39;, &#39;_fzf_orig_completion_mv&#39;,</span>
+<span class="go">        &#39;_fzf_orig_completion_pushd&#39;, &#39;_fzf_orig_completion_rm&#39;,</span>
+<span class="go">        &#39;_fzf_orig_completion_rmdir&#39;, &#39;_fzf_orig_completion_sed&#39;,</span>
+<span class="go">        &#39;_fzf_orig_completion_sort&#39;, &#39;_fzf_orig_completion_tail&#39;,</span>
+<span class="go">        &#39;_fzf_orig_completion_tee&#39;, &#39;_fzf_orig_completion_telnet&#39;,</span>
+<span class="go">        &#39;_fzf_orig_completion_uniq&#39;, &#39;_fzf_orig_completion_wc&#39;</span>
+<span class="go">        ]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.env_checks.get_home_3">
+<code class="sig-prename descclassname">pyutil.env_checks.</code><code class="sig-name descname">get_home_3</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env_checks.html#get_home_3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env_checks.get_home_3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the user’s home directory. Python3 only!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>home</strong> – The user’s home directory. Utilizes pathlib so requires Python 3.
+Returns <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> if the home directory isn’t found.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.env_checks.get_script_dir">
+<code class="sig-prename descclassname">pyutil.env_checks.</code><code class="sig-name descname">get_script_dir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fobj</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env_checks.html#get_script_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env_checks.get_script_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the directory the script is in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fobj</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Path to file to check</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Directory the file is in</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.env_checks.get_unix_username">
+<code class="sig-prename descclassname">pyutil.env_checks.</code><code class="sig-name descname">get_unix_username</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env_checks.html#get_unix_username"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env_checks.get_unix_username" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get username. Unix only!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>username</strong> – User username</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.env_checks.get_username">
+<code class="sig-prename descclassname">pyutil.env_checks.</code><code class="sig-name descname">get_username</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/env_checks.html#get_username"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.env_checks.get_username" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-pyutil.itersrc">
+<span id="itersrc"></span><h2><a class="toc-backref" href="#id6"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itersrc</span></code></a><a class="headerlink" href="#module-pyutil.itersrc" title="Permalink to this headline">¶</a></h2>
+<p>Iterate over all of the python files in a directory recursively.</p>
+<span class="target" id="module-itersrc.py"></span><div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.0.1: </span>Just added a check for python files. This could be useful as a base
+for a test runner.</p>
+</div>
+<dl class="py function">
+<dt id="pyutil.itersrc.iter_source_code">
+<code class="sig-prename descclassname">pyutil.itersrc.</code><code class="sig-name descname">iter_source_code</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">paths</span><span class="p">:</span> <span class="n">List</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a><a class="reference internal" href="_modules/pyutil/itersrc.html#iter_source_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.itersrc.iter_source_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all Python source files in C{paths}.</p>
+<p>Taken with almost no modifications from <code class="xref py py-mod docutils literal notranslate"><span class="pre">pyflakes</span></code>.</p>
+<p>This would be a great function to call with <a class="reference external" href="https://docs.python.org/3/library/os.html#os.listdir" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.listdir()</span></code></a>
+output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>paths</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – A list of paths.  Directories will be recursed into and
+any .py files found will be yielded.
+Any non-directories will be yielded as-is.</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><strong>full_path</strong> (<em>str</em>) – Absolute path to a python file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyutil.ptags">
+<span id="ptags"></span><h2><a class="toc-backref" href="#id7"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code></a><a class="headerlink" href="#module-pyutil.ptags" title="Permalink to this headline">¶</a></h2>
+<p>Create a tags file for Python programs, usable with vi.</p>
+<p>Currently uses a regex to create a tags file.</p>
+<div class="section" id="files-to-tag">
+<h3><a class="toc-backref" href="#id8">Files to tag</a><a class="headerlink" href="#files-to-tag" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>functions (even inside other defs or classes)</p></li>
+<li><p>classes</p></li>
+<li><p>filenames</p></li>
+</ul>
+<p>Warns about files it cannot open.</p>
+<p>No warnings about duplicate tags.</p>
+<p>Snagged from the scripts dir in python3.6-examples.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Use ipdb and step through while watching the tags var.</p>
+</div>
+<p>Otherwise add in <a class="reference external" href="https://www.python.org/dev/peps/pep-0257">PEP 257</a> compliant params.
+Try different styles and see what you like.</p>
+<dl class="py function">
+<dt id="pyutil.ptags.main">
+<code class="sig-prename descclassname">pyutil.ptags.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/ptags.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ptags.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle CLAs and work with writing the tags file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.ptags.treat_file">
+<code class="sig-prename descclassname">pyutil.ptags.</code><code class="sig-name descname">treat_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/ptags.html#treat_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.ptags.treat_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find usable matches for tags file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>path-like object</em>) – File to generate tags from.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>None</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-pyutil.strip_space">
+<span id="strip-space"></span><h2><a class="toc-backref" href="#id9"><code class="xref py py-mod docutils literal notranslate"><span class="pre">strip_space</span></code></a><a class="headerlink" href="#module-pyutil.strip_space" title="Permalink to this headline">¶</a></h2>
+<p>Strip only trailing whitespace from a file.</p>
+<p>Leading whitespace is significant in Python so don’t touch it.</p>
+<dl class="py function">
+<dt id="pyutil.strip_space.backup">
+<code class="sig-prename descclassname">pyutil.strip_space.</code><code class="sig-name descname">backup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">src</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/strip_space.html#backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.strip_space.backup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Backs up a file before doing anything.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>src</strong> (<em>file</em>) – File to strip trailing whitespace from. Backed up before anything.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.strip_space.main">
+<code class="sig-prename descclassname">pyutil.strip_space.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/strip_space.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.strip_space.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispatch the strip_space function.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.strip_space.strip_space">
+<code class="sig-prename descclassname">pyutil.strip_space.</code><code class="sig-name descname">strip_space</code><span class="sig-paren">(</span><em class="sig-param">src=&lt;_io.TextIOWrapper name='&lt;stdin&gt;' mode='r' encoding='utf-8'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/strip_space.html#strip_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.strip_space.strip_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Strip all trailing whitespace out of a file.</p>
+<p>Assumes a plaintext file. Uses sys.stdin if no argument provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – File to strip trailing whitespace from. Backed up before anything.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyutil.sys_checks">
+<span id="sys-checks"></span><h2><a class="toc-backref" href="#id10"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code></a><a class="headerlink" href="#module-pyutil.sys_checks" title="Permalink to this headline">¶</a></h2>
+<p>Module to check a user is utilizing the proper version of python.</p>
+<p>Even outside of the 2 to 3 incompatibilities, the standard library
+introduces new modules often enough that it’s useful to check what version oof
+Python is being run.</p>
+<p class="rubric">Assumes: All functions are imported as the module will immediately exit if directly executed.</p>
+<p>If nothing else this is a lesson in how painful it becomes to maintain
+nonsense names.</p>
+<div class="section" id="expanding-to-paths">
+<h3><a class="toc-backref" href="#id11">Expanding to Paths</a><a class="headerlink" href="#expanding-to-paths" title="Permalink to this headline">¶</a></h3>
+<p>This module is admittedly quite limited if we only check <code class="docutils literal notranslate"><span class="pre">sys.executable</span></code>.</p>
+<p>Let’s do some general file checking with <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#module-pathlib" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code></a>. This module itself
+was added to the standard library recently, and as a result, we’ll import it
+with a try statement.</p>
+<dl class="py function">
+<dt id="pyutil.sys_checks.is_file">
+<code class="sig-prename descclassname">pyutil.sys_checks.</code><code class="sig-name descname">is_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#is_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.is_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check a file exists on the system.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyutil.sys_checks</span> <span class="kn">import</span> <span class="n">is_file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">is_file</span><span class="p">(</span><span class="s1">&#39;path/to/file&#39;</span><span class="p">):</span>
+<span class="go">    &gt;&gt;&gt; pass</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.sys_checks.py_gt_exit">
+<code class="sig-prename descclassname">pyutil.sys_checks.</code><code class="sig-name descname">py_gt_exit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">min_py_version</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt_exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check a user’s python version is higher than some floor value.</p>
+<p>For example, the <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> was only introduced in python3.2.</p>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Possibly change API so funcs return a value on success.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>min_py_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – Value that represents the lowest version of python that can be used.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.sys_checks.py_gt_raise">
+<code class="sig-prename descclassname">pyutil.sys_checks.</code><code class="sig-name descname">py_gt_raise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">min_py_version</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_gt_raise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_gt_raise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise an error if python interpreter is not above a certain version.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.sys_checks.py_lt_exit">
+<code class="sig-prename descclassname">pyutil.sys_checks.</code><code class="sig-name descname">py_lt_exit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_py_version</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/sys_checks.html#py_lt_exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.sys_checks.py_lt_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check a user’s python version is lower than some ceiling value.</p>
+<p>If you’ll crash on python3.4 but work on 3.3, call this func with 3.3.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>max_py_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – The highest version of python that can be used</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="logging">
+<h2><a class="toc-backref" href="#id12"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_logging</span></code></a><a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="logger">
+<h3><a class="toc-backref" href="#id13">Logger</a><a class="headerlink" href="#logger" title="Permalink to this headline">¶</a></h3>
+<p>Set up a more generalized logger. This differs from 05_log.py in that it
+should be decoupled from IPython and provide reasonable defaults to fall back
+on if it is executed by something other than IPython.</p>
+<p>This will occur as the directory in which the <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Logger" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Logger</span></code></a> is
+determined in either a module function or a class method.</p>
+</div>
+<div class="section" id="formatter">
+<h3><a class="toc-backref" href="#id14">Formatter</a><a class="headerlink" href="#formatter" title="Permalink to this headline">¶</a></h3>
+<p>From <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Formatter" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Formatter</span></code></a>:</p>
+<p>Formatter instances are used to convert a <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.LogRecord" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logging.LogRecord</span></code></a> to text.</p>
+<p>Formatters need to know how a LogRecord is constructed. They are
+responsible for converting a LogRecord to (usually) a string which can
+be interpreted by either a human or an external system. The base Formatter
+allows a formatting string to be specified. If none is supplied, the
+the style-dependent default value, “%(message)s”, “{message}”, or
+“${message}”, is used.</p>
+<p>The Formatter can be initialized with a format string which makes use of
+knowledge of the LogRecord attributes - e.g. the default value mentioned
+above makes use of the fact that the user’s message and arguments are pre-
+formatted into a LogRecord’s message attribute. Currently, the useful
+attributes in a LogRecord are described by:</p>
+<blockquote>
+<div><p>%(name)s            Name of the logger (logging channel)
+%(levelno)s         Numeric logging level for the message (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+%(levelname)s       Text logging level for the message (“DEBUG”, “INFO”, “WARNING”, “ERROR”, “CRITICAL”)
+%(pathname)s        Full pathname of the source file where the logging call was issued (if available)
+%(filename)s        Filename portion of pathname
+%(module)s          Module (name portion of filename)
+%(lineno)d          Source line number where the logging call was issued (if available)
+%(funcName)s        Function name
+%(created)f         Time when the LogRecord was created (time.time() return value)
+%(asctime)s         Textual time when the LogRecord was created
+%(msecs)d           Millisecond portion of the creation time
+%(relativeCreated)d Time in milliseconds when the LogRecord was created, relative to the time the logging module was loaded (typically at application startup time)
+%(thread)d          Thread ID (if available)
+%(threadName)s      Thread name (if available)
+%(process)d         Process ID (if available)
+%(message)s         The result of record.getMessage(), computed just as the record is emitted</p>
+</div></blockquote>
+</div>
+<div class="section" id="module-pyutil._logging">
+<span id="logging-api"></span><h3><a class="toc-backref" href="#id15">Logging API</a><a class="headerlink" href="#module-pyutil._logging" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="pyutil._logging.QueueHandler">
+<em class="property">class </em><code class="sig-prename descclassname">pyutil._logging.</code><code class="sig-name descname">QueueHandler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">queue</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/_logging.html#QueueHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil._logging.QueueHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Handler" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Handler</span></code></a></p>
+<p>This handler store logs events into a queue.</p>
+<dl class="py method">
+<dt id="pyutil._logging.QueueHandler.emit">
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">record</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/_logging.html#QueueHandler.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil._logging.QueueHandler.emit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do whatever it takes to actually log the specified logging record.</p>
+<p>This version is intended to be implemented by subclasses and so
+raises a NotImplementedError.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyutil._logging.QueueHandler.enqueue">
+<code class="sig-name descname">enqueue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">record</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/_logging.html#QueueHandler.enqueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil._logging.QueueHandler.enqueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enqueue a log record.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil._logging._set_debugging">
+<code class="sig-prename descclassname">pyutil._logging.</code><code class="sig-name descname">_set_debugging</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/_logging.html#_set_debugging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil._logging._set_debugging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable debug logging. From rclone.py</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil._logging.basic_log">
+<code class="sig-prename descclassname">pyutil._logging.</code><code class="sig-name descname">basic_log</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logger</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/_logging.html#basic_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil._logging.basic_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up some basic logging.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil._logging.queued_logging">
+<code class="sig-prename descclassname">pyutil._logging.</code><code class="sig-name descname">queued_logging</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">logfile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">'__name__'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/_logging.html#queued_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil._logging.queued_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>All the produced logs using the standard logging function
+will be collected in a queue by the <code class="xref py py-obj docutils literal notranslate"><span class="pre">queue_handler</span></code> as well
+as outputted on the standard error <code class="xref py py-obj docutils literal notranslate"><span class="pre">stderr_handler</span></code>.</p>
+<p>The verbosity and the format of the log message is
+controlled by the <code class="xref py py-obj docutils literal notranslate"><span class="pre">debug</span></code> parameter</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>debug=False:</dt><dd><p>a concise log format will be used, debug messsages will be discarded
+and only important message will be passed to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">stderr_handler</span></code></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>debug=True:</dt><dd><p>an extended log format will be used, all messages will be processed
+by both the handlers</p>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>debug</strong> (<em>Bool</em>) – Set the logger to <code class="xref py py-obj docutils literal notranslate"><span class="pre">logging.DEBUG</span></code>.</p></li>
+<li><p><strong>logfile</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Path-like object</p></li>
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Logger()</span></code> name, optional) – Optional but better to set a more tailored logger than the root logger.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil._logging.setup_ipython_logger">
+<code class="sig-prename descclassname">pyutil._logging.</code><code class="sig-name descname">setup_ipython_logger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/_logging.html#setup_ipython_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil._logging.setup_ipython_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plug and play logging. No params so you can import and forget.</p>
+<p>Uses the default <code class="docutils literal notranslate"><span class="pre">datefmt</span></code> that comes with <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Formatter" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatter</span></code></a>
+classes. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">default_time_format</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span>
+</pre></div>
+</div>
+<p>Can be found under the <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> method of the logging
+<a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Formatter" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatter</span></code></a>.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a>
+    <ul>
+          <li>Previous: <a href="External_Commands.html" title="previous chapter">External Commands</a></li>
+          <li>Next: <a href="todo.html" title="next chapter">todo</a></li>
+    </ul>
+  </li>
+</ul>
+<h3><a href="index.html">Global Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Text.html">Text Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="External_Commands.html">External Commands</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Remaining Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.env"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#env-checks"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env_checks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.itersrc"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itersrc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.ptags"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.strip_space"><code class="xref py py-mod docutils literal notranslate"><span class="pre">strip_space</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.sys_checks"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_logging</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
+</ul>
+
+<h3><a href="index.html">Local Table of Contents</a></h3>
+<ul>
+<li><a class="reference internal" href="#">Remaining Modules</a><ul>
+<li><a class="reference internal" href="#module-pyutil.env"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li><a class="reference internal" href="#env-checks"><code class="xref py py-mod docutils literal notranslate"><span class="pre">env_checks</span></code></a><ul>
+<li><a class="reference internal" href="#matplotlib-env-checks">Matplotlib Env Checks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyutil.itersrc"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itersrc</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.ptags"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ptags</span></code></a><ul>
+<li><a class="reference internal" href="#files-to-tag">Files to tag</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyutil.strip_space"><code class="xref py py-mod docutils literal notranslate"><span class="pre">strip_space</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.sys_checks"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys_checks</span></code></a><ul>
+<li><a class="reference internal" href="#expanding-to-paths">Expanding to Paths</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logging"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_logging</span></code></a><ul>
+<li><a class="reference internal" href="#logger">Logger</a></li>
+<li><a class="reference internal" href="#formatter">Formatter</a></li>
+<li><a class="reference internal" href="#module-pyutil._logging">Logging API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Other.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2020, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Other.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

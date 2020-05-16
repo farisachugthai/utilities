@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Text Utilities &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="External Commands" href="External_Commands.html" />
+    <link rel="prev" title="Numerical" href="numerical.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="text-utilities">
+<h1>Text Utilities<a class="headerlink" href="#text-utilities" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyutil.json_sorter">
+<span id="json-sorter"></span><h2><a class="reference internal" href="#module-json_sorter" title="json_sorter: Sort a JSON file by key without losing organization for nested elements."><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><a class="headerlink" href="#module-pyutil.json_sorter" title="Permalink to this headline">¶</a></h2>
+<p>Take a <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> file, sort the keys and insert 4 spaces for indents.</p>
+<div class="section" id="module-json_sorter">
+<span id="id1"></span><h3><a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> sorter<a class="headerlink" href="#module-json_sorter" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="one-line-solution">
+<h4>One Line Solution<a class="headerlink" href="#one-line-solution" title="Permalink to this headline">¶</a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">((</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;settings.json&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">getitemattr</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You definitely shouldn’t implement it as a one liner, <em>as you can clearly see,</em>;
+however 5 functions and a handful of instantiated classes and debugging, and
+we’re somehow barely closer to done.</p>
+<p>The functions for reading and writing files could be refactored and used over the
+entire package.</p>
+<p>The logger <strong>should</strong> be set up that way.</p>
+<p>This code is going to easily clear 100 lines when a JSON encoded object shouldn’t
+take more than a few lines to deserialize and work with.</p>
+<p>This’ll serve as a good template for testing out tools to build a simple
+script with.</p>
+<p>The problem is already solved. Let’s see what we can’t squeeze out of our tools
+along the way.</p>
+<p>Interestingly enough, this display of excessiveness started as a simple
+quick fix.</p>
+<p>Originally, this module was used to fix my <a class="reference external" href="../.vscode/settings.json">../.vscode/settings.json</a> from VSCode.</p>
+<hr class="docutils" />
+<dl class="py function">
+<dt id="pyutil.json_sorter._parse_arguments">
+<code class="sig-prename descclassname">pyutil.json_sorter.</code><code class="sig-name descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter._parse_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse arguments given by the user.</p>
+<p>This implementation still, somehow isn’t done. An option for <em>inplace</em>
+modifications needs to be added.</p>
+<p>Unfortunately this will be mutually exclusive to the output file option.
+So we’ll need to work on learning argparse.mutually_exclusive_groups.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>args</strong> – Arguments provided by the user and handled by argparse.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.NameSpace()</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.json_sorter.convert_to_yaml">
+<code class="sig-prename descclassname">pyutil.json_sorter.</code><code class="sig-name descname">convert_to_yaml</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#convert_to_yaml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.convert_to_yaml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> to YAML.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The file to read in</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>yaml_object</strong> – Converted <code class="xref py py-mod docutils literal notranslate"><span class="pre">PyYAML</span></code> text.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.json_sorter.main">
+<code class="sig-prename descclassname">pyutil.json_sorter.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles user args, sets up logging and calls other functions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.json_sorter.sort_json">
+<code class="sig-prename descclassname">pyutil.json_sorter.</code><code class="sig-name descname">sort_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#sort_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.sort_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in a <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> object, sort it and write it back to a new file.</p>
+<p>By writing to a new file, the user is allowed the opportunity to inspect
+the file and ensure that the desired results have been achieved.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The file to read in</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>json_text</strong> – Correctly formmated <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> text.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.json_sorter.text_writer">
+<code class="sig-prename descclassname">pyutil.json_sorter.</code><code class="sig-name descname">text_writer</code><span class="sig-paren">(</span><em class="sig-param">plaintext</em>, <em class="sig-param">output_file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='utf-8'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#text_writer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter.text_writer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the previously inputted text to a file.</p>
+<p>This function could easily be utilized over the whole package though.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plaintext</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The file to read in</p></li>
+<li><p><strong>output_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Text file to write formatted <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> to.
+It will only write to the file if the filename currently doesn’t exist.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+<div class="section" id="wrap">
+<h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code><a class="headerlink" href="#wrap" title="Permalink to this headline">¶</a></h2>
+<p>Wrap text similarly to <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.dedent" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">textwrap.dedent()</span></code></a> but with multiple paragraphs.</p>
+<p>Allow the user to input any parameters that are accepted by
+<a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.TextWrapper" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">textwrap.TextWrapper</span></code></a></p>
+<dl class="py class">
+<dt id="pyutil.wrap.TextWrap">
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.wrap.</code><code class="sig-name descname">TextWrap</code><a class="headerlink" href="#pyutil.wrap.TextWrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclass <code class="xref py py-class docutils literal notranslate"><span class="pre">textwrap.TextWrapper()</span></code>.</p>
+<p>Primarily want to modify initialized arguments.
+Not entirely looking to reimplement the text formatting methods, both
+private and public.</p>
+<p>Now the publicly available methods from <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.TextWrapper" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextWrapper</span></code></a>.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">TextWrapper</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">TextWrapper</span><span class="p">)</span>
+<span class="go">[&#39;_fix_sentence_endings&#39;,</span>
+<span class="go">&#39;_handle_long_word&#39;,</span>
+<span class="go">&#39;_munge_whitespace&#39;,</span>
+<span class="go">&#39;_split&#39;,</span>
+<span class="go">&#39;_split_chunks&#39;,</span>
+<span class="go">&#39;_wrap_chunks&#39;,</span>
+<span class="go">&#39;fill&#39;,</span>
+<span class="go">&#39;sentence_end_re&#39;,</span>
+<span class="go">&#39;unicode_whitespace_trans&#39;,</span>
+<span class="go">&#39;uspace&#39;,</span>
+<span class="go">&#39;wordsep_re&#39;,</span>
+<span class="go">&#39;wordsep_simple_re&#39;,</span>
+<span class="go">&#39;wrap&#39;,</span>
+<span class="go">&#39;x&#39;]</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">__init__().text</span></code> defaults to None.</p>
+<p>However, it is still a required parameter. It’s simply not enforced.
+We’re all responsible users here right?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – A multi-line string.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="pyutil.wrap.TextWrap.wrap_paragraphs">
+<code class="sig-name descname">wrap_paragraphs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">ncols</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyutil.wrap.TextWrap.wrap_paragraphs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap multiple paragraphs to fit a specified width.</p>
+<p>This is equivalent to <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.wrap" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">textwrap.wrap()</span></code></a>, but with support for multiple
+paragraphs, as separated by empty lines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – text to wrap using <a class="reference external" href="https://docs.python.org/3/library/re.html#module-re" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/textwrap.html#textwrap.dedent" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">textwrap.dedent()</span></code></a></p></li>
+<li><p><strong>ncols</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – column to wrap text at</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns wrapped_text</dt>
+<dd class="field-even"><p>list of complete paragraphs, wrapped to fill <code class="xref py py-obj docutils literal notranslate"><span class="pre">ncols</span></code> columns.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">wrap</span> <span class="kn">import</span> <span class="n">ZimText</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wrapper</span> <span class="o">=</span> <span class="n">ZimText</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;unix-ide-editing.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wrapped</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;unix-ide-editing.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.text.html#module-IPython.utils.text" title="(in IPython v7.13.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython.utils.text</span></code></a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a>
+    <ul>
+          <li>Previous: <a href="numerical.html" title="previous chapter">Numerical</a></li>
+          <li>Next: <a href="External_Commands.html" title="next chapter">External Commands</a></li>
+    </ul>
+  </li>
+</ul>
+<h3><a href="index.html">Global Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Text Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.json_sorter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#wrap"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="External_Commands.html">External Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
+</ul>
+
+<h3><a href="index.html">Local Table of Contents</a></h3>
+<ul>
+<li><a class="reference internal" href="#">Text Utilities</a><ul>
+<li><a class="reference internal" href="#module-pyutil.json_sorter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><ul>
+<li><a class="reference internal" href="#module-json_sorter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> sorter</a><ul>
+<li><a class="reference internal" href="#one-line-solution">One Line Solution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#wrap"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code></a><ul>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Text.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2020, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Text.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Internet Utilities &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Numerical" href="numerical.html" />
+    <link rel="prev" title="Filesystem Scripts" href="filesystem.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="internet-utilities">
+<h1>Internet Utilities<a class="headerlink" href="#internet-utilities" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyutil.lazy_downloader">
+<span id="lazy-downloader"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code><a class="headerlink" href="#module-pyutil.lazy_downloader" title="Permalink to this headline">¶</a></h2>
+<p>Automates downloading plain text files from the Web.</p>
+<div class="section" id="id1">
+<h3>Lazy Downloader<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>As implemented currently, it will only correctly handle plain text;
+however, there are plans to implement the <code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetype</span></code> module and
+properly handle a much wider range of files.</p>
+<p>Both parameters, <a class="reference internal" href="#pyutil.lazy_downloader.url" title="pyutil.lazy_downloader.url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">url</span></code></a> and <a class="reference internal" href="#pyutil.lazy_downloader.output_fname" title="pyutil.lazy_downloader.output_fname"><code class="xref py py-obj docutils literal notranslate"><span class="pre">output_fname</span></code></a> are required parameters.</p>
+<div class="section" id="safety-features">
+<h4>Safety Features<a class="headerlink" href="#safety-features" title="Permalink to this headline">¶</a></h4>
+<p>If the filename already exists on the system it will NOT be overwritten,
+and the script will safely exit.</p>
+</div>
+<div class="section" id="setting-user-options">
+<h4>Setting User Options<a class="headerlink" href="#setting-user-options" title="Permalink to this headline">¶</a></h4>
+<p>This module is a perfect candidate for <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.ChainMap()</span></code>.
+We could check env vars, config files, command line args and user
+provided parameters and rank them in that order of importance when
+configuring the download.</p>
+<dl class="py attribute">
+<dt id="pyutil.lazy_downloader.url">
+<code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">url</code><a class="headerlink" href="#pyutil.lazy_downloader.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>A url to download</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyutil.lazy_downloader.output_fname">
+<code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">output_fname</code><a class="headerlink" href="#pyutil.lazy_downloader.output_fname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A path to write the downloaded content to. Defaults to the last
+section of the URL when split by forward slashes, or <kbd class="kbd docutils literal notranslate">/</kbd>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a>, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.lazy_downloader._get_page">
+<code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">_get_page</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">URL</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#_get_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader._get_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the content at <code class="xref py py-obj docutils literal notranslate"><span class="pre">URL</span></code>.</p>
+<p>Returns content if it is recognized HTML/XML. If not, return <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.lazy_downloader._parse_arguments">
+<code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader._parse_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse user input.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.lazy_downloader._parse_site">
+<code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">_parse_site</code><span class="sig-paren">(</span><em class="sig-param">URL</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#_parse_site"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader._parse_site" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the given <code class="xref py py-obj docutils literal notranslate"><span class="pre">URL</span></code>, remove tags and return plaintext.</p>
+<p>This should probably be modified to take the user agent and header args.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>URL</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Page to download.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>txt</strong> – Plaintext view of the website.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.lazy_downloader._parse_url">
+<code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">_parse_url</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">URL</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#_parse_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader._parse_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the url in order to get something usable if we don’t get a fname.</p>
+<p>If no output filename is given don’t crash!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>URL</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – A live URL to download a page from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>stripped_url</strong> – A URL that’s been split on the <kbd class="kbd docutils literal notranslate">/</kbd> symbols.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.lazy_downloader.check_response">
+<code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">check_response</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">server_response</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#check_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader.check_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that the headers sent by the server exist and are <em>200</em>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.lazy_downloader.find_links">
+<code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">find_links</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#find_links"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader.find_links" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search body of text for URLs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Body of formatted text to search for URLs.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>links</strong> – URLs found on site.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>todo</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.lazy_downloader.main">
+<code class="sig-prename descclassname">pyutil.lazy_downloader.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/lazy_downloader.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.lazy_downloader.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download URL and write to disk.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a>
+    <ul>
+          <li>Previous: <a href="filesystem.html" title="previous chapter">Filesystem Scripts</a></li>
+          <li>Next: <a href="numerical.html" title="next chapter">Numerical</a></li>
+    </ul>
+  </li>
+</ul>
+<h3><a href="index.html">Global Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Scripts</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Internet Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.lazy_downloader"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Text.html">Text Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="External_Commands.html">External Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
+</ul>
+
+<h3><a href="index.html">Local Table of Contents</a></h3>
+<ul>
+<li><a class="reference internal" href="#">Internet Utilities</a><ul>
+<li><a class="reference internal" href="#module-pyutil.lazy_downloader"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lazy_downloader</span></code></a><ul>
+<li><a class="reference internal" href="#id1">Lazy Downloader</a><ul>
+<li><a class="reference internal" href="#safety-features">Safety Features</a></li>
+<li><a class="reference internal" href="#setting-user-options">Setting User Options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Internet.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2020, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Internet.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

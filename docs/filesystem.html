@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Filesystem Scripts &#8212; pyutil 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Internet Utilities" href="Internet.html" />
+    <link rel="prev" title="Backup Utilities" href="Backups.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="filesystem-scripts">
+<h1>Filesystem Scripts<a class="headerlink" href="#filesystem-scripts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyutil.batch_renamer">
+<span id="batch-renamer"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">batch_renamer</span></code><a class="headerlink" href="#module-pyutil.batch_renamer" title="Permalink to this headline">¶</a></h2>
+<p>Renames a directory of files based on a template.</p>
+<span class="target" id="module-batch_renamer.py"></span><p>First we’ll examine the contents of a directory and ensure it only contains
+files with names we want to rename.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;/path/to/dir&quot;</span><span class="p">)</span>
+<span class="go">[&#39;img_1074.jpg&#39;, &#39;img_1076.jpg&#39;, &#39;img_1077.jpg&#39;]</span>
+</pre></div>
+</div>
+<p>As we can see it does we’ll then invoke the script like so.</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">python3 batch_renamer.py /path/to/dir</span>
+<span class="go">img_1074.jpg --&gt; Ashley_0.jpg</span>
+<span class="go">img_1076.jpg --&gt; Ashley_1.jpg</span>
+<span class="go">img_1077.jpg --&gt; Ashley_2.jpg</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt id="pyutil.batch_renamer.BatchRename">
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.batch_renamer.</code><code class="sig-name descname">BatchRename</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">template</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#BatchRename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.BatchRename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/string.html#string.Template" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">string.Template</span></code></a></p>
+<p>Delimiter for string substitutions.</p>
+<dl class="py attribute">
+<dt id="pyutil.batch_renamer.BatchRename.delimiter">
+<code class="sig-name descname">delimiter</code><em class="property"> = '%'</em><a class="headerlink" href="#pyutil.batch_renamer.BatchRename.delimiter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pyutil.batch_renamer.BatchRename.pattern">
+<code class="sig-name descname">pattern</code><em class="property"> = re.compile('\n    %(?:\n      (?P&lt;escaped&gt;%) |   # Escape sequence of two delimiters\n      (?P&lt;named&gt;(?a:[_a-z][_a-z0-9]*))      |   # delimiter and a Python identifier\n      {(?P&lt;braced&gt;(?a:[_a-z][_a-z0-9]*)), re.IGNORECASE|re.VERBOSE)</em><a class="headerlink" href="#pyutil.batch_renamer.BatchRename.pattern" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.batch_renamer._parse_arguments">
+<code class="sig-prename descclassname">pyutil.batch_renamer.</code><code class="sig-name descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer._parse_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse user arguments.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.batch_renamer.batch_mover">
+<code class="sig-prename descclassname">pyutil.batch_renamer.</code><code class="sig-name descname">batch_mover</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pattern</span></em>, <em class="sig-param"><span class="n">new_pattern</span></em>, <em class="sig-param"><span class="n">directory</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#batch_mover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.batch_mover" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move files in the current working directory that match a pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pattern</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Pattern to check filenames for. Functionally would be the old extension.</p></li>
+<li><p><strong>new_pattern</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – What to replace the old pattern with.</p></li>
+<li><p><strong>directory</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Directory where files that need to be renamed can be found.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.batch_renamer.file_check">
+<code class="sig-prename descclassname">pyutil.batch_renamer.</code><code class="sig-name descname">file_check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pattern</span></em>, <em class="sig-param"><span class="n">file_to_check</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#file_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.file_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that the file exists and matched the desired pattern.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.batch_renamer.main">
+<code class="sig-prename descclassname">pyutil.batch_renamer.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/batch_renamer.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.batch_renamer.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute module.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyutil.dir_cleaner">
+<span id="dir-cleaner"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir_cleaner</span></code><a class="headerlink" href="#module-pyutil.dir_cleaner" title="Permalink to this headline">¶</a></h2>
+<p>Deletes extraneous files.</p>
+<p>Without frequent monitoring, directories like /tmp and /var/log can frequently
+grow to sizes that are difficult to manage because of clutter and files.</p>
+<p>However, there has to be a middle ground between deleting thousands of files
+one by one and <strong class="command">rm -rf /tmp/</strong>.</p>
+<p>This module attempts that.</p>
+<p>Initially tested on the android app Termux, this specifically deletes
+directories with only month old sockets.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">$PREFIX</span></code>/tmp/nvim</p></li>
+<li><p><span class="target" id="index-1"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">$PREFIX</span></code>/tmp/ssh</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Ubuntu the big one is /var/log/journal so we might need to
+remind the user for credentials. <a class="reference external" href="https://docs.python.org/3/library/getpass.html#getpass.getpass" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">getpass.getpass()</span></code></a>?</p>
+</div>
+<p>In addition, it felt like a good way to get more familiar with the new
+<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#module-pathlib" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code></a> module.</p>
+<div class="section" id="concrete-roadmap">
+<h3>Concrete Roadmap<a class="headerlink" href="#concrete-roadmap" title="Permalink to this headline">¶</a></h3>
+<p>Up until now this has been fairly general and quite abstract.</p>
+<p>Let’s come up with a few pre-planned and clear endpoints.</p>
+<p>One way to implement this module would be:</p>
+<ol class="arabic simple">
+<li><p>Compare packages that are installed to what’s contained /usr/share/doc.
+I have like 4500 folders in that directory and nowhere near that many
+packages installed. Cruft and accumulation frequently doesn’t get cleared
+out of there correctly.</p></li>
+</ol>
+<dl class="py function">
+<dt id="pyutil.dir_cleaner.clean">
+<code class="sig-prename descclassname">pyutil.dir_cleaner.</code><code class="sig-name descname">clean</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ftype</span><span class="o">=</span><span class="default_value">'\\*.pyc'</span></em>, <em class="sig-param"><span class="n">recursive</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all pyc files. Add input for filetype later.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ftype</strong> (<em>filetype</em>) – File to iterately remove.</p></li>
+<li><p><strong>recursive</strong> (<em>Bool</em><em>, </em><em>Optional</em>) – Whether to search the directory recursively or not.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.dir_cleaner.dir_cleaner">
+<code class="sig-prename descclassname">pyutil.dir_cleaner.</code><code class="sig-name descname">dir_cleaner</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#dir_cleaner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.dir_cleaner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield all directories before november.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.dir_cleaner.main">
+<code class="sig-prename descclassname">pyutil.dir_cleaner.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Directory cleaner.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.dir_cleaner.rmtree">
+<code class="sig-prename descclassname">pyutil.dir_cleaner.</code><code class="sig-name descname">rmtree</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">ignore_errors</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">onerror</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dir_cleaner.html#rmtree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dir_cleaner.rmtree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <a class="reference external" href="https://docs.python.org/3/library/shutil.html#shutil.rmtree" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">shutil.rmtree()</span></code></a>.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-pyutil.dlink">
+<span id="dlink"></span><h2><a class="reference internal" href="#module-dlink" title="dlink: Symlinks a directory of files from another."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink</span></code></a><a class="headerlink" href="#module-pyutil.dlink" title="Permalink to this headline">¶</a></h2>
+<p>Symlink all of the files in one directory into another.</p>
+<span class="target" id="module-dlink"></span><div class="section" id="synopsis">
+<h3>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h3>
+<p>This module can be used to create individual symlinks to every file in a
+directory. This is a huge convenience wen symlinking dotfiles or configuration
+files held in a different location than where the software of interest expects
+it.</p>
+<p>This is quite easily one of my most frequently used scripts.</p>
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ln -s path/to/dest/* <span class="o">[</span>path/to/src<span class="o">]</span>
+</pre></div>
+</div>
+<p>As an example, one can <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">dotfiles</span></code> in a directory named <code class="xref py py-obj docutils literal notranslate"><span class="pre">projects</span></code>
+or <code class="xref py py-obj docutils literal notranslate"><span class="pre">src</span></code>. The location of the git repository is irrelevant, and as such, we’ll
+refer to it as <code class="xref py py-obj docutils literal notranslate"><span class="pre">src</span></code> from here, as <code class="xref py py-obj docutils literal notranslate"><span class="pre">dest</span></code> as it’s where the symlinks point to.</p>
+<p>For example if wants symlinks pointing to <code class="docutils literal notranslate"><span class="pre">/home/User/dotfiles/.vim</span></code>,
+then running dlink.py in <code class="docutils literal notranslate"><span class="pre">/home/User/.vim</span></code> with <code class="docutils literal notranslate"><span class="pre">$HOME/dotfiles/.vim</span></code> as
+an argument will create symlinks in <code class="docutils literal notranslate"><span class="pre">$HOME/.vim</span></code> pointing to
+<code class="docutils literal notranslate"><span class="pre">$HOME/dotfiles/.vim</span></code>.</p>
+</div>
+<div class="section" id="inspiration">
+<h3>Inspiration<a class="headerlink" href="#inspiration" title="Permalink to this headline">¶</a></h3>
+<p>If the module is given 2 args, the intended response is for it to behave  similarly to the classic Unix idiom:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ln -s path/to/dest/* <span class="o">[</span>path/to/src<span class="o">]</span>
+</pre></div>
+</div>
+<p>or treat it similarly to <a class="reference external" href="https://docs.python.org/3/library/os.html#os.symlink" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.symlink()</span></code></a>.</p>
+<dl class="py function">
+<dt id="pyutil.dlink.dlink">
+<code class="sig-prename descclassname">pyutil.dlink.</code><code class="sig-name descname">dlink</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dest</span></em>, <em class="sig-param"><span class="n">src</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink.html#dlink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink.dlink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Symlinks a directory from another one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The directory where the original files are located.</p></li>
+<li><p><strong>src</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Optional argument indicating the directory where the symlinks
+are to be created.
+If the <code class="xref py py-obj docutils literal notranslate"><span class="pre">src</span></code> argument isn’t provided, it is assumed that the current
+working directory is the <code class="xref py py-obj docutils literal notranslate"><span class="pre">src</span></code> dir.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="directory-linker-rewrite">
+<h2>Directory Linker Rewrite<a class="headerlink" href="#directory-linker-rewrite" title="Permalink to this headline">¶</a></h2>
+<p>This is a rewrite of a script I’ve had for years, so I decided to go above
+and beyond.</p>
+<p>The idea behind it was to create something that would easily allow for
+creating arbitrarily nested trees of symlinks.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Sep 17, 2019: Recursive option</p>
+<p>Currently doesnt work.</p>
+</div>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Logging doesnt log the right files.</p>
+</div>
+</div>
+<div class="section" id="dlink2-summary">
+<h2><code class="xref py py-obj docutils literal notranslate"><span class="pre">dlink2</span></code> Summary<a class="headerlink" href="#dlink2-summary" title="Permalink to this headline">¶</a></h2>
+<p>Generate symlinks to every file in the directory ‘destination_dir’.</p>
+<p>The module doesn’t immediately check for correct permissions or
+operating system.</p>
+<p>As a result, the onus is put on the user to ensure that the necessary
+requirements per OS are met.</p>
+<p>Namely on Windows 10, that if symlinks are allowed on the filesystem,
+whether they can only be created by an administrator. Recent enough
+versions of Windows 10 have introduced the ability for regular users
+to create symlinks as well as admins.</p>
+<span class="target" id="module-pyutil.dlink2"></span><dl class="py exception">
+<dt id="pyutil.dlink2.UsageError">
+<em class="property">exception </em><code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">UsageError</code><a class="reference internal" href="_modules/pyutil/dlink2.html#UsageError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.UsageError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>Symlinking error typically from Windows.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.dlink2.dlink">
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">dlink</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">destination_dir</span></em>, <em class="sig-param"><span class="n">source_dir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">is_recursive</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">glob_pattern</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#dlink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.dlink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Symlink user provided files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>destination_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Directory where symlinks point to.</p></li>
+<li><p><strong>source_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Directory where symlinks are created.</p></li>
+<li><p><strong>recursive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to recursively symlink directories beneath the
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">destination_dir</span></code>. Defaults to False.</p></li>
+<li><p><strong>glob_pattern</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Only symlink files that match a certain pattern.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.dlink2.generate_dest">
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">generate_dest</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dest</span></em>, <em class="sig-param"><span class="n">glob_pattern</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#generate_dest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.generate_dest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a generator for all the files in the destination directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Directory to find files in.</p></li>
+<li><p><strong>glob_pattern</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a> – File objects in dir.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.dlink2.get_basenames">
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">get_basenames</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">glob_pattern</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#get_basenames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.get_basenames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the basenames of all the files in a directory.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.dlink2.main">
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call <code class="xref py py-func docutils literal notranslate"><span class="pre">_parse_arguments()</span></code> and the <a class="reference internal" href="#module-dlink" title="dlink: Symlinks a directory of files from another."><code class="xref py py-func docutils literal notranslate"><span class="pre">dlink()</span></code></a> function.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyutil.dlink2.symlink">
+<code class="sig-prename descclassname">pyutil.dlink2.</code><code class="sig-name descname">symlink</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">src</span></em>, <em class="sig-param"><span class="n">dest</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/dlink2.html#symlink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.dlink2.symlink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the symlinking part of this.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyutil</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Faris A. Chugthai&repo=utilities&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a>
+    <ul>
+          <li>Previous: <a href="Backups.html" title="previous chapter">Backup Utilities</a></li>
+          <li>Next: <a href="Internet.html" title="next chapter">Internet Utilities</a></li>
+    </ul>
+  </li>
+</ul>
+<h3><a href="index.html">Global Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Backups.html">Backup Utilities</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Filesystem Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.batch_renamer"><code class="xref py py-mod docutils literal notranslate"><span class="pre">batch_renamer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dir_cleaner"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir_cleaner</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.dlink"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#directory-linker-rewrite">Directory Linker Rewrite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dlink2-summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dlink2</span></code> Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Internet.html">Internet Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical.html">Numerical Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Text.html">Text Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="External_Commands.html">External Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Other.html">Remaining Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
+</ul>
+
+<h3><a href="index.html">Local Table of Contents</a></h3>
+<ul>
+<li><a class="reference internal" href="#">Filesystem Scripts</a><ul>
+<li><a class="reference internal" href="#module-pyutil.batch_renamer"><code class="xref py py-mod docutils literal notranslate"><span class="pre">batch_renamer</span></code></a></li>
+<li><a class="reference internal" href="#module-pyutil.dir_cleaner"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dir_cleaner</span></code></a><ul>
+<li><a class="reference internal" href="#concrete-roadmap">Concrete Roadmap</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyutil.dlink"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dlink</span></code></a><ul>
+<li><a class="reference internal" href="#synopsis">Synopsis</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#inspiration">Inspiration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#directory-linker-rewrite">Directory Linker Rewrite</a></li>
+<li><a class="reference internal" href="#dlink2-summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dlink2</span></code> Summary</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/filesystem.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2020, Faris A Chugthai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/filesystem.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/Faris A. Chugthai/utilities" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

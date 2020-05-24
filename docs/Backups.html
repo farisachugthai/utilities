@@ -51,22 +51,21 @@ sections, this script has served a very utilitarian purpose.</p>
 </div>
 </div>
 <div class="section" id="module-pyutil.backup_nt_and_posix">
-<span id="backup-nt-and-posix"></span><h2><a class="reference internal" href="#module-backup_nt_and_posix" title="backup_nt_and_posix"><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code></a><a class="headerlink" href="#module-pyutil.backup_nt_and_posix" title="Permalink to this headline">¶</a></h2>
-<p>Backup a directory by appending the date and time and copying over.</p>
-<div class="section" id="id1">
-<h3>Backup NT and Posix<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<span class="target" id="module-backup_nt_and_posix"></span><div class="section" id="motivation">
-<h4>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h4>
+<span id="backup-nt-and-posix"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code><a class="headerlink" href="#module-pyutil.backup_nt_and_posix" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="motivation">
+<h3>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h3>
 <p>This script aims to be platform agnostic and in the long term will be used on
 Windows, Linux, Mac and Android systems.</p>
 <dl class="py function">
 <dt id="pyutil.backup_nt_and_posix.timestamped_dir">
-<code class="sig-prename descclassname">pyutil.backup_nt_and_posix.</code><code class="sig-name descname">timestamped_dir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">backup_dir</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">'.'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#timestamped_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.timestamped_dir" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a backup of a directory. Append date and time to new dir name.</p>
-<div class="admonition-todo admonition" id="id2">
+<code class="sig-prename descclassname">pyutil.backup_nt_and_posix.</code><code class="sig-name descname">timestamped_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/backup_nt_and_posix.html#timestamped_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.backup_nt_and_posix.timestamped_dir" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Create a backup of a directory. Append date and time to new dir name.</p>
+<div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>Change this so that it utilizes <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.check_call" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">subprocess.check_call()</span></code></a> so we handle return codes in a better way.</p>
 </div>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -74,24 +73,21 @@ Windows, Linux, Mac and Android systems.</p>
 <li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Directory to back up to. Defaults to cwd.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>err_code</strong> (<em>int</em>) – Non-zero value indicates error code, or zero on success.</p></li>
-<li><p><strong>err_msg</strong> (<em>str or None</em>) – Human readable error message, or None on success.</p></li>
-</ul>
-</p>
+<dt class="field-even">Returns response</dt>
+<dd class="field-even"><p>(err_code, err_msg)
+Non-zero value indicates error code, or zero on success.
+Human readable error message, or None on success.</p>
 </dd>
 </dl>
 </dd></dl>
 
 </div>
 </div>
-</div>
 <div class="section" id="module-pyutil.rclone">
 <span id="rclone"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code><a class="headerlink" href="#module-pyutil.rclone" title="Permalink to this headline">¶</a></h2>
-<p>Backup files using <a class="reference internal" href="#id3"><span class="std std-ref">rclone</span></a>.</p>
-<div class="section" id="id3">
-<h3>rclone<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Backup files using <a class="reference internal" href="#id2"><span class="std std-ref">rclone</span></a>.</p>
+<div class="section" id="id2">
+<h3>rclone<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p class="rubric">Requires</p>
 <p><a class="reference external" href="https://rclone.org">rclone</a>, a Golang package.</p>
 <ul class="simple">
@@ -161,7 +157,7 @@ rclone uses.</p>
 <p>There are situations in which one wants to follow symlinks and others
 that they don’t.</p>
 <p>This command assumes a use case and configures it rclone for it properly.</p>
-<div class="admonition-todo admonition" id="id5">
+<div class="admonition-todo admonition" id="id4">
 <p class="admonition-title">Todo</p>
 <p>rclone takes an argument for user-agent</p>
 </div>
@@ -277,14 +273,11 @@ of <code class="docutils literal notranslate"><span class="pre">returncode</span
 <li><a class="reference internal" href="#">Backup Utilities</a><ul>
 <li><a class="reference internal" href="#mv-to-repo"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mv_to_repo</span></code></a></li>
 <li><a class="reference internal" href="#module-pyutil.backup_nt_and_posix"><code class="xref py py-mod docutils literal notranslate"><span class="pre">backup_nt_and_posix</span></code></a><ul>
-<li><a class="reference internal" href="#id1">Backup NT and Posix</a><ul>
 <li><a class="reference internal" href="#motivation">Motivation</a></li>
 </ul>
 </li>
-</ul>
-</li>
 <li><a class="reference internal" href="#module-pyutil.rclone"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rclone</span></code></a><ul>
-<li><a class="reference internal" href="#id3">rclone</a></li>
+<li><a class="reference internal" href="#id2">rclone</a></li>
 </ul>
 </li>
 </ul>
@@ -316,7 +309,7 @@ of <code class="docutils literal notranslate"><span class="pre">returncode</span
       &copy;2018-2020, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,7 +4,7 @@
 # for the pyutil
 complete -o bashdefault -o default -F _fzf_path_completion -F _longopt dlink
 
-fzf-down() { # {{{ fzf
+fzf-down() { # fzf
     # Integration with ripgrep
 
     FZF_DEFAULT_COMMAND="rg --column --line-number --no-heading --color=always --smart-case "
@@ -22,18 +22,18 @@ is_in_git_repo() {
   git rev-parse HEAD > /dev/null 2>&1  || echo -e "Not in a git repo!\n"
 }
 
-# __git_complete_refs [<option>]...  {{{
-# Completes refs, short and long, local and remote, symbolic and pseudo.
-# --remote=<remote>: The remote to list refs from, can be the name of a
-#                    configured remote, a path, or a URL.
-# --track: List unique remote branches for 'git checkout's tracking DWIMery.
-# --pfx=<prefix>: A prefix to be added to each ref.
-# --cur=<word>: The current ref to be completed.  Defaults to the current
-#               word to be completed.
-# --sfx=<suffix>: A suffix to be appended to each ref instead of the default
-#                 space.
 __git_complete_refs ()
 {
+    # __git_complete_refs [<option>]...
+    # Completes refs, short and long, local and remote, symbolic and pseudo.
+    # --remote=<remote>: The remote to list refs from, can be the name of a
+    #                    configured remote, a path, or a URL.
+    # --track: List unique remote branches for 'git checkout's tracking DWIMery.
+    # --pfx=<prefix>: A prefix to be added to each ref.
+    # --cur=<word>: The current ref to be completed.  Defaults to the current
+    #               word to be completed.
+    # --sfx=<suffix>: A suffix to be appended to each ref instead of the default
+    #                 space.
 	local remote track pfx cur_="$cur" sfx=" "
 
 	while test $# != 0; do
@@ -104,7 +104,6 @@ fgs() { # {{{1 pick files from git status -s
   echo
 } # }}}
 
-
 fgps() { # {{{1 pick files from git status -s
   # doesn't work
 
@@ -143,7 +142,7 @@ fgl() { # {{{  Souped up git log with sort and preview
 
 complete -F __git_complete_refs -o bashdefault -o default fgl
 
-#   Updated versions of the above. From Choi's bashrc.:
+# Updated versions of the above. From Choi's bashrc.:
 
 fgzs() {  # git status through fzf: {{{1
   is_in_git_repo || return
@@ -237,9 +236,8 @@ fgstash() {  # {{{ git stash list
     ctrl-x) git stash drop $reflog ;;
   esac
 }
-# }}}
 
-# The bindings: {{{
+# The bindings:
 
 # TODO: add the vim-insert ones
 # so this raises if we execute instead of sourcing.
@@ -254,6 +252,4 @@ bind -m emacs-standard '"\C-g\C-r": "$(fgr)\e\C-e\er"'
 bind -m vi-insert '"\er": redraw-current-line'
 bind -m vi-insert '"\C-g\C-f": "$(fgf)\e\C-e\er"'
 
-# }}}
-
-# Vim: set et ts=4 sw=4 et sts=4:
+# Vim: set et ts=4 sw=4 et sts=4 fdm=syntax:

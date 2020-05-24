@@ -34,22 +34,7 @@
             
   <h1>Source code for pyutil.backup_nt_and_posix</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="sd">&quot;&quot;&quot;Backup a directory by appending the date and time and copying over.</span>
-
-<span class="sd">===================</span>
-<span class="sd">Backup NT and Posix</span>
-<span class="sd">===================</span>
-
-<span class="sd">.. highlight:: ipython</span>
-
-<span class="sd">.. module:: backup_nt_and_posix</span>
-
-<span class="sd">Motivation</span>
-<span class="sd">----------</span>
-<span class="sd">This script aims to be platform agnostic and in the long term will be used on</span>
-<span class="sd">Windows, Linux, Mac and Android systems.</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Backup a directory by appending the date and time and copying over.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -57,26 +42,6 @@
 
 
 <div class="viewcode-block" id="timestamped_dir"><a class="viewcode-back" href="../../Backups.html#pyutil.backup_nt_and_posix.timestamped_dir">[docs]</a><span class="k">def</span> <span class="nf">timestamped_dir</span><span class="p">(</span><span class="n">backup_dir</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Create a backup of a directory. Append date and time to new dir name.</span>
-
-<span class="sd">    .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` so we handle return codes in a better way.</span>
-
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    backup_dir : str</span>
-<span class="sd">        Directory to backup</span>
-<span class="sd">    path : str, optional</span>
-<span class="sd">        Directory to back up to. Defaults to cwd.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    err_code : int</span>
-<span class="sd">         Non-zero value indicates error code, or zero on success.</span>
-<span class="sd">    err_msg : str or None</span>
-<span class="sd">         Human readable error message, or None on success.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
         <span class="n">shell_command</span> <span class="o">=</span> <span class="s2">&quot;move&quot;</span>
 
@@ -183,7 +148,7 @@
       &copy;2018-2020, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

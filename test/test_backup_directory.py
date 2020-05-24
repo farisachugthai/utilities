@@ -49,7 +49,7 @@ class TestBackupDirectory(unittest.TestCase):
 
     def test_timestamped_dir(self):
         """Test that a directory is backed up correctly."""
-        self.setUp()
+        d = self.setUp()
         return_code = timestamped_dir(d, path=os.path.abspath(d))
         self.assertEqual(return_code, 0)
 

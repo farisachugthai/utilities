@@ -158,7 +158,6 @@ try:
         # A Platform specification describing an operating system supported by the
         # distribution which is not listed in the "Operating System" Trove
         # classifiers. See "Classifier" below.#
-        platform='any',
         classifiers=[
             # Trove classifiers
             # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers

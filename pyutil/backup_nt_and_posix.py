@@ -1,20 +1,5 @@
 #!/usr/bin/env python
-"""Backup a directory by appending the date and time and copying over.
-
-===================
-Backup NT and Posix
-===================
-
-.. highlight:: ipython
-
-.. module:: backup_nt_and_posix
-
-Motivation
-----------
-This script aims to be platform agnostic and in the long term will be used on
-Windows, Linux, Mac and Android systems.
-
-"""
+"""Backup a directory by appending the date and time and copying over."""
 import os
 import subprocess
 import sys
@@ -22,26 +7,6 @@ from time import strftime
 
 
 def timestamped_dir(backup_dir, path="."):
-    r"""Create a backup of a directory. Append date and time to new dir name.
-
-    .. todo:: Change this so that it utilizes :func:`subprocess.check_call()` so we handle return codes in a better way.
-
-
-    Parameters
-    ----------
-    backup_dir : str
-        Directory to backup
-    path : str, optional
-        Directory to back up to. Defaults to cwd.
-
-    Returns
-    -------
-    err_code : int
-         Non-zero value indicates error code, or zero on success.
-    err_msg : str or None
-         Human readable error message, or None on success.
-
-    """
     if os.name == "nt":
         shell_command = "move"
 

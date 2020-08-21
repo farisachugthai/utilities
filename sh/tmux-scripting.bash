@@ -10,24 +10,27 @@ tmux_check() { # Check if we're inside tmux: {{{
     fi
 }  # }}}
 
-tm_py() {   # {{{
-    tmux start-server;
-    if [[ -z $1 && $2 ]]; then
-        "tmux new-session -s $1 -n $2"
+tmpy() {   # {{{
+    if [[ -z "$TMUX" ]]; then
+      tmux start-server;
+    fi
+    if [[ -n $1 && $2 ]]; then
+        "$(tmux new-session -s $1 -n $2)"
 
-    elif [[ -z $1 ]]; then
-        "tmux new-session -s $1"
+    elif [[ -n $1 ]]; then
+        echo -e "'$1' is $1"
+        "$(tmux new-session -s $1)"
 
     else
-        'tmux new-session "-s default" "-n ipython" -d';
-        'tmux split-window "|" "-t default"'
+        tmux new-session -s default -n ipython -d;
+        tmux split-window -v -t default
     fi
 }   # }}}
 
-tm_nvim() {  # {{{
+tmnvim() {  # {{{
     # a means append the window number to the previous
     # P means print window info after
-    "tmux new-window -aP -n nvim -t default"
+    "$(tmux new-window -aP -n nvim -t default)"
 
     # TODO: How to start running commands. I find that really confusing.
     # the new window command wont work with CLAs. assign it to a var.
@@ -49,11 +52,11 @@ tm() {  #: {{{
     # additional arguments are currently ignored.
 
     # Jan 31, 2020: Checking if we're in tmux and starting a session first.
-    [[ -z "$TMUX" ]] && test -x byobu  && byobu-tmux -s tm || tmux new-session -s tm && return    
+    [[ -z "$TMUX" ]] && test -x byobu  && byobu-tmux -s tm || tmux new-session -s tm && return
     [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
-    if [[ "$1" ]]; then    
+    if [[ "$1" ]]; then
         tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s "$1" && tmux "$change" -t "$1"); return
-    fi  
+    fi
     # TODO: dude a preview window would be so cool.
     session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --no-multi --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 }

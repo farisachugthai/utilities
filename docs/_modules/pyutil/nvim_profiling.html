@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pyutil.nvim_profiling &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -52,6 +53,7 @@
 <span class="kn">import</span> <span class="nn">pynvim</span>
 <span class="kn">from</span> <span class="nn">pynvim.api.buffer</span> <span class="kn">import</span> <span class="n">Buffer</span>
 <span class="c1"># from pynvim.api.nvim import Nvim</span>
+<span class="kn">from</span> <span class="nn">pynvim.plugin</span> <span class="kn">import</span> <span class="n">script_host</span>
 
 <span class="kn">from</span> <span class="nn">pyutil.__about__</span> <span class="kn">import</span> <span class="n">__version__</span>
 <span class="c1"># from pyutil.env_checks import check_xdg_config_home</span>
@@ -97,17 +99,22 @@
 <div class="viewcode-block" id="Neovim"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.Neovim">[docs]</a><span class="k">class</span> <span class="nc">Neovim</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Instantiate a connection to neovim if it&#39;s running, establish the path if not.</span>
 
-<span class="sd">    Got to the point where I thought:</span>
+<span class="sd">    .. todo::</span>
 
-<span class="sd">    *Let&#39;s just rewrite this module.*</span>
+<span class="sd">        Utilize __new__ to establish a Global Object.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exe</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">exe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_instance</span><span class="p">()</span> <span class="k">if</span> <span class="n">exe</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">exe</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span> <span class="o">=</span> <span class="n">Buffer</span><span class="p">()</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instance</span> <span class="o">=</span> <span class="n">pynvim</span><span class="o">.</span><span class="n">Nvim</span><span class="o">.</span><span class="n">from_nvim</span><span class="p">(</span><span class="n">script_host</span><span class="o">.</span><span class="n">vim</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_instance</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_instance</span><span class="p">()</span>
+        <span class="c1"># self._buffer = Buffer()</span>
 
-<div class="viewcode-block" id="Neovim.running_instance"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.Neovim.running_instance">[docs]</a>    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">running_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Neovim.buffer"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.Neovim.buffer">[docs]</a>    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Neovim.listen_address"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.Neovim.listen_address">[docs]</a>    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">listen_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Is neovim running?</span>
 
 <span class="sd">        Returns</span>
@@ -116,23 +123,15 @@
 <span class="sd">            str if running None if not.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">remote</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NVIM_LISTEN_ADDRESS&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NVIM_LISTEN_ADDRESS&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">remote</span></div>
-
-<div class="viewcode-block" id="Neovim.buffer"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.Neovim.buffer">[docs]</a>    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">()</span></div>
+            <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="Neovim._get_instance"><a class="viewcode-back" href="../../External_Commands.html#pyutil.nvim_profiling.Neovim._get_instance">[docs]</a>    <span class="k">def</span> <span class="nf">_get_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Determine if neovim is running.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running_instance</span><span class="p">:</span>
-            <span class="n">vim</span> <span class="o">=</span> <span class="n">pynvim</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="s2">&quot;socket&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">running_instance</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">vim</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">listen_address</span><span class="p">:</span>
+            <span class="n">vim</span> <span class="o">=</span> <span class="n">pynvim</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="s2">&quot;socket&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">listen_address</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">vim</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_exe_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -289,7 +288,7 @@
       &copy;2018-2020, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

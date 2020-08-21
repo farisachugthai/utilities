@@ -14,9 +14,9 @@ import os
 import sys
 from shutil import rmtree
 
-from distutils.errors import DistutilsArgError
 from setuptools import Command, find_packages, setup
 from setuptools.dist import Distribution  # the powerhouse of the cell
+from distutils.errors import DistutilsArgError
 
 try:
     import pyutil
@@ -48,13 +48,7 @@ REQUIRED = [
 ]
 
 EXTRAS = {
-    "develop": [
-        "requests",
-        "flake8",
-        "flake8-rst",
-        "yapf"
-    ],
-
+    "develop": ["requests", "flake8", "flake8-rst", "yapf"],
     "docs": [
         "sphinx>=2.*",
         # Project uses reStructuredText, so ensure that the docutils get
@@ -63,7 +57,6 @@ EXTRAS = {
         "numpydoc>=0.9.1",
         "pyyaml",
     ],
-
     "test": ["pytest"],
 }
 
@@ -120,6 +113,8 @@ class UploadCommand(Command):  # {{{
         os.system("git push --tags")
 
         sys.exit()
+
+
 # }}}
 
 
@@ -169,7 +164,7 @@ try:
             "Programming Language :: Python :: Implementation :: CPython",
         ],
         # $ setup.py publish support.
-        cmdclass={"upload": UploadCommand, },
+        cmdclass={"upload": UploadCommand,},
         # project home page, if any
         # project_urls={
         #     "Bug Tracker": "https://bugs.example.com/HelloWorld/",
@@ -179,4 +174,4 @@ try:
         # could also include long_description, download_url, classifiers, etc.
     )
 except DistutilsArgError:
-    print('Incorrect arguments.')
+    print("Incorrect arguments.")

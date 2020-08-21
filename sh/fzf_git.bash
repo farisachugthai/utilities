@@ -4,26 +4,22 @@
 # for the pyutil
 complete -o bashdefault -o default -F _fzf_path_completion -F _longopt dlink
 
-fzf-down() { # fzf
+fzf-down() { # {{{ fzf
     # Integration with ripgrep
 
     FZF_DEFAULT_COMMAND="rg --column --line-number --no-heading --color=always --smart-case "
-    FZF_DEFAULT_OPTS=" --prompt 'FZF $: ' --ansi --cycle --sort \
-        --header 'Press CTRL-R to reload' \
-        --header-lines=1 --layout=reverse \
-        --ansi --phony"
+    FZF_DEFAULT_OPTS=" --prompt 'FZF $: ' --ansi --cycle --sort --header 'Press CTRL-R to reload' --header-lines=1 --layout=reverse --ansi --phony "
 
     fzf-tmux --query "$INITIAL_QUERY"
-}
+}  # }}}
 
 complete -F _fzf_opts_completion -o bashdefault -o default fzf-down
 
-is_in_git_repo() {
+is_in_git_repo() {  # {{{
   git rev-parse HEAD > /dev/null 2>&1  || echo -e "Not in a git repo!\n"
-}
+} # }}}
 
-__git_complete_refs ()
-{
+__git_complete_refs () {  # {{{
     # __git_complete_refs [<option>]...
     # Completes refs, short and long, local and remote, symbolic and pseudo.
     # --remote=<remote>: The remote to list refs from, can be the name of a
@@ -49,10 +45,9 @@ __git_complete_refs ()
 	done
 
 	__gitcomp_direct "$(__git_refs "$remote" "$track" "$pfx" "$cur_" "$sfx")"
-}
+}  # }}}
 
-
-fz() {  # Not git relates but depends on fasd:
+fz() {  # {{{ Not git relates but depends on fasd:
 
   test "$(command -v fasd)" || return
   f='fasd -f'
@@ -61,7 +56,7 @@ fz() {  # Not git relates but depends on fasd:
 
 complete -o bashdefault -F _fzf_opts_completion -o default  -o filenames fz
 
-dz() {  # Not git relates but depends on fasd:
+dz() {  # {{{ Not git relates but depends on fasd:
   test "$(command -v fasd)" || return
   d='fasd -d'
   d | awk -F' ' '{print $2}' | fzf-down
@@ -153,6 +148,8 @@ fgzs() {  # git status through fzf: {{{1
 }
 # }}}
 
+complete -F _git_status -F __git_complete_refs fgzs fgs fgps
+
 fghist() {  # Hist: {{{1
   is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
@@ -218,6 +215,7 @@ fgh() {  # {{{ git hist
 }  # }}}
 
 fgstash() {  # {{{ git stash list
+  is_in_git_repo || return
   local out k reflog
   out=(
     $(git stash list --pretty='%C(yellow)%gd %>(14)%Cgreen%cr %C(blue)%gs' |
@@ -252,4 +250,4 @@ bind -m emacs-standard '"\C-g\C-r": "$(fgr)\e\C-e\er"'
 bind -m vi-insert '"\er": redraw-current-line'
 bind -m vi-insert '"\C-g\C-f": "$(fgf)\e\C-e\er"'
 
-# Vim: set et ts=4 sw=4 et sts=4 fdm=syntax:
+# Vim: set et ts=4 sw=4 et sts=4 fdm=marker:

@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>External Commands &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -38,7 +39,7 @@
 <span id="external-commands"></span><h1>External Commands<a class="headerlink" href="#module-external_commands" title="Permalink to this headline">¶</a></h1>
 <p>All commands in this section rely on another tool or piece of software.</p>
 <p>The scripts therein collectively automate use of <strong class="command">git</strong>,
-<strong class="command">Neovim</strong>, <strong class="command">conda</strong>, and <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.14.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
+<strong class="command">Neovim</strong>, <strong class="command">conda</strong>, and <a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.html#module-IPython" title="(in IPython v7.16.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython</span></code></a>.</p>
 <div class="section" id="g">
 <h2><a class="reference internal" href="#module-g" title="g: Make working with Git safer and easier."><code class="xref py py-mod docutils literal notranslate"><span class="pre">g</span></code></a><a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="g-programmatically-work-with-subprocess-and-git">
@@ -203,11 +204,13 @@ that will behave similarly to the following command run in the shell:</p>
 <p>Automate profiling nvim.</p>
 <dl class="py class">
 <dt id="pyutil.nvim_profiling.Neovim">
-<em class="property">class </em><code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">Neovim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">exe</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyutil.nvim_profiling.</code><code class="sig-name descname">Neovim</code><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Instantiate a connection to neovim if it’s running, establish the path if not.</p>
-<p>Got to the point where I thought:</p>
-<p><em>Let’s just rewrite this module.</em></p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Utilize __new__ to establish a Global Object.</p>
+</div>
 <dl class="py method">
 <dt id="pyutil.nvim_profiling.Neovim._get_instance">
 <code class="sig-name descname">_get_instance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim._get_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim._get_instance" title="Permalink to this definition">¶</a></dt>
@@ -220,8 +223,8 @@ that will behave similarly to the following command run in the shell:</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="pyutil.nvim_profiling.Neovim.running_instance">
-<em class="property">property </em><code class="sig-name descname">running_instance</code><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim.running_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim.running_instance" title="Permalink to this definition">¶</a></dt>
+<dt id="pyutil.nvim_profiling.Neovim.listen_address">
+<em class="property">property </em><code class="sig-name descname">listen_address</code><a class="reference internal" href="_modules/pyutil/nvim_profiling.html#Neovim.listen_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.nvim_profiling.Neovim.listen_address" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is neovim running?</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -256,7 +259,7 @@ that will behave similarly to the following command run in the shell:</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
-<div class="admonition-todo admonition" id="id1">
+<div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>Allow the <code class="docutils literal notranslate"><span class="pre">test.py</span></code> file that we use for startup to be configured.</p>
 </div>
@@ -463,7 +466,7 @@ If we don’t need to capture output, check the return code.</p>
       &copy;2018-2020, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Maintainer: Faris Chugthai 
+# Maintainer: Faris Chugthai
 
 # set -euo pipefail
 
@@ -23,4 +23,4 @@ fi
 
 man_maker
 
-exit 0
+# exit 0

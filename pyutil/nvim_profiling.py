@@ -17,6 +17,7 @@ from timeit import Timer
 import pynvim
 from pynvim.api.buffer import Buffer
 # from pynvim.api.nvim import Nvim
+from pynvim.plugin import script_host
 
 from pyutil.__about__ import __version__
 # from pyutil.env_checks import check_xdg_config_home
@@ -62,17 +63,22 @@ def _parse_arguments():
 class Neovim:
     """Instantiate a connection to neovim if it's running, establish the path if not.
 
-    Got to the point where I thought:
+    .. todo::
 
-    *Let's just rewrite this module.*
+        Utilize __new__ to establish a Global Object.
+
     """
 
-    def __init__(self, exe=None):
-        self.exe = self._get_instance() if exe is None else exe
-        self._buffer = Buffer()
+    def __init__(self):
+        self.instance = pynvim.Nvim.from_nvim(script_host.vim) if self._get_instance() is None else self._get_instance()
+        # self._buffer = Buffer()
 
     @property
-    def running_instance(self):
+    def buffer(self):
+        return self._buffer()
+
+    @property
+    def listen_address(self):
         """Is neovim running?
 
         Returns
@@ -81,23 +87,15 @@ class Neovim:
             str if running None if not.
         """
         try:
-            remote = os.environ.get("NVIM_LISTEN_ADDRESS")
+            return os.environ.get("NVIM_LISTEN_ADDRESS")
         except OSError:
-            return None
-        else:
-            return remote
-
-    @property
-    def buffer(self):
-        return self._buffer()
+            return False
 
     def _get_instance(self):
         """Determine if neovim is running."""
-        if self.running_instance:
-            vim = pynvim.attach("socket", path=self.running_instance)
+        if self.listen_address:
+            vim = pynvim.attach("socket", path=self.listen_address)
             return vim
-        else:
-            return None
 
     @property
     def _exe_path(self):

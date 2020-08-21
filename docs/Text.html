@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Utilities &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -36,13 +37,11 @@
             
   <div class="section" id="text-utilities">
 <h1>Text Utilities<a class="headerlink" href="#text-utilities" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-pyutil.json_sorter">
-<span id="json-sorter"></span><h2><a class="reference internal" href="#module-json_sorter" title="json_sorter: Sort a JSON file by key without losing organization for nested elements."><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><a class="headerlink" href="#module-pyutil.json_sorter" title="Permalink to this headline">¶</a></h2>
-<p>Take a <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> file, sort the keys and insert 4 spaces for indents.</p>
 <div class="section" id="module-json_sorter">
-<span id="id1"></span><h3><a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> sorter<a class="headerlink" href="#module-json_sorter" title="Permalink to this headline">¶</a></h3>
+<span id="json-sorter"></span><h2><a class="reference internal" href="#module-json_sorter" title="json_sorter: Sort a JSON file by key without losing organization for nested elements."><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><a class="headerlink" href="#module-json_sorter" title="Permalink to this headline">¶</a></h2>
+<p>Take a <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> file, sort the keys and insert 4 spaces for indents.</p>
 <div class="section" id="one-line-solution">
-<h4>One Line Solution<a class="headerlink" href="#one-line-solution" title="Permalink to this headline">¶</a></h4>
+<h3>One Line Solution<a class="headerlink" href="#one-line-solution" title="Permalink to this headline">¶</a></h3>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">((</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;settings.json&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">getitemattr</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -53,7 +52,7 @@ we’re somehow barely closer to done.</p>
 entire package.</p>
 <p>The logger <strong>should</strong> be set up that way.</p>
 <p>This code is going to easily clear 100 lines when a JSON encoded object shouldn’t
-take more than a few lines to deserialize and work with.</p>
+take more than a few lines to de-serialize and work with.</p>
 <p>This’ll serve as a good template for testing out tools to build a simple
 script with.</p>
 <p>The problem is already solved. Let’s see what we can’t squeeze out of our tools
@@ -61,8 +60,7 @@ along the way.</p>
 <p>Interestingly enough, this display of excessiveness started as a simple
 quick fix.</p>
 <p>Originally, this module was used to fix my <a class="reference external" href="../.vscode/settings.json">../.vscode/settings.json</a> from VSCode.</p>
-<hr class="docutils" />
-<dl class="py function">
+<span class="target" id="module-pyutil.json_sorter"></span><dl class="py function">
 <dt id="pyutil.json_sorter._parse_arguments">
 <code class="sig-prename descclassname">pyutil.json_sorter.</code><code class="sig-name descname">_parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyutil/json_sorter.html#_parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyutil.json_sorter._parse_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse arguments given by the user.</p>
@@ -138,7 +136,6 @@ It will only write to the file if the filename currently doesn’t exist.</p></l
 </dl>
 </dd></dl>
 
-</div>
 </div>
 </div>
 <div class="section" id="wrap">
@@ -217,7 +214,7 @@ paragraphs, as separated by empty lines.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.text.html#module-IPython.utils.text" title="(in IPython v7.14.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython.utils.text</span></code></a></p>
+<p><a class="reference external" href="https://ipython.readthedocs.io/en/stable/api/generated/IPython.utils.text.html#module-IPython.utils.text" title="(in IPython v7.16.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IPython.utils.text</span></code></a></p>
 </div>
 </div>
 </div>
@@ -263,7 +260,7 @@ paragraphs, as separated by empty lines.</p>
 <li class="toctree-l1"><a class="reference internal" href="Internet.html">Internet Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numerical.html">Numerical Analysis</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Text Utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyutil.json_sorter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-json_sorter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#wrap"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code></a></li>
 </ul>
 </li>
@@ -277,11 +274,8 @@ paragraphs, as separated by empty lines.</p>
 <h3><a href="index.html">Local Table of Contents</a></h3>
 <ul>
 <li><a class="reference internal" href="#">Text Utilities</a><ul>
-<li><a class="reference internal" href="#module-pyutil.json_sorter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><ul>
-<li><a class="reference internal" href="#module-json_sorter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> sorter</a><ul>
+<li><a class="reference internal" href="#module-json_sorter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json_sorter</span></code></a><ul>
 <li><a class="reference internal" href="#one-line-solution">One Line Solution</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#wrap"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrap</span></code></a><ul>
@@ -317,7 +311,7 @@ paragraphs, as separated by empty lines.</p>
       &copy;2018-2020, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

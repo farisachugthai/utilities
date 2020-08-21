@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pyutil.json_sorter &#8212; pyutil 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -35,46 +36,6 @@
   <h1>Source code for pyutil.json_sorter</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Take a :mod:`json` file, sort the keys and insert 4 spaces for indents.</span>
-
-<span class="sd">==================</span>
-<span class="sd">:mod:`json` sorter</span>
-<span class="sd">==================</span>
-
-<span class="sd">.. module:: json_sorter</span>
-<span class="sd">    :synopsis: Sort a JSON file by key without losing organization for nested elements.</span>
-
-<span class="sd">One Line Solution</span>
-<span class="sd">=================</span>
-
-<span class="sd">&gt;&gt;&gt; sorted((json.loads(open(&#39;settings.json&#39;).read()).items()), key=operator.getitemattr)</span>
-
-<span class="sd">You definitely shouldn&#39;t implement it as a one liner, *as you can clearly see,*;</span>
-<span class="sd">however 5 functions and a handful of instantiated classes and debugging, and</span>
-<span class="sd">we&#39;re somehow barely closer to done.</span>
-
-<span class="sd">The functions for reading and writing files could be refactored and used over the</span>
-<span class="sd">entire package.</span>
-
-<span class="sd">The logger **should** be set up that way.</span>
-
-<span class="sd">This code is going to easily clear 100 lines when a JSON encoded object shouldn&#39;t</span>
-<span class="sd">take more than a few lines to deserialize and work with.</span>
-
-<span class="sd">This&#39;ll serve as a good template for testing out tools to build a simple</span>
-<span class="sd">script with.</span>
-
-<span class="sd">The problem is already solved. Let&#39;s see what we can&#39;t squeeze out of our tools</span>
-<span class="sd">along the way.</span>
-
-<span class="sd">Interestingly enough, this display of excessiveness started as a simple</span>
-<span class="sd">quick fix.</span>
-
-<span class="sd">Originally, this module was used to fix my `&lt;../.vscode/settings.json&gt;`_ from VSCode.</span>
-
-<span class="sd">----------</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -329,7 +290,7 @@
       &copy;2018-2020, Faris A Chugthai.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

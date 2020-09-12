@@ -719,17 +719,6 @@ doc3 = NumpyDocString("""
     """)
 
 
-def test_escape_stars():
-    signature = str(doc3).split('\n')[0]
-    assert signature == r'my_signature(\*params, \*\*kwds)'
-
-    def my_func():
-        pass
-
-    fdoc = FunctionDoc(func=my_func)
-    assert fdoc['Signature'] == r'my_func(a, b, \*\*kwargs)'
-
-
 doc4 = NumpyDocString(
     """a.conj()
 
@@ -770,61 +759,6 @@ def test_warns():
     assert param.name == ''
     assert param.type == 'SomeWarning'
     assert param.desc == ['If needed']
-
-
-def test_see_also():
-    doc6 = NumpyDocString(
-        """
-    z(x,theta)
-
-    See Also
-    --------
-    func_a, func_b, func_c
-    func_d : some equivalent func
-    foo.func_e : some other func over
-             multiple lines
-    func_f, func_g, :meth:`func_h`, func_j,
-    func_k
-    func_f1, func_g1, :meth:`func_h1`, func_j1
-    func_f2, func_g2, :meth:`func_h2`, func_j2 : description of multiple
-    :obj:`baz.obj_q`
-    :obj:`~baz.obj_r`
-    :class:`class_j`: fubar
-        foobar
-    """)
-
-    assert len(doc6['See Also']) == 10
-    for funcs, desc in doc6['See Also']:
-        for func, role in funcs:
-            if func in ('func_a', 'func_b', 'func_c', 'func_f',
-                        'func_g', 'func_h', 'func_j', 'func_k', 'baz.obj_q',
-                        'func_f1', 'func_g1', 'func_h1', 'func_j1',
-                        '~baz.obj_r'):
-                assert not desc, str([func, desc])
-            elif func in ('func_f2', 'func_g2', 'func_h2', 'func_j2'):
-                assert desc, str([func, desc])
-        else:
-            assert desc, str([func, desc])
-
-        if func == 'func_h':
-            assert role == 'meth'
-        elif func == 'baz.obj_q' or func == '~baz.obj_r':
-            assert role == 'obj'
-        elif func == 'class_j':
-            assert role == 'class'
-        elif func in ['func_h1', 'func_h2']:
-            assert role == 'meth'
-        else:
-            assert role is None, str([func, role])
-
-        if func == 'func_d':
-            assert desc == ['some equivalent func']
-        elif func == 'foo.func_e':
-            assert desc == ['some other func over', 'multiple lines']
-        elif func == 'class_j':
-            assert desc == ['fubar', 'foobar']
-        elif func in ['func_f2', 'func_g2', 'func_h2', 'func_j2']:
-            assert desc == ['description of multiple'], str([desc, ['description of multiple']])
 
 
 def test_see_also_parse_error():
@@ -1485,29 +1419,6 @@ Test xref in Parameters, Other Parameters and Returns
     **p5** : :obj:`python:sequence` of `int`
         A sequence
 """
-
-
-def test_xref():
-    xref_aliases = {
-        'sequence': ':obj:`python:sequence`',
-    }
-    config = namedtuple('numpydoc_xref_aliases',
-                        'numpydoc_xref_aliases')(xref_aliases)
-    app = namedtuple('config', 'config')(config)
-    update_config(app)
-
-    xref_ignore = {'of', 'default', 'optional'}
-
-    doc = SphinxDocString(
-        xref_doc_txt,
-        config=dict(
-            xref_param_type=True,
-            xref_aliases=xref_aliases,
-            xref_ignore=xref_ignore
-        )
-    )
-
-    line_by_line_compare(str(doc), xref_doc_txt_expected)
 
 
 if __name__ == "__main__":

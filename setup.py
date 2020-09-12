@@ -43,22 +43,27 @@ CONF_PATH = os.path.dirname(os.path.abspath("docs"))
 BUILD_PATH = os.path.join(CONF_PATH, "build")
 SOURCE_PATH = os.path.join(CONF_PATH, "_source")
 
+# Tests fail for some reason otherwise
 REQUIRED = [
-    "pynvim>=0.4.*",
-    "IPython>=7.*",
+    "jinja2",
+    "numpydoc>=0.9.1",
 ]
 
+tests_require = ["pytest"]
+
+docs_require = [
+    "sphinx>=2.*",
+    # Project uses reStructuredText, so ensure that the docutils get
+    # installed or upgraded on the target machine
+    "docutils>=0.3",
+]
+
+dev_require = ["requests", "flake8", "flake8-rst", "autopep8"] + docs_require + tests_require
+
 EXTRAS = {
-    "develop": ["requests", "flake8", "flake8-rst", "yapf"],
-    "docs": [
-        "sphinx>=2.*",
-        # Project uses reStructuredText, so ensure that the docutils get
-        # installed or upgraded on the target machine
-        "docutils>=0.3",
-        "numpydoc>=0.9.1",
-        "pyyaml",
-    ],
-    "test": ["pytest"],
+    "dev": dev_require,
+    "docs": docs_require,
+    "test": tests_require,
 }
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -137,11 +142,11 @@ try:
                 "dlink=pyutil.dlink2:main",
             ],
         },
-        install_requires=REQUIRED,
         extras_require=EXTRAS,
         test_suite="test",
         # don't use setup_requires it's really not well supported
         # setup_requires=['nose>=1.0'],
+        install_requires=REQUIRED,
         include_package_data=True,
         package_data={
             # If any package contains *.txt or *.rst files, include them:
@@ -163,7 +168,7 @@ try:
             "Programming Language :: Python :: Implementation :: CPython",
         ],
         # $ setup.py publish support.
-        cmdclass={"upload": UploadCommand,},
+        cmdclass={"upload": UploadCommand, },
         # project home page, if any
         # project_urls={
         #     "Bug Tracker": "https://bugs.example.com/HelloWorld/",

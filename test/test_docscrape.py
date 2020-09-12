@@ -326,7 +326,7 @@ That should break...
             """Cheese\n\nNo cheese."""
             pass
 
-    def dummy_func(arg):
+    def dummy_func():
         """
         Dummy function.
 
@@ -723,7 +723,7 @@ def test_escape_stars():
     signature = str(doc3).split('\n')[0]
     assert signature == r'my_signature(\*params, \*\*kwds)'
 
-    def my_func(a, b, **kwargs):
+    def my_func():
         pass
 
     fdoc = FunctionDoc(func=my_func)

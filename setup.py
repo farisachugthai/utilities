@@ -35,7 +35,8 @@ LICENSE = ("MIT",)
 KEYWORDS = ("linux math science",)
 URL = ("https://github.com/farisachugthai/utilities",)
 REQUIRES_PYTHON = ">=3.6.0"  # actually could be as bad as 3.7+ only.
-VERSION = "0.0.2"
+# Load the package's __version__.py module as a dictionary.
+about = {"__version__": "0.0.2"}
 
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 CONF_PATH = os.path.dirname(os.path.abspath("docs"))
@@ -68,8 +69,6 @@ try:
 except FileNotFoundError:
     long_description = DESCRIPTION
 
-# Load the package's __version__.py module as a dictionary.
-about = {"__version__": "0.0.1"}
 # }}}}
 
 

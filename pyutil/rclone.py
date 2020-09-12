@@ -37,7 +37,7 @@ from pyutil.__about__ import __version__
 LOG_LEVEL = "logging.WARNING"
 
 
-def _parse_arguments(cwd=None, **kwargs):
+def _parse_arguments(cwd=None):
     """Parse user-given arguments."""
     if cwd is None:
         cwd = os.getcwd()
@@ -217,7 +217,7 @@ class CloudProvider:
         logging.debug("URL was: " + self.url)
 
     @url.setter
-    def url(self, value):
+    def url(self):
         logging.debug("Old URL was: " + self.url)
         # set it
         logging.debug("New URL is: " + self.url)

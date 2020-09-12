@@ -5,6 +5,7 @@ import logging
 import sys
 import traceback
 from pathlib import Path
+from typing import Union
 
 logging.basicConfig(level=logging.INFO)
 
@@ -112,14 +113,14 @@ def generate_dest(dest, glob_pattern=None):
                 "Can't create needed directories for recursive symlinks."
             )
         except OSError:
-            logging.error("%s" % dest, exc_info=1)
+            logging.error(f"{dest}", exc_info=1)
     if glob_pattern is None:
         glob_pattern = '*'
     ret = [i for i in dest.glob(glob_pattern)]
     return ret
 
 
-def get_basenames(directory, glob_pattern=None):
+def get_basenames(directory: Path, glob_pattern: str = None) -> Union[list, Path]:
     """Get the basenames of all the files in a directory."""
     if not hasattr(directory, "iterdir"):
         directory = Path(directory)
@@ -138,7 +139,7 @@ def dlink(destination_dir, source_dir=None, is_recursive=False, glob_pattern=Non
         Directory where symlinks point to.
     source_dir : str, optional
         Directory where symlinks are created.
-    recursive : bool, optional
+    is_recursive : bool, optional
         Whether to recursively symlink directories beneath the
         `destination_dir`. Defaults to False.
     glob_pattern : str
@@ -229,4 +230,5 @@ def main():
 
 
 if __name__ == "__main__":
+    breakpoint()
     sys.exit(main())

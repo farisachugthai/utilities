@@ -88,7 +88,7 @@ def _parse_arguments():
     return args
 
 
-def batch_mover(pattern, new_pattern, directory=None):
+def batch_mover(pattern, directory=None):
     """Move files in the current working directory that match a pattern.
 
     Parameters
@@ -135,7 +135,7 @@ def main():
         logging.basicConfig(level=log_level)
 
     logging.debug("The directory that was chosen was: " + str(d))
-    batch_mover(pattern=old, new_pattern=fmt, directory=d)
+    batch_mover(pattern=old, directory=d)
 
 
 if __name__ == "__main__":

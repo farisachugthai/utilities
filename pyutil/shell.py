@@ -53,7 +53,7 @@ class BaseCommand:
         # logging.info('Output: %s' % reprlib.Repr(output))
         return output
 
-    def popen(self, cmd=None):
+    def popen(self):
         """Execute the required command in a subshell.
 
         First the command is split using :mod:`shlex`.

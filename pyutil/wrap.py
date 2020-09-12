@@ -16,7 +16,6 @@ class ZimText(TextWrapper):
 
     def __init__(
             self,
-            text=None,
             width=80,
             break_long_words=False,
             break_on_hyphens=False,

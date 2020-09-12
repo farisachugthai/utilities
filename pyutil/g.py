@@ -57,7 +57,7 @@ class Git(BaseCommand):
 
     """
 
-    def __init__(self, root=None, **kwargs):
+    def __init__(self, root=None):
         """Initialize a few necessary parameters."""
         if root is None:
             self.root = self._get_git_root()
@@ -74,7 +74,7 @@ class Git(BaseCommand):
         return self.run()
 
     @staticmethod
-    def _quote(self, cmd):
+    def _quote(cmd):
         """Which one of these two is preferable?"""
         return shlex.quote(cmd)
 
@@ -95,7 +95,7 @@ class Git(BaseCommand):
         """Checks output from a subprocess call."""
         try:
             output = subprocess.check_output(
-                [self._quote(cmd), kwargs],
+                [self._quote(), kwargs],
                 universal_newlines=True,
                 stderr=subprocess.PIPE,
             )

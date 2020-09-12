@@ -34,7 +34,7 @@ def get_path():
     return os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
-def update_context(app, pagename, templatename, context, doctree):
+def update_context(context):
     context["alabaster_version"] = alabaster_version.__version__
 
 

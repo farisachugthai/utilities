@@ -32,7 +32,7 @@ BUILD_PATH = os.path.join(DOC_PATH, '_build')
 LOGGER = logging.getLogger(name=__name__)
 
 
-def _parse_arguments(cmds=None):
+def _parse_arguments():
     """Parse user arguments.
 
     Parameters

@@ -16,7 +16,7 @@ from sphinx.roles import XRefRole
 name_re = re.compile(r"[\w_]+")
 
 
-def parse_magic(env, sig, signode):
+def parse_magic(sig, signode):
     m = name_re.match(sig)
     if not m:
         raise Exception("Invalid magic command: %s" % sig)
@@ -36,7 +36,7 @@ class LineMagicRole(XRefRole):
         return title, target
 
 
-def parse_cell_magic(env, sig, signode):
+def parse_cell_magic(sig, signode):
     m = name_re.match(sig)
     if not m:
         raise ValueError("Invalid cell magic: %s" % sig)

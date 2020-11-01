@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """Automate profiling nvim."""
 import argparse
-import codecs
 import datetime
 import logging
 import os
@@ -13,9 +12,9 @@ from pathlib import Path
 # from profile import run
 from shutil import which
 from timeit import Timer
+from typing import Optional, Union
 
 import pynvim
-from pynvim.api.buffer import Buffer
 # from pynvim.api.nvim import Nvim
 from pynvim.plugin import script_host
 
@@ -73,18 +72,14 @@ class Neovim:
         self.instance = pynvim.Nvim.from_nvim(script_host.vim) if self._get_instance() is None else self._get_instance()
         # self._buffer = Buffer()
 
-    @property
-    def buffer(self):
-        return self._buffer()
-
-    @property
-    def listen_address(self):
+    @staticmethod
+    def listen_address() -> Optional[Union[str, bool]]:
         """Is neovim running?
 
         Returns
         -------
-        str or None
-            str if running None if not.
+        str or bool
+            str if running False if not.
         """
         try:
             return os.environ.get("NVIM_LISTEN_ADDRESS")
@@ -97,16 +92,16 @@ class Neovim:
             vim = pynvim.attach("socket", path=self.listen_address)
             return vim
 
-    @property
-    def _exe_path(self):
+    @staticmethod
+    def _exe_path():
         """Where is neovim located?"""
         return which("nvim")
 
     def __repr__(self) -> str:
-        return f"<Nvim: {self.__class__.__name__}, {self.exe}>"
+        return f"<Nvim: {self.__class__.__name__}, {self._exe_path()}>"
 
 
-def output_results(output_dir):
+def output_results(output_dir: str) -> bool:
     """Checks that an directory named profiling exists.
 
     IPython has a function in :mod:`IPython.utils` that I believe is called
@@ -133,7 +128,7 @@ def output_results(output_dir):
         return True
 
 
-def get_log_file(nvim_root):
+def get_log_file(nvim_root: str) -> str:
     """Profile nvim.
 
     Parameters
@@ -158,19 +153,18 @@ def get_log_file(nvim_root):
     return os.path.join(nvim_root, "", now)
 
 
-def main():
+def main() -> Timer:
     # id probably do as well to refactor and make this a general decorator
     # ugh this fell apart. todo. there was a programmatic way i found to find nvim config dir.
-    return Timer(nvim_process(get_log_file(Path.cwd())))
+    log_file = Path.resolve(Path.cwd())
+    return Timer(nvim_process(get_log_file(log_file)))
 
 
-def nvim_process(profiling_log_file=None):
-    if profiling_log_file is None:
-        profiling_log_file = get_log_file()
+def nvim_process(profiling_log_file: str) -> Optional[str]:
     try:
-        return codecs.decode(subprocess.check_output(
+        return subprocess.run(
             ["nvim", "--startuptime", profiling_log_file, "test.py", "-c", ":qall"]
-        ).stdout, "utf-8")
+        )
     except subprocess.CalledProcessError:
         pass
 

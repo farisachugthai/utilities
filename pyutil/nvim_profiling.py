@@ -11,7 +11,7 @@ from pathlib import Path
 # from platform import system
 # from profile import run
 from shutil import which
-from timeit import Timer
+# from timeit import Timer
 from typing import Optional, Union
 
 import pynvim
@@ -20,9 +20,6 @@ from pynvim.plugin import script_host
 
 from pyutil.__about__ import __version__
 # from pyutil.env_checks import check_xdg_config_home
-
-LOGGER = logging.getLogger(name=__name__)
-LOG_LEVEL = "logging.WARNING"
 
 
 def _parse_arguments():
@@ -34,29 +31,45 @@ def _parse_arguments():
     parser.add_argument(
         "-p",
         "--path",
-        dest="path",
+        default="test.py",
         help="Path to the location of the temporary buffer for Nvim.",
+    )
+
+    parser.add_argument(
+        "-o",
+        "--output",
+        default="nvim.log",
+        help="File to write profiling results to.",
+    )
+
+    parser.add_argument(
+        "-r",
+        "--reruns",
+        type=int,
+        default=1,
+        help="Number of times to rerun neovim startup",
     )
 
     parser.add_argument(
         "-ll",
         "--log_level",
         dest="log_level",
-        metavar="Log Level.",
-        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        default=29,
+        choices=[0, 10, 20, 30, 40],
         help="Set the logging level",
     )
 
+    __version__ = "1"
     parser.add_argument(
         "-V", "--version", action="version", version="%(prog)s" + __version__
     )
 
     # sys.argv by default when invoking python from inside of neovim.
-    if len(sys.argv) == 1 or sys.argv == ['-c', 'script_host.py']:
-        # print help so we dont raise systemexit.
-        sys.exit(parser.print_help())
-    else:
-        return parser
+    # if len(sys.argv) == 1 or sys.argv == ['-c', 'script_host.py']:
+    #     # print help so we dont raise systemexit.
+    #     sys.exit(parser.print_help())
+    # else:
+    return parser
 
 
 class Neovim:
@@ -68,12 +81,25 @@ class Neovim:
 
     """
 
-    def __init__(self):
-        self.instance = pynvim.Nvim.from_nvim(script_host.vim) if self._get_instance() is None else self._get_instance()
-        # self._buffer = Buffer()
+    def __init__(
+        self,
+        file_to_open: str,
+        output_file: Optional[Union[str, Path]] = "nvim.log",
+    ):
+        """Initialize the instance.
 
-    @staticmethod
-    def listen_address() -> Optional[Union[str, bool]]:
+        Parameters
+        ----------
+        profiling_log_file : str or Path
+            The directory to put the output.
+        """
+        # self.instance = pynvim.Nvim.from_nvim(script_host.vim) if self._get_instance() is None else self._get_instance()
+        # self._buffer = Buffer()
+        self.log = output_file
+        self.path = file_to_open
+
+    @property
+    def listen_address(self) -> Optional[Union[str, bool]]:
         """Is neovim running?
 
         Returns
@@ -86,11 +112,22 @@ class Neovim:
         except OSError:
             return False
 
-    def _get_instance(self):
-        """Determine if neovim is running."""
-        if self.listen_address:
-            vim = pynvim.attach("socket", path=self.listen_address)
-            return vim
+    def attach_to_process(self):
+        # This probably isnt gonna work. We need an already running
+        # instance and this is more used for controlling the already
+        # running nvim process
+        child_argv = os.environ.get('NVIM_CHILD_ARGV')
+        if child_argv is None and self.listen_address is None:
+            child_argv = f'["nvim", "--startuptime", "{self.log}", "{self.path}", "-c", ":qall"]'
+
+        if child_argv is not None:
+            import json
+            editor = pynvim.attach('child', argv=json.loads(child_argv))
+        else:
+            assert self.listen_address is None or self.listen_address != ''
+            editor = pynvim.attach('socket', path=self.listen_address)
+
+        return editor
 
     @staticmethod
     def _exe_path():
@@ -100,81 +137,30 @@ class Neovim:
     def __repr__(self) -> str:
         return f"<Nvim: {self.__class__.__name__}, {self._exe_path()}>"
 
-
-def output_results(output_dir: str) -> bool:
-    """Checks that an directory named profiling exists.
-
-    IPython has a function in :mod:`IPython.utils` that I believe is called
-    ensure_dir_exists. Do we provide anything that that implementation doesn't?
-
-    Parameters
-    ----------
-    output_dir : str
-        Directory to store profiling results in.
-
-    Returns
-    -------
-    Bool
-
-    """
-    if os.path.isdir(os.path.join(output_dir, "profiling")) is False:
+    def run(self) -> Optional[subprocess.CompletedProcess[bytes]]:
         try:
-            os.mkdir(os.path.join(output_dir, "profiling"))
-        except OSError as e:
-            sys.exit(e)
-        else:
-            return True
-    else:
-        return True
+            return subprocess.run(
+                ["nvim", "--startuptime", self.log, self.path, "-c", ":qall"]
+            )
+        except subprocess.CalledProcessError:
+            pass
 
 
-def get_log_file(nvim_root: str) -> str:
-    """Profile nvim.
-
-    Parameters
-    -----------
-    nvim_root : str
-        The directory where nvim's configuration files are found.
-
-    Returns
-    --------
-    profiling_log_file : str
-        Creates file based on the current time in ISO format profiling nvim.
-
-
-    .. todo:: Allow the ``test.py`` file that we use for startup to be configured.
-
-    """
-    now = datetime.date.isoformat(datetime.datetime.now())
-
-    if output_results(nvim_root):
-        now = "profiling" + os.path.sep + str(now)
-
-    return os.path.join(nvim_root, "", now)
-
-
-def main() -> Timer:
+def main(arguments=None):
     # id probably do as well to refactor and make this a general decorator
     # ugh this fell apart. todo. there was a programmatic way i found to find nvim config dir.
-    log_file = Path.resolve(Path.cwd())
-    return Timer(nvim_process(get_log_file(log_file)))
-
-
-def nvim_process(profiling_log_file: str) -> Optional[str]:
-    try:
-        return subprocess.run(
-            ["nvim", "--startuptime", profiling_log_file, "test.py", "-c", ":qall"]
-        )
-    except subprocess.CalledProcessError:
-        pass
+    args = _parse_arguments() if arguments is None else arguments
+    user_args = args.parse_args()
+    LOG_LEVEL = user_args.log_level
+    LOGGER = logging.getLogger(name=__name__)
+    LOGGER.setLevel(LOG_LEVEL)
+    now = datetime.date.isoformat(datetime.datetime.now())
+    output_file = now + "-" + user_args.output
+    neovim = Neovim(user_args.path, output_file=output_file)
+    for i in range(user_args.reruns):
+        LOGGER.info("Running neovim # of times: %s", i)
+        neovim.run()
 
 
 if __name__ == "__main__":
-    args = _parse_arguments()
-    user_args = args.parse_args()
-    try:
-        LOG_LEVEL = user_args.log_level
-    except Exception as e:  # attributeerror?
-        LOGGER.error(e, exc_info=True)
-
     sys.exit(main())

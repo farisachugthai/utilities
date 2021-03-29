@@ -5,7 +5,7 @@ flake8>=3.7.5
 flake8-rst>=0.7.1
 ipython==7.6.1
 numpydoc==0.9.1
-Pygments==2.4.2
+Pygments==2.7.4
 pynvim==0.3.2
 python-language-server==0.27.0
 PyYAML==5.4

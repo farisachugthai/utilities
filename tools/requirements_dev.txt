@@ -3,7 +3,7 @@ coverage>=4.5.2
 docutils>=0.14
 flake8>=3.7.5
 flake8-rst>=0.7.1
-ipython==7.6.1
+ipython==7.16.3
 numpydoc==0.9.1
 Pygments==2.4.2
 pynvim==0.3.2

@@ -1,4 +1,4 @@
-certifi==2019.6.16
+certifi==2022.12.7
 coverage>=4.5.2
 docutils>=0.14
 flake8>=3.7.5
